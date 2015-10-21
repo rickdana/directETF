@@ -1,86 +1,92 @@
-//Mise en page
-x = ($('#maps').height()-$('#portefeuille').height())/2;
-$('#portefeuille .box-body').each(function() {
-  $(this).css('height', ($(this).innerHeight() + x) + 'px');
-});
-
-
 //Bénéfices vs Investissement
 $('#profits-investment').highcharts({
     chart: {
-        type: 'areaspline'
+        zoomType: 'xy'
     },
     title: {
-        text: null
+		floating: !true,
+		useHTML: true,
+		text: 'Evolution du portefeuille',
+		style: {
+			color: 'rgb(255,255,255)',
+		 },
     },
     exporting: {
     	enabled: false
     },
-    legend: {
-        layout: 'vertical',
-        align: 'left',
-        verticalAlign: 'top',
-        x: 150,
-        y: 100,
-        floating: true,
-        borderWidth: 1,
-        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+    chart: {
+		backgroundColor:  "transparent",
+		style: {
+				border:  "none"
+		}
     },
+
+	credits: {
+		style: {
+			color: 'transparent'
+		}
+	},
     xAxis: {
-        categories: [
-            'Oct.',
-            'Nov.',
-            'Dec.',
-            'Jan.',
-            'Feb.',
-            'Mar.',
-            'Apr.',
-            'May',
-            'Jun.',
-            'Jul.',
-            'Aug.',
-            'Sept.',
-        ],
-        plotBands: [{ // visualize the weekend
-            from: 0,
-            to: 2,
-            color: 'rgba(0, 0, 0, .1)',
-            label: {
-            	text: '2014'
-            }
-        }],
-        lineColor: '#ABA2A2',
-    },
-    yAxis: {
-        title: {
-            text: null
-        },
-    	gridLineColor: '#ABA2A2'
-    },
+            categories: ['Jan.13', 'Feb.13','Mar.13','Apr.13','May.13', 'Jun.13','Jul.13','Aug.13','Sept.13','Oct.13',
+                     'Nov.13','Dec.13','Jan.14','Feb.14','Mar.14','Apr.14','May.14','Jun.14','Jul.14','Aug.14',
+                     'Sept.14.','Oct.14','Nov.14','Dec.14','Jan.15','Feb.15','Mar.15','Apr.15','May.15','Jun.15',
+                     'Jul.15','Aug.15','Sept.15'],
+             crosshair: true,
+             labels: {
+                          step: 3,
+                     },
+             lineColor: 'rgba(255,255,255,.3)',
+            },
+    yAxis: [{
+        title: null,
+        gridLineColor: 'rgba(255,255,255,.3)'
+    }],
     tooltip: {
         shared: true,
         valuePrefix: '$'
     },
-    legend: {
-    	enabled: false
-    },
-    credits: {
-        enabled: false
-    },
+	legend: {
+		layout: 'vertical',
+		align: 'left',
+		verticalAlign: 'top',
+		x: 50,
+		y: 1,
+		floating: true,
+		backgroundColor: 'transparent'
+	},
     plotOptions: {
         areaspline: {
             fillOpacity: 0
-        }
+        },
+		series: {
+					animation: {
+						duration: 2000
+					},
+					borderColor: 'transparent',
+					borderRadius: '3px'
+				}
     },
     series: [{
-        name: 'Investment',
-        data: [3300, 5460, 4000, 1500, 1236, 3548, 6523, 1236, 6523, 9985, 15600, 12562],
-        color: 'rgb(243, 156, 18)'
+        name: 'Investissement',
+        data: [3300, 5460, 4000, 1500, 1236, 3548, 6523, 1236, 6523, 9985, 15600, 12562,
+               7500, 9045, 15697, 12051, 9571, 7541, 8167, 11610, 12541, 6897, 7861, 13640,
+               11600, 8008, 9743, 3058, 1214, 5410, 8087, 6243, 6493],
+        type: 'column',
+        color: 'rgba(255, 255, 255, .8)'
     }, {
-        name: 'Profits',
-        data: [6520, 5620, 6200,  980, 1236, 6584, 1236, 3650, 6548, 15630, 25000, 15600],
-        color: 'rgb(100, 100, 182)'
+        name: 'Profit',
+		type: 'spline',
+        data: [6520, 5620, 6200,  980, 1236, 6584, 1236, 3650, 6548, 15630, 25000, 15600,
+               6579, 12004, 16141, 19513, 16483, 10843, 7034, 3541, 12459, 13641, 13241, 8014,
+               10843, 13006, 2015, 6214, 6482, 8191, 10641, 9982, 7611],
+        color: 'rgb(243, 156, 18)',
     }]
+});
+
+//Mise en page
+var x = ($('#profits-investment').height() - ($('#portefeuille').height() - ($("#portefeuille-valeur").outerHeight(true) - $("#portefeuille-valeur").innerHeight()) * 2)) / 2;
+$('#portefeuille > div').each(function() {
+  $(this).css('height', ($(this).outerHeight() + x) + 'px');
 });
 
 function getSearchParameters() {
@@ -106,7 +112,8 @@ if (typeof $_GET['client'] == 'undefined') {
 
 $(function () {
 	var host = 'http://184.51.42.237:9000';
-	
+
+
 	// Load client's ETF
 	$.getJSON(host + '/client/etfs?id=' + $_GET['client'], function (etfsClient) {
 		var etfs = [];
@@ -136,57 +143,79 @@ $(function () {
 				}
 				percents_c[etfs[e].country] += parseFloat(percents[etfs[e].isin]);
 			}
-			
+
 			for (var e in etfs) {
 				data_parsed.push({
-					code: e, 
-					etfName: etfs[e].name, 
-					country: etfs[e].country, 
-					sector: etfs[e].sector, 
+					code: e,
+					etfName: etfs[e].name,
+					country: etfs[e].country,
+					sector: etfs[e].sector,
 					value: etfs[e].price,
 					p: percents_c[etfs[e].country].toFixed(2),
 				});
 			}
-	
+
 	        var mapData = Highcharts.geojson(Highcharts.maps['custom/world']);
-	
-	
+
+
 	        $('#investment-maps').highcharts('Map', {
+	        
 	            title: {
-	                floating: true,
+	                floating: !true,
+	            	useHTML: true,
+	            	text: "R&eacute;partition dans le monde",
 	            	style: {
-	                    color: 'rgba(255,255,255,.8)'
+	                    color: 'rgb(255,255,255)',
 	                 },
-	                text: "My investment in the World"
 	            },
 	            exporting: {
 	            	enabled: false
 	            },
-	
+
+                chart: {
+                        backgroundColor:  "transparent",
+                        style: {
+                                border:  "none"
+                        }
+                },
+
+                credits: {
+                	style: {
+                		color: 'transparent'
+                	}
+                },
+
 	            legend: {
 	                enabled: false
 	            },
-	
+
 	            mapNavigation: {
 	                enabled: true,
 	                buttonOptions: {
 	                    verticalAlign: 'bottom'
 	                }
 	            },
-	            
+
 	            tooltip: {
 	            	useHTML: true,
-	            	pointFormat: '{point.name}: {point.p}%',
+	            	formatter:  function  () {
+						if  (this.point.value) {
+							return this.point.name +  ' : '  +  this.point.value +  ' units';
+						}
+                    }
 	            },
-	
+
 	            series : [{
 	                name: 'ETFs by countries',
 	                mapData: mapData,
 	                color: '#E0E0E0',
 	                enableMouseTracking: false
 	            }, {
-	                type: 'mapbubble',
+	                //type: 'mapbubble',
 	                mapData: mapData,
+	                nullColor:  'rgba(255,255,255, 0.99)',
+                    borderColor:  'rgba(255,255,255,.3)',
+                    color:  'rgba(243, 156, 18, .8)',
 	                name: 'ETF information',
 	                joinBy: ['iso-a2', 'country'],
 	                data: data_parsed,
@@ -194,7 +223,7 @@ $(function () {
 	                maxSize: '12%',
 	            }]
 	        });
-	        
+
 	        var list = $("#investment-list tbody");
 
 	        for (var c in etfs) {
@@ -215,10 +244,20 @@ $(function () {
 						+"<span class='number' style='display:inline;'>" + etfsClient[etfs[c].isin] + "</span>"
 					+"</td>"+
 				   "</tr>";
-	        	
+
 	        	list.append(line);
 	        }
-
+/*			if the number of ETFs is more than 50, it allows to page
+			$('#investment-list').DataTable({
+				"paging" : list.find('tr').length > 50,
+				"lengthChange" : false,
+				"pageLength" : 50,
+				"searching" : false,
+				"ordering" : !true,
+				"info" : !true,
+				"autoWidth" : false,
+				"columnDefs" : [  {"type" : "alt-string", "targets" : 0} ],
+			});*/
 			// Sectors
 	        var percents_s = {};
 
@@ -228,7 +267,7 @@ $(function () {
 				}
 				percents_s[etfs[e].sector] += parseFloat(percents[etfs[e].isin]);
 			}
-			
+
 	        var data_sector = [];
 
 			for (var s in percents_s) {
@@ -237,63 +276,116 @@ $(function () {
 					y: parseFloat(percents_s[s].toFixed(2))
 				});
 			}
-			
+
 			data_sector[0].sliced = true;
 			data_sector[0].selected = true;
-			
+			data_sector.sort(function(a,b){return b.y-a.y});
+
+			for (var i = 3; i < data_sector.length; i++) {
+				data_sector[i].visible = false;
+			}
+
 		    // Build the chart
 			$('#sectors-overview').highcharts({
-				colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
-			        return {
-			            radialGradient: {
-			                cx: 0.5,
-			                cy: 0.3,
-			                r: 0.7
-			            },
-			            stops: [
-			                [0, color],
-			                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-			            ]
-			        };
-			    }),
+				 colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
+					return {
+						radialGradient: {
+							cx: 0.5,
+							cy: 0.3,
+							r: 0.7
+						},
+						stops: [
+							[0, color],
+							[1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+						]
+					};
+				 }),
+
+			     title: {
+                		floating: !true,
+                		useHTML: true,
+                		text: 'R&eacute;partition par secteurs',
+                		style: {
+                			color: 'rgb(255,255,255)',
+                		 },
+                    },
+
+				exporting: {
+					enabled: false
+				},
+
+				credits: {
+					style: {
+						color: 'transparent'
+					}
+				},
 				chart: {
 		            plotBackgroundColor: null,
 		            plotBorderWidth: null,
 		            plotShadow: false,
-		            type: 'pie'
+		            type: 'pie',
+		            backgroundColor:  "transparent",
+					style: {
+							border:  "none",
+					},
 		        },
-		        title: {
-		            text: null
-		        },
+
 	            exporting: {
 	            	enabled: false
 	            },
+
 		        tooltip: {
 		            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
 		        },
+
 		        plotOptions: {
 		            pie: {
 		                allowPointSelect: true,
 		                cursor: 'pointer',
 		                dataLabels: {
-		                    enabled: false
+		                    enabled: false,
 		                },
-		                showInLegend: false
+		                showInLegend: true,
+		                borderColor: "transparent"
 		            }
 		        },
+
 		        series: [{
 		            name: "Sectors",
 		            colorByPoint: true,
-		            data: data_sector
+		            data: data_sector,
 		        }],
-		        legend: {
-		        	enabled: false
-		        }
+
+				legend: {
+					labelFormat: '{name} ({percentage:.1f}%)',
+				},
 		    });
 		});		
 	});
+
+	// BEGIN COUNTER FOR SUMMARY BOX
+      $(".counter-num").each(function() {
+          var o = $(this);
+    	  var end = Number(o.html()),
+          	  start = end > 1000 ? Math.floor(end - 500) : Math.floor(end / 2),
+    	  	  speed = start > 500 ? 1 : 10;
+
+    	  $(o).html(start);
+
+          setInterval(function(){
+              var val = Number($(o).html());
+              if (val < end) {
+                  $(o).html(val+1);
+              } else {
+                  clearInterval();
+              }
+          }, speed);
+      });
+      //END COUNTER FOR SUMMARY BOX
+
 });
 
+//different display of etfs ( euro, percent, quanlity)
 jQuery(document).ready(function(){
 
 		jQuery('.percent-filter').click(function(){
