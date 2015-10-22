@@ -34,27 +34,28 @@
     <![endif]-->
 </head>
 <body class="hold-transition skin-blue fixed sidebar-mini">
-	<div class="wrapper">
+<div class="wrapper">
 
-		<header class="main-header">
-			<!-- Logo -->
-			<a href="index.html" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-				<span class="logo-mini"><b>D</b> ETF</span> <!-- logo for regular state and mobile devices -->
-				<span class="logo-lg"><b>Direct</b> ETF</span>
-			</a>
-			<!-- Header Navbar: style can be found in header.less -->
-			<nav class="navbar navbar-static-top" role="navigation">
-				<!-- Sidebar toggle button-->
-				<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
-					role="button"> <span class="sr-only">Toggle navigation</span>
-				</a>
-				<div class="navbar-custom-menu">
-					<ul class="nav navbar-nav">
-						<!-- Notifications: style can be found in dropdown.less -->
-						<li class="dropdown notifications-menu"><a href="#"
-							class="dropdown-toggle" data-toggle="dropdown"> <i
-								class="fa fa-bell-o"></i> <span class="label label-warning">1</span>
-						</a>
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="index.html" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>D</b> ETF</span> <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Direct</b> ETF</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas"
+               role="button"> <span class="sr-only">Toggle navigation</span>
+            </a>
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- Notifications: style can be found in dropdown.less -->
+                    <li class="dropdown notifications-menu"><a href="#"
+                                                               class="dropdown-toggle" data-toggle="dropdown"> <i
+                            class="fa fa-bell-o"></i> <span class="label label-warning">1</span>
+                    </a>
 							<span id="notification" class="dropdown-menu">
 								<span>Je pense que la Grèce va sortir de l'Euro.</span>
 								<button>Oui</button>
@@ -159,7 +160,7 @@
         <section class="content">
             <div class="row">
                 <!--coupe d'historique -->
-                <div  class="col-lg-9">
+                <div class="col-lg-9">
                     <!--left column Maps -->
                     <div class="box box-solid bg-teal-gradient">
                         <div class="box-body">
@@ -186,7 +187,8 @@
                         </div>
                         <a href="#" class="small-box-footer">Approvisionner <i
                                 class="fa fa-arrow-circle-right"></i></a>
-                    </div><!--/.box -->
+                    </div>
+                    <!--/.box -->
 
                     <!-- Dividendes -->
                     <div id="portefeuille-benefice" class="small-box bg-green">
@@ -202,11 +204,31 @@
                         </div>
                         <a href="#" class="small-box-footer">More info <i
                                 class="fa fa-arrow-circle-right"></i></a>
-                    </div><!--/.box -->
-                </div><!--/.col -->
+                    </div>
+                    <!--/.box -->
+                </div>
+                <!--/.col -->
 
+                <!-- Repartition des secteurs -->
+                <div class="col-lg-4">
+                    <div id="sector" class="box  box-solid bg-green-gradient">
+                        <div class="box-body">
+                            <div id="sectors-overview"  style="height: 300px;"></div>
+                            <div class="info-box">
+                                <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-title">Finance</span>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        Suspendisse at purus sed orci pretium elementum...</p>
+                                    <button type="button" class="btn btn-flat btn-xs">Fermer</button>
+                                </div><!-- /.info-box-content -->
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
 
-                <!-- Left side Maps de mes ETFs-->
+                <!-- Maps de mes ETFs-->
                 <div id="maps" class="col-lg-8">
                     <div class="box box-solid bg-light-blue">
                         <div class="box-body">
@@ -215,28 +237,16 @@
                         </div>
                         <!-- /.box-body -->
                     </div>
-                    <!-- /.box right column -->
+                    <!-- /.box column -->
                 </div>
 
-
-                <!-- Repartition des secteurs -->
-                <div  class="col-lg-4">
-                     <!--left column Maps -->
-                    <div class="box  box-solid bg-green-gradient">
-                        <div class="box-body">
-                            <div id="sectors-overview"
-                                 style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box right column -->
-                </div>
 
                 <!--Liste ETFs-->
                 <div class="col-lg-12">
                     <div class="box box-success">
                         <div class="box-header">
                             <i class="fa fa-list"></i>
+
                             <h3 class="box-title">Mes ETFs</h3>
                         </div>
                         <!-- /.box-header -->
@@ -244,11 +254,9 @@
                             <table id="investment-list" class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th></th>
                                     <th>Nom du titre</th>
-                                    <th>Secteur</th>
                                     <th>Gains/Pertes</th>
-                                    <th style="text-align : right;">
+                                    <th style="text-align : center;">
                                         <span class="currency-filter compo-filter">&euro;</span>
                                         <span class="percent-filter compo-filter">%</span>
                                         <span class="number-filter compo-filter selected">#</span>
@@ -259,12 +267,17 @@
                                 <tbody></tbody>
 
                             </table>
-                        </div><!-- /.box-body -->
-                    </div><!-- /.box -->
-                </div><!-- /.liste ETFs -->
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.liste ETFs -->
                 <!--/.col -->
-            </div><!-- /.row -->
-        </section><!-- /.content -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
@@ -474,6 +487,7 @@
 <script src="bower_components/highcharts/modules/exporting.js"></script>
 <script src="bower_components/highmaps/modules/map.js"></script>
 <script src="js/highmaps/mapdata/custom/world.js"></script>
+<script src="js/highcharts/theme.js"></script>
 <script src="js/pages/portefeuille.js"></script>
 
 </body>
