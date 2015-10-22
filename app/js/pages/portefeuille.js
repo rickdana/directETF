@@ -14,17 +14,9 @@ $('#profits-investment').highcharts({
     exporting: {
     	enabled: false
     },
-    chart: {
-		backgroundColor:  "transparent",
-		style: {
-				border:  "none"
-		}
-    },
 
-	credits: {
-		style: {
-			color: 'transparent'
-		}
+	mapNavigation: {
+		enabled: false
 	},
     xAxis: {
             categories: ['Jan.13', 'Feb.13','Mar.13','Apr.13','May.13', 'Jun.13','Jul.13','Aug.13','Sept.13','Oct.13',
@@ -41,10 +33,12 @@ $('#profits-investment').highcharts({
         title: null,
         gridLineColor: 'rgba(255,255,255,.3)'
     }],
+
     tooltip: {
         shared: true,
         valuePrefix: '$'
     },
+
 	legend: {
 		layout: 'vertical',
 		align: 'left',
@@ -54,6 +48,9 @@ $('#profits-investment').highcharts({
 		floating: true,
 		backgroundColor: 'transparent'
 	},
+
+	colorAxis: null,
+
     plotOptions: {
         areaspline: {
             fillOpacity: 0
@@ -83,11 +80,6 @@ $('#profits-investment').highcharts({
     }]
 });
 
-//Mise en page
-var x = ($('#profits-investment').height() - ($('#portefeuille').height() - ($("#portefeuille-valeur").outerHeight(true) - $("#portefeuille-valeur").innerHeight()) * 2)) / 2;
-$('#portefeuille > div').each(function() {
-  $(this).css('height', ($(this).outerHeight() + x) + 'px');
-});
 
 function getSearchParameters() {
     var prmstr = window.location.search.substr(1);
@@ -172,50 +164,33 @@ $(function () {
 	            	enabled: false
 	            },
 
-                chart: {
-                        backgroundColor:  "transparent",
-                        style: {
-                                border:  "none"
-                        }
-                },
-
-                credits: {
-                	style: {
-                		color: 'transparent'
-                	}
-                },
-
 	            legend: {
 	                enabled: false
 	            },
 
-	            mapNavigation: {
-	                enabled: true,
-	                buttonOptions: {
-	                    verticalAlign: 'bottom'
-	                }
-	            },
+			   	mapNavigation: {
+				   enabled: true,
+				   buttonOptions: {
+					   verticalAlign: 'bottom'
+				   }
+			   	},
 
-	            tooltip: {
-	            	useHTML: true,
-	            	formatter:  function  () {
-						if  (this.point.value) {
-							return this.point.name +  ' : '  +  this.point.value +  ' units';
-						}
-                    }
-	            },
+			    tooltip: {
+					useHTML: true,
+					//pointFormat: '{point.name}: {point.p} units',
+				   		formatter: function () {
+					   		if (this.point.value) {
+						  		 return this.point.name + ' : ' + this.point.value + ' units';
+					   		}
+				   		}
+			    },
 
 	            series : [{
-	                name: 'ETFs by countries',
 	                mapData: mapData,
-	                color: '#E0E0E0',
 	                enableMouseTracking: false
 	            }, {
 	                //type: 'mapbubble',
 	                mapData: mapData,
-	                nullColor:  'rgba(255,255,255, 0.99)',
-                    borderColor:  'rgba(255,255,255,.3)',
-                    color:  'rgba(243, 156, 18, .8)',
 	                name: 'ETF information',
 	                joinBy: ['iso-a2', 'country'],
 	                data: data_parsed,
@@ -230,9 +205,7 @@ $(function () {
 	        	var flag = "http://files.stevenskelton.ca/flag-icon/flag-icon/svg/country-4x3/" + etfs[c].country.toLowerCase() + ".svg";
 				var gain = (Math.floor(Math.random() * 30) + 2) * (Math.random() < 0.5 ? -1 : 1);
 	        	var line = "<tr>"
-					+ "<td><img class='left z-depth-1' width='' height='21' alt='" + etfs[c].country.toLowerCase() + "' src='" + flag + "'></td>"
 	        		+ "<td class='waves-effect waves-light'>" + etfs[c].name + "</td>"
-	        		+ "<td>" + etfs[c].sector + "</td>"
 	        		+ (gain >= 0 ? "<td style='color:green;'>" : "<td style='color:red;'>")
 	        			+"<span class='percent' style='display:none;'>" +  ((Math.abs(gain/etfsClient[etfs[c].isin])/etfs[c].price)*100).toFixed(2) + "%</span>"
                         +"<span class='currency' style='display:none;'>" + gain + "&euro;</span>"
@@ -277,17 +250,18 @@ $(function () {
 				});
 			}
 
-			data_sector[0].sliced = true;
-			data_sector[0].selected = true;
+			//data_sector[0].sliced = true;
+			//data_sector[0].selected = true;
 			data_sector.sort(function(a,b){return b.y-a.y});
 
 			for (var i = 3; i < data_sector.length; i++) {
 				data_sector[i].visible = false;
 			}
 
+			var sector_info_box = $('#sector .info-box');
 		    // Build the chart
 			$('#sectors-overview').highcharts({
-				 colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
+				colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
 					return {
 						radialGradient: {
 							cx: 0.5,
@@ -301,14 +275,14 @@ $(function () {
 					};
 				 }),
 
-			     title: {
-                		floating: !true,
-                		useHTML: true,
-                		text: 'R&eacute;partition par secteurs',
-                		style: {
-                			color: 'rgb(255,255,255)',
-                		 },
-                    },
+				 title: {
+						floating: !true,
+						useHTML: true,
+						text: 'R&eacute;partition par secteurs',
+						style: {
+							color: 'rgb(255,255,255)',
+						 },
+					},
 
 				exporting: {
 					enabled: false
@@ -320,48 +294,102 @@ $(function () {
 					}
 				},
 				chart: {
-		            plotBackgroundColor: null,
-		            plotBorderWidth: null,
-		            plotShadow: false,
-		            type: 'pie',
-		            backgroundColor:  "transparent",
-					style: {
-							border:  "none",
+					plotBackgroundColor: null,
+					plotBorderWidth: null,
+					plotShadow: false,
+					type: 'pie',
+
+				},
+
+				exporting: {
+					enabled: false
+				},
+
+				tooltip: {
+					pointFormat: ' <b>{point.percentage:.1f}%</b>'
+				},
+
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+							enabled: false,
+						},
+						showInLegend: true,
+						borderColor: "rgba(243, 156, 18, .5)",
 					},
-		        },
+					series: {
+                                 shadow: true
+                            },
+				},
 
-	            exporting: {
-	            	enabled: false
-	            },
+				series: [{
+					name: "Sectors",
+					colorByPoint: true,
+					data: data_sector,
+					point: {
+					    events: {
+					        select: function (e) {
+                                this.slice(false);
+                            },
+					    }
+					},
+					events: {
+						click: function(e) {
+                            current_pie = e;
 
-		        tooltip: {
-		            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-		        },
+							var rgb = e.point.color.stops[1][1].match(/\d+,\s?\d+,\s?\d+/)[0]
+							  , rgba = 'rgba(' + rgb + ', .8)';
 
-		        plotOptions: {
-		            pie: {
-		                allowPointSelect: true,
-		                cursor: 'pointer',
-		                dataLabels: {
-		                    enabled: false,
-		                },
-		                showInLegend: true,
-		                borderColor: "transparent"
-		            }
-		        },
+							if (sector_info_box.attr('data-current') == e.point.name) {
+								sector_info_box.attr('data-current', '');
+								sector_info_box.hide('slow');
+							} else {
+								sector_info_box.show('slow');
+								sector_info_box.attr('data-current', e.point.name);
+							}
 
-		        series: [{
-		            name: "Sectors",
-		            colorByPoint: true,
-		            data: data_sector,
-		        }],
+							sector_info_box.find('.info-box-title').text(e.point.name + " " + e.point.percentage.toFixed(1) + "%" );
+
+							sector_info_box.find('.info-box-icon, .btn')
+										   .css('color', 'rgba(255,255,255,.8)')
+										   .css('background-color', rgba);
+						}
+					}
+				}],
+
+				colorAxis: null,
 
 				legend: {
 					labelFormat: '{name} ({percentage:.1f}%)',
+					maxHeight: 81,
+					navigation: {
+							activeColor: '#3E576F',
+							animation: true,
+							arrowSize: 9,
+							inactiveColor: '#CCC',
+							style: {
+								fontWeight: 'bold',
+								color: '#333',
+								fontSize: '11px',
+							},
+						},
 				},
+
+
 		    });
-		});		
+
+            sector_info_box.css('display', 'block')
+                           .hide()
+                           .find('.btn').on('click', function() {
+                                sector_info_box.hide('slow');
+                                sector_info_box.attr('data-current', '');
+                                current_pie.point.slice(false);
+                           });
+		});
 	});
+
 
 	// BEGIN COUNTER FOR SUMMARY BOX
       $(".counter-num").each(function() {
@@ -383,6 +411,14 @@ $(function () {
       });
       //END COUNTER FOR SUMMARY BOX
 
+});
+
+//FORMATTING
+
+//formatting the value of wallet and the dividend
+var x = ($('#profits-investment').height() - ($('#portefeuille').height() - ($("#portefeuille-valeur").outerHeight(true) - $("#portefeuille-valeur").innerHeight()) * 2)) / 2;
+$('#portefeuille > div').each(function() {
+  $(this).css('height', ($(this).outerHeight() + x) + 'px');
 });
 
 //different display of etfs ( euro, percent, quanlity)
