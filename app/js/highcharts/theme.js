@@ -1,7 +1,8 @@
 Highcharts.theme = {
 
-   colors: ['rgba(64,19,117,0.05)', 'rgba(64,19,117,0.2)', 'rgba(64,19,117,0.4)',
-                       'rgba(64,19,117,0.5)', 'rgba(64,19,117,0.6)', 'rgba(64,19,117,0.8)', 'rgba(64,19,117,1)'],
+   colors: ['rgb(128, 133, 233)', 'rgb(241, 92, 128))', 'rgb(228, 211, 84)',
+                       'rgb(43, 144, 143)', 'rgb(244, 91, 91)', 'rgb(124, 181, 236)', 'rgb(67, 67, 72)',
+                        'rgb(144, 237, 125)', ' rgb(247, 163, 92)'],
 
    title: {
        text: null
@@ -9,10 +10,6 @@ Highcharts.theme = {
 
    exporting: {
     enabled: false
-   },
-
-   legend: {
-       enabled: false
    },
 
    chart: {
@@ -27,23 +24,6 @@ Highcharts.theme = {
         color: 'transparent'
      }
   },
-
-   mapNavigation: {
-       enabled: true,
-       buttonOptions: {
-           verticalAlign: 'bottom'
-       }
-   },
-
-   tooltip: {
-    useHTML: true,
-    //pointFormat: '{point.name}: {point.p} units',
-       formatter: function () {
-           if (this.point.value) {
-               return this.point.name + ' : ' + this.point.value + ' units';
-           }
-       }
-   },
 
    plotOptions: {
       series: {
