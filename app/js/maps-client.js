@@ -100,7 +100,6 @@ $(function () {
 	                color: '#E0E0E0',
 	                enableMouseTracking: false
 	            }, {
-	                type: 'mapbubble',
 	                mapData: mapData,
 	                name: 'ETF information',
 	                joinBy: ['iso-a2', 'country'],
