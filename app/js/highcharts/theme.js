@@ -11,6 +11,9 @@ Highcharts.theme = {
    exporting: {
     enabled: false
    },
+    legend: {
+        enabled: false
+    },
 
    chart: {
        backgroundColor: "transparent",

@@ -82,9 +82,6 @@ $(function () {
                     verticalAlign: 'bottom'
                 }
             },
-            legend: {
-                enabled: false
-            },
             series : [{
                 mapData: mapData,
                 enableMouseTracking: false
