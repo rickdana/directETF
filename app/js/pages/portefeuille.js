@@ -36,10 +36,12 @@ $('#profits-investment').highcharts({
 
     tooltip: {
         shared: true,
-        valuePrefix: '$'
+        useHTML: true,
+        valuePrefix: '&euro;'
     },
 
 	legend: {
+		enabled: true,
 		layout: 'vertical',
 		align: 'left',
 		verticalAlign: 'top',
@@ -205,7 +207,7 @@ $(function () {
 	        	var flag = "http://files.stevenskelton.ca/flag-icon/flag-icon/svg/country-4x3/" + etfs[c].country.toLowerCase() + ".svg";
 				var gain = (Math.floor(Math.random() * 30) + 2) * (Math.random() < 0.5 ? -1 : 1);
 	        	var line = "<tr>"
-	        		+ "<td class='waves-effect waves-light'>" + etfs[c].name + "</td>"
+	        		+ '<td class="waves-effect waves-light"><a href="javascript:void(0)" onclick="show_etf_info(this)" data-code="' + c + '">' + etfs[c].name + '</a></td>'
 	        		+ (gain >= 0 ? "<td style='color:green;'>" : "<td style='color:red;'>")
 	        			+"<span class='percent' style='display:none;'>" +  ((Math.abs(gain/etfsClient[etfs[c].isin])/etfs[c].price)*100).toFixed(2) + "%</span>"
                         +"<span class='currency' style='display:none;'>" + gain + "&euro;</span>"
@@ -220,6 +222,12 @@ $(function () {
 
 	        	list.append(line);
 	        }
+
+	        var tmp = location.pathname.split('/')
+              , base = tmp.slice(0, tmp.length - 1).join('/');
+
+			$.getScript(base + '/js/helpers/etf-info-box.js');
+
 /*			if the number of ETFs is more than 50, it allows to page
 			$('#investment-list').DataTable({
 				"paging" : list.find('tr').length > 50,
@@ -362,6 +370,7 @@ $(function () {
 				colorAxis: null,
 
 				legend: {
+					enabled: true,
 					labelFormat: '{name} ({percentage:.1f}%)',
 					maxHeight: 81,
 					navigation: {
