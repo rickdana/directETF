@@ -21,7 +21,6 @@
     "highmaps": "~1.0.1",
     "highstock-release": "~2.1.9",
     "adminlte": "~2.3.1",
-    "bootstrap-tagsinput": "~0.5.0",
-    "world": "http://code.highcharts.com/mapdata/custom/world.js"
+    "bootstrap-tagsinput": "~0.5.0"
   }
 }
