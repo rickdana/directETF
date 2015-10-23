@@ -12,10 +12,6 @@ Highcharts.theme = {
     enabled: false
    },
 
-   legend: {
-       enabled: false
-   },
-
    chart: {
        backgroundColor: "transparent",
        style: {
@@ -28,23 +24,6 @@ Highcharts.theme = {
         color: 'transparent'
      }
   },
-
-   mapNavigation: {
-       enabled: true,
-       buttonOptions: {
-           verticalAlign: 'bottom'
-       }
-   },
-
-   tooltip: {
-    useHTML: true,
-    //pointFormat: '{point.name}: {point.p} units',
-       formatter: function () {
-           if (this.point.value) {
-               return this.point.name + ' : ' + this.point.value + ' units';
-           }
-       }
-   },
 
    plotOptions: {
       series: {

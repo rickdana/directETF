@@ -76,6 +76,15 @@ $(function () {
             mapNavigation: {
                enabled: true
             },
+            mapNavigation: {
+                enabled: true,
+                buttonOptions: {
+                    verticalAlign: 'bottom'
+                }
+            },
+            legend: {
+                enabled: false
+            },
             series : [{
                 mapData: mapData,
                 enableMouseTracking: false
