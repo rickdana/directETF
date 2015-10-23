@@ -17,10 +17,10 @@
     <link rel="stylesheet"
           href="bower_components/datatables/media/css/dataTables.bootstrap.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="css/AdminLTE.min.css">
+    <link rel="stylesheet" href="bower_components/adminlte/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="bower_components/adminlte/dist/css/skins/_all-skins.min.css">
     <!-- Common style -->
     <link rel="stylesheet" href="css/common.css">
     <!-- Ion Slider -->
@@ -29,6 +29,8 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="bower_components/icheck/skins/flat/blue.css">
     <link rel="stylesheet" href="bower_components/icheck/skins/square/blue.css">
+    <!-- Tags Input -->
+    <link rel="stylesheet" href="bower_components/bootstrap-tagsinput/src/bootstrap-tagsinput.css">
     <!-- Theme style  -->
     <link rel="stylesheet" href="css/investir.css">
 
@@ -158,10 +160,10 @@
                 <li class="active">Investir</li>
             </ol>
             <div id="wizard-state">
-                <a id="wizard-step-1" data-step="1" data-state="current" href="javascript:void(0)">Sélection des
-                    titres</a>
-                <a id="wizard-step-2" data-step="2" data-state="unvalid" href="javascript:void(0)">Ajustement</a>
-                <a id="wizard-step-4" data-step="3" data-state="unvalid" href="javascript:void(0)">Exécution</a>
+                <a id="wizard-step-1" data-step="1" data-state="current" href="javascript:void(0)">Sélection</a>
+                <a id="wizard-step-2" data-step="2" data-state="unvalid" href="javascript:void(0)">Montant &amp; Ajustement</a>
+                <a id="wizard-step-3" data-step="3" data-state="unvalid" href="javascript:void(0)">Confirmation</a>
+                <a id="wizard-step-4" data-step="4" data-state="unvalid" href="javascript:void(0)">Validation</a>
             </div>
             <hr id="header-scroll-bar" class="fancy-line">
         </section>
@@ -177,31 +179,33 @@
                     <!--</div>-->
                     <div class="box-body">
                         <div id="filters-container" class="sidebar">
+                            <div id="filters-searchbar">
+                                <i class="fa fa-search"></i>
+                                <input type="text" id="search-etf" placeholder="rechercher...">
+                            </div>
                             <ul class="sidebar-menu">
-                                <li><a href="#"><i class="fa fa-search"></i> <span><input type="search" id="search-etf"
-                                                                                          placeholder="rechercher dans la liste..."></span>
-                                </a></li>
-                                <li class="active"><a href="#"><i class="fa fa-th-list"></i> <span>Secteurs</span>
+                                <li class="activeX"><a href="#"><i class="fa fa-th-list"></i> <span>Secteurs</span>
                                     <i class="fa fa-angle-left pull-right"></i></a>
                                     <ul class="treeview-menu">
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Finance</a></li>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Industrie</a></li>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Santé</a></li>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Energie</a></li>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Technologie</a></li>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Télécommunication</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="sector" data-value="Finance"><i class="fa fa-circle-o"></i> Finance</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="sector" data-value="Industrie"><i class="fa fa-circle-o"></i> Industrie</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="sector" data-value="Santé|Sante|Sant"><i class="fa fa-circle-o"></i> Santé</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="sector" data-value="Energie"><i class="fa fa-circle-o"></i> Energie</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="sector" data-value="Services aux collectivité|Services aux collectivit"><i class="fa fa-circle-o"></i> Services aux collectivité</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="sector" data-value="Technologie"><i class="fa fa-circle-o"></i> Technologies de l'information</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="sector" data-value="Biens de consomation cyclique"><i class="fa fa-circle-o"></i> Biens de consomation cyclique</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#"><i class="fa fa-map-marker"></i> <span>Régions</span>
                                     <i class="fa fa-angle-left pull-right"></i></a>
                                     <ul class="treeview-menu">
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> France</a></li>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Allemagne</a></li>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Espagne</a></li>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Itablie</a></li>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Hollande</a></li>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Royaume-Uni</a></li>
-                                        <li><a href="#"><i class="fa fa-circle-o"></i> Finlande</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="region" data-value="FR|France|Paris"><i class="fa fa-circle-o"></i> France</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="region" data-value="DE|Allemagne|Germany"><i class="fa fa-circle-o"></i> Allemagne</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="region" data-value="ES|Espagne|Madrid"><i class="fa fa-circle-o"></i> Espagne</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="region" data-value="IT|Italie"><i class="fa fa-circle-o"></i> Itablie</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="region" data-value="JP|Japon|Japan|Tokyo"><i class="fa fa-circle-o"></i> Japon</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="region" data-value="GB|Londre|London"><i class="fa fa-circle-o"></i> Royaume-Uni</a></li>
+                                        <li><a class="filter" href="javascript:void(0)" data-type="region" data-value="HK|Hong|Kong"><i class="fa fa-circle-o"></i> Hong Kong</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -216,9 +220,9 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th class="etf-column flag"></th>
                                 <th class="etf-column name">Nom du titre</th>
                                 <th class="etf-column sector">Secteur</th>
+                                <th class="etf-column country"></th>
                                 <th class="etf-column number">Quantité</th>
                                 <th class="etf-column price">Prix</th>
                                 <th class="etf-column price-cash">Prix</th>
@@ -234,7 +238,8 @@
                     </div>
                 </div>
 
-                <button class="btn btn-block btn-success btn-flat">Etape suivante: Ajustement</button>
+                <br>
+                <button class="btn btn-block btn-success btn-flat">Etape suivante: Montant &amp; Ajustement</button>
             </div>
 
             <!--Step 2-->
@@ -266,7 +271,6 @@
                                 <table class="table table-hover">
                                     <thead>
                                     <tr>
-                                        <th class="etf-column flag"></th>
                                         <th class="etf-column name">Nom du titre</th>
                                         <th class="etf-column number">Quantité</th>
                                         <th class="etf-column price">Prix</th>
@@ -279,7 +283,7 @@
                                     <tbody></tbody>
                                     <tfoot>
                                     <tr>
-                                        <td class="text-right" colspan="4"><b>Total des lignes</b></td>
+                                        <td class="text-right" colspan="3"><b>Total des lignes</b></td>
                                         <td class="text-right"><b><span class="order-cash">0</span> &euro;</b>&nbsp;&nbsp;&nbsp;&nbsp;
                                         </td>
                                         <td></td>
@@ -325,7 +329,7 @@
                         </li>
                     </ul>
                 </div>
-
+                <br>
                 <button class="btn btn-block btn-success btn-flat">Etape suivante: Exécution</button>
             </div>
 
@@ -418,8 +422,64 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+                <br>
                 <button class="btn btn-block btn-success btn-flat">Valider l'ordre d'achat</button>
+            </div>
+
+            <!--Step 4-->
+            <div class="wizard-panel" data-wizard-panel-step="4">
+
+            </div>
+
+            <div id="etf-info-box-wrapper" title="Cliquez pour fermer">
+                <div id="etf-info-box" class="info-box" title="">
+                    <div class="info-box-icon bg-green">
+                        <i class="fa fa-area-chart"></i>
+                    </div>
+                    <div class="info-box-content">
+                        <h3 class="info-box-text">Sales</h3>
+                        <table class="etf-info-details">
+                            <tbody>
+                                <tr class="code">
+                                    <td>Code</td>
+                                    <td class="value">DE000A0H08K7</td>
+                                </tr>
+
+                                <tr class="valeur">
+                                    <td>Dernière clotûre</td>
+                                    <td class="value">27,90 EUR</td>
+                                </tr>
+                                <tr class="return">
+                                    <td>Dividendes</td>
+                                    <td class="value">
+                                        4,3 %
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" class="text-center">
+                                        <br>
+                                        Diversification sectorielle
+                                        <div id="etf-info-sectors"></div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div class="etf-info-description">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac ipsum iaculis velit
+                            consequat porttitor sit amet non augue. Ut faucibus libero lacus.
+                            <a href="#">En savoir plus...</a>
+                            <br>
+                            <div class="map" title="Europe" data-src="http://www.ardex-pandomo.com/fileadmin/images/worldmap/ac-europe.png"></div>
+                            <div class="map" title="Asie" data-src="http://www.ardex-pandomo.com/fileadmin/images/worldmap/ac-asia.png"></div>
+                        </div>
+                        <h4>Performance historique du titre</h4>
+                        <div id="etf-info-history"></div>
+                        <button class="btn btn-flat btn-xs bg-green pull-right">Fermer</button>
+                        <br>
+                    </div><!-- /.info-box-content -->
+                </div>
             </div>
         </section>
         <!-- /.content -->
@@ -618,25 +678,26 @@
 <!-- Bootstrap -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- Slimscroll -->
-<script src="bower_components/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="bower_components/adminlte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
-<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<script src="bower_components/adminlte/plugins/fastclick/fastclick.min.js"></script>
 <!-- DataTables -->
 <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables/media/js/dataTables.bootstrap.min.js"></script>
 <!-- AdminLTE App -->
-<script src="js/app.min.js"></script>
+<script src="bower_components/adminlte/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="js/demo.js"></script>
 <!-- Highchats -->
-<script src="bower_components/highcharts/highcharts.js"></script>
+<script src="bower_components/highstock-release/highstock.js"></script>
 <script src="bower_components/highcharts/highcharts-more.js"></script>
-<script src="bower_components/highcharts/modules/exporting.js"></script>
 <script src="bower_components/highmaps/modules/map.js"></script>
 <script src="bower_components/world/index.js"></script>
 <!--<script src="js/theme.js"></script>-->
 <script src="bower_components/ionrangeslider/js/ion.rangeSlider.min.js"></script>
 <script src="bower_components/icheck/icheck.min.js"></script>
+<script src="bower_components/bootstrap-tagsinput/src/bootstrap-tagsinput.js"></script>
+<script src="js/highcharts/theme.js"></script>
 <script src="js/pages/investir.js"></script>
 <script src="js/pages/confirmation.js"></script>
 </body>

@@ -1,3 +1,14 @@
+
+$.fn.dataTableExt.oApi.fnResetAllFilters = function (oSettings, bDraw/*default true*/) {
+        for(iCol = 0; iCol < oSettings.aoPreSearchCols.length; iCol++) {
+                oSettings.aoPreSearchCols[ iCol ].sSearch = '';
+        }
+        oSettings.oPreviousSearch.sSearch = '';
+
+        if(typeof bDraw === 'undefined') bDraw = true;
+        if(bDraw) this.fnDraw();
+};
+
 $(function () {
     // Global init
     var wallet_cash = 40000;
@@ -7,11 +18,11 @@ $(function () {
     var wizard_state = $("#wizard-state");
 
     var wizard_panel_1 = $('[data-wizard-panel-step=1]'),
-        wizard_panel_1_table = wizard_panel_1.find('table'),
+        wizard_panel_1_table = wizard_panel_1.find('table').first(),
         wizard_panel_1_list = wizard_panel_1_table.find("tbody");
 
     var wizard_panel_2 = $('[data-wizard-panel-step=2]'),
-        wizard_panel_2_table = wizard_panel_2.find('table'),
+        wizard_panel_2_table = wizard_panel_2.find('table').first(),
         wizard_panel_2_list = wizard_panel_2_table.find('tbody'),
         wizard_panel_2_action = wizard_panel_2.find('.etf-action-dropdown').first().hide();
 
@@ -62,71 +73,24 @@ $(function () {
         var mapData = Highcharts.geojson(Highcharts.maps['custom/world']);
 
         $('#maps-container').highcharts('Map', {
-           colors: ["#f0ad4e"],
-
-            title: {
-                text: null
-            },
-            
-            exporting: {
-            	enabled: false
-            },
-
-            legend: {
-                enabled: false
-            },
-
-            chart: {
-                backgroundColor: "transparent",
-                style: {
-                    border: "none"
-                }
-            },
-
-           credits: {
-              style: {
-                 color: 'transparent'
-              }
-           },
-
             mapNavigation: {
-                enabled: true,
-                buttonOptions: {
-                    verticalAlign: 'bottom'
-                }
+               enabled: true
             },
-            
-            tooltip: {
-            	useHTML: true,
-            	pointFormat: '{point.name}: {point.p} units',
-            },
-
             series : [{
-                name: 'Investment by countries',
                 mapData: mapData,
-                color: '#E0E0E0',
                 enableMouseTracking: false
             }, {
                 //type: 'mapbubble',
                 mapData: mapData,
                 name: 'ETF information',
+
                 joinBy: ['iso-a2', 'country'],
-                dataLabels: {
-                    enabled: !true,
-                    color: 'white',
-                    formatter: function () {
-                        if (this.point.value) {
-                            return this.point.name;
-                        }
-                    }
-                },
                 data: data_parsed,
                 minSize: 4,
                 maxSize: '12%',
                 events: {
                 	click: function(e) {
-                		search_input.val(e.point.country);
-                		start_search(e.point.country);
+                		start_search(e.point.country, 2);
                 	}
                 }
             }]
@@ -135,12 +99,11 @@ $(function () {
         //
     	// load list view
         for (var c in etfs) {
-        	var flag = "http://files.stevenskelton.ca/flag-icon/flag-icon/svg/country-4x3/" + etfs[c].country.toLowerCase() + ".svg";
         	var tr_id = "etf-" + c;
         	var line = '<tr id="' + tr_id + '">'
-	    				+ 	'<td class="etf-column flag"><img class="country-flag" width="" height="21" title="' + etfs[c].country + '" alt="' + etfs[c].country + '" src="' + flag + '"><span style="display:none">' + etfs[c].country + '</span></td>'
-		        		+ 	'<td class="etf-column name"><a href="javascript:void(0)">' + etfs[c].name + '</a></td>'
+	    				+ 	'<td class="etf-column name"><a href="javascript:void(0)" onclick="show_etf_info(this)" data-code="' + c + '">' + etfs[c].name + '</a></td>'
 						+ 	'<td class="etf-column sector">' + etfs[c].sector + '</td>'
+						+ 	'<td class="etf-column country"><i>' + etfs[c].country + '</i></td>'
 						+ 	'<td class="etf-column number">' + etfs[c].number + '</td>'
 						+ 	'<td class="etf-column price">' + etfs[c].price + '&euro;</td>'
 						+ 	'<td class="etf-column price-cash"></td>'
@@ -149,6 +112,115 @@ $(function () {
 					   '</tr>';
         	wizard_panel_1_list.append(line);
         }
+
+        var etf_info_box_wrapper = $("#etf-info-box-wrapper")
+          , etf_info_box = etf_info_box_wrapper.find('.info-box');
+
+        etf_info_box.css("top", ($('.content-header').offset().top + $('.content-header').height() + 20) + "px");
+
+        etf_info_box_wrapper.css('display', 'block')
+                            .hide()
+                            .on('click', function() {
+                                $(this).fadeOut('slow');
+                                return false;
+                            });
+        $('#etf-info-box').on('click', function() {
+            return false;
+        }).find('.btn').click(function() {
+            etf_info_box_wrapper.click();
+        })
+
+        etf_info_box.find('.map').each(function() {
+            $(this).css('background-image', 'url(' + $(this).attr('data-src') + ')');
+        })
+
+
+        show_etf_info = function(a) {
+            etf_info_box_wrapper.find('.info-box-text').text($(a).text());
+            etf_info_box_wrapper.find('.code .value').text($(a).attr('data-code'));
+
+            etf_info_box_wrapper.fadeIn('slow');
+
+            etf_info_box.css("left", Math.max(0, (($(document).width() - etf_info_box.width()) / 2) +
+                                                            $(document).scrollLeft() + $('.main-sidebar').width() / 2) + "px");
+
+            $('#etf-info-sectors').html('').highcharts({
+                //colors: ['rgba(0, 166, 90,.3)', 'rgba(0, 166, 90,.8)', 'rgba(0, 166, 90,.7)', 'rgba(0, 166, 90,.5)'],
+
+                mapNavigation: {
+                   enabled: false
+                },
+
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: 0,
+                    plotShadow: false,
+                    height:200,
+                    style: {
+                        top: '-15px',
+    //                    left: '-30px'
+                        'margin-bottom': '-140px'
+                    }
+                },
+                tooltip: {
+                    useHTML: false,
+                    formatter: function () {
+                       return this.point.name + ' : ' + this.point.y + '%';
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        dataLabels: {
+                            enabled: false,
+                            distance: -50,
+                        },
+                        startAngle: -90,
+                        endAngle: 90,
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    data: [
+                        ['Finance',   10.38],
+                        ['Santé',       56.33],
+                        ['Industrie', 24.03],
+                        ['Energie',    4.77],
+                        ['Technologie',     0.91],
+                        {
+                            y: 0.2,
+                            dataLabels: {
+                                enabled: false
+                            }
+                        }
+                    ]
+                }]
+            });
+        };
+
+        $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
+            $('#etf-info-history').highcharts('StockChart', {
+                mapNavigation: {
+                   enabled: false
+                },
+
+                chart: {
+                    height:200
+                },
+
+                rangeSelector : {
+                    enabled: false,
+                    selected : 5
+                },
+
+                series : [{
+                    data : data,
+                    tooltip: {
+                        valueDecimals: 2
+                    }
+                }]
+            });
+        });
+
 
         // iCheck init
 		wizard_panel_1_table.find('input[type=checkbox]').iCheck({
@@ -193,7 +265,7 @@ $(function () {
             max: wallet_cash,
             from: wallet_cash,
             postfix: catch_max.attr('data-postfix'),
-            grid: true,
+//            grid: true,
             hide_min_max: true,
             grid_num: 10
         });
@@ -261,7 +333,7 @@ $(function () {
 
 				selected_row.attr('id', selected_row_id)
 				            .addClass('selected-row-item');
-				selected_row.find('.sector').remove();
+				selected_row.find('.sector,.country').remove();
 				selected_row.find('.option').html('')
 							.append(cancel_btn);
                 selected_row.find('.order').html('')
@@ -333,7 +405,7 @@ $(function () {
                          postfix: $(this).attr('data-postfix'),
                          onChange: callback,
                          onUpdate: callback,
-                         grid: true,
+//                         grid: true,
                          hide_min_max: true,
                          //grid_num: 10
                      });
@@ -347,10 +419,10 @@ $(function () {
 
         $('.etf-column.option, .etf-column.flag').css('text-align', 'center');
 
-        var oTable = wizard_panel_1_table.DataTable({
+        var oTable = wizard_panel_1_table.dataTable({
         	bFilter: !false,
-        	bInfo: false,
-        	paging: false,
+        	bInfo: wizard_panel_1_list.find('tr').length > 20,
+        	paging: wizard_panel_1_list.find('tr').length > 20,
 	        lengthChange: false,
 	        searching: !false,
 	        ordering: true,
@@ -359,26 +431,149 @@ $(function () {
 	        columnDefs: [
                 { searchable: false, targets: 5 }
             ],
-            order: [1, "asc"]
+            order: [0, "asc"]
         });
 
         $(".dataTables_filter").hide();
 
-        search_input = $('#search-etf');
-        start_search = function(q) {
-            oTable.search( '' )
-                  .columns().search( '' );
 
-            if (typeof q == 'undefined') {
-                oTable.search(search_input.val()).draw();
+        var filters = {};
+
+        clear_search = function() {
+            oTable.fnResetAllFilters();
+            $('#filters-container a.filter').attr('data-selected', 'false');
+            console.log('clear')
+        };
+        start_search = function(q, c, callback) {
+            if (typeof c == 'undefined') {
+                oTable.fnFilter(q.replace(/,/g, '|'), null, true, false, true, true);
             } else {
-                oTable.column(0).search(q).draw();
+                if (typeof filters[c] == 'undefined') {
+                    filters[c] = q.trim();
+                } else if (filters[c].length > 0) {
+                    if (filters[c].search(q) >= 0) {
+                        return;
+                    }
+                    filters[c] = filters[c] + '|' + q.trim();
+                }
+
+                oTable.fnFilter(filters[c], c, true, false, true, true);
+
+                console.log('Queries:')
+                for (var i in filters) {
+                    console.log('\t[%s]: %s', i, filters[i]);
+                }
             }
         };
 
-        search_input.on('keyup', function() {
-            start_search();
-        } );
+        var filters_container = $('#filters-container')
+          , filter_searchbar = filters_container.find('#filters-searchbar')
+          , search_input = $('#search-etf')
+          , sidebar_menu = filters_container.find('.sidebar-menu');
+
+        search_input.tagsinput();
+
+        var sidebar_menu_position = function() {
+                console.log(filter_searchbar.outerHeight())
+                sidebar_menu.css('margin-top', filter_searchbar.outerHeight() + 'px');
+            };
+
+        filters_container.css({
+            height: 'initial',
+            opacity: '1'
+        });
+
+        var search_input_keyup_click_handle = function(o, value, code) {
+                //$('#out')[0].textContent = `${e.type}: ${this.value.replace(/,/g,', ')}`;
+                //console.log(this.value.replace(/,/g,', '));
+    
+                var prev = tag = o.getAttribute('data-previous-tags')
+                  , column = o.getAttribute('data-type');
+    
+                if (typeof prev == 'string') {
+                    tag = value.substr(prev.length);
+                    console.log(prev)
+                    console.log(tag)
+                } else {
+                    tag = value;
+                }
+    
+                if (typeof column == 'string') {
+                    start_search(tag, column == 'sector' ? 1 : 2);
+    
+                    o.setAttribute('data-previous-tags', value);
+                } else {
+                    start_search(tag);
+                }
+            },
+            search_input_change_handle = function(e) {
+                sidebar_menu_position();
+    
+                var keys = search_input.tagsinput('items');
+
+                clear_search();
+                $('#filters-container a.filter').attr('data-selected', 'false');
+
+                if (keys.length > 0) {
+                    for (var i in keys) {
+                        var filter = $('.filter[data-value*="' + keys[i] + '"]').attr('data-selected', 'true');
+
+                        start_search(keys[i],
+                                        filter.attr('data-type') == 'sector'
+                                            ? 1
+                                            : filter.attr('data-type') == 'region'
+                                                ? 2
+                                                : 0);
+                    }
+                }
+
+                sidebar_menu_position();
+            }
+
+        var search_key = ''
+          , search_keys = '';
+
+        function filterbar_add_key(key, code) {
+            var pos = search_keys.search(key);
+
+            key = key.toLowerCase();
+
+            if (pos == -1) {
+                search_input.tagsinput('add', code);
+            } else {
+                search_input.tagsinput('remove', code);
+            }
+        }
+
+        filter_searchbar.on('click', search_input_change_handle);
+
+        filter_searchbar.find('input').each(function() {
+            $(this).on('keyup', function(e) {
+                        if (e.keyCode == 13 || e.keyCode == 188) {
+                            filterbar_add_key(search_key, search_key);
+                            search_input_keyup_click_handle(this, search_key, search_key, search_key);
+                        } else {
+                            sidebar_menu_position();
+                        }
+
+                        search_key = $(this).val().trim();
+                    })
+                    .on('change', function(e) {
+                        console.log('search_input_change_handle:change')
+                        search_input_change_handle();
+                        search_input_keyup_click_handle(this, search_key, search_key, search_key);
+                    });
+        });
+
+        $('#filters-container a.filter').each(function() {
+            $(this).on('click', function() {
+                var value = $(this).attr('data-value').toLowerCase()
+                  , code = $(this).text().trim();
+
+                filterbar_add_key(value, code);
+                search_input_keyup_click_handle($(this).get(0), value, code);
+            });
+        });
 
 
         //
