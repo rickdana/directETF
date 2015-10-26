@@ -67,16 +67,25 @@ section.content {
 #etf-info-box .info-box-content .etf-info-details {
     float:right;
 
-    padding: 10px 15px;
+    font-weight:bold;
 
     margin-top:0px;
-    margin-left:20px;
     margin-right: 11px;
 }
 
-#etf-info-box .info-box-content .etf-info-details tbody {
-    border:1px solid #ccc;
-    box-shadow: 0 0 2px 0 rgba(0,0,0,0.3);
+#etf-info-box .info-box-content .infos {
+    display:block;
+    margin:-5px 0 15px;
+    color:#37646F;
+}
+
+#etf-info-box .info-box-content .infos span {
+    display:inline-block;
+    margin-right: 5px;
+}
+
+#etf-info-box .info-box-content .infos span:before {
+    content: attr(data-label) ": ";
 }
 
 #etf-info-box .info-box-content .etf-info-description {
@@ -94,10 +103,6 @@ section.content {
     background-origin: border-box;
     background-repeat: no-repeat;
     background-size: contain;
-}
-
-#etf-info-box .info-box-content .etf-info-details td {
-    padding: 3px 10px;
 }
 
 #etf-info-box .info-box-content #etf-info-sectors {
