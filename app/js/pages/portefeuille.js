@@ -174,7 +174,8 @@ $(function () {
 				   enabled: true,
 				   buttonOptions: {
 					   verticalAlign: 'bottom'
-				   }
+				   },
+				   enableMouseWheelZoom: false,
 			   	},
 
 			    tooltip: {
@@ -319,6 +320,7 @@ $(function () {
 
 				plotOptions: {
 					pie: {
+						ignoreHiddenPoint: false,
 						allowPointSelect: true,
 						cursor: 'pointer',
 						dataLabels: {
