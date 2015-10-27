@@ -6,33 +6,15 @@ var html_box_raw = '\
             </div>\
             <div class="info-box-content">\
                 <h3 class="info-box-text">Sales</h3>\
-                <table class="etf-info-details">\
-                    <tbody>\
-                        <tr class="code">\
-                            <td>Code</td>\
-                            <td class="value">DE000A0H08K7</td>\
-                        </tr>\
-                        <tr class="valeur">\
-                            <td>Derniere cloture</td>\
-                            <td class="value">27,90 EUR</td>\
-                        </tr>\
-                        <tr class="return">\
-                            <td>Dividendes</td>\
-                            <td class="value">\
-                                4,3 %\
-                            </td>\
-                        </tr>\
-                    </tbody>\
-                    <tfoot>\
-                        <tr>\
-                            <td colspan="2" class="text-center">\
-                                <br>\
-                                Diversification sectorielle\
-                                <div id="etf-info-sectors"></div>\
-                            </td>\
-                        </tr>\
-                    </tfoot>\
-                </table>\
+                <div class="etf-info-details text-center">\
+                    Diversification sectorielle\
+                    <div id="etf-info-sectors"></div>\
+                </div>\
+                <div class="infos">\
+                    <span class="isin" data-label="ISIN">FR0010408799</span>\
+                    <span class="cloture" data-label="Derniere cloture">27,90 EUR</span>\
+                    <span class="dividente" data-label="Dividendes">4,3 %</span>\
+                </div>\
                 <div class="etf-info-description">\
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac ipsum iaculis velit\
                     consequat porttitor sit amet non augue. Ut faucibus libero lacus.\
@@ -83,12 +65,12 @@ etf_info_box.find('.map').each(function() {
 
 show_etf_info = function(a) {
     etf_info_box_wrapper.find('.info-box-text').text($(a).text());
-    etf_info_box_wrapper.find('.code .value').text($(a).attr('data-code'));
+    etf_info_box_wrapper.find('.isin').text($(a).attr('data-code'));
 
     etf_info_box_wrapper.fadeIn('slow');
 
     etf_info_box.css("left", Math.max(0, (($(document).width() - etf_info_box.width()) / 2) +
-                                                    $(document).scrollLeft() + $('.main-sidebar').width() / 2) + "px");
+                                           $(document).scrollLeft() + $('.main-sidebar').width() / 2) + "px");
 
     $('#etf-info-sectors').html('').highcharts({
         //colors: ['rgba(0, 166, 90,.3)', 'rgba(0, 166, 90,.8)', 'rgba(0, 166, 90,.7)', 'rgba(0, 166, 90,.5)'],
@@ -101,11 +83,12 @@ show_etf_info = function(a) {
             plotBackgroundColor: null,
             plotBorderWidth: 0,
             plotShadow: false,
-            height:200,
+//            height:200,
+            width:200,
             style: {
-                top: '-15px',
+                top: '-100px',
 //                    left: '-30px'
-                'margin-bottom': '-140px'
+                'margin-bottom': '-150px'
             }
         },
         tooltip: {
@@ -119,9 +102,7 @@ show_etf_info = function(a) {
                 dataLabels: {
                     enabled: false,
                     distance: -50,
-                },
-                startAngle: -90,
-                endAngle: 90,
+                }
             }
         },
         series: [{
@@ -150,7 +131,7 @@ $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json
         },
 
         chart: {
-            height:200
+            height:160
         },
 
         rangeSelector : {

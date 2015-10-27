@@ -20,6 +20,7 @@
     "ionicons": "~2.0.1",
     "highmaps": "~1.0.1",
     "highstock-release": "~2.1.9",
-    "adminlte": "~2.3.1"
+    "adminlte": "~2.3.1",
+    "bootstrap-tagsinput": "~0.5.0"
   }
 }

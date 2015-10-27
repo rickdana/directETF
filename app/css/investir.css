@@ -337,11 +337,25 @@ hr.fancy-line:before, hr.fancy-line:after {
 
 #list-view {
 	border-radius: 0;
-	margin-top: -12px;
+	margin-top: -15px;
 
 	-webkit-box-shadow: inset 0px 15px 20px -17px rgba(0,0,0,0.75);
     -moz-box-shadow: inset 0px 15px 20px -17px rgba(0,0,0,0.75);
     box-shadow: inset 0px 15px 20px -17px rgba(0,0,0,0.75);
+}
+
+.wizard-panel .dataTables_wrapper .row {
+	border-left: 1px solid #d2d6de;
+	border-right: 1px solid #d2d6de;
+
+    margin-left:0;
+    margin-right:0;
+}
+
+.wizard-panel .dataTables_wrapper .row:last-child,
+.wizard-panel .dataTables_wrapper .row:last-child {
+    border-left: none;
+    border-right: none;
 }
 
 #search-form {
