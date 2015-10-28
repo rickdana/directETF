@@ -1,4 +1,4 @@
 {
-  "WS_URL": "http://184.51.42.237:9000",
+  "WS_URL": "http://directetfws.elasticbeanstalk.com",
   "EXPRESS_PORT": 8081
 }
