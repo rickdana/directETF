@@ -3,7 +3,8 @@
 var express = require('express')
   , serveStatic = require('serve-static')
   , url = require('url')
-  , path = require('path');
+  , path = require('path')
+  , morgan = require('morgan');
 
 var app = express();
 
@@ -17,6 +18,9 @@ try {
   console.error("No such config file for env '%s'!", env);
   process.exit(1);
 }
+
+// Morgan logger
+app.use(morgan('combined'));
 
 // Log in route
 app.post('/login',
