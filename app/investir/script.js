@@ -119,10 +119,7 @@ $(function () {
                     wizard_panel_1_list.append(line);
                 }
 
-                var tmp = location.pathname.split('/')
-                  , base = tmp.slice(0, tmp.length - 1).join('/');
-
-                $.getScript(base + '/js/helpers/etf-info-box.js');
+                $.getScript('/public/js/helpers/etf-info-box.js');
 
 
                 // iCheck init

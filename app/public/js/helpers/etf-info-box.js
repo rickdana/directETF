@@ -34,12 +34,10 @@ var html_box_raw = '\
 $('section.content').append($(html_box_raw));
 
 // Load helper's css
-var tmp = location.pathname.split('/')
-          , base = tmp.slice(0, tmp.length - 1).join('/');
 $('<link>')
   .appendTo('head')
   .attr({type : 'text/css', rel : 'stylesheet'})
-  .attr('href', base + '/css/helpers/etf-info-box.css');
+  .attr('href', '/public/css/helpers/etf-info-box.css');
 
 
 var etf_info_box_wrapper = $("#etf-info-box-wrapper")

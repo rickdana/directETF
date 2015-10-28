@@ -223,10 +223,7 @@ $(function () {
 					list.append(line);
 				}
 
-				var tmp = location.pathname.split('/')
-				  , base = tmp.slice(0, tmp.length - 1).join('/');
-
-				$.getScript(base + '/js/helpers/etf-info-box.js');
+				$.getScript('/public/js/helpers/etf-info-box.js');
 
 	/*			if the number of ETFs is more than 50, it allows to page
 				$('#investment-list').DataTable({

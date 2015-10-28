@@ -1,11 +1,11 @@
-var express = require('express');
-var serveStatic = require('serve-static');
-var url = require('url');
+var express = require('express')
+  , serveStatic = require('serve-static')
+  , url = require('url')
+  , path = require('path');
 
-var app = express();
-
-var env = process.env.NODE_ENV || "production";
-var config;
+var app = express()
+  , env = process.env.NODE_ENV || "production"
+  , config;
 
 if (env == "production") {
   config = require('./app-aws.json');
@@ -18,7 +18,7 @@ app.get(/^\/(app.js|app-aws\.json|app-dev\.json)$/i, function (req, res) {
   res.send("Not Found");
 });
 
-app.use(serveStatic(__dirname));
+app.use(serveStatic(path.join(process.cwd(), '/app')));
 
 app.get('/config/ws/host', function (req, res) {
   res.send(config.WS_URL);
@@ -39,6 +39,6 @@ var server = app.listen(config.EXPRESS_PORT, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Example app listening at http://%s:%s', host, port);
+  console.log('Listening at http://%s:%s', host, port);
 });
 
