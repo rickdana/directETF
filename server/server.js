@@ -2,6 +2,8 @@
 
 var express = require('express')
   , serveStatic = require('serve-static')
+  , passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy
   , url = require('url')
   , path = require('path')
   , morgan = require('morgan');
@@ -19,8 +21,24 @@ try {
   process.exit(1);
 }
 
-// Morgan logger
-app.use(morgan('combined'));
+// Load passport strategy
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
 
 // Log in route
 app.post('/login',
