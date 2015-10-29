@@ -5,9 +5,11 @@ var express = require('express')
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
   , url = require('url')
+  , fs = require('fs')
   , path = require('path')
   , morgan = require('morgan');
 
+// create express app
 var app = express();
 
 // Load env config
@@ -21,6 +23,16 @@ try {
   process.exit(1);
 }
 
+//
+// Morgan logger
+
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'})
+
+// setup the logger
+app.use(morgan(config.MORGAN_FORMAT || 'combined', {stream: accessLogStream}));
+
+//
 // Load passport strategy
 passport.use(new LocalStrategy({
     usernameField: 'email',

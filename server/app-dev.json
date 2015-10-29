@@ -1,4 +1,6 @@
 {
-  "WS_URL": "http://184.51.43.30:8080",
-  "EXPRESS_PORT": 3000
+  "WS_URL": "http://directetfws.elasticbeanstalk.com",
+  "EXPRESS_PORT": 3000,
+
+  "MORGAN_FORMAT": "dev"
 }

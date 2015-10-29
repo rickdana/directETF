@@ -1,4 +1,6 @@
 {
   "WS_URL": "http://directetfws.elasticbeanstalk.com",
-  "EXPRESS_PORT": 8081
+  "EXPRESS_PORT": 8081,
+
+  "MORGAN_FORMAT": "combined"
 }
