@@ -50,8 +50,7 @@
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <!-- Notifications: style can be found in dropdown.less -->
-                    <li class="dropdown notifications-menu"><a href="#"
-                                                               class="dropdown-toggle" data-toggle="dropdown"> <i
+                    <li class="dropdown notifications-menu"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i
                             class="fa fa-bell-o"></i> <span class="label label-warning">1</span>
                     </a>
 							<span id="notification" class="dropdown-menu">
@@ -77,6 +76,10 @@
                                         Sept. 2015
                                     </small>
                                 </p>
+                                <button type="button" class="btn btn-block btn-info btn-flat"
+                                        style="font-size: 12px;  width: 100px; height: 22px; position: relative;
+                                        top: -12px; left: 77px; padding-top: 1px; border: none;
+                                        background-color: rgba(10, 124, 153, .8)">Change user</button>
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
@@ -84,7 +87,7 @@
                                     <a href="#" class="btn btn-default btn-flat">Mon Profil</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Déconnexion</a>
+                                    <a href="/login.html" class="btn btn-default btn-flat">Déconnexion</a>
                                 </div>
                             </li>
                         </ul>
@@ -195,6 +198,25 @@
                     </div>
                 </div>
                 <!-- ./col -->
+                <div id="change-client-box" class="box box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Change the user</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <ul class="nav nav-pills">
+                            <li><a href="javascript:void(0)" data-id="1"> Depardieu Gérard</a></li>
+                            <li><a href="javascript:void(0)" data-id="2"> Roberts Julia</a></li>
+                            <li><a href="javascript:void(0)" data-id="3"> Bullock Sandra</a></li>
+                        </ul>
+                    </div>
+                    <div class="box-footer">
+                        <button class="btn btn-flat bg-green pull-right">Connecter</button>
+                    </div>
+                </div>
                 <div class="col-lg-3 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-yellow">
@@ -526,5 +548,37 @@
 
 <script src="/public/js/highcharts/theme.js"></script>
 <script src="/public/js/maps-client.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+<script>
+    var client_id = $.cookie('client_id') || '1';
+
+    $("#change-client-box a").each(function() {
+        $(this).click(function() {
+            $("#change-client-box a").attr('data-selected', 'false');
+            $(this).attr('data-selected', 'true');
+        });
+    });
+    $("#change-client-box button").each(function() {
+        $(this).click(function() {
+
+            var selected_client = $("#change-client-box a[data-selected=true]");
+
+            $.cookie('client_id', selected_client.attr('data-id'), { path: '/' });
+
+            window.location.reload();
+        });
+    });
+
+    var change_cli_box = $("#change-client-box");
+
+/*    $(".navbar-custom-menu .user-menu a").on('click', function() {
+        change_cli_box.show('slow');
+
+        return false;
+    });*/
+</script>
 </body>
 </html>
