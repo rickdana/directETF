@@ -52,8 +52,7 @@
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <!-- Notifications: style can be found in dropdown.less -->
-                    <li class="dropdown notifications-menu"><a href="#"
-                                                               class="dropdown-toggle" data-toggle="dropdown"> <i
+                    <li class="dropdown notifications-menu"><a href='#' class="dropdown-toggle" data-toggle="dropdown"> <i
                             class="fa fa-bell-o"></i> <span class="label label-warning">1</span>
                     </a>
 							<span id="notification" class="dropdown-menu">
@@ -62,8 +61,7 @@
 								<button>Non</button>
 							</span></li>
                     <!-- User Account: style can be found in dropdown.less -->
-                    <li class="dropdown user user-menu"><a href="#"
-                                                           class="dropdown-toggle" data-toggle="dropdown"> <img
+                    <li class="dropdown user user-menu"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img
                             src="/bower_components/adminlte/dist/img/user2-160x160.jpg" class="user-image"
                             alt="User Image"> <span class="hidden-xs">Pierre Dupont</span>
                     </a>
@@ -86,7 +84,7 @@
                                     <a href="#" class="btn btn-default btn-flat">Mon Profil</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Déconnexion</a>
+                                    <a href="/login.html" class="btn btn-default btn-flat">Déconnexion</a>
                                 </div>
                             </li>
                         </ul>
@@ -159,59 +157,63 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                <!--coupe d'historique -->
-                <div class="col-lg-9">
-                    <!--left column Maps -->
-                    <div class="box box-solid bg-teal-gradient">
-                        <div class="box-body">
-                            <div id="profits-investment"></div>
+                <div class=""row>
+                    <!--coupe d'historique -->
+                    <div class="col-lg-9">
+                        <!--left column Maps -->
+                        <div class="box box-solid bg-teal-gradient">
+                            <div class="box-body">
+                                <div id="profits-investment"></div>
+                            </div>
+                            <!-- /.box-body -->
                         </div>
-                        <!-- /.box-body -->
+                        <!-- /.box right column -->
                     </div>
-                    <!-- /.box right column -->
+
+                    <!-- Right side Valeur de portefeuille -->
+                    <div id="portefeuille" class="col-lg-3">
+                        <!-- Valeur du portefeuille-->
+                        <div id="portefeuille-valeur" class="small-box bg-aqua">
+                            <div class="inner">
+                                <p>Portefeuille</p>
+
+                                <h2>
+                                    <span></span>
+                                </h2>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-euro"></i>
+                            </div>
+
+                            <a href="#" class="small-box-footer">Approvisionner <i
+                                    class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                        <!--/.box -->
+
+                        <!-- Dividendes -->
+                        <div id="portefeuille-benefice" class="small-box bg-green">
+                            <div class="inner">
+                                <p>Dividendes prévisioenelles</p>
+
+                                <h2>
+                                    <span></span>
+                                </h2>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-line-chart"></i>
+                            </div>
+
+                            <a href="#" class="small-box-footer">More info <i
+                                    class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                        <!--/.box -->
+                    </div>
+                    <!--/.col -->
                 </div>
-
-                <!-- Right side Valeur de portefeuille -->
-                <div id="portefeuille" class="col-lg-3">
-                    <!-- Valeur du portefeuille-->
-                    <div id="portefeuille-valeur" class="small-box bg-aqua">
-                        <div class="inner">
-                            <p>Portefeuille</p>
-
-                            <h3>
-                                <span>40 000 &euro;</span>
-                            </h3>
-                        </div>
-                        <div class="icon">
-                            <i class="fa fa-euro"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">Approvisionner <i
-                                class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                    <!--/.box -->
-
-                    <!-- Dividendes -->
-                    <div id="portefeuille-benefice" class="small-box bg-green">
-                        <div class="inner">
-                            <p>Dividendes prévisioenelles</p>
-
-                            <h3>
-                                <span class="counter-num">400</span><span> &euro;</span>
-                            </h3>
-                        </div>
-                        <div class="icon">
-                            <i class="fa fa-line-chart"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i
-                                class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                    <!--/.box -->
-                </div>
-                <!--/.col -->
 
                 <!-- Repartition des secteurs -->
                 <div class="col-lg-4">
-                    <div id="sector" class="box  box-solid bg-green-gradient">
+                    <div id="sector" class="box box-solid bg-green-gradient">
                         <div class="box-body">
                             <div id="sectors-overview"  style="height: 300px;"></div>
                             <div class="info-box">
@@ -306,7 +308,7 @@
             <div class="tab-pane" id="control-sidebar-home-tab">
                 <h3 class="control-sidebar-heading">Recent Activity</h3>
                 <ul class="control-sidebar-menu">
-                    <li><a href="javascript::;"> <i
+                    <li><a href="javascript:void(0)"> <i
                             class="menu-icon fa fa-birthday-cake bg-red"></i>
 
                         <div class="menu-info">
@@ -315,7 +317,7 @@
                             <p>Will be 23 on April 24th</p>
                         </div>
                     </a></li>
-                    <li><a href="javascript::;"> <i
+                    <li><a href="javascript:void(0)"> <i
                             class="menu-icon fa fa-user bg-yellow"></i>
 
                         <div class="menu-info">
@@ -325,7 +327,7 @@
                             <p>New phone +1(800)555-1234</p>
                         </div>
                     </a></li>
-                    <li><a href="javascript::;"> <i
+                    <li><a href="javascript:void(0)"> <i
                             class="menu-icon fa fa-envelope-o bg-light-blue"></i>
 
                         <div class="menu-info">
@@ -335,7 +337,7 @@
                             <p>nora@example.com</p>
                         </div>
                     </a></li>
-                    <li><a href="javascript::;"> <i
+                    <li><a href="javascript:void(0)"> <i
                             class="menu-icon fa fa-file-code-o bg-green"></i>
 
                         <div class="menu-info">
@@ -350,7 +352,7 @@
 
                 <h3 class="control-sidebar-heading">Tasks Progress</h3>
                 <ul class="control-sidebar-menu">
-                    <li><a href="javascript::;">
+                    <li><a href="javascript:void(0)">
                         <h4 class="control-sidebar-subheading">
                             Custom Template Design <span
                                 class="label label-danger pull-right">70%</span>
@@ -361,7 +363,7 @@
                                  style="width: 70%"></div>
                         </div>
                     </a></li>
-                    <li><a href="javascript::;">
+                    <li><a href="javascript:void(0)">
                         <h4 class="control-sidebar-subheading">
                             Update Resume <span class="label label-success pull-right">95%</span>
                         </h4>
@@ -371,7 +373,7 @@
                                  style="width: 95%"></div>
                         </div>
                     </a></li>
-                    <li><a href="javascript::;">
+                    <li><a href="javascript:void(0)">
                         <h4 class="control-sidebar-subheading">
                             Laravel Integration <span
                                 class="label label-warning pull-right">50%</span>
@@ -382,7 +384,7 @@
                                  style="width: 50%"></div>
                         </div>
                     </a></li>
-                    <li><a href="javascript::;">
+                    <li><a href="javascript:void(0)">
                         <h4 class="control-sidebar-subheading">
                             Back End Framework <span class="label label-primary pull-right">68%</span>
                         </h4>
@@ -452,7 +454,7 @@
 
                     <div class="form-group">
                         <label class="control-sidebar-subheading"> Delete chat
-                            history <a href="javascript::;" class="text-red pull-right"><i
+                            history <a href="javascript:void(0)" class="text-red pull-right"><i
                                     class="fa fa-trash-o"></i></a>
                         </label>
                     </div>
@@ -489,6 +491,9 @@
 <script src="http://code.highcharts.com/mapdata/custom/world.js"></script>
 
 <script src="/public/js/highcharts/theme.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
 <script src="script.js"></script>
 
 </body>
