@@ -1,0 +1,316 @@
+<!-- Common style -->
+<link rel="stylesheet" href="/css/common.css">
+<!-- Ion Slider -->
+<link rel="stylesheet" href="/ionrangeslider/css/ion.rangeSlider.css">
+<link rel="stylesheet" href="/ionrangeslider/css/ion.rangeSlider.skinModern.css">
+<!-- iCheck -->
+<link rel="stylesheet" href="/icheck/skins/flat/blue.css">
+<link rel="stylesheet" href="/icheck/skins/square/blue.css">
+<!-- Tags Input -->
+<link rel="stylesheet" href="/bootstrap-tagsinput/src/bootstrap-tagsinput.css">
+<!-- Theme style  -->
+<link rel="stylesheet" href="investir/style.css">
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>Investir</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Mon espace</a></li>
+        <li class="active">Investir</li>
+    </ol>
+    <div id="wizard-state">
+        <a id="wizard-step-1" data-step="1" data-state="current" href="javascript:void(0)">Sélection</a>
+        <a id="wizard-step-2" data-step="2" data-state="unvalid" href="javascript:void(0)">Montant &amp; Ajustement</a>
+        <a id="wizard-step-3" data-step="3" data-state="unvalid" href="javascript:void(0)">Revoir</a>
+        <a id="wizard-step-4" data-step="4" data-state="unvalid" href="javascript:void(0)">Validation</a>
+    </div>
+    <hr id="header-scroll-bar" class="fancy-line">
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="wizard-panel" data-wizard-panel-step="1">
+
+        <!-- Map box -->
+        <div id="filter-view" class="box box-solid bg-light-blue">
+            <!--<div id="search-form">-->
+            <!--<input type="search" id="search-etf" placeholder="rechercher dans la liste...">-->
+            <!--</div>-->
+            <div class="box-body">
+                <div id="filters-container" class="sidebar">
+                    <div id="filters-searchbar">
+                        <i class="fa fa-search"></i>
+                        <input type="text" id="search-etf" placeholder="rechercher...">
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li class="activeX"><a href="#"><i class="fa fa-th-list"></i> <span>Secteurs</span>
+                            <i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a class="filter" href="javascript:void(0)" data-type="sector" data-value="Finance"><i
+                                        class="fa fa-circle-o"></i> Finance</a></li>
+                                <li><a class="filter" href="javascript:void(0)" data-type="sector"
+                                       data-value="Industrie"><i class="fa fa-circle-o"></i> Industrie</a></li>
+                                <li><a class="filter" href="javascript:void(0)" data-type="sector"
+                                       data-value="Santé|Sante|Sant"><i class="fa fa-circle-o"></i> Santé</a></li>
+                                <li><a class="filter" href="javascript:void(0)" data-type="sector" data-value="Energie"><i
+                                        class="fa fa-circle-o"></i> Energie</a></li>
+                                <li><a class="filter" href="javascript:void(0)" data-type="sector"
+                                       data-value="Services aux collectivité|Services aux collectivit"><i
+                                        class="fa fa-circle-o"></i> Services aux collectivité</a></li>
+                                <li><a class="filter" href="javascript:void(0)" data-type="sector"
+                                       data-value="Technologie"><i class="fa fa-circle-o"></i> Technologies de
+                                    l'information</a></li>
+                                <li><a class="filter" href="javascript:void(0)" data-type="sector"
+                                       data-value="Biens de consomation cyclique"><i class="fa fa-circle-o"></i> Biens
+                                    de consomation cyclique</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#"><i class="fa fa-map-marker"></i> <span>Régions</span>
+                            <i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a class="filter" href="javascript:void(0)" data-type="region"
+                                       data-value="FR|France|Paris"><i class="fa fa-circle-o"></i> France</a></li>
+                                <li><a class="filter" href="javascript:void(0)" data-type="region"
+                                       data-value="DE|Allemagne|Germany"><i class="fa fa-circle-o"></i> Allemagne</a>
+                                </li>
+                                <li><a class="filter" href="javascript:void(0)" data-type="region"
+                                       data-value="ES|Espagne|Madrid"><i class="fa fa-circle-o"></i> Espagne</a></li>
+                                <li><a class="filter" href="javascript:void(0)" data-type="region"
+                                       data-value="IT|Italie"><i class="fa fa-circle-o"></i> Itablie</a></li>
+                                <li><a class="filter" href="javascript:void(0)" data-type="region"
+                                       data-value="JP|Japon|Japan|Tokyo"><i class="fa fa-circle-o"></i> Japon</a></li>
+                                <li><a class="filter" href="javascript:void(0)" data-type="region"
+                                       data-value="GB|Londre|London"><i class="fa fa-circle-o"></i> Royaume-Uni</a></li>
+                                <li><a class="filter" href="javascript:void(0)" data-type="region"
+                                       data-value="HK|Hong|Kong"><i class="fa fa-circle-o"></i> Hong Kong</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div id="maps-container"></div>
+            </div>
+        </div>
+
+        <!-- List of ETFs -->
+        <div id="list-view" class="box box-solid">
+            <div class="box-body no-padding">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="etf-column name">Nom du titre</th>
+                        <th class="etf-column sector">Secteur</th>
+                        <th class="etf-column country"></th>
+                        <th class="etf-column number">Quantité</th>
+                        <th class="etf-column price">Prix</th>
+                        <th class="etf-column price-cash">Prix</th>
+                        <th class="etf-column order"></th>
+                        <th class="etf-column option"></th>
+                    </tr>
+                    </thead>
+
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <br>
+        <button class="btn btn-block btn-success btn-flat">Etape suivante: Montant &amp; Ajustement</button>
+    </div>
+
+    <!--Step 2-->
+    <div class="wizard-panel" data-wizard-panel-step="2">
+        <div class="row">
+            <div class="col-md-3">
+                <div id="wallet-box" class="box box-solid">
+                    <div class="box-header">
+                        <i class="fa fa-google-wallet"></i>
+                        <span class="box-title">Portefeuille</span>
+                        <span class="label pull-right bg-green"><span class="wallet-cash"></span> &euro;</span>
+                    </div>
+                    <div class="box-body">
+                        <div class="entry">Combien souhaitez-vous investir ?
+                            <div class="range-wrapper-wallet text-center">
+                                <input id="catch-max" name="wallet-range" type="text" class="input-range"
+                                       data-callback=""
+                                       data-min="1" data-max="40000" data-from="40000"
+                                       data-postfix="&euro;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="box box-solid">
+                    <div class="box-body no-padding">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th class="etf-column name">Nom du titre</th>
+                                <th class="etf-column number">Quantité</th>
+                                <th class="etf-column price">Prix</th>
+                                <th class="etf-column price-cash">Coût</th>
+                                <th class="etf-column order">Ordre&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                <th class="etf-column option"></th>
+                            </tr>
+                            </thead>
+
+                            <tbody></tbody>
+                            <tfoot>
+                            <tr>
+                                <td class="text-right" colspan="3"><b>Total des lignes</b></td>
+                                <td class="text-right"><b><span class="order-cash">0</span> &euro;</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="etf-action-dropdown collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle no-padding" data-toggle="dropdown"><span
+                            class="order-number"></span>/<span class="order-price"></span>&euro; <span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                                    <span class="natural-language">Acheter une quantité de <b class="order-number"></b> au coût unitaire de <b><span
+                                            class="order-price"></span>&euro;</b></span>
+                        </li>
+                        <li>
+											<span class="entry">Investir un pourcentage
+												<input name="percent-range" class="input-range" type="text" value=""
+                                                       data-postfix="%">
+											</span>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+											<span class="entry">Définir le prix de l'achat
+												<input name="price-range" class="input-range" type="text" value=""
+                                                       data-postfix="&euro;">
+											</span>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+											<span class="entry">Définir la quantité
+												<input name="number-range" class="input-range" type="text" value="">
+											</span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <br>
+        <button class="btn btn-block btn-success btn-flat">Etape suivante: Exécution</button>
+    </div>
+
+    <!--Step 3-->
+    <div class="wizard-panel" data-wizard-panel-step="3">
+        <h3>Confirmation des informations d'achat</h3>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="box box-solid">
+                    <div class="box-body no-padding">
+                        <table id="summary-table" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th class="etf-column name">Nom du titre</th>
+                                <th class="etf-column number">Quantité</th>
+                                <th class="etf-column price">Prix d'achat</th>
+                                <th class="etf-column price-cash">Coût total</th>
+                            </tr>
+                            </thead>
+
+                            <tbody></tbody>
+
+                            <tfoot>
+                            <tr>
+                                <td class="text-right" colspan="3"><b>Total des lignes</b></td>
+                                <td class="text-right"><span class="order-cash">0</span> &euro;</td>
+                            </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+                </div>
+                <!-- /.box -->
+
+                <!-- Wallet -->
+                <div class="box box-solid">
+                    <div class="box-body no-padding">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td>Liquidités disponibles</td>
+                                <td class="text-right"><span class="wallet-cash"></span> &euro;</td>
+                            </tr>
+                            <tr>
+                                <td>Liquidités sortantes</td>
+                                <td class="text-right"><span class="order-cash">0</span> &euro;</td>
+                            </tr>
+                            <tr>
+                                <td>Liquidités entrantes estimées</td>
+                                <td class="text-right"><span class="">0</span> &euro;</td>
+                            </tr>
+                            </tbody>
+
+                            <tfoot>
+                            <tr>
+                                <td>Liquidités restantes estimées après transaction</td>
+                                <td class="text-right"><span class="cash-diff">0</span> &euro;</td>
+                            </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+
+            <!-- Repartition des secteurs -->
+            <div class="col-lg-4">
+                <!--left column Maps -->
+                <div class="box box-solid">
+                    <div class="box-body">
+                        <div id="sectors-overview"
+                             style="height: 200px;"></div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box  -->
+                <!-- Maps -->
+                <div class="box box-solid">
+                    <div class="box-body">
+                        <div id="investment-maps"
+                             style="height: 200px;"></div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+
+            </div>
+        </div>
+        <!-- /.row -->
+        <br>
+        <button class="btn btn-block btn-success btn-flat">Valider l'ordre d'achat</button>
+    </div>
+
+    <!--Step 4-->
+    <div class="wizard-panel" data-wizard-panel-step="4">
+
+    </div>
+</section>
+<!-- /.content -->
+
+<script type="text/javascript-lazy" src="/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+<script type="text/javascript-lazy" src="/icheck/icheck.min.js"></script>
+<script type="text/javascript-lazy" src="/bootstrap-tagsinput/src/bootstrap-tagsinput.js"></script>
+
+<script type="text/javascript-lazy" src="investir/script.js"></script>
+<!--<script type="text/javascript-lazy" src="confirmation.js"></script>-->
