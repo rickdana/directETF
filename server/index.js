@@ -8,7 +8,8 @@ var express = require('express')
   , url = require('url')
   , fs = require('fs')
   , path = require('path')
-  , logger = require('morgan');
+  , logger = require('morgan')
+  , FileStreamRotator = require('file-stream-rotator');
 
 // Load env config
 var env = process.env.NODE_ENV || "aws"
