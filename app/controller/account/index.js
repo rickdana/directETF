@@ -12,7 +12,7 @@ const VIEW_DIR = path.join(module.parent.exports.VIEW_DIR, '/account')
 app.set('view engine', 'jade');
 
 function render_file(name) {
-    return path.join(__dirname, name + '.jade');
+    return path.join(VIEW_DIR, name + '.jade');
 }
 
 module.exports = function(passport){

@@ -1,4 +1,4 @@
-'strict mode';
+'use strict';
 
 var route = require('express').Router()
   , path = require('path')

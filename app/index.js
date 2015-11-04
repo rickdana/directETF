@@ -1,4 +1,4 @@
-'strict mode';
+'use strict';
 
 // Module Dependencies
 var serveStatic = require('serve-static')

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-'strict mode';
+'use strict';
 
 // Module Dependencies
 var express = require('express')
