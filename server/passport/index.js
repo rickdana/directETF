@@ -7,7 +7,7 @@ var session = require('express-session')
 
 // Configuring Passport
 var passport = require('passport');
-var User = require('../../model/User');
+var User = require('./User');
 
 module.exports = function(app) {
     app.use(session({

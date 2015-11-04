@@ -9,7 +9,7 @@ block content
             p.login-box-msg= title
             if message.lenght
                 .alert.alert-danger= message
-            form(action="/account/signup" method="post")
+            form(action="/signup" method="post")
                 .form-group.has-feedback
                     input(name="firstName" type="text" class="form-control" placeholder="Votre prénom")
                 .form-group.has-feedback
@@ -25,6 +25,6 @@ block content
                             | Signup
             .row
                 .col-xs-8
-                    a(href="/account/login")| Already have an account? login
+                    a(href="/login")| Already have an account? login
                 .col-xs-4
                     a(href="/" class="text-center")| Home

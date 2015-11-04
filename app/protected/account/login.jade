@@ -10,7 +10,7 @@ block content
                 | Sign in to start your session
             if message.length
                 .alert.alert-danger= message
-            form(action="/account/login" method="post")
+            form(action="/login" method="post")
                 .form-group.has-feedback
                     input(name="email" type="email" class="form-control" placeholder="Email" value="demo@directetf.com")
                     span.glyphicon.glyphicon-envelope.form-control-feedback
@@ -26,8 +26,8 @@ block content
                     .col-xs-4
                         button(type="submit").btn.btn-primary.btn-block.btn-flat
                             | Sign In
-            a(href="/account/forget")| I forgot my password
-            a(href="/account/signup" class="text-center")| Register a new membership
+            a(href="/forget")| I forgot my password
+            a(href="/signup" class="text-center")| Register a new membership
 
 block scripts
     script(src="/AdminLTE//plugins/iCheck/icheck.min.js")

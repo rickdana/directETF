@@ -9,7 +9,11 @@ var express = require('express')
   , fs = require('fs')
   , path = require('path')
   , logger = require('morgan')
-  , FileStreamRotator = require('file-stream-rotator');
+  , FileStreamRotator = require('file-stream-rotator')
+  , serveStatic = require('serve-static')
+  , favicon = require('serve-favicon')
+  , cookieParser = require('cookie-parser')
+  , bodyParser = require('body-parser');
 
 // Load env config
 var env = process.env.NODE_ENV || "aws"
@@ -25,9 +29,11 @@ try {
 // Create an express instance
 var app = require('express')();
 
+const APP_DIR = path.join(process.cwd(), 'app');
+
 // Exports
-module.exports.config = config;
-module.exports.app = app;
+//module.exports.config = config;
+//module.exports.app = app;
 
 // Logger
 if (env == 'dev') {
@@ -50,8 +56,129 @@ if (env == 'dev') {
   app.use(logger(config.MORGAN_FORMAT || 'combined', {stream: accessLogStream}))
 }
 
-// Load app
-var app = require(path.join(process.cwd(), '/app'));
+// Binding
+app.use(favicon(path.join(APP_DIR, 'public', 'common', 'favicon.ico')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+var passport = require('./passport')(app);
+
+/**
+ * Routing
+ */
+
+// As with any middleware it is quintessential to call next()
+// if the user is authenticated
+var isAuthenticated = function (req, res, next) {
+    if (req.isAuthenticated())
+        return next();
+    res.redirect('/login');
+}
+
+var protected_dir = path.join(APP_DIR, 'protected');
+var protected_files = fs.readdirSync(protected_dir);
+
+app.get('/logout', function(req, res, next) {
+    if (req.isAuthenticated()) {
+        req.logout();
+    }
+    res.redirect('/');
+});
+
+app.get('/login', function(req, res, next) {
+    if (req.isAuthenticated()) {
+        res.redirect('/dashboard');
+    }
+    res.render(path.join(protected_dir, 'account', 'login.jade'), { message: req.flash('message') });
+});
+
+app.post('/login', passport.authenticate('login', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/login',
+    failureFlash : true
+}));
+
+app.get('/signup', function(req, res){
+    res.render(path.join(protected_dir, 'account', 'signup.jade'),{message: req.flash('message')});
+});
+
+app.post('/signup', passport.authenticate('signup', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/signup',
+    failureFlash : true
+}));
+
+protected_files.forEach(function(file) {
+    app.use('/' + file, function(req, res, next) {
+        if (!req.isAuthenticated()) {
+            return res.sendStatus(401);
+        }
+        return next();
+    });
+});
+
+app.get('/dashboard/main.js', isAuthenticated, function(req, res) {
+    // Append WS_HOST config to the file content
+    fs.readFile(path.join(protected_dir, 'dashboard', 'main.js'), 'utf8', function (err, main_content) {
+        if (err) {
+            return next(err);
+        }
+
+        var ws_content = '\nWS_URL = "' + config.WS_URL + '";';
+
+        res.type('text/javascript')
+           .status(200)
+           .end(main_content + ws_content);
+    });
+});
+
+// Serve common static files
+app.use(serveStatic(path.join(APP_DIR, '/public/common')));
+app.use(serveStatic(path.join(APP_DIR, '/bower_components')));
+app.use(serveStatic(path.join(APP_DIR, '/public/pages')));
+app.use(serveStatic(path.join(APP_DIR, '/protected')));
+
+// view engine setup
+app.set('views', path.join(__dirname));
+app.set('view engine', 'jade');
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Page Not Found');
+  err.title = 'Page Not Found';
+  err.status = 404;
+  next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (process.env.NODE_ENV === 'dev') {
+    app.use(function(err, req, res, next) {
+        console.error(err);
+        res.status(err.status || 500);
+        res.render('error', {
+            title: err.title || 'Internal Server Error',
+            message: err.message,
+            error: err
+        });
+    });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        title: err.title || 'Internal Server Error',
+        message: err.message,
+        error: {}
+    });
+});
+
+
 
 /**
  * Get port from environment and store in Express.
