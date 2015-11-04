@@ -16,6 +16,16 @@ function render_file(name) {
 }
 
 module.exports = function(passport){
+
+    /* Handle Logout */
+    router.get('/logout', function(req, res) {
+        if (req.isAuthenticated()) {
+            req.logout();
+        }
+        res.redirect('/');
+    });
+
+    // Redirect to the dashboard if authenticated
     router.use(function (req, res, next) {
         if (req.isAuthenticated()) {
            return res.redirect('/dashboard');
@@ -47,12 +57,6 @@ module.exports = function(passport){
         failureRedirect: '/account/signup',
         failureFlash : true
     }));
-
-    /* Handle Logout */
-    router.get('/logout', function(req, res) {
-      req.logout();
-      res.redirect('/');
-    });
 
     // Serve static files
     router.use(serveStatic(VIEW_DIR));

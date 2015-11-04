@@ -1,19 +1,17 @@
+#!/usr/bin/env node
+
 'strict mode';
 
+// Module Dependencies
 var express = require('express')
-  , serveStatic = require('serve-static')
-  , passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy
+  , http = require('http')
   , url = require('url')
   , fs = require('fs')
   , path = require('path')
-  , morgan = require('morgan');
-
-// create express app
-var app = express();
+  , logger = require('morgan');
 
 // Load env config
-var env = process.env.NODE_ENV || "dev"
+var env = process.env.NODE_ENV || "aws"
   , config;
 
 try {
@@ -23,81 +21,115 @@ try {
   process.exit(1);
 }
 
-//
-// Morgan logger
+// Create an express instance
+var app = require('express')();
 
-// create a write stream (in append mode)
-var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'})
+// Exports
+module.exports.config = config;
+module.exports.app = app;
 
-// setup the logger
-app.use(morgan(config.MORGAN_FORMAT || 'combined', {stream: accessLogStream}));
+// Logger
+if (env == 'dev') {
+  app.use(logger('dev'));
+} else {
+  // log file rotation
+  var logDirectory = __dirname + '/log'
 
-//
-// Load passport strategy
-passport.use(new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-  },
-  function(username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
+  // ensure log directory exists
+  fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
 
-// Log in route
-app.post('/login',
-  //passport.authenticate('local'),
-  function(req, res) {
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
-    //console.log(req.user.username)
-    res.redirect('/dashboard/');
-  });
+  // create a rotating write stream
+  var accessLogStream = FileStreamRotator.getStream({
+    filename: logDirectory + '/access-%DATE%.log',
+    frequency: 'daily',
+    verbose: false
+  })
 
-//app.post('/login',
-//  passport.authenticate('local', { successRedirect: '/dashboard',
-//                                   failureRedirect: '/login',
-//                                   failureFlash: true }));
+  // setup the logger
+  app.use(logger(config.MORGAN_FORMAT || 'combined', {stream: accessLogStream}))
+}
 
-// Log Out route
-app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
-});
+// Load app
+var app = require(path.join(process.cwd(), '/app'));
 
-// Serve static files on /app
-app.use(serveStatic(path.join(process.cwd(), '/app')));
+/**
+ * Get port from environment and store in Express.
+ */
 
-// Specific route for client to get address of ws's host
-app.get('/config/ws/host', function (req, res) {
-  res.send(config.WS_URL);
-});
+var port = normalizePort(config.EXPRESS_PORT || '3000');
+app.set('port', port);
 
-// Route of *.html
-app.get(/^\/.+\.html$/, function (req, res) {
-  var url_parsed = url.parse(req.url, true);
-  var pathname = url_parsed.pathname;
+/**
+ * Create HTTP server.
+ */
 
-  if (pathname == "/") {
-    pathname = "/index.html";
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
   }
 
-  res.sendFile(__dirname + pathname);
-});
+  if (port >= 0) {
+    // port number
+    return port;
+  }
 
-// Launch express server
-var server = app.listen(config.EXPRESS_PORT, function () {
-  var host = server.address().address;
-  var port = server.address().port;
+  return false;
+}
 
-  console.log('Listening at http://%s:%s', host, port);
-});
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+           ? 'Pipe ' + port
+           : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+           ? 'pipe ' + addr
+           : 'port ' + addr.port;
+  console.log('Listening on ' + bind);
+}
 

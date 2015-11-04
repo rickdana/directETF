@@ -37,7 +37,7 @@ $('section.content').append($(html_box_raw));
 $('<link>')
   .appendTo('head')
   .attr({type : 'text/css', rel : 'stylesheet'})
-  .attr('href', '/public/css/helpers/etf-info-box.css');
+  .attr('href', '/css/helpers/etf-info-box.css');
 
 
 var etf_info_box_wrapper = $("#etf-info-box-wrapper")
