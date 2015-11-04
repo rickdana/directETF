@@ -12,11 +12,10 @@ table .selected {
 }
 
 #profits-investment  {
-	height: 250px;
+	height: 400px;
 }
 
 .small-box>.small-box-footer {
-	position: absolute;
 	bottom: 0;
 	display: block;
 	width: 100%;
