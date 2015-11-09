@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	var client_id = $.cookie('client_id') || '1';
 
-	//Bénéfices vs Investissement
+	//Bï¿½nï¿½fices vs Investissement
 	$.ajax({
 		cache: false,
 		url: WS_URL + '/client/valo/' + client_id,
@@ -65,15 +65,6 @@ $(document).ready(function() {
 					}
 
 					$('#profits-investment').highcharts('StockChart', {
-						// version avec un seul graph
-						title: {
-							floating: !true,
-							useHTML: true,
-							text: 'Evolution du portefeuille',
-							style: {
-								color: 'rgb(255,255,255)',
-							},
-						},
 
 						yAxis: [{ // Primary yAxis
 							labels: {
@@ -83,37 +74,18 @@ $(document).ready(function() {
 									fontSize: '11px'
 								},
 							},
-							title: {
-								text: 'Portefeuiile',
-								style: {
-									color: 'rgb(243, 156, 18)',
-									fontSize: '15px'
 
-								},
-							},
 							opposite: false,
 						}, { // Secondary yAxis
-							title: {
-								text: 'Investissement',
-								style: {
-									color: 'rgba(255, 255, 255, .8)',
-									fontSize: '15px'
-								}
-							},
+
 							labels: {
 								style: {
-									color: 'rgba(255, 255, 255, .8)',
+									color: 'rgba(0, 0, 0, .8)',
 									fontSize: '11px'
 								}
 							},
 						}, { // Third yAxis
-							title: {
-								text: 'Reference',
-								style: {
-									//color: 'rgba(255, 255, 255, .8)',
-									fontSize: '15px'
-								}
-							},
+
 							labels: {
 								style: {
 									//color: 'rgba(255, 255, 255, .8)',
@@ -235,14 +207,12 @@ $(document).ready(function() {
 
 	//Load infos of wallet
 	$.getJSON(WS_URL + '/client/portfolio/' + client_id, function (walClient) {
-		var value = $("#portefeuille-valeur span");
-		var num = walClient['cash']['EUR'].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') ;
-		value.append(num);
-		var dividends = $("#portefeuille-benefice span");
-		var num1 = "<span>"
-				+	walClient['dividends']['EUR'].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' &euro;' +
-				"</span>";
-		dividends.append(num1);
+		var num = walClient['cash']['EUR'].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+		$("#portefeuille-valeur .number").html(num + ' &euro;');
+
+		var num1 = walClient['dividends']['EUR'].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' &euro;';
+		$("#portefeuille-benefice .number").html(num1);
+
 		etfsClient = walClient['etf'];
 
 	// Load client's ETF
@@ -393,28 +363,6 @@ $(document).ready(function() {
 					var sector_info_box = $('#sector .info-box');
 					// Build the chart
 					$('#sectors-overview').highcharts({
-						colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
-							return {
-								radialGradient: {
-									cx: 0.5,
-									cy: 0.3,
-									r: 0.7
-								},
-								stops: [
-									[0, color],
-									[1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-								]
-							};
-						}),
-
-						title: {
-							floating: !true,
-							useHTML: true,
-							text: 'R&eacute;partition par secteurs',
-							style: {
-								color: 'rgb(255,255,255)',
-							},
-						},
 
 						exporting: {
 							enabled: false
