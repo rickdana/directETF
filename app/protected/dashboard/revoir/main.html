@@ -1,0 +1,122 @@
+<link rel="stylesheet" href="revoir/style.css">
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Revoir
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Mon espace</a></li>
+        <li class="active">Revoir</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="" row>
+            <!--coupe d'historique -->
+            <div class="col-lg-9">
+                <!--left column Maps -->
+                <div class="box box-solid bg-teal-gradient">
+                    <div class="box-body">
+                        <div id="profits-investment"></div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box right column -->
+            </div>
+
+            <!-- Right side Valeur de portefeuille -->
+            <div class="col-lg-3">
+                <!-- Valeur du portefeuille-->
+                <div id="profit" class="small-box bg-aqua">
+                    <div class="inner">
+                        <p>Les nouveaux investissements pourrons vous apporter</p>
+                        <p><span style="font-size:30px; font-weight:500; margin-right:15px;color:rgb(20, 105, 60)"></span>
+                             plus si vous avez pris ces ETFs à la date initiale</p>
+
+                    </div>
+                    <div class="icon">
+
+                </div>
+                <!--/.box -->
+            </div>
+            <!--/.col -->
+        </div>
+
+        <!-- Repartition des secteurs -->
+        <div class="col-lg-4">
+            <div id="sector" class="box box-solid bg-green-gradient">
+                <div class="box-body">
+                    <div id="sectors-overview" style="height: 300px;"></div>
+                    <div class="info-box">
+                        <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-title">Finance</span>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                Suspendisse at purus sed orci pretium elementum...</p>
+                            <button type="button" class="btn btn-flat btn-xs">Fermer</button>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+
+        <!-- Maps de mes ETFs-->
+        <div id="maps" class="col-lg-8">
+            <div class="box box-solid bg-light-blue">
+                <div class="box-body">
+                    <div id="investment-maps"
+                         style="height: 300px; min-width: 300px; max-width: 100%; margin: 0 auto"></div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box column -->
+        </div>
+
+
+        <!--Liste ETFs-->
+        <div class="col-lg-12">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-list"></i>
+
+                    <h3 class="box-title">Mes ETFs</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <table id="investment-list" class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Nom du titre</th>
+                            <th>Gains/Pertes</th>
+                            <th style="text-align : center;">
+                                <span class="currency-filter compo-filter">&euro;</span>
+                                <span class="percent-filter compo-filter">%</span>
+                                <span class="number-filter compo-filter selected">#</span>
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody></tbody>
+
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.liste ETFs -->
+        <!--/.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+
+<script type="text/javascript-lazy" src="revoir/script.js"></script>
