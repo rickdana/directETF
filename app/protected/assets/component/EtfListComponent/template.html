@@ -1,0 +1,55 @@
+<div class="etf-list-component">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th class="etf-column name">Intitulé du titre</th>
+            <th class="etf-column sector sectors">Secteur</th>
+            <th class="etf-column country countries"></th>
+            <th class="etf-column number quantity">Quantité</th>
+            <th class="etf-column price">Prix</th>
+            <th class="etf-column price-cash">Prix</th>
+            <th class="etf-column order"></th>
+        </tr>
+        </thead>
+
+        <tbody ng-controller="EtfItemClickNameController" data-list-items>
+        </tbody>
+    </table>
+
+    <div id="etf-info-box-wrapper" title="Cliquez pour fermer" ng-controller="PopupInfosController"
+         data-etf-popup-infos>
+        <div id="etf-info-box" class="info-box" title="" ng-draggable>
+            <div class="info-box-icon bg-green"><i class="fa fa-area-chart"></i></div>
+            <div class="info-box-content">
+                <h3 class="info-box-text">{{name}}</h3>
+
+                <div class="infos"><span class="isin" data-label="ISIN">{{isin}}</span> <span class="cloture"
+                                                                                              data-label="Derniere cloture">{{price}} &euro;</span>
+                    <span class="dividente" data-label="Dividendes">4,3 %</span></div>
+
+                <P class="etf-info-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac
+                    ipsum
+                    iaculis velit consequat porttitor sit amet non augue. Ut faucibus libero lacus. <a href="#">En
+                        savoir
+                        plus...</a>
+                </P>
+
+                <div class="scroller">
+                    <h4>Diversification sectorielle</h4>
+
+                    <div class="etf-info-box-chart-sectors" height="320" ng-etf-sectors-chart></div>
+
+                    <h4>Maps</h4>
+
+                    <div class="etf-info-box-maps chart-wrapper" height="180" ng-etf-maps></div>
+
+                    <h4>Performance historique</h4>
+
+                    <div id="etf-info-box-chart-performance" class="chart-wrapper"></div>
+                </div>
+
+                <button class="btn bg-green pull-right">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

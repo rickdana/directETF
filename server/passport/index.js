@@ -12,7 +12,7 @@ var User = require('./User');
 module.exports = function(app) {
     app.use(session({
         secret: 'TODO SET REDIS SECRET KEY HERE',
-        cookie: { maxAge: 60000 },
+//        cookie: { maxAge: 60000 },
         resave: true,
         saveUninitialized: true
     }));
@@ -25,7 +25,7 @@ module.exports = function(app) {
     });
 
     passport.deserializeUser(function(email, done) {
-        User.findById({email: email}, function(err, user) {
+        User.prototype.findById({email: email}, function(err, user) {
             done(err, user);
         });
     });

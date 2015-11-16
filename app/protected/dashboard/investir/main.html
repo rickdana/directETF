@@ -1,120 +1,123 @@
-<!-- Common style -->
-<link rel="stylesheet" href="/css/common.css">
-<!-- Ion Slider -->
-<link rel="stylesheet" href="/ionrangeslider/css/ion.rangeSlider.css">
-<link rel="stylesheet" href="/ionrangeslider/css/ion.rangeSlider.skinModern.css">
-<!-- iCheck -->
-<link rel="stylesheet" href="/icheck/skins/flat/blue.css">
-<link rel="stylesheet" href="/icheck/skins/square/blue.css">
-<!-- Tags Input -->
-<link rel="stylesheet" href="/bootstrap-tagsinput/src/bootstrap-tagsinput.css">
-<!-- Theme style  -->
-<link rel="stylesheet" href="investir/style.css">
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar content-header">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/">Direct ETF</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">Investir</a>
+        </li>
+    </ul>
 
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>Investir</h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Mon espace</a></li>
-        <li class="active">Investir</li>
-    </ol>
     <div id="wizard-state">
         <a id="wizard-step-1" data-step="1" data-state="current" href="javascript:void(0)">Sélection</a>
         <a id="wizard-step-2" data-step="2" data-state="unvalid" href="javascript:void(0)">Montant &amp; Ajustement</a>
         <a id="wizard-step-3" data-step="3" data-state="unvalid" href="javascript:void(0)">Revoir</a>
         <a id="wizard-step-4" data-step="4" data-state="unvalid" href="javascript:void(0)">Validation</a>
     </div>
-    <hr id="header-scroll-bar" class="fancy-line">
-</section>
+</div>
+<h3 class="page-title"> Nouvel ordre d'investissement </h3>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<!--<div class="note note-info">-->
+<!--<h3>Assistant Nouvel Investissement-->
+<!--<span class="close" data-close="note"></span>-->
+<!--</h3>-->
+<!--<p> Utilisez cet assistant pour passer de nouveaux ordres d'investissement toute sécurité.</p>-->
+<!--<br>-->
+<!--<button class="btn blue">Démarrer l'assistant</button>-->
+<!--</div>-->
+<div ng-controller="InvestirController">
+    <!--<div height="320"  data-filter="FR0010424135,FR0010315770,QS0011029939" ng-etf-maps></div>-->
+    <!--<div height="320" ng-etf-sectors-chart></div>-->
+    <!--<div height="320" data-filter="FR0010424135,FR0010315770,QS0011029939" ng-etf-sectors-chart></div>-->
 
-<!-- Main content -->
-<section class="content">
     <div class="wizard-panel" data-wizard-panel-step="1">
-
         <!-- Map box -->
-        <div id="filter-view" class="box box-solid bg-light-blue">
-            <!--<div id="search-form">-->
-            <!--<input type="search" id="search-etf" placeholder="rechercher dans la liste...">-->
-            <!--</div>-->
-            <div class="box-body">
-                <div id="filters-container" class="sidebar">
-                    <div id="filters-searchbar">
-                        <i class="fa fa-search"></i>
-                        <input type="text" id="search-etf" placeholder="rechercher...">
-                    </div>
-                    <ul class="sidebar-menu">
-                        <li class="activeX"><a href="#"><i class="fa fa-th-list"></i> <span>Secteurs</span>
-                            <i class="fa fa-angle-left pull-right"></i></a>
-                            <ul class="treeview-menu">
-                                <li><a class="filter" href="javascript:void(0)" data-type="sector" data-value="Finance"><i
-                                        class="fa fa-circle-o"></i> Finance</a></li>
-                                <li><a class="filter" href="javascript:void(0)" data-type="sector"
-                                       data-value="Industrie"><i class="fa fa-circle-o"></i> Industrie</a></li>
-                                <li><a class="filter" href="javascript:void(0)" data-type="sector"
-                                       data-value="Santé|Sante|Sant"><i class="fa fa-circle-o"></i> Santé</a></li>
-                                <li><a class="filter" href="javascript:void(0)" data-type="sector" data-value="Energie"><i
-                                        class="fa fa-circle-o"></i> Energie</a></li>
-                                <li><a class="filter" href="javascript:void(0)" data-type="sector"
-                                       data-value="Services aux collectivité|Services aux collectivit"><i
-                                        class="fa fa-circle-o"></i> Services aux collectivité</a></li>
-                                <li><a class="filter" href="javascript:void(0)" data-type="sector"
-                                       data-value="Technologie"><i class="fa fa-circle-o"></i> Technologies de
-                                    l'information</a></li>
-                                <li><a class="filter" href="javascript:void(0)" data-type="sector"
-                                       data-value="Biens de consomation cyclique"><i class="fa fa-circle-o"></i> Biens
-                                    de consomation cyclique</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i> <span>Régions</span>
-                            <i class="fa fa-angle-left pull-right"></i></a>
-                            <ul class="treeview-menu">
-                                <li><a class="filter" href="javascript:void(0)" data-type="region"
-                                       data-value="FR|France|Paris"><i class="fa fa-circle-o"></i> France</a></li>
-                                <li><a class="filter" href="javascript:void(0)" data-type="region"
-                                       data-value="DE|Allemagne|Germany"><i class="fa fa-circle-o"></i> Allemagne</a>
-                                </li>
-                                <li><a class="filter" href="javascript:void(0)" data-type="region"
-                                       data-value="ES|Espagne|Madrid"><i class="fa fa-circle-o"></i> Espagne</a></li>
-                                <li><a class="filter" href="javascript:void(0)" data-type="region"
-                                       data-value="IT|Italie"><i class="fa fa-circle-o"></i> Itablie</a></li>
-                                <li><a class="filter" href="javascript:void(0)" data-type="region"
-                                       data-value="JP|Japon|Japan|Tokyo"><i class="fa fa-circle-o"></i> Japon</a></li>
-                                <li><a class="filter" href="javascript:void(0)" data-type="region"
-                                       data-value="GB|Londre|London"><i class="fa fa-circle-o"></i> Royaume-Uni</a></li>
-                                <li><a class="filter" href="javascript:void(0)" data-type="region"
-                                       data-value="HK|Hong|Kong"><i class="fa fa-circle-o"></i> Hong Kong</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+        <div id="filter-view">
+            <div id="filters-container" class="sidebar">
+                <div id="filters-searchbar">
+                    <i class="fa fa-search"></i>
+                    <input type="text" id="search-etf" placeholder="rechercher...">
                 </div>
-                <div id="maps-container"></div>
+                <ul class="sidebar-menu">
+                    <li class="activeX"><a href="#"><i class="fa fa-th-list"></i> <span>Secteurs</span>
+                        <i class="fa fa-angle-left pull-right"></i></a>
+
+                        <label>
+                            <input type="checkbox" data-type="sector" data-value="Finance">
+                            <span>Finance</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" data-type="sector" data-value="Industrie">
+                            <span>Industrie</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" data-type="sector" data-value="Santé|Sante|Sant">
+                            <span>Santé</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" data-type="sector" data-value="Energie">
+                            <span>Energie</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" data-type="sector"
+                                   data-value="Services aux collectivité|Services aux collectivit">
+                            <span>Services aux collectivité</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" data-type="sector" data-value="Technologie">
+                            <span>Technologies de l'information</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" data-type="sector" data-value="Biens de consomation cyclique">
+                            <span>Biens de consomation cyclique</span>
+                        </label>
+                    </li>
+                    <li><a href="#"><i class="fa fa-map-marker"></i> <span>Régions</span>
+                        <i class="fa fa-angle-left pull-right"></i></a>
+                        <label>
+                            <input type="checkbox" data-type="region" data-value="FR|France|Paris">
+                            <span>France</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" data-type="region" data-value="DE|Allemagne|Germany">
+                            <span>Allemagne</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" data-type="region" data-value="ES|Espagne|Madrid">
+                            <span>Espagne</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" data-type="region" data-value="IT|Italie">
+                            <span>Itablie</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" data-type="region" data-value="JP|Japon|Japan|Tokyo">
+                            <span>Japon</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" data-type="region" data-value="GB|UK|Londre|London">
+                            <span>Royaume-Uni</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" data-type="region" data-value="HK|CH|Chine|Hong|Kong">
+                            <span>Hong Kong</span>
+                        </label>
+                    </li>
+                </ul>
             </div>
+            <div id="maps-container" height="320" null-color="#fff" ng-etf-maps></div>
         </div>
 
         <!-- List of ETFs -->
-        <div id="list-view" class="box box-solid">
-            <div class="box-body no-padding">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th class="etf-column name">Nom du titre</th>
-                        <th class="etf-column sector">Secteur</th>
-                        <th class="etf-column country"></th>
-                        <th class="etf-column number">Quantité</th>
-                        <th class="etf-column price">Prix</th>
-                        <th class="etf-column price-cash">Prix</th>
-                        <th class="etf-column order"></th>
-                        <th class="etf-column option"></th>
-                    </tr>
-                    </thead>
-
-                    <tbody></tbody>
-                </table>
-            </div>
+        <div id="list-view" class="portlet light bordered">
+            <div id="investir-full-etf-list" data-header-template="investir/tpl/header.html"
+                 data-row-template="investir/tpl/row.html" ng-etf-list></div>
         </div>
 
-        <br>
-        <button class="btn btn-block btn-success btn-flat">Etape suivante: Montant &amp; Ajustement</button>
+        <button class="btn btn-success">Etape suivante: Montant &amp; Ajustement</button>
     </div>
 
     <!--Step 2-->
@@ -146,7 +149,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th class="etf-column name">Nom du titre</th>
+                                <th class="etf-column name">Intitulé du titre</th>
                                 <th class="etf-column number">Quantité</th>
                                 <th class="etf-column price">Prix</th>
                                 <th class="etf-column price-cash">Coût</th>
@@ -178,27 +181,27 @@
                             class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                                    <span class="natural-language">Acheter une quantité de <b class="order-number"></b> au coût unitaire de <b><span
-                                            class="order-price"></span>&euro;</b></span>
+                            <span class="natural-language">Acheter une quantité de <b class="order-number"></b> au coût unitaire de <b><span
+                                    class="order-price"></span>&euro;</b></span>
                         </li>
                         <li>
-											<span class="entry">Investir un pourcentage
-												<input name="percent-range" class="input-range" type="text" value=""
-                                                       data-postfix="%">
-											</span>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-											<span class="entry">Définir le prix de l'achat
-												<input name="price-range" class="input-range" type="text" value=""
-                                                       data-postfix="&euro;">
-											</span>
+                                    <span class="entry">Investir un pourcentage
+                                        <input name="percent-range" class="input-range" type="text" value=""
+                                               data-postfix="%">
+                                    </span>
                         </li>
                         <li class="divider"></li>
                         <li>
-											<span class="entry">Définir la quantité
-												<input name="number-range" class="input-range" type="text" value="">
-											</span>
+                                    <span class="entry">Définir le prix de l'achat
+                                        <input name="price-range" class="input-range" type="text" value=""
+                                               data-postfix="&euro;">
+                                    </span>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                                    <span class="entry">Définir la quantité
+                                        <input name="number-range" class="input-range" type="text" value="">
+                                    </span>
                         </li>
                     </ul>
                 </li>
@@ -219,7 +222,7 @@
                         <table id="summary-table" class="table table-hover">
                             <thead>
                             <tr>
-                                <th class="etf-column name">Nom du titre</th>
+                                <th class="etf-column name">Intitulé du titre</th>
                                 <th class="etf-column number">Quantité</th>
                                 <th class="etf-column price">Prix d'achat</th>
                                 <th class="etf-column price-cash">Coût total</th>
@@ -302,15 +305,5 @@
     </div>
 
     <!--Step 4-->
-    <div class="wizard-panel" data-wizard-panel-step="4">
-
-    </div>
-</section>
-<!-- /.content -->
-
-<script type="text/javascript-lazy" src="/ionrangeslider/js/ion.rangeSlider.min.js"></script>
-<script type="text/javascript-lazy" src="/icheck/icheck.min.js"></script>
-<script type="text/javascript-lazy" src="/bootstrap-tagsinput/src/bootstrap-tagsinput.js"></script>
-
-<script type="text/javascript-lazy" src="investir/script.js"></script>
-<!--<script type="text/javascript-lazy" src="confirmation.js"></script>-->
+    <div class="wizard-panel" data-wizard-panel-step="4"></div>
+</div>

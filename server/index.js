@@ -112,7 +112,8 @@ app.post('/signup', passport.authenticate('signup', {
 protected_files.forEach(function(file) {
     app.use('/' + file, function(req, res, next) {
         if (!req.isAuthenticated()) {
-            return res.sendStatus(401);
+            return res.redirect('/');
+//            return res.sendStatus(401);
         }
         return next();
     });

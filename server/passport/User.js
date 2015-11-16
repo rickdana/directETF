@@ -10,89 +10,84 @@ function generateHash(password) {
 
 var db = {
     'demo@directetf.com': {
-        firstname: '',
-        secondname: '',
+        firstName: '',
+        secondName: '',
         password: generateHash('demo')
     },
     'user1@directetf.com': {
-        firstname: 'Gérard',
-        secondname: 'Depardieu',
+        firstName: 'GÃ©rard',
+        secondName: 'Depardieu',
         password: generateHash('user1')
     },
     'user2@directetf.com': {
-        firstname: 'Julia',
-        secondname: 'Roberts',
+        firstName: 'Julia',
+        secondName: 'Roberts',
         password: generateHash('user2')
     },
     'user3@directetf.com': {
-        firstname: 'Sandra',
-        secondname: 'Bullock',
+        firstName: 'Sandra',
+        secondName: 'Bullock',
         password: generateHash('user3')
     },
     'user4@directetf.com': {
-        firstname: 'Brad',
-        secondname: 'Pitt',
+        firstName: 'Brad',
+        secondName: 'Pitt',
         password: generateHash('user4')
     }
 };
 
-module.exports = class User {
-    constructor(email) {
-        this.id = email;
-    }
-
-    get email() {
-        return this.id;
-    }
-
-    setPassword(password) {
+var User = {
+    setPassword: function (password) {
         this.password = generateHash(password);
-    }
+    },
 
-    get firstName() {
-        return this.firstname;
-    }
-
-    set firstName(firstName) {
-        this.firstname = firstName;
-    }
-
-    set secondName(secondName) {
-        this.secondname = secondName;
-    }
-
-    get secondName() {
-        return this.secondname;
-    }
-
-    save(done) {
-        db[this.id] = {
-            firstname: this.firstname,
-            secondname: this.secondname
+    save: function (done) {
+        db[this.email] = {
+            firstName: this.firstName,
+            secondName: this.secondName
         };
 
         done(true);
-    }
+    },
 
-    validPassword(pwd) {
-        return generateHash(pwd) == db[this.id].password;
-        //    return bcrypt.compareSync(generateHash(pwd), db[this.id]);
-    }
+    validPassword: function (pwd) {
+        return generateHash(pwd) == db[this.email].password;
+        //    return bcrypt.compareSync(generateHash(pwd), db[this.email]);
+    },
 
-    static findById(query, done) {
+    findById: function (query, done) {
         if (typeof db[query.email] != 'undefined') {
-            done(false, new User(query.email));
+            done(false, new u(query.email));
         } else {
             done(true, false);
         }
-    }
+    },
 
-    static findOne(query, done) {
+    findOne: function (query, done) {
        if (typeof db[query.email] != 'undefined') {
-           console.log(new User(query.email))
-           done(false, new User(query.email));
+           console.log(new u(query.email))
+           done(false, new u(query.email));
        } else {
            done(true, false);
        }
     }
 };
+
+function u(email) {
+    if (typeof db[email] == 'undefined') {
+        throw Error('No user ' + email + 'found');
+    }
+
+    for (var p in User) {
+        db[email][p] = User[p];
+    }
+
+    db[email].email = email;
+
+    return db[email];
+};
+
+module.exports = {
+    prototype: User,
+    get: u
+}

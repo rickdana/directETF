@@ -11,7 +11,7 @@ module.exports = function(passport, User) {
       function(req, username, password, done) {
         console.log("User.findOne({ 'email' :  username } === " + username)
         // check in mongo if a user with username exists or not
-        User.findOne({ 'email' :  username },
+        User.prototype.findOne({ 'email' :  username },
           function(err, user) {
             // In case of any error, return using the done method
             if (err)

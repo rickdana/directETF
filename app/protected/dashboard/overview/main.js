@@ -1,15 +1,11 @@
-'use strict';
+angular.module('MetronicApp').controller('OverviewController', function($rootScope, $scope, $http, $timeout) {
+    $scope.$on('$viewContentLoaded', function() {
+        // initialize core components
+        App.initAjax();
+    });
 
-angular.module('myApp.overview', ['ngRoute'])
-
-.config(['$routeProvider', function($routeProvider) {
-    $routeProvider
-        .when('/overview', {
-            templateUrl: 'overview/main.html',
-            controller: 'OverviewCtrl'
-        });
-  }])
-
-  .controller('OverviewCtrl', [function($scope, $routeParams) {
-          //$scope.cash = "40 000 &euro;";
-  }]);
+    // set sidebar closed and body solid layout mode
+    $rootScope.settings.layout.pageContentWhite = true;
+    $rootScope.settings.layout.pageBodySolid = false;
+    $rootScope.settings.layout.pageSidebarClosed = false;
+});

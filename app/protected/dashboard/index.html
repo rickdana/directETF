@@ -1,376 +1,140 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>
-<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>
-<html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<html lang="en" class="ie8 no-js" data-ng-app="MetronicApp"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js" data-ng-app="MetronicApp"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" data-ng-app="MetronicApp">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
 <head>
-    <meta charset="utf-8">
+    <title data-ng-bind="$state.current.data.pageTitle + ' - Direct ETF'"></title>
+    <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Investir - Direct ETF</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta
-            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-            name="viewport">
-    <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-          href="/font-awesome/css/font-awesome.min.css">
-    <!-- DataTables -->
-    <link rel="stylesheet"
-          href="/datatables/media/css/dataTables.bootstrap.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="/adminlte/dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-             folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="/adminlte/dist/css/skins/_all-skins.min.css">
-
-    <script src="/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
+          type="text/css"/>
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css"/>
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
+          type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN DYMANICLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
+    <link id="ng_load_plugins_before"/>
+    <!-- END DYMANICLY LOADED CSS FILES -->
+    <!-- BEGIN THEME STYLES -->
+    <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
+    <link href="/assets/global/css/components.min.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css"
+          id="style_color"/>
+    <link href="/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css"/>
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="/favicon.ico"/>
 </head>
-<body class="hold-transition skin-blue fixed sidebar-mini">
-<div class="wrapper">
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<!-- DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices -->
+<!-- DOC: Apply "page-sidebar-closed" class to the body and "page-sidebar-menu-closed" class to the sidebar menu element to hide the sidebar by default -->
+<!-- DOC: Apply "page-sidebar-hide" class to the body to make the sidebar completely hidden on toggle -->
+<!-- DOC: Apply "page-sidebar-closed-hide-logo" class to the body element to make the logo hidden on sidebar toggle -->
+<!-- DOC: Apply "page-sidebar-hide" class to body element to completely hide the sidebar on sidebar toggle -->
+<!-- DOC: Apply "page-sidebar-fixed" class to have fixed sidebar -->
+<!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
+<!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
+<!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
 
-    <header class="main-header">
-        <!-- Logo -->
-        <a href="/" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>D</b> ETF</span> <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Direct</b> ETF</span>
-        </a>
-        <!-- Header Navbar: style can be found in header.less -->
-        <nav class="navbar navbar-static-top" role="navigation">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas"
-               role="button"> <span class="sr-only">Toggle navigation</span>
-            </a>
-
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                    <!-- Notifications: style can be found in dropdown.less -->
-                    <li class="dropdown notifications-menu"><a href="#"
-                                                               class="dropdown-toggle" data-toggle="dropdown"> <i
-                            class="fa fa-bell-o"></i> <span class="label label-warning">1</span>
-                    </a>
-							<span id="notification" class="dropdown-menu">
-								<span>Je pense que la Grèce va sortir de l'Euro.</span>
-								<button>Oui</button>
-								<button>Non</button>
-							</span></li>
-                    <!-- User Account: style can be found in dropdown.less -->
-                    <li class="dropdown user user-menu"><a href="javascript:void(0)"
-                                                           class="dropdown-toggle" data-toggle="dropdown"> <img
-                            src="/adminlte/dist/img/user2-160x160.jpg" class="user-image"
-                            alt="User Image"> <span class="hidden-xs">Pierre Dupont</span>
-                    </a>
-                        <ul class="dropdown-menu">
-                            <!-- User image -->
-                            <li class="user-header"><img
-                                    src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle"
-                                    alt="User Image">
-
-                                <p>
-                                    Pierre Dupont
-                                    <small>Membre depuis
-                                        Sept. 2015
-                                    </small>
-                                </p>
-                            </li>
-                            <!-- Menu Footer-->
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Mon Profil</a>
-                                </div>
-                                <div class="pull-right">
-                                    <a href="/logout" class="btn btn-default btn-flat">Déconnexion</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- Control Sidebar Toggle Button -->
-                    <li><a href="#" data-toggle="control-sidebar"><i
-                            class="fa fa-gears"></i></a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-            <!-- sidebar menu: : style can be found in sidebar.less -->
-            <ul class="sidebar-menu">
-                <li class="header">MENU PRINCIPAL</li>
-                <li><a href="#/overview"> <i class="fa fa-dashboard"></i>
-                    <span>Tableau de bord</span>
-                </a></li>
-                <li><a href="#/portefeuille"> <i class="fa fa-google-wallet"></i> <span>Mon
-								portefeuille</span>
-                </a></li>
-                <li class="active"><a href="#/investir"> <i class="fa fa-list"></i>
-                    <span>Investir</span>
-                </a></li>
-                <li><a href="#"> <i class="fa fa-line-chart"></i> <span>Performance</span></a></li>
-                <li><a href="#"> <i class="fa fa-calendar"></i> <span>Historique</span></a></li>
-                <li><a href="#"> <i class="fa fa-newspaper-o"></i> <span>
-								Actualités</span>
-                    <small class="label pull-right bg-green">3</small>
-                </a></li>
-                <li><a href="#"><i class="fa fa-lightbulb-o"></i> <span>Conseils</span>
-                    <i class="fa fa-angle-left pull-right"></i></a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Les bases</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>
-                            Utilisation d'ETF</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Comment
-                            évaluer un ETF ?</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Optimiser
-                            ETF Trading</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>
-                            Construction d'un portefolios</a></li>
-                    </ul>
-                </li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> <span>Mon
-								profil</span></a></li>
-            </ul>
-        </section>
-        <!-- /.sidebar -->
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <div ng-view></div>
-    </div>
-    <!-- /.content-wrapper -->
-
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> Preview
-        </div>
-        <strong>Copyright &copy; 2015 <a href="/">Direct
-            ETF</a>.
-        </strong> All rights reserved.
-    </footer>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Create the tabs -->
-        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i
-                    class="fa fa-home"></i></a></li>
-            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i
-                    class="fa fa-gears"></i></a></li>
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <!-- Home tab content -->
-            <div class="tab-pane" id="control-sidebar-home-tab">
-                <h3 class="control-sidebar-heading">Recent Activity</h3>
-                <ul class="control-sidebar-menu">
-                    <li><a href="javascript::;"> <i
-                            class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                        <div class="menu-info">
-                            <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                            <p>Will be 23 on April 24th</p>
-                        </div>
-                    </a></li>
-                    <li><a href="javascript::;"> <i
-                            class="menu-icon fa fa-user bg-yellow"></i>
-
-                        <div class="menu-info">
-                            <h4 class="control-sidebar-subheading">Frodo Updated His
-                                Profile</h4>
-
-                            <p>New phone +1(800)555-1234</p>
-                        </div>
-                    </a></li>
-                    <li><a href="javascript::;"> <i
-                            class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-                        <div class="menu-info">
-                            <h4 class="control-sidebar-subheading">Nora Joined Mailing
-                                List</h4>
-
-                            <p>nora@example.com</p>
-                        </div>
-                    </a></li>
-                    <li><a href="javascript::;"> <i
-                            class="menu-icon fa fa-file-code-o bg-green"></i>
-
-                        <div class="menu-info">
-                            <h4 class="control-sidebar-subheading">Cron Job 254
-                                Executed</h4>
-
-                            <p>Execution time 5 seconds</p>
-                        </div>
-                    </a></li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-                <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                <ul class="control-sidebar-menu">
-                    <li><a href="javascript::;">
-                        <h4 class="control-sidebar-subheading">
-                            Custom Template Design <span
-                                class="label label-danger pull-right">70%</span>
-                        </h4>
-
-                        <div class="progress progress-xxs">
-                            <div class="progress-bar progress-bar-danger"
-                                 style="width: 70%"></div>
-                        </div>
-                    </a></li>
-                    <li><a href="javascript::;">
-                        <h4 class="control-sidebar-subheading">
-                            Update Resume <span class="label label-success pull-right">95%</span>
-                        </h4>
-
-                        <div class="progress progress-xxs">
-                            <div class="progress-bar progress-bar-success"
-                                 style="width: 95%"></div>
-                        </div>
-                    </a></li>
-                    <li><a href="javascript::;">
-                        <h4 class="control-sidebar-subheading">
-                            Laravel Integration <span
-                                class="label label-warning pull-right">50%</span>
-                        </h4>
-
-                        <div class="progress progress-xxs">
-                            <div class="progress-bar progress-bar-warning"
-                                 style="width: 50%"></div>
-                        </div>
-                    </a></li>
-                    <li><a href="javascript::;">
-                        <h4 class="control-sidebar-subheading">
-                            Back End Framework <span class="label label-primary pull-right">68%</span>
-                        </h4>
-
-                        <div class="progress progress-xxs">
-                            <div class="progress-bar progress-bar-primary"
-                                 style="width: 68%"></div>
-                        </div>
-                    </a></li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-            </div>
-            <!-- /.tab-pane -->
-            <!-- Stats tab content -->
-            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab
-                Content
-            </div>
-            <!-- /.tab-pane -->
-            <!-- Settings tab content -->
-            <div class="tab-pane" id="control-sidebar-settings-tab">
-                <form method="post">
-                    <h3 class="control-sidebar-heading">General Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading"> Report panel
-                            usage <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>Some information about this general settings option</p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading"> Allow mail
-                            redirect <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>Other sets of options are available</p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading"> Expose author
-                            name in posts <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>Allow the user to show his name in blog posts</p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading"> Show me as
-                            online <input type="checkbox" class="pull-right" checked>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading"> Turn off
-                            notifications <input type="checkbox" class="pull-right">
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading"> Delete chat
-                            history <a href="javascript::;" class="text-red pull-right"><i
-                                    class="fa fa-trash-o"></i></a>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-                </form>
-            </div>
-            <!-- /.tab-pane -->
-        </div>
-    </aside>
-    <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
+<body ng-controller="AppController"
+      class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-fixed page-on-load"
+      ng-class="{'page-content-white': settings.layout.pageContentWhite,'page-container-bg-solid': settings.layout.pageBodySolid, 'page-sidebar-closed': settings.layout.pageSidebarClosed}">
+<!-- BEGIN PAGE SPINNER -->
+<div ng-spinner-bar class="page-spinner-bar">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
 </div>
-<!-- ./wrapper -->
-
-<script src="/angular/angular.js"></script>
-<script src="/angular-route/angular-route.js"></script>
-<!-- jQuery -->
-<script src="/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Slimscroll -->
-<script src="/adminlte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="/adminlte/plugins/fastclick/fastclick.min.js"></script>
-<!-- AdminLTE App -->
-<script src="/adminlte/dist/js/app.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="/adminlte/dist/js/demo.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-<!-- DataTables -->
-<script type="text/javascript" src="/datatables/media/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/datatables/media/js/dataTables.bootstrap.min.js"></script>
+<!-- END PAGE SPINNER -->
+<!-- BEGIN HEADER -->
+<div data-ng-include="'header.html'" data-ng-controller="HeaderController"
+     class="page-header navbar navbar-fixed-top"></div>
+<!-- END HEADER -->
+<div class="clearfix"></div>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <!-- BEGIN SIDEBAR -->
+    <div data-ng-include="'sidebar.html'" data-ng-controller="SidebarController" class="page-sidebar-wrapper"></div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN STYLE CUSTOMIZER(optional) -->
+            <div data-ng-include="'theme-panel.html'" data-ng-controller="ThemePanelController"
+                 class="theme-panel hidden-xs hidden-sm"></div>
+            <!-- END STYLE CUSTOMIZER -->
+            <!-- BEGIN ACTUAL CONTENT -->
+            <div ui-view class="fade-in-up"></div>
+            <!-- END ACTUAL CONTENT -->
+        </div>
+    </div>
+    <!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<div data-ng-include="'footer.html'" data-ng-controller="FooterController" class="page-footer"></div>
+<!-- END FOOTER -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE JQUERY PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/respond/dest/respond.min.js"></script>
+<script src="/ExplorerCanvas/excanvas.js"></script>
+<![endif]-->
+<script src="/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="/jquery.cookie/jquery.cookie.js"></script>
+<script src="/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+        type="text/javascript"></script>
+<script src="/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<!--<script src="/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>-->
+<!--<script src="/uniform/jquery.uniform.min.js" type="text/javascript"></script>-->
+<script src="/bootstrap-switch/dist/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE JQUERY PLUGINS -->
 <!-- Highchats -->
 <script type="text/javascript" src="/highstock-release/highstock.js"></script>
 <script type="text/javascript" src="/highcharts/highcharts-more.js"></script>
 <script type="text/javascript" src="/highmaps/modules/map.js"></script>
 <script type="text/javascript" src="/js/highcharts/world.js"></script>
 <script type="text/javascript" src="/js/highcharts/theme.js"></script>
-
-<script src="/js/angular-loadscript.js"></script>
-
-<script src="main.js"></script>
-<script src="overview/main.js"></script>
-<script src="portefeuille/main.js"></script>
-<script src="investir/main.js"></script>
-
+<!-- BEGIN CORE ANGULARJS PLUGINS -->
+<script src="/angular/angular.min.js" type="text/javascript"></script>
+<script src="/angular-sanitize/angular-sanitize.min.js" type="text/javascript"></script>
+<script src="/angular-touch/angular-touch.min.js" type="text/javascript"></script>
+<script src="/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
+<script src="/ocLazyLoad/dist/ocLazyLoad.min.js" type="text/javascript"></script>
+<script src="/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+<!-- END CORE ANGULARJS PLUGINS -->
+<!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
+<script src="main.js" type="text/javascript"></script>
+<script src="/assets/factory/EtfsFactory.js" type="text/javascript"></script>
+<script src="/assets/factory/ClientFactory.js" type="text/javascript"></script>
+<script src="/assets/component/EtfMapsComponent.js" type="text/javascript"></script>
+<script src="/assets/component/EtfSectorsChartComponent/main.js" type="text/javascript"></script>
+<script src="/assets/component/EtfListComponent/main.js" type="text/javascript"></script>
+<script src="directives.js" type="text/javascript"></script>
+<!-- END APP LEVEL ANGULARJS SCRIPTS -->
+<!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
+<script src="/assets/global/scripts/app.min.js" type="text/javascript"></script>
+<script src="/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+<script src="/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+<script src="/assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+<!-- END APP LEVEL JQUERY SCRIPTS -->
+<!-- END JAVASCRIPTS -->
 </body>
+<!-- END BODY -->
+
 </html>

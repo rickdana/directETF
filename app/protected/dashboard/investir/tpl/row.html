@@ -1,0 +1,11 @@
+<tr ng-repeat="etf in etfs" id="etf-{{etf.isin}}" data-isin="{{etf.isin}}">
+    <td class="etf-column name"><a href="javascript:void(0)" ng-click="openPopupInfos(etf);" data-code="{{etf.isin}}">{{etf.name}}</a>
+    </td>
+    <td class="etf-column sector sectors">{{etf.sectorsStr}}</td>
+    <td class="etf-column country countries">{{etf.countriesStr}}</td>
+    <td class="etf-column number quantity">{{etf.quantity}}</td>
+    <td class="etf-column price">{{etf.price}} &euro;</td>
+    <td class="etf-column price-cash"></td>
+    <td class="etf-column order"></td>
+    <td class="etf-column option"><input type="checkbox" data-row-id="{{etf.isin}}"></td>
+</tr>

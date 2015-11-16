@@ -1,145 +1,192 @@
-<link rel="stylesheet" href="portefeuille/style.css">
-
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>
-        Mon portefeuille
-        <small></small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Mon espace</a></li>
-        <li class="active">Mon portefeuille</li>
-    </ol>
-</section>
-
-<!-- Main content -->
-<section class="content">
-    <div class="row">
-        <div class="" row>
-            <!--coupe d'historique -->
-            <div class="col-lg-9">
-                <!--left column Maps -->
-                <div class="box box-solid bg-teal-gradient">
-                    <div class="box-body">
-                        <div id="profits-investment"></div>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box right column -->
-            </div>
-
-            <!-- Right side Valeur de portefeuille -->
-            <div id="portefeuille" class="col-lg-3">
-                <!-- Valeur du portefeuille-->
-                <div id="portefeuille-valeur" class="small-box bg-aqua">
-                    <div class="inner">
-                        <p>Portefeuille</p>
-
-                        <h2>
-                            <span></span>
-                        </h2>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-euro"></i>
-                    </div>
-
-                    <a href="#" class="small-box-footer">Approvisionner <i
-                            class="fa fa-arrow-circle-right"></i></a>
-                </div>
-                <!--/.box -->
-
-                <!-- Dividendes -->
-                <div id="portefeuille-benefice" class="small-box bg-green">
-                    <div class="inner">
-                        <p>Dividendes prévisioenelles</p>
-
-                        <h2>
-                            <span></span>
-                        </h2>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-line-chart"></i>
-                    </div>
-
-                    <a href="#" class="small-box-footer">More info <i
-                            class="fa fa-arrow-circle-right"></i></a>
-                </div>
-                <!--/.box -->
-            </div>
-            <!--/.col -->
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/">Direct ETF</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">Portefeuille</a>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"
+                    dropdown-menu-hover data-delay="1000" data-close-others="true"> Actions
+                <i class="fa fa-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu pull-right" role="menu">
+                <li>
+                    <a href="#">
+                        <i class="icon-user"></i> New User </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-present"></i> New Event
+                        <span class="badge badge-success">4</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-basket"></i> New order </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="#">
+                        <i class="icon-flag"></i> Pending Orders
+                        <span class="badge badge-danger">4</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-users"></i> Pending Users
+                        <span class="badge badge-warning">12</span>
+                    </a>
+                </li>
+            </ul>
         </div>
+    </div>
+</div>
+<h3 class="page-title"> Mon portefeuille </h3>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="PortefeuilleController">
+    <div class="note note-info">
+        <h3>Présentation du portefeuille
+            <span class="close" data-close="note"></span>
+        </h3>
 
+        <p> Utilisez cet espace pour gérer de façon efficace votre portefeuille. Vous pouvez à tout moment rajouter
+            du cash, suivre l'évolution du portefeuille et contrôller vos avoirs. </p>
+        <br>
+        <button class="btn blue">Commencer la visite guidée du portefeuille</button>
+    </div>
+
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div id="portefeuille-valeur" class="dashboard-stat green">
+                <div class="visual">
+                    <i class="fa fa-euro"></i>
+                </div>
+                <div class="details">
+                    <div class="number"> 45.000 &euro; </div>
+                    <div class="desc"> dans le portefeuille</div>
+                </div>
+                <a class="more" href="#"> Approvisionner
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <!-- Dividendes -->
+            <div id="portefeuille-benefice" class="dashboard-stat blue">
+                <div class="visual">
+                    <i class="fa fa-line-chart"></i>
+                </div>
+                <div class="details">
+                    <div class="number"> 45.000 &euro; </div>
+                    <div class="desc"> dividente prévisionnelle</div>
+                </div>
+                <a class="more" href="#"> Affichier les détails
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <!--<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">-->
+        <!--<div class="dashboard-stat green">-->
+        <!--<div class="visual">-->
+        <!--<i class="fa fa-shopping-cart"></i>-->
+        <!--</div>-->
+        <!--<div class="details">-->
+        <!--<div class="number"> 549 </div>-->
+        <!--<div class="desc"> New Orders </div>-->
+        <!--</div>-->
+        <!--<a class="more" href="#"> View more-->
+        <!--<i class="m-icon-swapright m-icon-white"></i>-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">-->
+        <!--<div class="dashboard-stat purple">-->
+        <!--<div class="visual">-->
+        <!--<i class="fa fa-globe"></i>-->
+        <!--</div>-->
+        <!--<div class="details">-->
+        <!--<div class="number"> +89% </div>-->
+        <!--<div class="desc"> Brand Popularity </div>-->
+        <!--</div>-->
+        <!--<a class="more" href="#"> View more-->
+        <!--<i class="m-icon-swapright m-icon-white"></i>-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+
+    <!--courbe d'historique -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <span class="caption-subject font-green bold uppercase">Evolution du portefeuille</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div id="profits-investment"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <!-- Repartition des secteurs -->
         <div class="col-lg-4">
-            <div id="sector" class="box box-solid bg-green-gradient">
-                <div class="box-body">
-                    <div id="sectors-overview" style="height: 300px;"></div>
-                    <div class="info-box">
-                        <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-title">Finance</span>
-
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Suspendisse at purus sed orci pretium elementum...</p>
-                            <button type="button" class="btn btn-flat btn-xs">Fermer</button>
-                        </div>
-                        <!-- /.info-box-content -->
+            <div id="sector" class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <span class="caption-subject font-green bold uppercase">Répartition sectorielle</span>
                     </div>
                 </div>
-                <!-- /.box-body -->
+                <div class="portlet-body">
+                    <div id="sectors-overview" height="320" data-lazy="true" ng-etf-sectors-chart></div>
+                </div>
+                <!-- /.portlet-body -->
             </div>
         </div>
 
         <!-- Maps de mes ETFs-->
         <div id="maps" class="col-lg-8">
-            <div class="box box-solid bg-light-blue">
-                <div class="box-body">
-                    <div id="investment-maps"
-                         style="height: 300px; min-width: 300px; max-width: 100%; margin: 0 auto"></div>
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <span class="caption-subject font-green bold uppercase">Répartition dans le monde</span>
+                    </div>
                 </div>
-                <!-- /.box-body -->
+                <div class="portlet-body">
+                    <div id="maps-repartition" height="200" data-lazy="true" ng-etf-maps></div>
+                </div>
+                <!-- /.portlet-body -->
             </div>
             <!-- /.box column -->
         </div>
-
-
-        <!--Liste ETFs-->
+    </div>
+    <div class="row">
         <div class="col-lg-12">
-            <div class="box box-success">
-                <div class="box-header">
-                    <i class="fa fa-list"></i>
-
-                    <h3 class="box-title">Mes ETFs</h3>
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <span class="caption-subject font-green bold uppercase">Titres du portefeuille</span>
+                    </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body no-padding">
-                    <table id="investment-list" class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>Nom du titre</th>
-                            <th>Gains/Pertes</th>
-                            <th style="text-align : center;">
-                                <span class="currency-filter compo-filter">&euro;</span>
-                                <span class="percent-filter compo-filter">%</span>
-                                <span class="number-filter compo-filter selected">#</span>
-                            </th>
-                        </tr>
-                        </thead>
-
-                        <tbody></tbody>
-
-                    </table>
+                <div class="portlet-body">
+                    <div id="investment-list" data-lazy="true" data-header-template="portefeuille/tpl/header.html"
+                         data-row-template="portefeuille/tpl/row.html" ng-etf-list></div>
                 </div>
-                <!-- /.box-body -->
+                <!-- /.portlet-body -->
             </div>
-            <!-- /.box -->
         </div>
-        <!-- /.liste ETFs -->
-        <!--/.col -->
     </div>
-    <!-- /.row -->
-</section>
-<!-- /.content -->
-
-<script type="text/javascript-lazy" src="portefeuille/script.js"></script>
+    <!-- END DASHBOARD STATS -->
+</div>
+<!-- END MAIN CONTENT -->

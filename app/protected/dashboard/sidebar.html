@@ -1,0 +1,89 @@
+<div class="page-sidebar navbar-collapse collapse">
+    <!-- BEGIN SIDEBAR MENU -->
+    <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+    <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+    <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+    <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+    <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+    <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+    <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200"
+        ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
+        <li class="start nav-item">
+            <a href="#/overview">
+                <i class="icon-home"></i>
+                <span class="title">Tableau de board</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#/portefeuille">
+                <i class="icon-wallet"></i>
+                <span class="title">Mon portefeuille</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#/investir">
+                <i class="icon-calculator"></i>
+                <span class="title">Investir</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#/performance">
+                <i class="icon-pie-chart"></i>
+                <span class="title">Performance</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#/historique">
+                <i class="icon-calendar"></i>
+                <span class="title">Historique</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#/actualites">
+                <i class="icon-globe"></i>
+                <span class="title">Actualit&eacute;s</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-settings"></i>
+                <span class="title">Conseils</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#">
+                        <i class="icon-question"></i> Les bases</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-question"></i> Utilisation d'ETF</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-question"></i> Comment &eacute;valuer un ETF ?</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-question"></i> Optimiser ETF Trading</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-question"></i> Construction d'un portefeuille</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#/profile/account" id="sidebar_menu_link_profile">
+                <i class="icon-user"></i>
+                <span class="title">Mon Profil</span>
+            </a>
+        </li>
+    </ul>
+    <!-- END SIDEBAR MENU -->
+</div>

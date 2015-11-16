@@ -1,97 +1,95 @@
-<!-- Common style -->
-<link rel="stylesheet" href="/css/common.css">
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="/">Direct ETF</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <a href="#">Tableau de board</a>
+        </li>
+    </ul>
+</div>
+<h3 class="page-title"> Tableau de board </h3>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div ng-controller="OverviewController">
+    <div class="note note-info">
+        <h3>Bienvenue sur Direct ETF !
+            <span class="close" data-close="note"></span>
+        </h3>
 
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>
-        Tableau de bord
-        <small></small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Mon espace</a></li>
-        <li class="active">Tableau de bord</li>
-    </ol>
-</section>
+        <p> Direct ETF est la première plateforme de financement entièrement destinée au grand public. </p>
 
-<!-- Main content -->
-<section class="content">
-    <!-- Small boxes (Stat box) -->
-    <div class="row">
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-                <div class="inner">
-                    <h3>
-                        <sup style="font-size: 20px">$</sup><span class="counter-num">6500</span>
-                    </h3>
-
-                    <p>Profits</p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-dollar"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i
-                        class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-green">
-                <div class="inner">
-                    <h3>
-                        +<span class="counter-num">30</span><sup
-                            style="font-size: 20px">%</sup>
-                    </h3>
-
-                    <p>Profits Prevision</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i
-                        class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-yellow">
-                <div class="inner">
-                    <h3>
-                        <span class="counter-num">44</span>
-                    </h3>
-
-                    <p>Label Three</p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-line-chart"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i
-                        class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-red">
-                <div class="inner">
-                    <h3>
-                        <span class="counter-num">65</span>
-                    </h3>
-
-                    <p>Label Four</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i
-                        class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
+        <p>Utilisez cet assistant pour découvrir comment investir facilement et rapidement en toute sécurité.</p>
+        <br>
+        <button class="btn blue">Commencer la visite guidée</button>
     </div>
-    <!-- /.row -->
+    <!-- BEGIN DASHBOARD STATS -->
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat blue">
+                <div class="visual">
+                    <i class="fa fa-comments"></i>
+                </div>
+                <div class="details">
+                    <div class="number"> 1349</div>
+                    <div class="desc"> New Feedbacks</div>
+                </div>
+                <a class="more" href="#"> View more
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat red">
+                <div class="visual">
+                    <i class="fa fa-bar-chart-o"></i>
+                </div>
+                <div class="details">
+                    <div class="number"> 12,5M$</div>
+                    <div class="desc"> Total Profit</div>
+                </div>
+                <a class="more" href="#"> View more
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat green">
+                <div class="visual">
+                    <i class="fa fa-shopping-cart"></i>
+                </div>
+                <div class="details">
+                    <div class="number"> 549</div>
+                    <div class="desc"> New Orders</div>
+                </div>
+                <a class="more" href="#"> View more
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat purple">
+                <div class="visual">
+                    <i class="fa fa-globe"></i>
+                </div>
+                <div class="details">
+                    <div class="number"> +89%</div>
+                    <div class="desc"> Brand Popularity</div>
+                </div>
+                <a class="more" href="#"> View more
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- END DASHBOARD STATS -->
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN MAIN JS & CSS -->
+<script>
+    //Dashboard.init();
 
-</section>
-<!-- /.content -->
+</script>
+<!-- BEGIN MAIN JS & CSS -->
