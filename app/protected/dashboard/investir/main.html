@@ -33,36 +33,6 @@
     <!--<div height="320" ng-etf-sectors-chart></div>-->
     <!--<div height="320" data-filter="FR0010424135,FR0010315770,QS0011029939" ng-etf-sectors-chart></div>-->
 
-    <!--<div class="row">-->
-    <!--<div class="col-lg-12">-->
-    <!--<div class="portlet light bordered">-->
-    <!--<div class="portlet-title">-->
-    <!--<div class="caption caption-md">-->
-    <!--<span class="caption-subject font-green bold uppercase">Simulation future</span>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="portlet-body">-->
-    <!--<div id="simulation-future"></div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-
-    <!--<div class="row">-->
-    <!--<div class="col-lg-12">-->
-    <!--<div class="portlet light bordered">-->
-    <!--<div class="portlet-title">-->
-    <!--<div class="caption caption-md">-->
-    <!--<span class="caption-subject font-green bold uppercase">Simulation passée</span>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="portlet-body">-->
-    <!--<div id="simulation-past"></div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-
     <div class="wizard-panel" data-wizard-panel-step="1">
         <!-- Map box -->
         <div id="filter-view">
@@ -144,7 +114,7 @@
         <!-- List of ETFs -->
         <div id="list-view" class="portlet light bordered">
             <div id="investir-full-etf-list" data-header-template="investir/tpl/header.html"
-            <!--data-row-template="investir/tpl/row.html" ng-etf-list></div>-->
+                 data-row-template="investir/tpl/row.html" ng-etf-list></div>
         </div>
 
         <button class="btn btn-success">Etape suivante: Montant &amp; Ajustement</button>
@@ -243,7 +213,35 @@
 
     <!--Step 3-->
     <div class="wizard-panel" data-wizard-panel-step="3">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption caption-md">
+                            <span class="caption-subject font-green bold uppercase">Simulation future</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div id="simulation-future"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption caption-md">
+                            <span class="caption-subject font-green bold uppercase">Simulation passée</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div id="simulation-past"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!--Step 4-->
