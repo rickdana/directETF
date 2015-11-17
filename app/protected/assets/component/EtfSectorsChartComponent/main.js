@@ -1,7 +1,6 @@
 angular.module('MetronicApp')
     .controller('EtfSectorsChartController', ['$ocLazyLoad', '$EtfsFactory', '$scope', '$element', '$attrs', function($ocLazyLoad, $EtfsFactory, $scope, $element, $attrs) {
         $ocLazyLoad.load({
-    //        name: 'PopupInfosController',
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
 
             files: [
@@ -21,38 +20,46 @@ angular.module('MetronicApp')
                 },
 
                 chart: {
+                    type: 'pie',
                     plotBackgroundColor: null,
                     plotBorderWidth: 0,
                     plotShadow: false,
-                    height:200,
-                    width:200,
+                    height: $attrs.height || null,
+                    width: $attrs.width || null,
                     style: {
                         top: '0px',
         //                    left: '-30px'
                         'margin-bottom': '0px'
+                    },
+                    options3d: {
+                        enabled: true,
+                        alpha: 45,
+                        beta: 0
                     }
                 },
                 tooltip: {
                     pointFormat: ' <b>{point.percentage:.2f}%</b>'
                 },
+
                 plotOptions: {
                     pie: {
                         ignoreHiddenPoint: false,
                         allowPointSelect: true,
                         cursor: 'pointer',
+                        depth: 35,
                         dataLabels: {
-                            enabled: false,
+                            enabled: $attrs.enableDataLabels === 'true' || false,
+                            format: '{point.name}'
                         },
-                        showInLegend: true,
-                        borderColor: "rgba(243, 156, 18, .5)",
+                        showInLegend: $attrs.showInLegend === 'true' || false,
                     },
                     series: {
                         shadow: true
                     },
                 },
+
                 series: [{
                     type: 'pie',
-                    name: "Sectors",
                     data: parse(etfs),
                     colorByPoint: true,
                     point: {
@@ -61,6 +68,11 @@ angular.module('MetronicApp')
                                 this.slice(false);
                             },
                         }
+                    },
+                    options3d: {
+                        enabled: true,
+                        alpha: 45,
+                        beta: 0
                     },
                     events: {
                         click: function (e) {

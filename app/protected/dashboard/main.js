@@ -199,7 +199,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '/bootstrap-tagsinput/src/bootstrap-tagsinput.js',
 
                             'investir/main.js',
-//                            'investir/script.js',
+                            'investir/script.js',
                         ]
                     });
                 }]

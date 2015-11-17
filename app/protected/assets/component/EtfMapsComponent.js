@@ -43,7 +43,7 @@ angular.module('MetronicApp')
                         verticalAlign: 'bottom',
                         style: {
                             position: 'absolute',
-                           bottom: '25px'
+                            bottom: '25px'
                         },
                     },
                     enableMouseWheelZoom: false,

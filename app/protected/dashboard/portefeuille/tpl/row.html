@@ -1,6 +1,5 @@
 <tr ng-repeat="etf in etfs" id="etf-{{etf.isin}}" data-isin="{{etf.isin}}">
-    <td class="etf-column name"><a href="javascript:void(0)" ng-click="openPopupInfos(etf)" data-code="{{etf.isin}}">{{etf.name}}</a>
-    </td>
+    <td class="etf-column name" data-etf-attr-name="name">{{etf.name}}</td>
     <td style="text-align:center" class="etf-column gains">
         <span class="percent" style="display:none"></span>
         <span class="currency" style="display:none"></span>
