@@ -8,28 +8,34 @@
     <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
     <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200"
         ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
-        <li class="start nav-item">
-            <a href="#/overview">
-                <i class="icon-home"></i>
-                <span class="title">Tableau de board</span>
-            </a>
-        </li>
         <li class="nav-item">
-            <a href="#/portefeuille">
+            <a href="javascript:void(0)" class="nav-link nav-toggle">
                 <i class="icon-wallet"></i>
                 <span class="title">Mon portefeuille</span>
+                <span class="arrow"></span>
             </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#/portefeuille/synthese">
+                        <i class="icon-pie-chart"></i> Synthèse</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/portefeuille/historique">
+                        <i class="icon-calendar"></i> Historique</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/portefeuille/comparer">
+                        <i class="icon-speedometer"></i> Comparer</span>
+                    </a>
+                </li>
+            </ul>
         </li>
         <li class="nav-item">
             <a href="#/investir">
-                <i class="icon-calculator"></i>
+                <i class="icon-basket"></i>
                 <span class="title">Investir</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#/performance">
-                <i class="icon-pie-chart"></i>
-                <span class="title">Performance</span>
             </a>
         </li>
         <li class="nav-item">
@@ -41,12 +47,12 @@
         <li class="nav-item">
             <a href="#/actualites">
                 <i class="icon-globe"></i>
-                <span class="title">Actualit&eacute;s</span>
+                <span class="title">Actualités</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="icon-settings"></i>
+            <a href="javascript:void(0)" class="nav-link nav-toggle">
+                <i class="icon-notebook"></i>
                 <span class="title">Conseils</span>
                 <span class="arrow"></span>
             </a>
