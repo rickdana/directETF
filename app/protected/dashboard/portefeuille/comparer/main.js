@@ -1,5 +1,5 @@
 angular.module('MetronicApp')
-    .controller('PortefeuilleController', function($ClientFactory, $rootScope, $scope, $ocLazyLoad, ServiceBroadcastEtfList) {
+    .controller('PortefeuilleComparerController', function($ClientFactory, $rootScope, $scope, $ocLazyLoad, ServiceBroadcastEtfList) {
         $scope.$on('$viewContentLoaded', function() {
             $ocLazyLoad.load({
                 name: 'MetronicApp',
