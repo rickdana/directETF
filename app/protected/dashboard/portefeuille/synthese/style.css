@@ -68,6 +68,7 @@ table .selected {
 }
 
 .etf-list-component .etf-column.total,
-.etf-list-component .etf-column.cash, {
+.etf-list-component .etf-column.cash,
+.etf-list-component .etf-column.total-gains, {
 	font-weight: 700;
 }

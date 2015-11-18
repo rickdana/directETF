@@ -12,14 +12,17 @@ angular.module('MetronicApp')
 
                 $ClientFactory.valo(function(valo) {
 
-                    $rootScope.$on('handleBroadcastEtfListLoaded', function() {
-                        if (location.hash.search(/\/portefeuille/) == -1) {
-                            return;
-                        }
-                        load_etf_list(wallet, ServiceBroadcastEtfList.etfs, valo);
-                    });
+                    $ClientFactory.trades(function(trades) {
 
-                    load_wallet(wallet, valo);
+                        $rootScope.$on('handleBroadcastEtfListLoaded', function() {
+                            if (location.hash.search(/\/portefeuille/) == -1) {
+                                return;
+                            }
+                            load_etf_list(wallet, ServiceBroadcastEtfList.etfs, valo, trades);
+                        });
+
+                        load_wallet(wallet, valo);
+                    });
                 });
 
             });
