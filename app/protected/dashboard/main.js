@@ -131,44 +131,66 @@ MetronicApp.controller('FooterController', ['$scope', function($scope) {
 /* Setup Rounting For All Pages */
 MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     // Redirect any unmatched url
-    $urlRouterProvider.otherwise("/overview");
+    $urlRouterProvider.otherwise("/portefeuille/synthese");
     
     $stateProvider
-        // Overview
-        .state('overview', {
-            url: "/overview",
-            templateUrl: "overview/main.html",
-            data: {pageTitle: 'Vue globale du portefeuille'},
-            controller: "OverviewController",
+        // Portefeuille synthèse
+        .state('portefeuille/synthese', {
+            url: "/portefeuille/synthese",
+            templateUrl: "portefeuille/synthese/main.html",
+            data: {pageTitle: 'Synthèse du portefeuille'},
+            controller: "PortefeuilleSyntheseController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
-                            'overview/main.js',
-                            'overview/script.js',
+                            'portefeuille/synthese/main.js',
+                            'portefeuille/synthese/script.js',
+                            'portefeuille/synthese/style.css',
                         ]
                     });
                 }]
             }
         })
-
-        // Portefeuille
-        .state('portefeuille', {
-            url: "/portefeuille",
-            templateUrl: "portefeuille/main.html",
-            data: {pageTitle: 'Mon portefeuille'},
-            controller: "PortefeuilleController",
+        
+        // Portefeuille historique
+        .state('portefeuille/historique', {
+            url: "/portefeuille/historique",
+            templateUrl: "portefeuille/historique/main.html",
+            data: {pageTitle: 'Historique du portefeuille'},
+            controller: "PortefeuilleHistoriqueController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
-                            'portefeuille/main.js',
-                            'portefeuille/script.js',
-                            'portefeuille/style.css',
+                            'portefeuille/historique/main.js',
+                            'portefeuille/historique/script.js',
+                            'portefeuille/historique/style.css',
+                        ]
+                    });
+                }]
+            }
+        })
+        
+        // Portefeuille comparer
+        .state('portefeuille/comparer', {
+            url: "/portefeuille/comparer",
+            templateUrl: "portefeuille/comparer/main.html",
+            data: {pageTitle: 'Comparer le portefeuille'},
+            controller: "PortefeuilleComparerController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        files: [
+                            'portefeuille/comparer/main.js',
+                            'portefeuille/comparer/script.js',
+                            'portefeuille/comparer/style.css',
                         ]
                     });
                 }]
