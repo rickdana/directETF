@@ -56,3 +56,18 @@ table .selected {
 	font-size: 14px;
 	margin-bottom: 6px;
 }
+
+.etf-list-component .etf-column.value,
+.etf-list-component .etf-column.gains  {
+	text-align: right;
+}
+
+.etf-list-component .etf-column.number,
+.etf-list-component .etf-column.quantity  {
+	text-align: center;
+}
+
+.etf-list-component .etf-column.total,
+.etf-list-component .etf-column.cash, {
+	font-weight: 700;
+}

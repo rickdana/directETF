@@ -5,14 +5,23 @@ angular.module('MetronicApp')
             App.initAjax();
 
             $ClientFactory.wallet(function(wallet) {
-                $rootScope.$on('handleBroadcastEtfListLoaded', function() {
-                    if (location.hash.search(/\/portefeuille/) == -1) {
-                        return;
-                    }
-                    load_etf_list(wallet, ServiceBroadcastEtfList.etfs);
+
+                $scope.client = {
+                    wallet: wallet
+                };
+
+                $ClientFactory.valo(function(valo) {
+
+                    $rootScope.$on('handleBroadcastEtfListLoaded', function() {
+                        if (location.hash.search(/\/portefeuille/) == -1) {
+                            return;
+                        }
+                        load_etf_list(wallet, ServiceBroadcastEtfList.etfs, valo);
+                    });
+
+                    load_wallet(wallet, valo);
                 });
 
-                load_wallet(wallet);
             });
         });
 

@@ -1,5 +1,16 @@
-function load_wallet(wallet) {
-	var num = wallet['cash']['EUR'].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+function load_wallet(wallet, valo) {
+	var data_valo = [];
+	var total_value = $("#total-value");
+
+	for (var date in valo) {
+		data_valo.push([new Date(date).getTime(), valo[date]]);
+	}
+
+	data_valo.sort(function (a, b) {
+		return a[0] - b[0];
+	});
+
+	var num = data_valo[data_valo.length - 1][1].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 	$("#portefeuille-valeur .number").html(num + ' &euro;');
 
 	var num1 = wallet['dividends']['EUR'].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' &euro;';
@@ -148,13 +159,23 @@ function load_valo_trades(valo, trades) {
 	});
 }
 
-function load_etf_list(wallet, etfs) {
+function load_etf_list(wallet, etfs, valo) {
 	var s = 0;
 	percents = {};
-	var percents_c = {};
+	var data_valo = [];
+	var total_value = $("#total-value");
+
+	for (var date in valo) {
+		data_valo.push([new Date(date).getTime(), valo[date]]);
+	}
+
+	data_valo.sort(function (a, b) {
+		return a[0] - b[0];
+	});
+
+	total_value.html(data_valo[data_valo.length - 1][1] + " &euro;");
 
 	for (var code in wallet.etf) {
-		//etfs.push(code);
 		s += wallet.etf[code];
 	}
 
@@ -170,37 +191,38 @@ function load_etf_list(wallet, etfs) {
 
 		var gain = (Math.floor(Math.random() * 30) + 2) * (Math.random() < 0.5 ? -1 : 1);
 
-		gains.css('color', gain >= 0 ? "green" : "red")
-		gains.find('.percent').html(((gain / etf.quantity / etf.price) * 100).toFixed(2) + "%");
-		gains.find('.currency').html(gain + " &euro;");
-		gains.find('.number').html(gain);
+		gains.css('color', gain >= 0 ? "green" : "red");
+		gains.html(gain + " &euro;");
+		/*		gains.find('.percent').html(((gain / etf.quantity / etf.price) * 100).toFixed(2) + "%");
+		 gains.find('.currency').html(gain + " &euro;");
+		 gains.find('.number').html(gain);
 
-		tr.find('.etf-column.percents .percent').html(percents[etf.isin] + "%");
-		tr.find('.etf-column.percents .currency').html((etf.quantity * etf.price) + "&euro;");
-		tr.find('.etf-column.percents .number').html(etf.quantity);
+		 tr.find('.etf-column.percents .percent').html(percents[etf.isin] + "%");
+		 tr.find('.etf-column.percents .currency').html((etf.quantity * etf.price) + "&euro;");
+		 tr.find('.etf-column.percents .number').html(etf.quantity);*/
 	}
 
-	$('.percent-filter').click(function(){
-		$('.compo-filter.selected').removeClass('selected');
-		$('.percent-filter').addClass('selected');
-		$('.percent').show();
-		$('.number').hide();
-		$('.currency').hide();
-	});
+	/*	$('.percent-filter').click(function(){
+	 $('.compo-filter.selected').removeClass('selected');
+	 $('.percent-filter').addClass('selected');
+	 $('.percent').show();
+	 $('.number').hide();
+	 $('.currency').hide();
+	 });
 
-	$('.number-filter').click(function(){
-		$('.compo-filter.selected').removeClass('selected');
-		$('.number-filter').addClass('selected');
-		$('.number').show();
-		$('.percent').hide();
-		$('.currency').hide();
-	});
+	 $('.number-filter').click(function(){
+	 $('.compo-filter.selected').removeClass('selected');
+	 $('.number-filter').addClass('selected');
+	 $('.number').show();
+	 $('.percent').hide();
+	 $('.currency').hide();
+	 });
 
-	$('.currency-filter').click(function(){
-		$('.compo-filter.selected').removeClass('selected');
-		$('.currency-filter').addClass('selected');
-		$('.currency').show();
-		$('.number').hide();
-		$('.percent').hide();
-	});
+	 $('.currency-filter').click(function(){
+	 $('.compo-filter.selected').removeClass('selected');
+	 $('.currency-filter').addClass('selected');
+	 $('.currency').show();
+	 $('.number').hide();
+	 $('.percent').hide();
+	 });*/
 }
