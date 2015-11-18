@@ -124,20 +124,21 @@ function EtfListController($EtfsFactory, $scope, $element, $attrs, $compile, $ht
             });
 
             // Table Foot
-            $element.find('table tfoot').remove();
-            $attrs.footerTemplate = $attrs.footerTemplate || "/assets/component/EtfListComponent/template-foot.html";
+            if ($attrs.footerTemplate) {
+                $element.find('table tfoot').remove();
 
-            $q.all([
-                $http.get($attrs.footerTemplate, { cache : $templateCache })
-            ]).then(function(resp) {
-                $rootScope.templateFootCache = resp;
-            });
+                $q.all([
+                    $http.get($attrs.footerTemplate, { cache : $templateCache })
+                ]).then(function(resp) {
+                    $rootScope.templateFootCache = resp;
+                });
 
-            $scope.$watch('templateFootCache', function(n, o) {
-                if(n) {
-                    tbody.after($compile($templateCache.get($attrs.footerTemplate)[1])($scope));
-                }
-            });
+                $scope.$watch('templateFootCache', function(n, o) {
+                    if(n) {
+                        tbody.after($compile($templateCache.get($attrs.footerTemplate)[1])($scope));
+                    }
+                });
+            }
 
             // Emit
             setTimeout(function() {
