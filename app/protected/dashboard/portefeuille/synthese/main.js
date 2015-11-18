@@ -1,14 +1,6 @@
 angular.module('MetronicApp')
-    .controller('PortefeuilleSyntheseController', function($ClientFactory, $rootScope, $scope, $ocLazyLoad, ServiceBroadcastEtfList) {
+    .controller('PortefeuilleSyntheseController', function($ClientFactory, $rootScope, $scope, ServiceBroadcastEtfList) {
         $scope.$on('$viewContentLoaded', function() {
-            $ocLazyLoad.load({
-                name: 'MetronicApp',
-                insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
-                files: [
-                    '/assets/helper/StockChart.js',
-                ]
-            });
-
             // initialize core components
             App.initAjax();
 
@@ -21,12 +13,6 @@ angular.module('MetronicApp')
                 });
 
                 load_wallet(wallet);
-
-                $ClientFactory.valo(function(valo) {
-                    $ClientFactory.trades(function(trades) {
-                        load_valo_trades(valo, trades);
-                    });
-                });
             });
         });
 
