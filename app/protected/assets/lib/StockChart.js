@@ -17,7 +17,9 @@ function LoadStockChart(series, container, done, clear) {
         container = $(container);
     }
 
-    if (typeof container.highcharts() == 'undefined') {
+    var chart = container.highcharts();
+
+    if (typeof chart == 'undefined') {
         container.highcharts('StockChart', {
             //colors: ['rgba(0, 166, 90,.3)', 'rgba(255, 166, 90,.8)', 'rgba(0, 15, 255,.7)', 'rgba(0, 5, 30,.5)'],
 
@@ -110,20 +112,20 @@ function LoadStockChart(series, container, done, clear) {
             colorAxis: null,
 
             plotOptions: {
-            areaspline: {
-            fillOpacity: 0
-            },
-            series: {
-            borderColor: 'transparent',
-            borderRadius: '3px',
-            }
+                areaspline: {
+                    fillOpacity: 0
+                },
+                series: {
+                    borderColor: 'transparent',
+                    borderRadius: '3px',
+                }
             },
 
             navigator: {
-            outlineWidth: 2,
-            height: 35,
-            margin: 25,
-            maskFill: 'rgba(19, 159, 159, .5)',
+                outlineWidth: 2,
+                height: 35,
+                margin: 25,
+                maskFill: 'rgba(19, 159, 159, .5)',
             },
 
             scrollbar: {
@@ -132,13 +134,12 @@ function LoadStockChart(series, container, done, clear) {
 
             series: []
         });
+        chart = container.highcharts();
     }
 
     clear = clear || false;
 
     if (clear) {
-        var chart = container.highcharts();
-
         while(chart.series.length > 0) {
             chart.series[0].remove( false );
         }
@@ -146,7 +147,7 @@ function LoadStockChart(series, container, done, clear) {
     }
 
     if (typeof series.data == 'object') {
-        container.highcharts().addSeries(series, true, true);
+        chart.addSeries(series, true, true);
         return;
     }
 
@@ -172,6 +173,6 @@ function LoadStockChart(series, container, done, clear) {
 
         series.data = data_parsed;
 
-        container.highcharts().addSeries(series, true, true);
+        chart.addSeries(series, true, true);
     });
 }
