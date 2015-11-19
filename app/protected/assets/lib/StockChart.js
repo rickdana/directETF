@@ -17,7 +17,7 @@ function LoadStockChart(series, container, done, clear) {
         container = $(container);
     }
 
-    if (container.attr('data-chart-etf-loaded') !== '1') {
+    if (typeof container.highcharts() == 'undefined') {
         container.highcharts('StockChart', {
             //colors: ['rgba(0, 166, 90,.3)', 'rgba(255, 166, 90,.8)', 'rgba(0, 15, 255,.7)', 'rgba(0, 5, 30,.5)'],
 
@@ -132,7 +132,6 @@ function LoadStockChart(series, container, done, clear) {
 
             series: []
         });
-        container.attr('data-chart-etf-loaded', '1');
     }
 
     clear = clear || false;
