@@ -1,5 +1,5 @@
 {
-  "WS_URL": "http://directetfws.elasticbeanstalk.com",
+  "WS_URL": "http://localhost:8080",
   "EXPRESS_PORT": 3000,
 
   "MORGAN_FORMAT": "dev"
