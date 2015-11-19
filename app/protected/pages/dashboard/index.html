@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js" data-ng-app="MetronicApp"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js" data-ng-app="MetronicApp"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" data-ng-app="MetronicApp">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+    <title data-ng-bind="$state.current.data.pageTitle + ' - Direct ETF'"></title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
+          type="text/css"/>
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css"/>
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
+          type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN DYMANICLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
+    <link id="ng_load_plugins_before"/>
+    <!-- END DYMANICLY LOADED CSS FILES -->
+    <!-- BEGIN THEME STYLES -->
+    <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
+    <link href="/protected/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/protected/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/protected/assets/layouts/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link href="/protected/assets/layouts/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css"
+          id="style_color"/>
+    <link href="/protected/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="/favicon.ico"/>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<!-- DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices -->
+<!-- DOC: Apply "page-sidebar-closed" class to the body and "page-sidebar-menu-closed" class to the sidebar menu element to hide the sidebar by default -->
+<!-- DOC: Apply "page-sidebar-hide" class to the body to make the sidebar completely hidden on toggle -->
+<!-- DOC: Apply "page-sidebar-closed-hide-logo" class to the body element to make the logo hidden on sidebar toggle -->
+<!-- DOC: Apply "page-sidebar-hide" class to body element to completely hide the sidebar on sidebar toggle -->
+<!-- DOC: Apply "page-sidebar-fixed" class to have fixed sidebar -->
+<!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
+<!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
+<!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
+
+<body ng-controller="AppController"
+      class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-fixed page-on-load"
+      ng-class="{'page-content-white': settings.layout.pageContentWhite,'page-container-bg-solid': settings.layout.pageBodySolid, 'page-sidebar-closed': settings.layout.pageSidebarClosed}">
+<!-- BEGIN PAGE SPINNER -->
+<div ng-spinner-bar class="page-spinner-bar">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+</div>
+<!-- END PAGE SPINNER -->
+<!-- BEGIN HEADER -->
+<div data-ng-include="'/protected/pages/dashboard/header.html'" data-ng-controller="HeaderController"
+     class="page-header navbar navbar-fixed-top"></div>
+<!-- END HEADER -->
+<div class="clearfix"></div>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <!-- BEGIN SIDEBAR -->
+    <div data-ng-include="'/protected/pages/dashboard/sidebar.html'" data-ng-controller="SidebarController"
+         class="page-sidebar-wrapper"></div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN STYLE CUSTOMIZER(optional) -->
+            <div data-ng-include="'/protected/pages/dashboard/theme-panel.html'"
+                 data-ng-controller="ThemePanelController"
+                 class="theme-panel hidden-xs hidden-sm"></div>
+            <!-- END STYLE CUSTOMIZER -->
+            <!-- BEGIN ACTUAL CONTENT -->
+            <div ui-view class="fade-in-up"></div>
+            <!-- END ACTUAL CONTENT -->
+        </div>
+    </div>
+    <!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<div data-ng-include="'/protected/pages/dashboard/footer.html'" data-ng-controller="FooterController"
+     class="page-footer"></div>
+<!-- END FOOTER -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE JQUERY PLUGINS -->
+<!--[if lt IE 9]>
+<script src="/respond/dest/respond.min.js"></script>
+<script src="/ExplorerCanvas/excanvas.js"></script>
+<![endif]-->
+<script src="/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="/jquery.cookie/jquery.cookie.js"></script>
+<script src="/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+        type="text/javascript"></script>
+<script src="/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<!--<script src="/protected/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>-->
+<!--<script src="/uniform/jquery.uniform.min.js" type="text/javascript"></script>-->
+<script src="/bootstrap-switch/dist/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE JQUERY PLUGINS -->
+<!-- Highchats -->
+<script type="text/javascript" src="/highstock-release/highstock.js"></script>
+<script type="text/javascript" src="/highcharts/highcharts-more.js"></script>
+<script type="text/javascript" src="/highmaps/modules/map.js"></script>
+<script type="text/javascript" src="/protected/assets/highcharts/world.js"></script>
+<script type="text/javascript" src="/protected/assets/highcharts/theme.js"></script>
+<!-- BEGIN CORE ANGULARJS PLUGINS -->
+<script src="/angular/angular.min.js" type="text/javascript"></script>
+<script src="/angular-sanitize/angular-sanitize.min.js" type="text/javascript"></script>
+<script src="/angular-touch/angular-touch.min.js" type="text/javascript"></script>
+<script src="/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
+<script src="/ocLazyLoad/dist/ocLazyLoad.min.js" type="text/javascript"></script>
+<script src="/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+<!-- END CORE ANGULARJS PLUGINS -->
+<!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
+<script src="/protected/pages/dashboard/main.js" type="text/javascript"></script>
+<script src="/protected/factory/EtfsFactory.js" type="text/javascript"></script>
+<script src="/protected/factory/ClientFactory.js" type="text/javascript"></script>
+<script src="/protected/component/EtfMapsComponent.js" type="text/javascript"></script>
+<script src="/protected/component/EtfSectorsChartComponent/main.js" type="text/javascript"></script>
+<script src="/protected/component/EtfListComponent/main.js" type="text/javascript"></script>
+<script src="/protected/pages/dashboard/directives.js" type="text/javascript"></script>
+<!-- END APP LEVEL ANGULARJS SCRIPTS -->
+<!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
+<script src="/protected/assets/global/scripts/app.js" type="text/javascript"></script>
+<script src="/protected/assets/layouts/layout/scripts/layout.js" type="text/javascript"></script>
+<script src="/protected/assets/layouts/global/scripts/quick-sidebar.js" type="text/javascript"></script>
+<script src="/protected/assets/layouts/layout/scripts/demo.js" type="text/javascript"></script>
+<!-- END APP LEVEL JQUERY SCRIPTS -->
+<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+
+</html>

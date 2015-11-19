@@ -1,0 +1,30 @@
+extends  ./layout.jade
+
+block vars
+    - var title = "Signup Page"
+
+block content
+    .login-box
+        .login-box-body
+            p.login-box-msg= title
+            if message.lenght
+                .alert.alert-danger= message
+            form(action="/signup" method="post")
+                .form-group.has-feedback
+                    input(name="firstName" type="text" class="form-control" placeholder="Votre prénom")
+                .form-group.has-feedback
+                    input(name="secondName" type="text" class="form-control" placeholder="Votre nom")
+                .form-group.has-feedback
+                    input(name="email" type="email" class="form-control" placeholder="Email")
+                .form-group.has-feedback
+                    input(name="password" type="password" class="form-control" placeholder="Password")
+                .row
+                    .col-xs-8| &nbsp;
+                    .col-xs-4
+                        button(type="submit").btn.btn-primary.btn-block.btn-flat
+                            | Signup
+            .row
+                .col-xs-8
+                    a(href="/login")| Already have an account? login
+                .col-xs-4
+                    a(href="/" class="text-center")| Home

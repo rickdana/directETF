@@ -57,7 +57,7 @@ if (env == 'dev') {
 }
 
 // Binding
-app.use(favicon(path.join(APP_DIR, 'public', 'common', 'favicon.ico')));
+app.use(favicon(path.join(APP_DIR, 'public/assets/favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -76,8 +76,7 @@ var isAuthenticated = function (req, res, next) {
     res.redirect('/login');
 }
 
-var protected_dir = path.join(APP_DIR, 'protected');
-var protected_files = fs.readdirSync(protected_dir);
+var protected_dir = path.join(APP_DIR, '/protected');
 
 app.get('/logout', function(req, res, next) {
     if (req.isAuthenticated()) {
@@ -90,7 +89,7 @@ app.get('/login', function(req, res, next) {
     if (req.isAuthenticated()) {
         res.redirect('/dashboard');
     }
-    res.render(path.join(protected_dir, 'account', 'login.jade'), { message: req.flash('message') });
+    res.render('login', { message: req.flash('message') });
 });
 
 app.post('/login', passport.authenticate('login', {
@@ -100,7 +99,7 @@ app.post('/login', passport.authenticate('login', {
 }));
 
 app.get('/signup', function(req, res){
-    res.render(path.join(protected_dir, 'account', 'signup.jade'),{message: req.flash('message')});
+    res.render('signup',{ message: req.flash('message') });
 });
 
 app.post('/signup', passport.authenticate('signup', {
@@ -109,19 +108,20 @@ app.post('/signup', passport.authenticate('signup', {
     failureFlash : true
 }));
 
-protected_files.forEach(function(file) {
-    app.use('/' + file, function(req, res, next) {
+['/protected', '/dashboard'].forEach(function(route) {
+    app.use(route, function(req, res, next) {
         if (!req.isAuthenticated()) {
             return res.redirect('/');
-//            return res.sendStatus(401);
+    //            return res.sendStatus(401);
         }
         return next();
     });
 });
 
-app.get('/dashboard/main.js', isAuthenticated, function(req, res) {
+// Serve common static files
+app.get('/protected/pages/dashboard/main.js', isAuthenticated, function(req, res) {
     // Append WS_HOST config to the file content
-    fs.readFile(path.join(protected_dir, 'dashboard', 'main.js'), 'utf8', function (err, main_content) {
+    fs.readFile(path.join(protected_dir, '/pages/dashboard/main.js'), 'utf8', function (err, main_content) {
         if (err) {
             return next(err);
         }
@@ -134,14 +134,15 @@ app.get('/dashboard/main.js', isAuthenticated, function(req, res) {
     });
 });
 
-// Serve common static files
-app.use(serveStatic(path.join(APP_DIR, '/public/common')));
+app.get('/dashboard', function(req, res){
+    res.sendFile(path.join(APP_DIR, '/protected/pages/dashboard/index.html'));
+});
+
+app.use(serveStatic(APP_DIR, {index: ['public/pages/index/index.html']}));
 app.use(serveStatic(path.join(APP_DIR, '/bower_components')));
-app.use(serveStatic(path.join(APP_DIR, '/public/pages')));
-app.use(serveStatic(path.join(APP_DIR, '/protected')));
 
 // view engine setup
-app.set('views', path.join(__dirname));
+app.set('views', path.join(__dirname, '/jade'));
 app.set('view engine', 'jade');
 
 // catch 404 and forward to error handler

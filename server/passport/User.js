@@ -42,12 +42,7 @@ var User = {
     },
 
     save: function (done) {
-        db[this.email] = {
-            firstName: this.firstName,
-            secondName: this.secondName
-        };
-
-        done(true);
+        done(false);
     },
 
     validPassword: function (pwd) {
@@ -65,10 +60,9 @@ var User = {
 
     findOne: function (query, done) {
        if (typeof db[query.email] != 'undefined') {
-           console.log(new u(query.email))
            done(false, new u(query.email));
        } else {
-           done(true, false);
+           done(false, false);
        }
     }
 };
@@ -87,7 +81,20 @@ function u(email) {
     return db[email];
 };
 
+function instance(email) {
+    db[email] = {};
+
+    for (var p in User) {
+        db[email][p] = User[p];
+    }
+
+    db[email].email = email;
+
+    return db[email];
+};
+
 module.exports = {
     prototype: User,
-    get: u
+    get: u,
+    instance: instance
 }

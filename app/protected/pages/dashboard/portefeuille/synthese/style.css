@@ -1,0 +1,74 @@
+
+table .compo-filter {
+	padding : 2px 8px;
+	border : 1px solid #DEDBDB;
+	cursor : pointer;
+	margin : 0 1px;
+	border-radius : 4px;
+}
+
+table .selected {
+	background-color : #DEDBDB;
+}
+
+#profits-investment  {
+	height: 400px;
+}
+
+.small-box>.small-box-footer {
+	bottom: 0;
+	display: block;
+	width: 100%;
+}
+
+#sector{
+	position: relative;
+}
+
+#sector .info-box {
+		-webkit-box-shadow:1px 4px 17px -2px rgba(0,0,0,0.75);
+		-moz-box-shadow:1px 4px 17px -2px rgba(0,0,0,0.75);
+		box-shadow:1px 4px 17px -2px rgba(0,0,0,0.75);
+		position: absolute;
+		left: 202px;
+		top: 141px;
+		color: #333;
+		display: none;
+		z-index:900;
+		max-width: 400px;
+}
+
+#sector .info-box .info-box-title{
+	font-size: 16px;
+	font-weight: bold;
+}
+#sector .info-box .info-box-icon {
+	position:absolute;
+	height:100%;
+}
+#sector .info-box .btn,
+#sector .info-box .info-box-icon {
+	transition:background-color 1s, color 1s;
+}
+
+#sector .info-box button {
+	float: right;
+	font-size: 14px;
+	margin-bottom: 6px;
+}
+
+.etf-list-component .etf-column.value,
+.etf-list-component .etf-column.gains  {
+	text-align: right;
+}
+
+.etf-list-component .etf-column.number,
+.etf-list-component .etf-column.quantity  {
+	text-align: center;
+}
+
+.etf-list-component .etf-column.total,
+.etf-list-component .etf-column.cash,
+.etf-list-component .etf-column.total-gains, {
+	font-weight: 700;
+}

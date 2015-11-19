@@ -11,7 +11,7 @@ module.exports = function(passport, User) {
       function(req, username, password, done) {
         var findOrCreateUser = function() {
           // find a user in Mongo with provided username
-          User.findOne({'email': username}, function(err, user) {
+          User.prototype.findOne({'email': username}, function(err, user) {
             // In case of any error return
             if (err){
               console.log('Error in SignUp: '+err);
@@ -25,7 +25,7 @@ module.exports = function(passport, User) {
             } else {
               // if there is no user with that email
               // create the user
-              var newUser = new User(username);
+              var newUser = new User.instance(username);
               // set the user's local credentials
               newUser.setPassword(password);
               newUser.firstName = req.param('firstName');
