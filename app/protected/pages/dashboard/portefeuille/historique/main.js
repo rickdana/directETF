@@ -16,7 +16,7 @@ angular.module('MetronicApp')
             $ClientFactory.wallet(function(wallet) {
                 $ClientFactory.valo(function(valo) {
                     $ClientFactory.trades(function(trades) {
-                        load_valo_trades(valo, trades);
+                        load_historique_valo_trades(valo, trades);
                     });
                 });
             });

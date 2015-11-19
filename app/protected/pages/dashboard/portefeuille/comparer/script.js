@@ -1,9 +1,9 @@
-function load_valo_trades(valo, trades) {
+function load_comparaison_valo_trades(valo, trades) {
 	var invests_by_date = {};
 	var data_trades = [];
 	var trades_by_date = {};
 	var somme_trades = 0;
-	var trades_ca_sto = {};
+	var trades_cash_stockin = {};
 	var rate_house_month = [['2013-01', 2.95], ['2013-02', 2.80], ['2013-03', 2.80],['2013-04', 2.75], ['2013-05', 2.75], ['2013-06', 2.70],
 							['2013-07', 2.80], ['2013-08', 2.90], ['2013-09', 2.90],['2013-10', 2.95], ['2013-11', 2.95], ['2013-12', 2.90],
 							['2014-01', 2.90], ['2014-02', 2.85], ['2014-03', 2.80],['2014-04', 2.70], ['2014-05', 2.60], ['2014-06', 2.60],
@@ -34,16 +34,16 @@ function load_valo_trades(valo, trades) {
 		}
 
 		//CASHIN and STOCKIN
-		if (typeof trades_ca_sto[trades[i].date] == 'undefined' && (trades[i].type == 'CASHIN' || trades[i].type == 'STOCKIN')) {
-			trades_ca_sto[trades[i].date] = 0;
+		if (typeof trades_cash_stockin[trades[i].date] == 'undefined' && (trades[i].type == 'CASHIN' || trades[i].type == 'STOCKIN')) {
+			trades_cash_stockin[trades[i].date] = 0;
 		}
 		switch (trades[i].type) {
 
 			case 'CASHIN':
-				trades_ca_sto[trades[i].date] += trades[i].cash;
+				trades_cash_stockin[trades[i].date] += trades[i].cash;
 				break;
 			case 'STOCKIN':
-				trades_ca_sto[trades[i].date] += trades[i].cash;
+				trades_cash_stockin[trades[i].date] += trades[i].cash;
 		}
 	}
 
@@ -117,7 +117,7 @@ function load_valo_trades(valo, trades) {
 		// Reference rate 3%
 		{        //the reference of interest 3%
 			name: 'Compte-épargne ',
-			data: reference_interest(0.03, valo, trades_ca_sto),
+			data: reference_interest(0.03, valo, trades_cash_stockin),
 			type: 'spline',
 			color: 'rgba(255, 12, 77, .8)',
 			dashStyle: 'shortdot',
@@ -133,7 +133,7 @@ function load_valo_trades(valo, trades) {
 		}
 	];
 
-	LoadStockChart(series, '#profits-investment', function (prices) {
-		return reference_etf(prices, valo, data_valo, trades_ca_sto);
+	LoadStockChart(series, '#portefeuille-comparaison-stockchart', function (prices) {
+		return reference_etf(prices, valo, data_valo, trades_cash_stockin, true);
 	});
 }

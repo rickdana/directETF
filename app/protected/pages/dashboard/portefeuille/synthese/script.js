@@ -62,8 +62,9 @@ function load_etf_list(wallet, etfs, valo, trades) {
 	percents = {};
 	var data_valo = [];
 	var total_value = $("#total-value");
-	var total_gains = $("#total-gains");
+	var total_etfs = $("#total-etfs");
 	var gains_wallet = $("#gains-wallet");
+	var sum_etfs = 0;
 	var sum_gains = 0;
 
 	for (var date in valo) {
@@ -80,15 +81,15 @@ function load_etf_list(wallet, etfs, valo, trades) {
 		var etf = etfs[i];
 		var tr = $("#etf-" + etf.isin);
 		var gains = tr.find('.etf-column.gains');
-
-
 		var gain = gains_by_etf(etf.isin, wallet, trades, etf.price);
+
+		sum_etfs += etf.price * etf.quantity;
 		sum_gains += gain;
 		gains.css('color', gain >= 0 ? "green" : "red");
 		gains.html(gain + " &euro;");
 
 	}
 
-	total_gains.html(sum_gains + " &euro;");
+	total_etfs.html(sum_etfs + " &euro;");
 	gains_wallet.html(sum_gains + " &euro;");
 }

@@ -1,9 +1,9 @@
-function load_valo_trades(valo, trades) {
+function load_historique_valo_trades(valo, trades) {
 	var invests_by_date = {};
 	var data_trades = [];
 	var trades_by_date = {};
 	var somme_trades = 0;
-	var trades_ca_sto = {};
+	var trades_cash_stockin = {};
 
 	//Bénéfices vs Investissement
 	var data_valo = [];
@@ -28,16 +28,16 @@ function load_valo_trades(valo, trades) {
 		}
 
 		//CASHIN and STOCKIN
-		if (typeof trades_ca_sto[trades[i].date] == 'undefined' && (trades[i].type == 'CASHIN' || trades[i].type == 'STOCKIN')) {
-			trades_ca_sto[trades[i].date] = 0;
+		if (typeof trades_cash_stockin[trades[i].date] == 'undefined' && (trades[i].type == 'CASHIN' || trades[i].type == 'STOCKIN')) {
+			trades_cash_stockin[trades[i].date] = 0;
 		}
 		switch (trades[i].type) {
 
 			case 'CASHIN':
-				trades_ca_sto[trades[i].date] += trades[i].cash;
+				trades_cash_stockin[trades[i].date] += trades[i].cash;
 				break;
 			case 'STOCKIN':
-				trades_ca_sto[trades[i].date] += trades[i].cash;
+				trades_cash_stockin[trades[i].date] += trades[i].cash;
 		}
 	}
 
@@ -77,7 +77,7 @@ function load_valo_trades(valo, trades) {
 		}
 	];
 
-	LoadStockChart(series, '#profits-investment', function (prices) {
-		return reference_etf(prices, valo, data_valo, trades_ca_sto);
+	LoadStockChart(series, '#portefeuille-historique-stockchart', function (prices) {
+		return reference_etf(prices, valo, data_valo, trades_cash_stockin, true);
 	});
 }
