@@ -1,7 +1,7 @@
-function LoadStockChart(series, container, done, clear) {
+function LoadStockChart(series, container, done, clear, cb) {
     if (series instanceof Array) {
         for (var i = 0; i < series.length; i++) {
-            LoadStockChart(series[i], container, done, clear);
+            LoadStockChart(series[i], container, done, clear, cb);
         }
         return;
     }
@@ -22,6 +22,16 @@ function LoadStockChart(series, container, done, clear) {
     if (typeof chart == 'undefined') {
         container.highcharts('StockChart', {
             //colors: ['rgba(0, 166, 90,.3)', 'rgba(255, 166, 90,.8)', 'rgba(0, 15, 255,.7)', 'rgba(0, 5, 30,.5)'],
+
+            chart: {
+                events: {
+                    addSeries: function () {
+                        if (typeof cb == 'function') {
+                            cb(this);
+                        }
+                    }
+                }
+            },
 
             yAxis: [{ // Primary yAxis
                     labels: {
@@ -155,7 +165,7 @@ function LoadStockChart(series, container, done, clear) {
         var data_parsed = [];
 
         if (typeof done == 'function') {
-            var ouput = done(prices, container.highcharts());
+            var ouput = done(prices, chart);
             data_parsed = ouput || data_parsed;
         } else {
             for (var i = 0; i < prices.length; i++) {
