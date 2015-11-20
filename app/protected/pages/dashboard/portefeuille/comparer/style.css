@@ -56,3 +56,15 @@ table .selected {
 	font-size: 14px;
 	margin-bottom: 6px;
 }
+
+
+#text-comparaison{
+	position: fixed;
+	max-width: 60px;
+}
+
+#text-comparaison p {
+	padding: 8px;
+	margin: 0;
+	font-size: 13px;
+}
