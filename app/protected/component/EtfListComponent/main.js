@@ -149,7 +149,7 @@ function EtfListController($EtfsFactory, $scope, $element, $attrs, $compile, $ht
 
     $element.$EtfsFactory = $EtfsFactory;
 
-    if (!$attrs.lazy) {
+    if (!$attrs.lazy || $attrs.filter) {
         $element.$EtfsFactory.load($attrs.filter, $element.render);
     }
 }

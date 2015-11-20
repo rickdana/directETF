@@ -132,7 +132,7 @@ angular.module('MetronicApp')
 
         };
 
-        if (!$attrs.lazy) {
+        if (!$attrs.lazy || $attrs.filter) {
             $element.$EtfsFactory.load($attrs.filter, $element.render);
         }
 
