@@ -1,3 +1,29 @@
+function load_lengend_text (lengend) {
+	switch (lengend) {
+
+		case 'portefueille' :
+			return "Cette courbe présente l'évolution de la valeur du portefueille.";
+
+		case 'Investissement' :
+			return "Cette courbe présente la somme de tous investissements.";
+
+		case 'Compte-épargne' :
+			return "La comparaison: livret, taux annuel: 3%.";
+
+		case 'Imonilier' :
+			return "La comparaison: l'investissement à immobilier.";
+
+		case 'Référence ETF US' :
+			return "La comparaison: Lyxor MSCI EMU Small Cap UCITS ETF.";
+
+		case 'Référence ETF FR' :
+			return "La comparaison: Lyxor EURO STOXX 50 Daily Short UCITS ETF.";
+
+		case 'Référence ETF World' :
+			return "La comparaison: Lyxor MSCI India UCITS ETF.";
+	}
+}
+
 function load_comparaison_valo_trades(valo, trades) {
 	var invests_by_date = {};
 	var data_trades = [];
@@ -133,7 +159,37 @@ function load_comparaison_valo_trades(valo, trades) {
 		}
 	];
 
-	LoadStockChart(series, '#portefeuille-comparaison-stockchart', function (prices) {
+	var on_prices = function (prices) {
 		return reference_etf(prices, valo, data_valo, trades_cash_stockin, true);
-	});
+	};
+
+	//hover
+	var text_box = $('#text-comparaison');
+	var on_rendered = function (chart) {
+		if (series.length == chart.series.length) {
+			setTimeout(function() {
+				$(chart.series).each(function (i, serie) {
+					if (!$(serie.legendItem).length) {
+						return;
+					}
+
+					$(serie.legendItem.element).hover(function () {
+						var x= this.getBoundingClientRect().left;
+						var y =this.getBoundingClientRect().top;
+						var text =  $('#text-comparaison p');
+						text.html(load_lengend_text(serie.legendItem.textStr));
+						text_box.css('top', y + 13 + 'px');
+						text_box.css('left', x + 'px');
+						text_box.show();
+					}, function () {
+						text_box.hide();
+					});
+				});
+			}, 100);
+		}
+	};
+
+	LoadStockChart(series, '#portefeuille-comparaison-stockchart', on_prices, false, on_rendered);
+
+
 }

@@ -86,10 +86,10 @@ function load_etf_list(wallet, etfs, valo, trades) {
 		sum_etfs += etf.price * etf.quantity;
 		sum_gains += gain;
 		gains.css('color', gain >= 0 ? "green" : "red");
-		gains.html(gain + " &euro;");
+		gains.html(gain.toFixed(2) + " &euro;");
 
 	}
 
 	total_etfs.html(sum_etfs + " &euro;");
-	gains_wallet.html(sum_gains + " &euro;");
+	gains_wallet.html(sum_gains.toFixed(2) + " &euro;");
 }
