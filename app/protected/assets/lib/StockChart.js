@@ -2,6 +2,7 @@ function LoadStockChart(series, container, done, clear) {
     if (series instanceof Array) {
         for (var i = 0; i < series.length; i++) {
             LoadStockChart(series[i], container, done, clear);
+            clear = false;
         }
         return;
     }
