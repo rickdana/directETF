@@ -10,7 +10,6 @@ angular.module('MetronicApp')
 
         var sector_info_box = $element.find('.sectors-overview-box');
 
-        $element.$EtfsFactory = $EtfsFactory;
         $element.render = function(etfs) {
             $element.find('.etf-sectors-pie-chart-wrapper').highcharts({
         //            colors: ['rgba(0, 166, 90,.3)', 'rgba(0, 166, 90,.8)', 'rgba(0, 166, 90,.7)', 'rgba(0, 166, 90,.5)'],
@@ -133,7 +132,7 @@ angular.module('MetronicApp')
         };
 
         if (!$attrs.lazy || $attrs.filter) {
-            $element.$EtfsFactory.load($attrs.filter, $element.render);
+            $EtfsFactory.load($attrs.filter, $element.render);
         }
 
         function parse(etfs) {
