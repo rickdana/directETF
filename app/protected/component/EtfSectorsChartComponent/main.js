@@ -189,24 +189,17 @@ angular.module('MetronicApp')
         }
 
     }])
-    .directive("ngEtfSectorsChart", function() {
+    .directive("ngEtfSectorsChart", function($EtfsFactory) {
         return {
             controller: "EtfSectorsChartController",
             templateUrl: "/protected/component/EtfSectorsChartComponent/template.html",
             link: function($scope, $element, $attrs) {
-                // Trigger when number of children changes,
-                // including by directives like ng-repeat
                 $scope.$watch(function() {
-                    return $element.attr('filter');
-                }, function() {
-                    // Wait for templates to render
-                    $scope.$evalAsync(function() {
-                        // Finally, directives are evaluated
-                        // and templates are renderer here
-                        if ($element.attr('filter')) {
-                            $element.$EtfsFactory.load($element.attr('filter'), $element.render);
-                        }
-                    });
+                    return $element.attr('data-filter');
+                }, function(newFilter) {
+                    if (newFilter) {
+                        $EtfsFactory.load(newFilter, $element.render);
+                    }
                 });
             }
         };

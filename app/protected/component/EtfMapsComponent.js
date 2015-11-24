@@ -71,7 +71,7 @@ angular.module('MetronicApp')
         }
 
         if (!$attrs.lazy || $attrs.filter) {
-            $element.$EtfsFactory.load($attrs.filter, $element.render);
+            $EtfsFactory.load($attrs.filter, $element.render);
         }
 
         function parse(etfs) {
