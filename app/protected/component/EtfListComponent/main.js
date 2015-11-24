@@ -15,22 +15,8 @@ angular.module('MetronicApp')
 
         return sharedService;
     })
-    .factory('ServiceBroadcastEtfList', function($rootScope) {
-        var sharedService = {};
-
-        sharedService.prepForBroadcast = function(etfs) {
-            this.etfs = etfs;
-            this.broadcastItem();
-        };
-
-        sharedService.broadcastItem = function() {
-            $rootScope.$broadcast('handleBroadcastEtfListLoaded');
-        };
-
-        return sharedService;
-    })
     .directive("ngEtfList",
-        function() {
+        function($EtfsFactory) {
             return {
                 controller: "EtfListController",
                 templateUrl: "/protected/component/EtfListComponent/template.html",
@@ -41,20 +27,16 @@ angular.module('MetronicApp')
                         railVisible: true
                     });
 
-                    // Trigger when number of children changes,
-                    // including by directives like ng-repeat
                     $scope.$watch(function() {
-                        return $element.attr('filter');
-                    }, function() {
-                        // Wait for templates to render
-                        $scope.$evalAsync(function() {
-                            // Finally, directives are evaluated
-                            // and templates are renderer here
-                            if ($element.attr('filter')) {
-                                $element.$EtfsFactory.load($element.attr('filter'), $element.render);
-                            }
-                        });
+                        return $element.attr('data-filter');
+                    }, function(newFilter) {
+                        if (newFilter) {
+                            $EtfsFactory.load(newFilter, $element.render);
+                        }
                     });
+
+                    $attrs.targetScopeName = $attrs.targetScopeName || 'etfs';
+                    $scope[$attrs.targetScopeName] = [];
                 }
             };
         }
@@ -76,81 +58,91 @@ angular.module('MetronicApp')
     )
 
 function EtfListController($EtfsFactory, $scope, $element, $attrs, $compile, $http, $q, $rootScope, $templateCache,
-                                 sharedService, ServiceBroadcastEtfList) {
+                                 sharedService) {
     $element.render = function(etfs) {
-        $scope.etfs = etfs;
+        $scope[$attrs.targetScopeName] = etfs;
 
-        if (typeof $scope[window.location.hash] == 'undefined') {
-            $scope[window.location.hash] = true;
+        $scope.openPopupInfos = function(etf) {
+            sharedService.prepForBroadcast(etf);
+        };
 
-            $scope.openPopupInfos = function(etf) {
-                sharedService.prepForBroadcast(etf);
-            };
+        // Table Head
+        var tbody = $element.find('table tbody');
 
-            // Table Head
-            var tbody = $element.find('table tbody');
+        var uid = Math.floor(Math.random() * (100000 - 1 + 1)) + 1
+          , varTemplateHeadCacheName = 'templateHeadCache' + uid
+          , varTemplateBodyCacheName = 'templateBodyCache' + uid
+          , varTemplateFootCacheName = 'templateFootCache' + uid;
 
-            $element.find('table thead').remove();
-            $attrs.headerTemplate = $attrs.headerTemplate || "/protected/component/EtfListComponent/template-head.html";
+        $element.find('table thead').remove();
+        $attrs.headerTemplate = $attrs.headerTemplate || "/protected/component/EtfListComponent/template-head.html";
 
-            $q.all([
-                $http.get($attrs.headerTemplate, { cache : $templateCache })
-            ]).then(function(resp) {
-                $rootScope.templateHeadCache = resp;
-            });
+        $q.all([
+            $http.get($attrs.headerTemplate, { cache : $templateCache })
+        ]).then(function(resp) {
+            $rootScope[varTemplateHeadCacheName] = resp;
+        });
 
-            $scope.$watch('templateHeadCache', function(n, o) {
-                if(n) {
-                    tbody.before($compile($templateCache.get($attrs.headerTemplate)[1])($scope));
-                }
-            });
-
-            // Table Body Row
-            $attrs.rowTemplate = $attrs.rowTemplate || "/protected/component/EtfListComponent/template-row.html";
-
-            tbody.find('tr').remove();
-            tbody.html("");
-
-            $q.all([
-                $http.get($attrs.rowTemplate, { cache : $templateCache })
-            ]).then(function(resp) {
-                $rootScope.templateBodyCache = resp;
-            })
-
-            $scope.$watch('templateBodyCache', function(n, o) {
-                if(n) {
-                    tbody.append($compile($templateCache.get($attrs.rowTemplate)[1])($scope));
-                }
-            });
-
-            // Table Foot
-            if ($attrs.footerTemplate) {
-                $element.find('table tfoot').remove();
-
-                $q.all([
-                    $http.get($attrs.footerTemplate, { cache : $templateCache })
-                ]).then(function(resp) {
-                    $rootScope.templateFootCache = resp;
-                });
-
-                $scope.$watch('templateFootCache', function(n, o) {
-                    if(n) {
-                        tbody.after($compile($templateCache.get($attrs.footerTemplate)[1])($scope));
-                    }
-                });
+        $scope.$watch(varTemplateHeadCacheName, function(n, o) {
+            if(n) {
+                tbody.before($compile($templateCache.get($attrs.headerTemplate)[1])($scope));
             }
+        });
 
-            // Emit
-            setTimeout(function() {
-                ServiceBroadcastEtfList.prepForBroadcast(etfs);
-            }, 500);
+        // Table Body Row
+        $attrs.rowTemplate = $attrs.rowTemplate || "/protected/component/EtfListComponent/template-row.html";
+
+        tbody.find('tr').remove();
+        tbody.html("");
+
+        $q.all([
+            $http.get($attrs.rowTemplate, { cache : $templateCache })
+        ]).then(function(resp) {
+            $rootScope[varTemplateBodyCacheName] = resp;
+        })
+
+        $scope.$watch(varTemplateBodyCacheName, function(n, o) {
+            if(n) {
+                tbody.append($compile($templateCache.get($attrs.rowTemplate)[1])($scope));
+            }
+        });
+
+        // Table Foot
+        if ($attrs.footerTemplate) {
+            $element.find('table tfoot').remove();
+
+            $q.all([
+                $http.get($attrs.footerTemplate, { cache : $templateCache })
+            ]).then(function(resp) {
+                $rootScope[varTemplateFootCacheName] = resp;
+            });
+
+            $scope.$watch(varTemplateFootCacheName, function(n, o) {
+                if(n) {
+                    tbody.after($compile($templateCache.get($attrs.footerTemplate)[1])($scope));
+                }
+            });
         }
+
+        // Emit
+        setTimeout(function() {
+            if (typeof $attrs.onLoaded == 'string') {
+                if (typeof $scope[$attrs.onLoaded] != 'function') {
+                    throw new Error('Cannot find callback ' + $attrs.onLoaded + ' in the current $scope!');
+                }
+            } else {
+                if (typeof $scope.cbEtfsListLoaded == 'function') {
+                    $attrs.onLoaded = 'cbEtfsListLoaded';
+                } else {
+                    return;
+                }
+            }
+            $scope[$attrs.onLoaded](etfs);
+        }, 500);
     };
 
-    $element.$EtfsFactory = $EtfsFactory;
-
     if (!$attrs.lazy || $attrs.filter) {
-        $element.$EtfsFactory.load($attrs.filter, $element.render);
+        $EtfsFactory.load($attrs.filter, $element.render);
     }
 }
 
@@ -193,7 +185,7 @@ function PopupInfosController($scope, $ocLazyLoad, $element, sharedService) {
         $scope.name = sharedService.message.name;
         $scope.price = sharedService.message.price;
 
-        $element.find('.update-on-new-isin').attr('filter', $scope.isin);
+        $element.find('.update-on-new-isin').attr('data-filter', $scope.isin);
 
         $element.fadeIn('slow');
         onresize();
@@ -212,5 +204,5 @@ function PopupInfosController($scope, $ocLazyLoad, $element, sharedService) {
 }
 
 EtfListController.$inject = ['$EtfsFactory', '$scope', '$element', '$attrs', '$compile', '$http', '$q', '$rootScope',
-                             '$templateCache', 'mySharedService', 'ServiceBroadcastEtfList'];
+                             '$templateCache', 'mySharedService'];
 PopupInfosController.$inject = ['$scope', '$ocLazyLoad', '$element', 'mySharedService'];

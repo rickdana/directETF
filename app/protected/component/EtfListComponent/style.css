@@ -1,8 +1,9 @@
-.etf-list-component .etf-column.price-cash,
-.etf-list-component .etf-column.order,
-.etf-list-component .etf-column.sector,
-.etf-list-component .etf-column.country {
+.etf-list-component .etf-column.sectors,
+.etf-list-component .etf-column.countries {
     display:none;
+}
+.etf-list-component .etf-column.quantity {
+    text-align: center;
 }
 .etf-list-component .etf-column.price {
     text-align: right;
