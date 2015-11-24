@@ -16,7 +16,7 @@ function load_wallet(wallet, valo) {
 	var num1 = wallet['dividends']['EUR'].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' &euro;';
 	$("#portefeuille-benefice .number").html(num1);
 
-	$('#investment-list, #maps-repartition, #sectors-overview').attr('filter', JSON.stringify(wallet.etf));
+	$('#investment-list, #maps-repartition, #sectors-overview').attr('data-filter', JSON.stringify(wallet.etf));
 }
 
 function gains_by_etf(isin, wallet, trades, price) {

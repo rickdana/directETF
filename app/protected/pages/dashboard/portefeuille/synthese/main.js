@@ -1,31 +1,28 @@
 angular.module('MetronicApp')
-    .controller('PortefeuilleSyntheseController', function($ClientFactory, $rootScope, $scope, ServiceBroadcastEtfList) {
+    .controller('PortefeuilleSyntheseController', function($ClientFactory, $rootScope, $scope) {
         $scope.$on('$viewContentLoaded', function() {
             // initialize core components
             App.initAjax();
+        });
 
-            $ClientFactory.wallet(function(wallet) {
+        $ClientFactory.wallet(function(wallet) {
 
-                $scope.client = {
-                    wallet: wallet
-                };
+            $scope.client = {
+                wallet: wallet
+            };
 
-                $ClientFactory.valo(function(valo) {
+            $ClientFactory.valo(function(valo) {
 
-                    $ClientFactory.trades(function(trades) {
+                $ClientFactory.trades(function(trades) {
 
-                        $rootScope.$on('handleBroadcastEtfListLoaded', function() {
-                            if (location.hash.search(/\/portefeuille/) == -1) {
-                                return;
-                            }
-                            load_etf_list(wallet, ServiceBroadcastEtfList.etfs, valo, trades);
-                        });
+                    $scope.cbEtfsListLoaded = function(etfs) {
+                        load_etf_list(wallet, etfs, valo, trades);
+                    };
 
-                        load_wallet(wallet, valo);
-                    });
+                    load_wallet(wallet, valo);
                 });
-
             });
+
         });
 
         // set sidebar closed and body solid layout mode
