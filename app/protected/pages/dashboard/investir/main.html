@@ -129,7 +129,8 @@
                     <div class="entry">Combien souhaitez-vous investir ?
                         <div class="range-wrapper-wallet text-center">
                             <input id="catch-max" name="wallet-range" type="text" class="input-range"
-                                   data-min="1" data-max="{{client.wallet.cash}}" data-from="{{client.wallet.cash}}"
+                                   data-min="1" data-max="{{client.portofolio.cash}}"
+                                   data-from="{{client.portofolio.cash}}"
                                    data-postfix="&euro;">
                         </div>
                     </div>
@@ -238,7 +239,7 @@
                     <tbody>
                     <tr>
                         <td>Liquidités disponibles</td>
-                        <td class="text-right">{{client.wallet.cash | number: 2}}&nbsp;&euro;</td>
+                        <td class="text-right">{{client.portofolio.cash | number: 2}}&nbsp;&euro;</td>
                     </tr>
                     <tr>
                         <td>Liquidités sortantes</td>
@@ -253,7 +254,7 @@
                     <tfoot>
                     <tr>
                         <td class="text-left">Liquidités restantes estimées après transaction</td>
-                        <td class="text-right">{{client.wallet.cash - cash | number: 2}}&nbsp;&euro;</td>
+                        <td class="text-right">{{client.portofolio.cash - cash | number: 2}}&nbsp;&euro;</td>
                     </tr>
                     </tfoot>
 

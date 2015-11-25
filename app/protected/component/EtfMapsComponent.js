@@ -127,13 +127,11 @@ angular.module('MetronicApp')
         return {
             controller: "EtfMapsController",
             link: function($scope, $element, $attrs) {
-
-
                 $scope.$watch(function() {
                     return $element.attr('data-filter');
-                }, function(newFilter) {
-                    if (newFilter) {
-                        $EtfsFactory.load(newFilter, $element.render);
+                }, function(filter) {
+                    if (filter) {
+                        $EtfsFactory.load(filter, $element.render);
                     }
                 });
             }

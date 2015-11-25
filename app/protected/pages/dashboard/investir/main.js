@@ -152,16 +152,14 @@ angular.module('MetronicApp')
                     case '3':
                         $OrdersFactory.lock();
                         setTimeout(function() {
-                            $scope.$apply(function() {
-                                $rootScope.runSimulation();
-                            });
+                            $rootScope.runSimulation();
                         }, 500);
                         break;
 
                     case '4':
                         $OrdersFactory.lock();
                         setTimeout(function() {
-                            $scope.$apply(function() {
+                            $rootScope.$apply(function() {
                                 $('[data-wizard-panel-step=4] .update-with-etfs-selection')
                                     .attr('data-filter', JSON.stringify($OrdersFactory.get()));
                             });
@@ -182,8 +180,8 @@ angular.module('MetronicApp')
 
                 $(window).scrollTop(0);
 
-                $('.wizard-panel').hide('slow');
-                $('[data-wizard-panel-step=' + current.attr('data-step') + ']').show('slow');
+                $('.wizard-panel').hide();
+                $('[data-wizard-panel-step=' + current.attr('data-step') + ']').show();
             });
 
             var step = parseInt($(this).attr('data-step'));
@@ -195,25 +193,17 @@ angular.module('MetronicApp')
 
         $('[data-wizard-panel-step=1]').show('slow');
 
-        $ClientFactory.wallet(function(wallet) {
-            var cash;
-
-            for (var device in wallet.cash) {
-                cash = wallet.cash[device];
-            }
-
+        $ClientFactory.portofolio(function(portofolio) {
             $rootScope.client = {
-                wallet: {
-                    cash: cash
-                }
+                portofolio: portofolio
             };
 
             var catch_max = $('#catch-max');
 
             catch_max.ionRangeSlider({
                 min: catch_max.attr('data-min'),
-                max: cash,
-                from: cash,
+                max: portofolio.cash,
+                from: portofolio.cash,
                 postfix: catch_max.attr('data-postfix'),
                 //            grid: true,
                 hide_min_max: true,
@@ -280,36 +270,6 @@ angular.module('MetronicApp')
             var wizard_panel_3 = $('[data-wizard-panel-step=3]'),
                 wizard_panel_3_table = wizard_panel_3.find('table#summary-table'),
                 wizard_panel_3_list = wizard_panel_3_table.find("tbody");
-
-              //
-              // Selected view
-              var selection_legend_action = $("#selection-legend-action"),
-
-                  compute_order_cash = function() {
-                      var sum = 0;
-                      var wizard_panel_3_list_elements =  wizard_panel_3_list.find('tr');
-
-                      wizard_panel_2_list.find('tr').each(function(i) {
-                          var prices = parseInt($(this).find('.order-number').first().text()) * parseFloat($(this).find('.order-price').first().text());
-
-                          $(wizard_panel_3_list_elements.get(i)).find('.price-cash').first().html(prices + ' &euro;');
-
-                          sum += prices;
-                      });
-
-                      $('.order-cash').text(sum);
-                      $('.cash-diff').text(wallet_cash - sum);
-
-            //			    $('.input-range').each(function() {
-            //			        $(this).data("ionRangeSlider").reset();
-            //			    })
-                  };
-
-
-              selection_legend_action.click(function() {
-                  $(this).hide('slow');
-              });
-              selection_legend_action.hide();
 
             //      var oTable = wizard_panel_1_table.dataTable({
             //          bFilter: !false,
@@ -571,7 +531,7 @@ angular.module('MetronicApp')
         	return [year, month, day].join('-');
         }
 
-        //Simulation of investments in the wallet
+        //Simulation of investments in the portofolio
         function evolution_invests(ref_etfs, data_valo,  done_evolution) {
         	var evolution_etfs = [];
         	var evolution_one_etf = {};
@@ -623,7 +583,7 @@ angular.module('MetronicApp')
         	etf_price(ref_etfs[index++][0], prices_callback);
         }
 
-        //Simulation of investments in the wallet
+        //Simulation of investments in the portofolio
         function simulation(ref_etfs, valo, data_valo,  done_simulation) {
         	var simulation_etfs = [];
         	var simul_etfs = {};
@@ -773,7 +733,7 @@ angular.module('MetronicApp')
                 };
 
                 function simulation_cb(new_invest) {
-                    var series = [{      //the value of wallet
+                    var series = [{      //the value of portofolio
                         name: 'Portefeuille',
                         type: 'spline',
                         data: data_valo,

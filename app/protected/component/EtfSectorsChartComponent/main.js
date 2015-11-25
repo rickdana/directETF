@@ -1,5 +1,5 @@
 angular.module('MetronicApp')
-    .controller('EtfSectorsChartController', ['$ocLazyLoad', '$EtfsFactory', '$scope', '$element', '$attrs', function($ocLazyLoad, $EtfsFactory, $scope, $element, $attrs) {
+    .controller('EtfSectorsChartController', function($ocLazyLoad, $EtfsFactory, $scope, $element, $attrs) {
         $ocLazyLoad.load({
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
 
@@ -188,7 +188,7 @@ angular.module('MetronicApp')
             return series;
         }
 
-    }])
+    })
     .directive("ngEtfSectorsChart", function($EtfsFactory) {
         return {
             controller: "EtfSectorsChartController",
@@ -196,9 +196,9 @@ angular.module('MetronicApp')
             link: function($scope, $element, $attrs) {
                 $scope.$watch(function() {
                     return $element.attr('data-filter');
-                }, function(newFilter) {
-                    if (newFilter) {
-                        $EtfsFactory.load(newFilter, $element.render);
+                }, function(filter) {
+                    if (filter) {
+                        $EtfsFactory.load(filter, $element.render, false);
                     }
                 });
             }

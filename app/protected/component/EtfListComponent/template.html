@@ -3,36 +3,37 @@
         <tbody data-list-items></tbody>
     </table>
 
-    <div id="etf-info-box-wrapper" title="Cliquez pour fermer" ng-controller="PopupInfosController"
+    <div class="etf-info-box-wrapper" title="Cliquez pour fermer" ng-controller="PopupInfosController"
          data-etf-popup-infos>
-        <div id="etf-info-box" class="info-box" title="" ng-draggable>
+        <div class="etf-info-box" title="" ng-draggable>
             <div class="info-box-icon bg-green"><i class="fa fa-area-chart"></i></div>
             <div class="info-box-content">
-                <h3 class="info-box-text">{{name}}</h3>
+                <h3 class="info-box-text">{{etf.name}}</h3>
 
                 <div class="infos">
-                    <span class="isin" data-label="ISIN">{{isin}}</span>
-                    <span class="cloture" data-label="Derniere cloture">{{price}} &euro;</span>
+                    <span class="isin" data-label="ISIN">{{etf.isin}}</span>
+                    <span class="cloture" data-label="Dernière clôture">{{etf.price}} &euro;</span>
                     <span class="dividente" data-label="Dividendes">4,3 %</span>
                 </div>
 
-                <P class="etf-info-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac
+                <p class="etf-info-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac
                     ipsum iaculis velit consequat porttitor sit amet non augue. Ut faucibus libero lacus.
                     <a href="#">En savoir plus...</a>
-                </P>
+                </p>
 
                 <div class="scroller-zone">
                     <h4>Répartition sectorielle</h4>
 
-                    <div class="update-on-new-isin" data-lazy="true" data-height="320" data-show-in-legend="false"
+                    <div data-lazy="true" data-filter="{{etf.isin}}" data-height="320" data-show-in-legend="false"
                          data-enable-data-labels="true" ng-etf-sectors-chart></div>
 
                     <h4>Répartition dans le monde</h4>
 
-                    <div class="update-on-new-isin" data-lazy="true" data-height="180" ng-etf-maps></div>
+                    <div data-lazy="true" data-filter="{{etf.isin}}" data-height="180" ng-etf-maps></div>
 
                     <h4>Performance historique</h4>
-                    <div id="etf-info-box-chart-performance" class="chart-wrapper"></div>
+
+                    <div class="etf-info-box-chart-performance"></div>
                 </div>
 
                 <button class="btn bg-green pull-right">Fermer</button>

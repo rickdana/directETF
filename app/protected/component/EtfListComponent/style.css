@@ -13,7 +13,7 @@ section.content {
     position:relative;
 }
 
-#etf-info-box-wrapper {
+.etf-info-box-wrapper {
     content:"";
 
     position:fixed;
@@ -41,7 +41,7 @@ section.content {
   position: relative;
 }
 
-#etf-info-box {
+.etf-info-box {
     position:absolute;
 
     max-width:780px;
@@ -63,17 +63,17 @@ section.content {
     box-shadow: 10px 10px 150px 23px rgba(0,0,0,0.53);
 }
 
-#etf-info-box h3 {
+.etf-info-box h3 {
     font-weight:bold;
     font-size:1.1em;
 }
 
-#etf-info-box i,
-#etf-info-box button {
+.etf-info-box i,
+.etf-info-box button {
     color:rgba(255,255,255,.85);
 }
 
-#etf-info-box .info-box-icon {
+.etf-info-box .info-box-icon {
     position:absolute;
     height:100%;
     width:130px;
@@ -83,7 +83,7 @@ section.content {
     font-size: 75px;
 }
 
-#etf-info-box .info-box-content {
+.etf-info-box .info-box-content {
     position:relative;
 
     margin-left: 140px;
@@ -91,7 +91,7 @@ section.content {
     padding: 0 13px 10px 10px;
 }
 
-#etf-info-box .info-box-content .etf-info-details {
+.etf-info-box .info-box-content .etf-info-details {
     float:right;
 
     font-weight:bold;
@@ -100,31 +100,31 @@ section.content {
     margin-right: 11px;
 }
 
-#etf-info-box .info-box-content .infos {
+.etf-info-box .info-box-content .infos {
     color:#818688;
 }
 
-#etf-info-box .info-box-content .infos span {
+.etf-info-box .info-box-content .infos span {
     display:inline-block;
     margin-right: 5px;
 }
 
-#etf-info-box .info-box-content .infos span:before {
+.etf-info-box .info-box-content .infos span:before {
     content: attr(data-label) ": ";
 }
 
-#etf-info-box .info-box-content .etf-info-description {
+.etf-info-box .info-box-content .etf-info-description {
     margin:10px 0 0;
 }
 
-#etf-info-box .scroller-zone {
+.etf-info-box .scroller-zone {
     position:relative;
 
     min-height:200px;
     max-height:500px;
     overflow-y:auto;
 }
-#etf-info-box .scroller-zone:before {
+.etf-info-box .scroller-zone:before {
     content: "";
     position:filter;
     top:0;
@@ -138,7 +138,7 @@ section.content {
     background: linear-gradient(to bottom,  rgba(255,255,255,0.8) 100%, rgba(255,255,255,0) 0%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ccffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
 }
-#etf-info-box .scroller-zone:after {
+.etf-info-box .scroller-zone:after {
     content: "";
     position:filter;
     bottom:0;
@@ -160,6 +160,6 @@ section.content {
     font-weight:400;
 }
 
-#etf-info-box button {
+.etf-info-box button {
     margin-bottom:13px;
 }
