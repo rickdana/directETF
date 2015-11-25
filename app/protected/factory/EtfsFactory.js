@@ -1,5 +1,5 @@
 angular.module('MetronicApp')
-    .factory('$EtfsFactory', ['$http', function($http) {
+    .factory('$EtfsFactory', function($http) {
         var etfs = [];
         var queries = {};
     
@@ -109,6 +109,10 @@ angular.module('MetronicApp')
             return _filters;
         };
 
+        function is_valid_isin(isin) {
+            return isin[0].match(/[A-Z]/) instanceof Array;
+        }
+
         return {
             load: function(filters, cb, getPrice) {
                 filters = parseFilters(filters);
@@ -178,6 +182,9 @@ angular.module('MetronicApp')
                                 cb(etfs);
                             }, getPrice);
                         }
+                    } else if (is_valid_isin(filters[0])) {
+                        // filters = [isin_1, isin_2, ..., isin_n]
+                        load(filters, cb, getPrice);
                     }
 
                 } else if (typeof filters == 'object' && !(filters instanceof Array)) {
@@ -225,4 +232,4 @@ angular.module('MetronicApp')
                 }
             }
         };
-    }]);
+    });
