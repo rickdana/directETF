@@ -77,9 +77,8 @@ function LoadStockChart(series, container, done, clear, cb) {
 
             legend: {
                 enabled: true,
-                verticalAlign: 'top',
-                y: -15,
-                margin: 20,
+                //layout: 'vertical',
+                y: 12,
                 backgroundColor: 'transparent',
                 itemStyle: {
                     color: 'rgb(69, 114, 167)',
