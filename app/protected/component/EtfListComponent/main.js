@@ -15,7 +15,7 @@ angular.module('MetronicApp')
                         return $element.attr('data-filter');
                     }, function(newFilter) {
                         if (newFilter) {
-                            $EtfsFactory.load(newFilter, $element.render);
+                            $EtfsFactory.load(newFilter, $element.onLoaded);
                         }
                     });
 
@@ -41,8 +41,27 @@ angular.module('MetronicApp')
         }
     )
     .controller('EtfListController', function($EtfsFactory, $scope, $element, $attrs, $compile, $http, $q, $rootScope, $templateCache) {
-        $element.render = function(etfs) {
-            $scope[$attrs.targetScopeName] = etfs;
+        $element.onLoaded = function(etfs) {
+            if (typeof $attrs.onBeforeRendering == 'string') {
+                if (typeof $scope[$attrs.onBeforeRendering] != 'function') {
+                    throw new Error('Cannot find callback ' + $attrs.onBeforeRendering + ' in the current $scope!');
+                }
+
+                $scope[$attrs.onBeforeRendering](etfs, function() {
+                    //render(etfs);
+                });
+            } else if (typeof $scope.cbEtfsListBeforeRendering == 'function') {
+                $scope.cbEtfsListBeforeRendering(etfs, function(etfs) {
+                    render(etfs);
+                });
+            } else {
+                render(etfs);
+            }
+        };
+
+        function render(etfs) {
+            //$scope[$attrs.targetScopeName] = etfs;
+            $scope.etfs = etfs;
 
             // Table Head
             var tbody = $element.find('table tbody');
@@ -104,23 +123,23 @@ angular.module('MetronicApp')
 
             // Emit
             setTimeout(function() {
-                if (typeof $attrs.onLoaded == 'string') {
-                    if (typeof $scope[$attrs.onLoaded] != 'function') {
-                        throw new Error('Cannot find callback ' + $attrs.onLoaded + ' in the current $scope!');
+                if (typeof $attrs.onRendered == 'string') {
+                    if (typeof $scope[$attrs.onRendered] != 'function') {
+                        throw new Error('Cannot find callback ' + $attrs.onRendered + ' in the current $scope!');
                     }
                 } else {
                     if (typeof $scope.cbEtfsListLoaded == 'function') {
-                        $attrs.onLoaded = 'cbEtfsListLoaded';
+                        $attrs.onRendered = 'cbEtfsListLoaded';
                     } else {
                         return;
                     }
                 }
-                $scope[$attrs.onLoaded](etfs);
+                $scope[$attrs.onRendered](etfs);
             }, 500);
-        };
+        }
 
         if (!$attrs.lazy || $attrs.filter) {
-            $EtfsFactory.load($attrs.filter, $element.render);
+            $EtfsFactory.load($attrs.filter, $element.onLoaded);
         }
     })
     .controller('PopupInfosController', function($scope, $ocLazyLoad, $element) {

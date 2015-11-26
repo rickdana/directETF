@@ -1,9 +1,7 @@
 <tr ng-repeat="etf in etfs" id="etf-{{etf.isin}}" data-isin="{{etf.isin}}">
     <td class="etf-column name" data-etf-attr-name="name">{{etf.name}}</td>
     <td class="etf-column quantity number" data-etf-attr-name="quantity" >{{etf.quantity}}</td>
-    <td class="etf-column price" data-etf-attr-name="price">{{etf.price}} &euro;</td>
+    <td class="etf-column price" data-etf-attr-name="price">{{etf.price}} {{client.portofolio.currencySymb}}</td>
     <td class="etf-column value" data-etf-attr-name="value">{{etf.quantity * etf.price | number: 2}} &euro;</td>
-    <td class="etf-column gains" data-etf-attr-name="gain-loss"></td>
+    <td class="etf-column gains"><span class="gain-loss">{{etf.gains}}</span> {{client.portofolio.currencySymb}}</td>
 </tr>
-
-

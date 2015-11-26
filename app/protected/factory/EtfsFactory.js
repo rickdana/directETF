@@ -116,7 +116,7 @@ angular.module('MetronicApp')
         }
 
         return {
-            load: function(filters, cb, getPrice, sp) {
+            load: function(filters, cb, getPrice) {
                 filters = parseFilters(filters);
 
                 var query = JSON.stringify(filters);

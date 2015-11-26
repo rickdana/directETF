@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-settings theme-font hide"></i>
+                    <span class="caption-subject font-blue-madison bold uppercase">Mes préférences d'investissement</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <form role="form" action="#" ng-controller="PortfolioSettingsController">
+                    <div class="form-group">
+                        <label class="control-label">Objectif d'investissement</label>
+
+                        <div class="portfolio-goal" ng-repeat="goal in portfolio.goals">
+                            <input id="goal-{{goal.code}}" type="radio" ng-model="goal.code" name="goal"
+                                   value="{{goal.code}}">
+                            <label for="goal-{{goal.code}}">{{goal.name}}</label></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Investissement mensuel</label>
+                        <input type="real" placeholder="Renseignez le montant mensuel d'investissement"
+                               ng-model="client.portfolio.settings.amountMonthly" class="form-control" required></div>
+                    <div class="form-group">
+                        <label class="control-label">Niveau de risque accepté</label>
+                        <input type="text" placeholder="Définissez le niveau de risque d'investissement"
+                               ng-model="client.portfolio.settings.riskLevel" class="form-control" required></div>
+                    <div class="margiv-top-10">
+                        <a href="javascript:void(0)" class="btn green-haze"
+                           ng-click="client.portfolio.settings.saveChanges()"> Enregistrer les changements </a>
+                        <button type="reset" class="btn default"> Annuler</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
