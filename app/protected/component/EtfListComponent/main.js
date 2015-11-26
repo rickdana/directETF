@@ -42,21 +42,26 @@ angular.module('MetronicApp')
     )
     .controller('EtfListController', function($EtfsFactory, $scope, $element, $attrs, $compile, $http, $q, $rootScope, $templateCache) {
         $element.onLoaded = function(etfs) {
-            if (typeof $attrs.onLoaded == 'string') {
-                if (typeof $scope[$attrs.onLoaded] != 'function') {
-                    throw new Error('Cannot find callback ' + $attrs.onLoaded + ' in the current $scope!');
+            if (typeof $attrs.onBeforeRendering == 'string') {
+                if (typeof $scope[$attrs.onBeforeRendering] != 'function') {
+                    throw new Error('Cannot find callback ' + $attrs.onBeforeRendering + ' in the current $scope!');
                 }
-                $scope[$attrs.onLoaded](etfs, function() {
+
+                $scope[$attrs.onBeforeRendering](etfs, function() {
+                    //render(etfs);
+                });
+            } else if (typeof $scope.cbEtfsListBeforeRendering == 'function') {
+                $scope.cbEtfsListBeforeRendering(etfs, function(etfs) {
                     render(etfs);
                 });
-
             } else {
                 render(etfs);
             }
         };
 
         function render(etfs) {
-            $scope[$attrs.targetScopeName] = etfs;
+            //$scope[$attrs.targetScopeName] = etfs;
+            $scope.etfs = etfs;
 
             // Table Head
             var tbody = $element.find('table tbody');
