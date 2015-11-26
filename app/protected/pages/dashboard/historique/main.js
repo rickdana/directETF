@@ -12,7 +12,10 @@ angular.module('MetronicApp').controller('HistoriqueController', function( $Clie
 
         App.initAjax();
 
-        $ClientFactory.trades(function(trades) {
+        $ClientFactory.portfolio.trades(function(err, trades) {
+            if (err) {
+                throw err;
+            }
             load_user_history (trades);
         });
 
