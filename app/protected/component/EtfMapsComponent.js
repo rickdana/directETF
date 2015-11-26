@@ -1,6 +1,5 @@
 angular.module('MetronicApp')
     .controller('EtfMapsController', ['$EtfsFactory', '$scope', '$element', '$attrs', function($EtfsFactory, $scope, $element, $attrs) {
-        $element.$EtfsFactory = $EtfsFactory;
         $element.render = function(etfs) {
             var mapData = Highcharts.geojson(Highcharts.maps['custom/world']);
 
@@ -72,7 +71,7 @@ angular.module('MetronicApp')
         }
 
         if (!$attrs.lazy || $attrs.filter) {
-            $element.$EtfsFactory.load($attrs.filter, $element.render);
+            $EtfsFactory.load($attrs.filter, $element.render);
         }
 
         function parse(etfs) {
@@ -124,23 +123,16 @@ angular.module('MetronicApp')
         }
 
     }])
-    .directive("ngEtfMaps", function() {
+    .directive("ngEtfMaps", function($EtfsFactory) {
         return {
             controller: "EtfMapsController",
             link: function($scope, $element, $attrs) {
-                // Trigger when number of children changes,
-                // including by directives like ng-repeat
                 $scope.$watch(function() {
-                    return $element.attr('filter');
-                }, function() {
-                    // Wait for templates to render
-                    $scope.$evalAsync(function() {
-                        // Finally, directives are evaluated
-                        // and templates are renderer here
-                        if ($element.attr('filter')) {
-                            $element.$EtfsFactory.load($element.attr('filter'), $element.render);
-                        }
-                    });
+                    return $element.attr('data-filter');
+                }, function(filter) {
+                    if (filter) {
+                        $EtfsFactory.load(filter, $element.render);
+                    }
                 });
             }
         };

@@ -1,5 +1,5 @@
 angular.module('MetronicApp')
-    .controller('EtfSectorsChartController', ['$ocLazyLoad', '$EtfsFactory', '$scope', '$element', '$attrs', function($ocLazyLoad, $EtfsFactory, $scope, $element, $attrs) {
+    .controller('EtfSectorsChartController', function($ocLazyLoad, $EtfsFactory, $scope, $element, $attrs) {
         $ocLazyLoad.load({
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
 
@@ -10,7 +10,6 @@ angular.module('MetronicApp')
 
         var sector_info_box = $element.find('.sectors-overview-box');
 
-        $element.$EtfsFactory = $EtfsFactory;
         $element.render = function(etfs) {
             $element.find('.etf-sectors-pie-chart-wrapper').highcharts({
         //            colors: ['rgba(0, 166, 90,.3)', 'rgba(0, 166, 90,.8)', 'rgba(0, 166, 90,.7)', 'rgba(0, 166, 90,.5)'],
@@ -133,7 +132,7 @@ angular.module('MetronicApp')
         };
 
         if (!$attrs.lazy || $attrs.filter) {
-            $element.$EtfsFactory.load($attrs.filter, $element.render);
+            $EtfsFactory.load($attrs.filter, $element.render);
         }
 
         function parse(etfs) {
@@ -189,25 +188,18 @@ angular.module('MetronicApp')
             return series;
         }
 
-    }])
-    .directive("ngEtfSectorsChart", function() {
+    })
+    .directive("ngEtfSectorsChart", function($EtfsFactory) {
         return {
             controller: "EtfSectorsChartController",
             templateUrl: "/protected/component/EtfSectorsChartComponent/template.html",
             link: function($scope, $element, $attrs) {
-                // Trigger when number of children changes,
-                // including by directives like ng-repeat
                 $scope.$watch(function() {
-                    return $element.attr('filter');
-                }, function() {
-                    // Wait for templates to render
-                    $scope.$evalAsync(function() {
-                        // Finally, directives are evaluated
-                        // and templates are renderer here
-                        if ($element.attr('filter')) {
-                            $element.$EtfsFactory.load($element.attr('filter'), $element.render);
-                        }
-                    });
+                    return $element.attr('data-filter');
+                }, function(filter) {
+                    if (filter) {
+                        $EtfsFactory.load(filter, $element.render, false);
+                    }
                 });
             }
         };

@@ -1,5 +1,5 @@
 angular.module('MetronicApp')
-    .factory('$ClientFactory', ['$http', '$EtfsFactory', function($http, $EtfsFactory) {
+    .factory('$ClientFactory', function($http, $EtfsFactory) {
         var client = {
             id: $.cookie('client_id') || '1',
             wallet: {},
@@ -14,9 +14,18 @@ angular.module('MetronicApp')
                 $http.get(WS_URL + '/client/desc/' + client.id)
                     .success(done);
             },
-            wallet: function(done) {
+            portofolio: function(done) {
                 $http.get(WS_URL + '/client/portfolio/' + client.id)
-                    .success(done);
+                    .success(function(portofolio) {
+                        var currency = typeof portofolio['dividends']['EUR'] != 'undefined' ? 'EUR' : 'USD';
+
+                        done({
+                            currency: currency,
+                            dividends: portofolio['dividends'][currency],
+                            cash: portofolio.cash[currency],
+                            etfs: portofolio.etf,
+                        })
+                    });
             },
             valo: function(done) {
                 $http.get(WS_URL + '/client/valo/' + client.id)
@@ -27,9 +36,9 @@ angular.module('MetronicApp')
                     .success(done);
             },
             etfs: function(done) {
-                this.wallet(function (wallet) {
+                this.portofolio(function (wallet) {
                     $EtfsFactory.load(wallet.etf, done);
                 });
             },
         };
-    }]);
+    });

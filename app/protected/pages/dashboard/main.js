@@ -147,7 +147,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
                             '/protected/pages/dashboard/portefeuille/synthese/main.js',
-                            '/protected/pages/dashboard/portefeuille/synthese/script.js',
                             '/protected/pages/dashboard/portefeuille/synthese/style.css',
                         ]
                     });
@@ -212,8 +211,8 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '/icheck/skins/flat/blue.css',
                             '/icheck/skins/square/blue.css',
                             '/protected/pages/dashboard/investir/style.css',
-
                             '/bootstrap-tagsinput/src/bootstrap-tagsinput.css',
+
                             '/datatables/media/js/jquery.dataTables.min.js',
                             '/datatables/media/js/dataTables.bootstrap.min.js',
                             '/ionrangeslider/js/ion.rangeSlider.min.js',
@@ -221,7 +220,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '/bootstrap-tagsinput/src/bootstrap-tagsinput.js',
 
                             '/protected/pages/dashboard/investir/main.js',
-                            '/protected/pages/dashboard/investir/script.js',
                         ]
                     });
                 }]

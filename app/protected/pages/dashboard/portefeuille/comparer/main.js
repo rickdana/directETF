@@ -13,11 +13,9 @@ angular.module('MetronicApp')
             // initialize core components
             App.initAjax();
 
-            $ClientFactory.wallet(function(wallet) {
-                $ClientFactory.valo(function(valo) {
-                    $ClientFactory.trades(function(trades) {
-                        load_comparaison_valo_trades(valo, trades);
-                    });
+            $ClientFactory.valo(function(valo) {
+                $ClientFactory.trades(function(trades) {
+                    load_comparaison_valo_trades(valo, trades);
                 });
             });
         });
