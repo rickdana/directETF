@@ -230,11 +230,10 @@ function reference_interest( rate, valo, trades ) {
 			ref_livret.push([new Date(date).getTime(), evolution[date]]);
 		}
 
-		console.log(JSON.stringify((evolution)))
 		ref_livret.sort(function (a, b) {
 			return a[0] - b[0];
 		});
-		console.log(JSON.stringify((ref_livret)))
+
 		return ref_livret;
 	}
 
@@ -368,11 +367,16 @@ function reference_house( rates, trades_by_date, valo_wallet ) {
 		end_time = end.getFullYear() + '-' + (parseInt(end.getMonth())+1);
 	}
 
-
+	var is_first_month = true;
 	for(var i in rates) {
 		if(comparator_year_month(rates[i][0], start_time) != -1 && comparator_year_month(rates[i][0], end_time) != 1) {
-			amount = get_amount_month(trades_by_date,rates[i][0]);
-			ref_house.push([new Date(amount[0]).getTime(),amount[1] * (rates[i][1] / 100 + 1)]);
+			var amount = get_amount_month(trades_by_date,rates[i][0]);
+			if (is_first_month) {
+				ref_house.push([new Date(amount[0]).getTime(),amount[1]]);
+				is_first_month = false;
+			} else {
+				ref_house.push([new Date(amount[0]).getTime(),amount[1] * (rates[i - 1][1] / 100 + 1)]);
+			}
 		}
 	}
 

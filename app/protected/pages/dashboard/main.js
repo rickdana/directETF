@@ -158,13 +158,13 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             url: "/portefeuille/historique",
             templateUrl: "/protected/pages/dashboard/portefeuille/historique/main.html",
             data: {pageTitle: 'Historique du portefeuille'},
-            controller: "PortefeuilleHistoriqueController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
+                            '/protected/assets/lib/StockChart.js',
                             '/protected/pages/dashboard/portefeuille/historique/main.js',
                             '/protected/pages/dashboard/portefeuille/historique/script.js',
                             '/protected/pages/dashboard/portefeuille/historique/style.css',
