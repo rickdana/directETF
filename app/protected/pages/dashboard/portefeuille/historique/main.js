@@ -6,7 +6,6 @@ angular.module('MetronicApp')
                 insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                 files: [
                     '/protected/assets/lib/StockChart.js',
-                    '/protected/assets/lib/history.js'
                 ]
             });
 
@@ -14,7 +13,7 @@ angular.module('MetronicApp')
             App.initAjax();
         });
 
-        $ClientFactory.portfolio.valo(function(err, valo) {
+        $ClientFactory.portfolio.valo(function(err, valo, data_valo) {
             if (err) {
                 throw err;
             }

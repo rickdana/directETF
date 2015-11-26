@@ -1,22 +1,21 @@
 angular.module('MetronicApp')
-    .controller('PortefeuilleComparerController', function($ClientFactory, $rootScope, $scope, $ocLazyLoad) {
+    .controller('PortefeuilleComparerController', function($ClientFactory, $rootScope, $scope) {
         $scope.$on('$viewContentLoaded', function() {
-            $ocLazyLoad.load({
-                name: 'MetronicApp',
-                insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
-                files: [
-                    '/protected/assets/lib/StockChart.js',
-                    '/protected/assets/lib/history.js',
-                ]
-            });
-
             // initialize core components
             App.initAjax();
+        });
 
-            $ClientFactory.valo(function(valo) {
-                $ClientFactory.trades(function(trades) {
-                    load_comparaison_valo_trades(valo, trades);
-                });
+        $ClientFactory.portfolio.valo(function(err, valo, data_valo) {
+            if (err) {
+                throw err;
+            }
+
+            $ClientFactory.portfolio.trades(function(err, trades) {
+                if (err) {
+                    throw err;
+                }
+
+                load_comparaison_valo_trades(valo, trades);
             });
         });
 

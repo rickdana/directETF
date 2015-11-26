@@ -179,16 +179,16 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             url: "/portefeuille/comparer",
             templateUrl: "/protected/pages/dashboard/portefeuille/comparer/main.html",
             data: {pageTitle: 'Comparer le portefeuille'},
-            controller: "PortefeuilleComparerController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
+                            '/protected/pages/dashboard/portefeuille/comparer/style.css',
+                            '/protected/assets/lib/StockChart.js',
                             '/protected/pages/dashboard/portefeuille/comparer/main.js',
                             '/protected/pages/dashboard/portefeuille/comparer/script.js',
-                            '/protected/pages/dashboard/portefeuille/comparer/style.css',
                         ]
                     });
                 }]
@@ -200,7 +200,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             url: "/investir",
             templateUrl: "/protected/pages/dashboard/investir/main.html",
             data: {pageTitle: 'Investir'},
-//            controller: "InvestirController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
