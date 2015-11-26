@@ -1,11 +1,15 @@
 angular.module('MetronicApp')
     .factory('$PortfolioFactory', function($http) {
         var models = {};
-    
-        function load(riskLevel, cb) {
+
+        function key(goal, amountMontly, riskLevel) {
+            return goal + amountMontly + riskLevel;
+        }
+
+        function load(goal, amountMontly, riskLevel, cb) {
             $http.get(WS_URL + '/portfolio/model/' + riskLevel)
                 .success(function (portfolio, status, headers, config) {
-                    models[riskLevel] = portfolio;
+                    models[key(goal, amountMontly, riskLevel)] = portfolio;
                     cb(portfolio);
                 })
                 .error(function(data, status, headers, config) {
@@ -14,18 +18,20 @@ angular.module('MetronicApp')
         }
 
         return {
-            get: function load(riskLevel, cb) {
+            model: function load(goal, amountMontly, riskLevel, cb) {
                 if (typeof cb != 'function') {
                     throw new Error('cb must be a callback function!');
                 }
 
                 riskLevel = riskLevel || 'low';
 
-                if (models[riskLevel]) {
-                    return cb(models[riskLevel]);
+                var key = key(goal, amountMontly, riskLevel);
+
+                if (models[key]) {
+                    return cb(models[key]);
                 }
 
-                load(riskLevel, cb);
+                load(goal, amountMontly, riskLevel, cb);
             }
         };
     });
