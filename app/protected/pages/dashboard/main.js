@@ -139,7 +139,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             url: "/portefeuille/synthese",
             templateUrl: "/protected/pages/dashboard/portefeuille/synthese/main.html",
             data: {pageTitle: 'Synthèse du portefeuille'},
-            controller: "PortefeuilleSyntheseController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
@@ -306,12 +305,27 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '/bootstrap-fileinput/css/fileinput.min.css',
                             '/protected/pages/dashboard/profile/style.css',
 
-                            '/bootstrap-fileinput/js/fileinput.min.js',
-
-                            '/protected/pages/dashboard/profile/script.js',
-
                             '/protected/pages/dashboard/profile/UserProfileController.js'
                         ]                    
+                    });
+                }]
+            }
+        })
+
+        // User Settings
+        .state("profile.settings", {
+            url: "/settings",
+            templateUrl: "/protected/pages/dashboard/profile/settings/main.html",
+            data: {pageTitle: 'Mes préférences'},
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        files: [
+                            '/protected/pages/dashboard/profile/settings/style.css',
+                            '/protected/pages/dashboard/profile/settings/PortfolioSettingsController.js'
+                        ]
                     });
                 }]
             }
@@ -322,6 +336,13 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             url: "/account",
             templateUrl: "/protected/pages/dashboard/profile/account.html",
             data: {pageTitle: 'Mon compte'}
+        })
+
+        // User Billing
+        .state("profile.billing", {
+            url: "/billing",
+            templateUrl: "/protected/pages/dashboard/profile/billing.html",
+            data: {pageTitle: 'Carte de crédit'}
         })
 
         // User Profile Help

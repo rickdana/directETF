@@ -34,9 +34,17 @@
                 <!-- SIDEBAR MENU -->
                 <div class="profile-usermenu">
                     <ul class="nav">
+                        <li ng-class="{active: $state.includes('profile.settings')}">
+                            <a ui-sref="profile.settings">
+                                <i class="icon-settings"></i> Mes préférences </a>
+                        </li>
                         <li ng-class="{active: $state.includes('profile.account')}">
                             <a ui-sref="profile.account">
-                                <i class="icon-settings"></i> Mon compte </a>
+                                <i class="icon-user"></i> Mon compte </a>
+                        </li>
+                        <li ng-class="{active: $state.includes('profile.billing')}">
+                            <a ui-sref="profile.billing">
+                                <i class="icon-credit-card"></i> Carte de crédit </a>
                         </li>
                         <li ng-class="{active: $state.includes('profile.help')}">
                             <a ui-sref="profile.help">
