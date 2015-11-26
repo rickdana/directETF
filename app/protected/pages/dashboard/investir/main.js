@@ -193,17 +193,21 @@ angular.module('MetronicApp')
 
         $('[data-wizard-panel-step=1]').show('slow');
 
-        $ClientFactory.portofolio(function(portofolio) {
+        $ClientFactory.portfolio.infos(function(err, infos) {
+            if (err) {
+                throw err;
+            }
+
             $rootScope.client = {
-                portofolio: portofolio
+                portofolio: infos
             };
 
             var catch_max = $('#catch-max');
 
             catch_max.ionRangeSlider({
                 min: catch_max.attr('data-min'),
-                max: portofolio.cash,
-                from: portofolio.cash,
+                max: infos.cash,
+                from: infos.cash,
                 postfix: catch_max.attr('data-postfix'),
                 //            grid: true,
                 hide_min_max: true,
@@ -681,19 +685,17 @@ angular.module('MetronicApp')
         	}
         }
 
-        $ClientFactory.valo(function (valo) {
-            var data_valo = [];
-
-            for (var date in valo) {
-                data_valo.push([new Date(date).getTime(), valo[date]]);
+        $ClientFactory.portfolio.valo(function(err, valo, data_valo) {
+            if (err) {
+                throw err;
             }
 
-            data_valo.sort(function (a, b) {
-                return a[0] - b[0];
-            });
-
             // Trades
-            $ClientFactory.trades(function(trades) {
+            $ClientFactory.portfolio.trades(function(err, trades) {
+                if (err) {
+                    throw err;
+                }
+
                 var data_trades = [];
                 var trades_by_date = {};
                 var somme_trades = 0;
