@@ -52,10 +52,36 @@
 <!-- BEGIN MAIN CONTENT -->
 <div ng-controller="HistoriqueController">
     <div class="note note-info">
-        <h3>Page en construction !
+        <h3>Présentation du historique
             <span class="close" data-close="note"></span>
         </h3>
-
         <p> Cette page est en cours de construction. </p>
     </div>
+
+    <!-- BEGIN TABLE -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <span class="caption-subject font-green bold uppercase">Historique</span>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="portlet-body">
+                    <table id="trades-history" class="table table-hover table-header-fixed">
+                        <thead>
+                            <tr class="">
+                                <th> Date </th>
+                                <th> Opération </th>
+                                <th style="text-align: right"> Valeur </th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+        </div>
 </div>
+

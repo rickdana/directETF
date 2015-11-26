@@ -99,46 +99,55 @@ function comparator_year_month(a, b) {
 }
 
 //Reference of deposit
-function evolution_interest(today, invest, date, date_after_one_year, rate, evolution) {
-	for(var dat_evol in evolution) {
-		if(comparator_date(dat_evol, date) != -1) {
-			evolution[dat_evol] += invest;
-		}
-	}
-
-	while(date_after_one_year.getTime() <= today.getTime()) {
-		d = date_after_one_year.toISOString().substr(0,10);
-		interest = invest * (1 + rate) - invest;
-		for(var dat_evol in evolution) {
-			if(comparator_date(dat_evol, d) != -1) {
-				evolution[dat_evol] += interest;
-			}
-		}
-		date_after_one_year.setFullYear( date_after_one_year.getFullYear() + 1);
-	}
-	return evolution;
-}
-
-//Reference of deposit
-function reference_interest(rate, valo_wallet, trades) {
+function reference_interest( rate, valo, trades ) {
 	var evolution = {};
 	var ref_interest =[];
+	var value_total = 0;
+	var start_year = new Date(valo[0][0]).getFullYear();
+	var end_year = new Date(valo[valo.length-1][0]).getFullYear() - 1;
+	var end_date = new Date(valo[valo.length-1][0]);
+	var year = start_year;
+	var array_trades = [];
 
-	for (var date in valo_wallet) {
-		evolution[date] = 0;
+
+	if( end_date.toLocaleDateString() == '31/12') {
+		end_year += 1;
+	}
+
+	while ( year <= end_year ) {
+		var date = year + "-12-31";
+		if(typeof trades[date] == 'undefined') {
+			trades[date] = 0;
+		}
+
+		year = parseInt(year) + 1;
 	}
 
 	for (var date in trades) {
-		var date_after_one_year = new Date(date);
-		date_after_one_year.setFullYear( date_after_one_year.getFullYear() + 1);
-
-		evolution = evolution_interest(new Date(), trades[date], date, date_after_one_year, rate, evolution);
+		array_trades.push([date, trades[date]]);
 	}
 
-	for (var date_valo in valo_wallet) {
-		ref_interest.push([new Date(date_valo).getTime(), evolution[date_valo]]);
+	array_trades.sort(function (a, b) {
+		return comparator_date(a[0], b[0]);
+	});
+
+	for (var i = 0; i < array_trades.length; i++) {
+
+		value_total += array_trades[i][1];
+		var date = array_trades[i][0];
+
+
+		if ( date.substr(5, 5) == "12-31") {
+			value_total *= (1 + rate);
+			evolution[date.substr(0, 4) + "-12-31"] = value_total;
+		} else {
+			evolution[date] = value_total;
+		}
 	}
 
+	for (var date in evolution) {
+		ref_interest.push([new Date(date).getTime(), evolution[date]]);
+	}
 
 	ref_interest.sort(function (a, b) {
 		return a[0] - b[0];
@@ -147,8 +156,181 @@ function reference_interest(rate, valo_wallet, trades) {
 	return ref_interest;
 }
 
+//Comparaispon compte-epargne
+	function reference_livret ( rate, trades, valo ) {
+		var rate_by_month = rate / 24;
+		var evolution = {};
+		var ref_livret =[];
+		var array_trades = [];
+		var end_date = new Date(valo[valo.length - 1][0]);
+		var end_month = parseInt(end_date.getMonth()) + 1;
+		var end_date_string = end_date.getFullYear() + '-' + end_month + '-' +end_date.getDate();
+
+		for (var date in trades) {
+			array_trades.push([date, trades[date]]);
+		}
+
+		array_trades.sort(function (a, b) {
+			return comparator_date(a[0], b[0]);
+		});
+
+
+		for (var i = 0; i < array_trades.length; i++) {
+
+	/*		if (year_in_loop != array_trades[i][0].substr(0,4)) {
+				var first_day = array_trades[i][0].substr(0,4) + '-01' + '-01';
+				for (var j = 1; j <= calcu_nombre_quinzaine(first_day,
+					end_date_string); j++) {
+					var solde_last_year = evolution[first_day];
+					var interest = solde_last_year *  rate_by_month * j;
+					var date_quinzaine = calcu_date_quinzaine(first_day, j);
+					evolution[date_quinzaine] = solde_last_year + interest;
+
+				}
+				year_in_loop = array_trades[i][0].substr(0,4)
+			}*/
+
+			var money_invest = array_trades[i][1];
+			var sum = array_trades[i][1] + load_evolution_recent(array_trades[i][0], evolution);
+			evolution[array_trades[i][0]] = sum;
+
+			for (var j = 1; j <= calcu_nombre_quinzaine(array_trades[i][0], end_date_string); j++) {
+				var interest = money_invest *  rate_by_month * j;
+				var date_quinzaine = calcu_date_quinzaine(array_trades[i][0], j);
+				if (typeof evolution[date_quinzaine] =='undefined') {
+					evolution[date_quinzaine] = sum + interest;
+				} else {
+					evolution[date_quinzaine] +=  (money_invest+ interest);
+				}
+			}
+
+
+		}
+
+		//calculer l'intérêt de la somme de l'année dernière
+		var first_year = parseInt(new Date(valo[0][0]).getFullYear());
+		var last_year = parseInt(new Date(valo[valo.length - 1][0]).getFullYear());
+		for (var i = 1; i <= (last_year - first_year); i++) {
+			var first_day = first_year + i + '-01' + '-01';
+			for (var j = 1; j <= calcu_nombre_quinzaine(first_day,
+				end_date_string); j++) {
+				var solde_last_year = evolution[first_day];
+				var interest = solde_last_year *  rate_by_month * j;
+				var date_quinzaine = calcu_date_quinzaine(first_day, j);
+				if (typeof  evolution[date_quinzaine] == 'undefined') {
+					evolution[date_quinzaine] = solde_last_year + interest;
+				} else {
+					evolution[date_quinzaine] +=  interest;
+				}
+
+			}
+		}
+
+		for (var date in evolution) {
+			ref_livret.push([new Date(date).getTime(), evolution[date]]);
+		}
+
+		console.log(JSON.stringify((evolution)))
+		ref_livret.sort(function (a, b) {
+			return a[0] - b[0];
+		});
+		console.log(JSON.stringify((ref_livret)))
+		return ref_livret;
+	}
+
+	//calcul la date de l'evolution plus récente
+	function load_evolution_recent (date, evolution) {
+		var dates = Object.keys(evolution);
+
+		dates.sort(function (a, b) {
+			return comparator_date(a, b);
+		});
+
+		var i = 0;
+		for (i; i < dates.length; i++) {
+			if (comparator_date(date, dates[i]) == -1) {
+				break;
+			}
+		}
+		i-= 1;
+		if (i >= 0) {
+			return evolution[dates[i]];
+		} else {
+			return 0;
+		}
+
+	}
+
+	//calcul la nombre quinzaine à partir une date à la fin d'année
+	function calcu_nombre_quinzaine (date, end_date) {
+		var n = 0;
+
+
+		if(date.substr(0,4) < end_date.substr(0,4)) { //investissement avant cette année
+			var day = date.substr(8,2);
+			var month = date.substr(5,2);
+			if (day <=15) {
+				n = (12 - month) * 2 + 2;
+			} else {
+				n = ((12 - month)) * 2 + 1;
+			}
+
+		} else {  //investisement dans cette année
+			var n_last_month = end_date.substr(8,2) > 15 ? 2 : 1;
+			var end_month = end_date.substr(5,2) - 1;
+			var day = date.substr(8,2);
+
+			if (day <=15) {
+				n = (end_month - date.substr(5,2)) * 2 + 1;
+			} else {
+				n = ((end_month - date.substr(5,2))) * 2 ;
+			}
+
+			n += n_last_month;
+		}
+		return n;
+	}
+
+	//calcul la date de chaque quizaine
+	function calcu_date_quinzaine(date, j) {
+		var date_quinzaine;
+		var year = date.substr(0,4);
+		var month = date.substr(5,2);
+		var day = date.substr(8,2);
+		var month_quinzaine;
+		var day_quinzaine;
+
+		if(j % 2 == 1) {
+			if (day <= 15) {
+				day_quinzaine = '16';
+			} else {
+				month =  parseInt(month) + 1;
+				day_quinzaine = '01';
+			}
+		} else {
+			if (day <= 15) {
+				day_quinzaine = '01';
+			} else {
+				day_quinzaine = '16';
+			}
+		}
+
+		month_quinzaine = parseInt(j / 2) +  parseInt(month);
+		if (month_quinzaine < 10) {
+			month_quinzaine = '0' + month_quinzaine;
+		}
+		if(month_quinzaine > 12) {
+			year = parseInt(year) + 1;
+			month_quinzaine = '01';
+			day_quinzaine = '01'
+		}
+		date_quinzaine = year + '-' + month_quinzaine + '-' + day_quinzaine;
+		return date_quinzaine;
+
+	}
+
 //get the total of investment par mois demandé
-function get_amount_month(trades_by_date, time) {
+function get_amount_month( trades_by_date, time ) {
 	var amount = [];
 	for(var i = 1; i < 32; i++ ){
 		if(i < 10) {
@@ -166,7 +348,7 @@ function get_amount_month(trades_by_date, time) {
 }
 
 //Reference housing
-function reference_house(rates, trades_by_date, valo_wallet) {
+function reference_house( rates, trades_by_date, valo_wallet ) {
 	var ref_house =[];
 	var start = new Date(valo_wallet[0][0]);
 	var start_time = 0;
