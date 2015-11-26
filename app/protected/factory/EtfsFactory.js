@@ -82,9 +82,9 @@ angular.module('MetronicApp')
         }
 
         function parseFilters(filters) {
-            var _filters = [];
-
             if (typeof filters == 'string') {
+                var _filters = [];
+
                 filters = filters.trim();
 
                 if (filters.length > 0) {
@@ -104,9 +104,11 @@ angular.module('MetronicApp')
                         }
                     }
                 }
-            }
 
-            return _filters;
+                return _filters;
+            } else {
+                return filters;
+            }
         };
 
         function is_valid_isin(isin) {
@@ -114,7 +116,7 @@ angular.module('MetronicApp')
         }
 
         return {
-            load: function(filters, cb, getPrice) {
+            load: function(filters, cb, getPrice, sp) {
                 filters = parseFilters(filters);
 
                 var query = JSON.stringify(filters);
