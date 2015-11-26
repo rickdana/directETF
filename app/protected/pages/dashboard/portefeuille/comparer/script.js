@@ -10,7 +10,7 @@ function load_lengend_text (lengend) {
 		case 'Compte-épargne' :
 			return "La comparaison: livret, taux annuel: 3%.";
 
-		case 'Imonilier' :
+		case 'Imobilier' :
 			return "La comparaison: l'investissement à immobilier.";
 
 		case 'Référence ETF US' :
@@ -142,8 +142,9 @@ function load_comparaison_valo_trades(valo, trades) {
 		},
 		// Reference rate 3%
 		{        //the reference of interest 3%
-			name: 'Compte-épargne ',
-			data: reference_interest(0.03, valo, trades_cash_stockin),
+			name: 'Compte-épargne',
+			//data: reference_interest(0.03, valo, trades_cash_stockin),
+			data: reference_livret ( 0.03, trades_cash_stockin, data_valo ),
 			type: 'spline',
 			color: 'rgba(255, 12, 77, .8)',
 			dashStyle: 'shortdot',
@@ -151,7 +152,7 @@ function load_comparaison_valo_trades(valo, trades) {
 		},
 		// Reference house
 		{        //the reference of interest 3%
-			name: 'Imobilier ',
+			name: 'Imobilier',
 			data: reference_house(rate_house_month, trades_by_date, data_valo),
 			type: 'spline',
 			color: 'rgba(130, 12, 77, .8)',
