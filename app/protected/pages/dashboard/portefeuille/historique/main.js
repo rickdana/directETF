@@ -12,13 +12,19 @@ angular.module('MetronicApp')
 
             // initialize core components
             App.initAjax();
+        });
 
-            $ClientFactory.wallet(function(wallet) {
-                $ClientFactory.valo(function(valo) {
-                    $ClientFactory.trades(function(trades) {
-                        load_historique_valo_trades(valo, trades);
-                    });
-                });
+        $ClientFactory.portfolio.valo(function(err, valo) {
+            if (err) {
+                throw err;
+            }
+
+            $ClientFactory.portfolio.trades(function(err, trades) {
+                if (err) {
+                    throw err;
+                }
+
+                load_historique_valo_trades(valo, trades);
             });
         });
 
