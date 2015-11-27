@@ -142,7 +142,7 @@ angular.module('MetronicApp')
             $EtfsFactory.load($attrs.filter, $element.onLoaded);
         }
     })
-    .controller('PopupInfosController', function($scope, $ocLazyLoad, $element) {
+    .controller('PopupInfosController', function($EtfsFactory, $scope, $ocLazyLoad, $element) {
         $ocLazyLoad.load({
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
             files: [
@@ -184,13 +184,19 @@ angular.module('MetronicApp')
 
             $element.find('.scroller-zone').slimScroll({ scrollTo : '0px' });
 
-            LoadStockChart({
-                isin: etf.isin,
-                type: 'spline',
-                name: etf.isin,
-                tooltip: {
-                    valueDecimals: 2
+            $EtfsFactory.prices(etf.isin, function(err, prices) {
+                if (err) {
+                    throw err;
                 }
-            }, $element.find('.etf-info-box-chart-performance'), undefined, true);
+
+                LoadStockChart({
+                    type: 'spline',
+                    name: etf.isin,
+                    tooltip: {
+                        valueDecimals: 2
+                    },
+                    data: $EtfsFactory.toUTC(prices)
+                }, $element.find('.etf-info-box-chart-performance'), true);
+            })
         };
     });
