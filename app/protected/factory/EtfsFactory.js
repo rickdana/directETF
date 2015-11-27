@@ -2,7 +2,9 @@ angular.module('MetronicApp')
     .factory('$EtfsFactory', function($http) {
         var etfs = [];
         var queries = {};
-    
+        var isin_price = {};
+        var isin_prices = {};
+
         function load(etfs_list, cb, getPrice) {
             getPrice = typeof getPrice == 'undefined' ? true : getPrice;
 
@@ -43,42 +45,73 @@ angular.module('MetronicApp')
                             return;
                         }
 
-                        $http.get(WS_URL + '/etf/price/' + desc.isin)
-                            .success(function (__data) {
-                                var price = 0;
-    
-                                for (var __p in __data) {
-                                    price = __data[__p] || 0;
+                        price(desc.isin, function(err, price) {
+                            if (err) {
+                                price = '0';
+                                console.error("Failed to get price of ETF %s", isin);
+                            }
+
+                            desc.price = price;
+                            etfs.push(desc);
+
+                            if (etfs.length == etfs_list.length) {
+                                // end of list
+                                if (typeof cb == 'function') {
+                                    cb(etfs);
                                 }
-    
-                                desc.price = price;
-                                etfs.push(desc);
-    
-                                if (etfs.length == etfs_list.length) {
-                                    // end of list
-                                    if (typeof cb == 'function') {
-                                        cb(etfs);
-                                    }
-                                }
-                            })
-                            .error(function(data, status, headers, config) {
-                                desc.price = '0';
-                                etfs.push(desc);
-    
-                                if (etfs.length == etfs_list.length) {
-                                    // end of list
-                                    if (typeof cb == 'function') {
-                                        cb(etfs);
-                                    }
-                                }
-    
-                                console.error("Failed to get price of ETF %s", desc.isin);
-                            });
+                            }
+                        });
                     })
                     .error(function(data, status, headers, config) {
                         console.error("Failed to get description of ETF %s", etfs_list[i]);
                     });
             }
+        }
+
+        function price(isin, cb) {
+            if (isin_price[isin]) {
+                return cb(false, isin_price[isin]);
+            }
+
+            $http.get(WS_URL + '/etf/price/' + isin)
+                .success(function (__data) {
+                    var price = 0;
+
+                    for (var __p in __data) {
+                        price = __data[__p] || 0;
+                    }
+
+                    isin_price[isin] = price;
+
+                    cb(false, price);
+                })
+                .error(function(data, status, headers, config) {
+                    var err = new Error("Failed to get price of ETF " + isin);
+                    err.status = status;
+                    err.headers = headers;
+
+                    cb(err, null);
+                });
+        }
+
+        function prices(isin, cb) {
+            if (isin_prices[isin]) {
+                return cb(false, isin_prices[isin]);
+            }
+
+            $http.get(WS_URL + '/etf/prices/' + isin)
+                .success(function (prices) {
+                    isin_prices[isin] = prices;
+
+                    cb(false, prices);
+                })
+                .error(function(data, status, headers, config) {
+                    var err = new Error("Failed to get prices of ETF " + isin);
+                    err.status = status;
+                    err.headers = headers;
+
+                    cb(err, null);
+                });
         }
 
         function parseFilters(filters) {
@@ -232,6 +265,25 @@ angular.module('MetronicApp')
                             console.error("Failed to get the list of ETFs");
                         });
                 }
+            },
+            price: price,
+            prices: prices,
+            toUTC: function(prices) {
+                data_parsed = [];
+
+                for (var i = 0; i < prices.length; i++) {
+                    var entry = prices[i];
+
+                    for (var entry in prices[i]) {
+                        data_parsed.push([new Date(entry).getTime(), prices[i][entry]]);
+                    }
+                }
+
+                data_parsed.sort(function (a, b) {
+                    return a[0] - b[0];
+                });
+
+                return data_parsed;
             }
         };
     });
