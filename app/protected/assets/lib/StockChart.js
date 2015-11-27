@@ -1,7 +1,7 @@
-function LoadStockChart(series, container, done, clear, cb) {
+function LoadStockChart(series, container, clear, cb) {
     if (series instanceof Array) {
         for (var i = 0; i < series.length; i++) {
-            LoadStockChart(series[i], container, done, clear, cb);
+            LoadStockChart(series[i], container, clear, cb);
             clear = false;
         }
         return;
@@ -10,12 +10,9 @@ function LoadStockChart(series, container, done, clear, cb) {
     if (series.length == 0) {
         throw new Error("First argument must be an array of object's series");
     }
-    if (typeof series.isin == 'undefined' && typeof series.data == 'undefined') {
-        throw new Error("A serie object must contain the property 'isin'!\n" + JSON.stringify(series), undefined, 4);
-    }
 
     if (typeof container == 'string') {
-        container = $(container);
+        throw new Error("Second argument must be an Angular.js's element or an JQuery's element!");
     }
 
     var chart = container.highcharts();
@@ -157,33 +154,5 @@ function LoadStockChart(series, container, done, clear, cb) {
         chart.redraw();
     }
 
-    if (typeof series.data == 'object') {
-        chart.addSeries(series, true, true);
-        return;
-    }
-
-    $.getJSON(WS_URL + '/etf/prices/' + series.isin, function (prices) {
-        var data_parsed = [];
-
-        if (typeof done == 'function') {
-            var ouput = done(prices, chart);
-            data_parsed = ouput || data_parsed;
-        } else {
-            for (var i = 0; i < prices.length; i++) {
-                var entry = prices[i];
-
-                for (var entry in prices[i]) {
-                    data_parsed.push([new Date(entry).getTime(), prices[i][entry]]);
-                }
-            }
-
-            data_parsed.sort(function (a, b) {
-                return a[0] - b[0];
-            });
-        }
-
-        series.data = data_parsed;
-
-        chart.addSeries(series, true, true);
-    });
+    chart.addSeries(series, true, true);
 }
