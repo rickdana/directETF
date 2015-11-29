@@ -32,19 +32,15 @@
         </div>
     </div>
 </div>
-<h3 class="page-title"> Synthèse du portefeuille </h3>
 <!-- END PAGE HEADER-->
 <!-- BEGIN MAIN CONTENT -->
 <div ng-controller="PortefeuilleSyntheseController">
     <div class="note note-info">
-        <h3>Présentation du portefeuille
+        <h3>Votre portefeuille
             <span class="close" data-close="note"></span>
         </h3>
-
-        <p> Utilisez cet espace pour gérer de façon efficace votre portefeuille. Vous pouvez à tout moment rajouter
-            du cash, suivre l'évolution du portefeuille et contrôller vos avoirs. </p>
+        Description de votre portefeuille.
         <br>
-        <button class="btn blue">Commencer la visite guidée du portefeuille</button>
     </div>
 
     <!-- BEGIN DASHBOARD STATS -->
@@ -66,7 +62,7 @@
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="dashboard-stat purple">
                 <div class="visual">
-                    <i class="fa fa-shopping-cart"></i>
+                    <i class="fa fa-line-chart"></i>
                 </div>
                 <div class="details">
                     <div id="gains-wallet" class="number">{{format(client.portofolio.gains)}}
