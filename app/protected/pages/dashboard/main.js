@@ -213,7 +213,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
 
                             '/datatables/media/js/jquery.dataTables.min.js',
                             '/datatables/media/js/dataTables.bootstrap.min.js',
-                            '/ionrangeslider/js/ion.rangeSlider.min.js',
                             '/icheck/icheck.min.js',
                             '/bootstrap-tagsinput/src/bootstrap-tagsinput.js',
 
@@ -326,7 +325,11 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
+                            '/angularjs-slider/dist/rzslider.min.css',
                             '/protected/pages/dashboard/profile/settings/style.css',
+
+                            '/angular-bootstrap/ui-bootstrap-tpls.min.js',
+                            '/angularjs-slider/dist/rzslider.min.js',
                             '/protected/pages/dashboard/profile/settings/PortfolioSettingsController.js'
                         ]
                     });

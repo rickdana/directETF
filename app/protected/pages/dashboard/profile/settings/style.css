@@ -1,0 +1,187 @@
+.display-block {
+    display: block;
+}
+
+.radio-box {
+    display: inline-block;
+    position: relative;
+    margin: 0 .4em .4em 0;
+}
+
+.radio-box input {
+    position: absolute;
+    left: -32232px;
+}
+
+.radio-box input + label {
+    cursor: pointer;
+
+    background-color: #fff;
+
+    padding: .5em 2em;
+
+    border: 1px solid #ccc;
+
+    -webkit-border-radius:25px !important;
+    -moz-border-radius:25px !important;
+    border-radius:25px !important;
+
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+}
+
+.radio-box input:focus + label,
+.radio-box label:hover,
+.form-group rzslider .rz-pointer:hover {
+    -webkit-box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+    -ms-box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+    -o-box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+}
+
+.radio-box input:active + label,
+.radio-box label:active {
+    color: #000;
+    color: rgba(0,0,0,.7);
+    background-color: #fff;
+    background-color: rgba(255,255,255,.7);
+    border-color: #0b97c4;
+}
+
+.form-group rzslider .rz-bar.rz-selection,
+.form-group rzslider .rz-pointer,
+.radio-box input:checked + label {
+    color: #fff;
+    color: rgba(255,255,255,.8);
+    border-color: #0b97c4;
+    background-color: #00a7d0;
+}
+
+.radio-box.goal.just-invest {
+    float: left;
+}
+
+.radio-box.goal label i {
+    display: inline-block;
+    margin-left: -8px;
+    margin-right: 5px;
+    color: #00a7d0;
+}
+
+.radio-box input:checked + label i {
+    color: #fff;
+    color: rgba(255,255,255,.7);
+}
+
+.radio-box.goal.just-invest label {
+    height: 81px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.radio-box.goal.just-invest label i {
+    display: block;
+    margin:0 0 10px;
+    font-size: 2em;
+}
+
+.form-group input.portfolio-amount-monthly {
+    display: inline-block;
+    width: 90px !important;
+    float: right;
+    position: relative;
+    top: 45px;
+}
+
+.form-group div.portfolio-amount-monthly {
+    margin-right:100px;
+}
+
+.form-group rzslider.portfolio-amount-monthly {
+    float: left;
+}
+
+[data-currency]:after {
+    content: attr(data-currency);
+    position: absolute;
+    right: 10px;
+    top: 45px;
+    font-size: 1.5em;
+    font-weight: normal;
+    z-index: 1;
+    color: #00a7d0;
+}
+
+.form-group .portfolio-risks .rz-pointer {
+    -webkit-transition: background-color .5s, border-color, .5s;
+    -moz-transition: background-color .5s, border-color, .5s;
+    -ms-transition: background-color .5s, border-color, .5s;
+    -o-transition: background-color .5s, border-color, .5s;
+    transition: background-color .5s, border-color, .5s;
+}
+
+.form-group rzslider[data-risk=low] .rz-pointer,
+.radio-box input:checked + label.risk.low {
+    border-color: #f4b130;
+    background-color: #f4bc4a;
+}
+.form-group rzslider[data-risk=low] .rz-pointer.rz-active:after {
+    background-color: #f45410;
+}
+
+.form-group rzslider[data-risk=medium] .rz-pointer,
+.radio-box input:checked + label.risk.medium {
+    border-color: #f4792a;
+    background-color: #f47002;
+}
+.form-group rzslider[data-risk=medium] .rz-pointer.rz-active:after {
+    background-color: #c62f1a;
+}
+
+.form-group rzslider[data-risk=high] .rz-pointer,
+.radio-box input:checked + label.risk.high {
+    border-color: #c62f1a;
+    background-color: #f4373e;
+}
+.form-group rzslider[data-risk=high] .rz-pointer.rz-active:after {
+    background-color: #95002d;
+}
+
+.opts-timeframe .goal-just-invest {
+    height: 34px;
+    padding-top: 7px;
+}
+
+.opts-timeframe input, .opts-timeframe span {
+    float: left;
+}
+
+.opts-timeframe input {
+    width:60px;
+}
+
+.opts-timeframe span {
+    margin: 10px 0 0 10px;
+    font-size: 10px;
+}
+
+.opts-timeframe strong {
+    display: inline-block;
+    margin-top: 6px;
+}
+
+.form-group {
+    position: relative;
+}
+
+.rz-ticks .tick, .rz-pointer {
+    -webkit-border-radius:50% !important;
+    -moz-border-radius:50% !important;
+    border-radius:50% !important;
+}
+

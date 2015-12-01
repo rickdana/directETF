@@ -1,16 +1,16 @@
 angular.module('MetronicApp')
-    .factory('$ClientFactory', function($http, $EtfsFactory, $PortfolioFactory) {
+    .factory('$ClientFactory', function($http, $EtfsFactory) {
         var client = {
             id: $.cookie('client_id') || '1',
             profile: null,
             portfolio: {
-                info: null,
+                infos: null,
                 valo: [],
                 value: 0.0,
                 etfsValue: 0.0,
                 trades: [],
                 gains: 0.0
-            },
+            }
         };
 
         function gains_by_etf(etf, trades) {
@@ -35,6 +35,18 @@ angular.module('MetronicApp')
             return sum_trades;
         }
 
+        function clone_object(src, dest) {
+            for (var p in src) {
+                if (typeof src[p] == 'object' && src[p] !== null) {
+                     clone_object(src[p], dest[p])
+                } else if (src[p] instanceof Array) {
+                    dest[p] = src[p].slice(0);
+                } else {
+                    dest[p] = src[p];
+                }
+            }
+        }
+
         return {
             id: client.id,
             profile: function(done) {
@@ -44,8 +56,7 @@ angular.module('MetronicApp')
 
                 $http.get(WS_URL + '/client/desc/' + client.id)
                     .success(function(profile) {
-                        client.profile = profile;
-                        done(false, client.profile)
+                        done(false, client.profile = profile)
                     })
                     .error(function(data, status, headers, config) {
                         var err = new Error("Failed to load profile of ClientID " + client.id);
@@ -60,7 +71,7 @@ angular.module('MetronicApp')
             },
             portfolio: {
                 infos: function(done) {
-                    if (client.portfolio.info) {
+                    if (client.portfolio.infos) {
                         return done(false, client.portfolio.infos);
                     }
 
@@ -69,11 +80,15 @@ angular.module('MetronicApp')
                             var currency = typeof portofolio['dividends']['EUR'] != 'undefined' ? 'EUR' : 'USD';
 
                             client.portfolio.infos = {
+                                goal: portofolio.desc.goal,
+                                risk: portofolio.desc.risk,
+                                amountMonthly: portofolio.desc.amountMonthly,
+                                timeframe: portofolio.desc.timeframe,
                                 currency: currency,
                                 currencySymb: currency == 'EUR' ? '€' : '$',
                                 dividends: portofolio['dividends'][currency],
                                 cash: portofolio.cash[currency],
-                                etfs: portofolio.etf,
+                                etfs: portofolio.etfs,
                             };
 
                             done(false, client.portfolio.infos);
@@ -84,7 +99,9 @@ angular.module('MetronicApp')
                             err.status = status;
                             err.headers = headers;
 
-                            cb(err, null);
+                            if (typeof done == 'function') {
+                                done(err, null);
+                            }
 
                             console.error(err.message);
                         });
@@ -218,6 +235,52 @@ angular.module('MetronicApp')
 
                         done(false, gains);
                     });
+                },
+            },
+            settings: {
+                profile: {
+                    save: function (profile, done) {
+                        clone_object(profile, client.profile);
+
+                        $http.post(WS_URL + '/client/desc/' + client.id, client.profile)
+                            .success(function(portofolio) {
+                                done(false, client.profile);
+                            })
+                            .error(function(data, status, headers, config) {
+                                var err = new Error("Failed to save profile of ClientID " + client.id);
+
+                                err.status = status;
+                                err.headers = headers;
+
+                                if (typeof done == 'function') {
+                                    done(err, null);
+                                }
+
+                                console.error(err.message);
+                            });
+                    }
+                },
+                portfolio: {
+                    save: function (portfolio, done) {
+                        clone_object(portfolio.infos, client.portfolio.infos);
+
+                        $http.post(WS_URL + '/client/portfolio/' + client.id, client.portfolio.infos)
+                            .success(function(portofolio) {
+                                done(false, client.portfolio.infos);
+                            })
+                            .error(function(data, status, headers, config) {
+                                var err = new Error("Failed to save portfolio of ClientID " + client.id);
+
+                                err.status = status;
+                                err.headers = headers;
+
+                                if (typeof done == 'function') {
+                                    done(err, null);
+                                }
+
+                                console.error(err.message);
+                            });
+                    }
                 },
             }
         };
