@@ -156,6 +156,42 @@ angular.module('MetronicApp')
                             console.error(err.message);
                         });
                 },
+                //all the TYPE STOCKIN and CASHIN in the trades according to the value's data in the wallet
+                tradesByDate: function(done) {
+                    if (client.portfolio.tradesByDate) {
+                        return done(false, client.portfolio.tradesByDate);
+                    }
+
+                    var self = this;
+
+                    this.valo(function(err, valo, data_valo) {
+                        if (err) {
+                            return done(err, null);
+                        }
+
+                        self.trades(function(err, trades) {
+                            if (err) {
+                                return done(err, null);
+                            }
+
+                            var somme_trades = 0;
+                            var trades_by_date = {};
+
+                            for (var x in data_valo) {
+                                for (var i in trades) {
+                                    if ((trades[i].type == 'CASHIN' || trades[i].type == 'STOCKIN') && data_valo[x][0] == new Date(trades[i].date).getTime()) {
+                                        somme_trades += trades[i].cash;
+                                    }
+                                }
+                                trades_by_date[new Date(data_valo[x][0])] = somme_trades;
+                            }
+
+                            client.portfolio.tradesByDate = trades_by_date;
+
+                            done(false, trades_by_date);
+                        });
+                    });
+                },
                 etfs: function(done) {
                     var self = this;
 

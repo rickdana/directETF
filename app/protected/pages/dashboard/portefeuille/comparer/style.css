@@ -68,3 +68,51 @@ table .selected {
 	margin: 0;
 	font-size: 13px;
 }
+
+.display-table {
+	display: table;
+}
+
+.display-cell {
+	display: table-cell;
+	vertical-align: top;
+}
+
+.display-cell label {
+	font-size: .8em;
+	display: inline-block;
+	margin-top: 7px;
+}
+.display-cell select {
+	margin-left: 15px !important;
+}
+
+.control-label.form-control {
+	border-color: transparent !important;
+	padding-left: 0px;
+	padding-right: 0px;
+	float: left;
+}
+
+.form-control.control-input {
+	width: 210px;
+	float: left;
+}
+
+#text-comparaiso {
+	margin-left: 190px;
+
+}
+
+@media screen and (max-width:768px) {
+	.form-control.control-input {
+		float: none;
+		display: block;
+	}
+	#text-comparaiso {
+		margin: 0;
+	}
+	#text-comparaiso li.in .message {
+		margin-left: 15px;
+	}
+}

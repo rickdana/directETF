@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Actions France",
+    "data": "FR0010424135",
+    "tax": 0,
+    "text": "La comparaison: Lyxor EURO STOXX 50 Daily Short UCITS ETF.",
+    "type": "spline",
+    "color": "rgb(91, 173, 255)"
+  },
+  {
+    "name": "Actions US",
+    "data": "FR0010168773",
+    "tax": 0,
+    "text": "La comparaison: Lyxor MSCI EMU Small Cap UCITS ETF.",
+    "type": "spline",
+    "color": "rgb(91, 173, 0)"
+  },
+  {
+    "name": "Actions World",
+    "data": "FR0010361683",
+    "tax": 0,
+    "text": "La comparaison: Lyxor MSCI India UCITS ETF.",
+    "type": "spline",
+    "color": "rgba(255, 112, 77, .8)"
+  },
+  {
+    "name": "Compte-épargne-livretA",
+    "data": 0.0075,
+    "tax": 0,
+    "text": "La comparaison: livret, taux annuel: 0.75%.",
+    "type": "spline",
+    "color": "rgba(255, 12, 77, .8)"
+  },
+  {
+    "name": "Imobilier",
+    "data": [["2013-01", 2.95], ["2013-02", 2.80], ["2013-03", 2.80],["2013-04", 2.75], ["2013-05", 2.75], ["2013-06", 2.70],
+             ["2013-07", 2.80], ["2013-08", 2.90], ["2013-09", 2.90],["2013-10", 2.95], ["2013-11", 2.95], ["2013-12", 2.90],
+             ["2014-01", 2.90], ["2014-02", 2.85], ["2014-03", 2.80],["2014-04", 2.70], ["2014-05", 2.60], ["2014-06", 2.60],
+             ["2014-07", 2.50], ["2014-08", 2.40], ["2014-09", 2.35],["2014-10", 2.25], ["2014-11", 2.15], ["2014-12", 2.10],
+             ["2015-01", 2.10], ["2015-02", 1.95], ["2015-03", 1.90],["2015-04", 1.80], ["2015-05", 1.75], ["2015-06", 1.80],
+             ["2015-07", 2.05], ["2015-08", 2.15], ["2015-09", 2.10],["2015-10", 2.20]],
+    "tax": 15,
+    "text": "La comparaison: l'investissement à immobilier.",
+    "type": "spline",
+    "color": "rgba(130, 12, 77, .8)"
+  }
+]

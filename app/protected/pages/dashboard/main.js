@@ -187,6 +187,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                         files: [
                             '/protected/pages/dashboard/portefeuille/comparer/style.css',
                             '/protected/assets/lib/StockChart.js',
+                            '/protected/pages/dashboard/portefeuille/comparer/reference.json',
                             '/protected/pages/dashboard/portefeuille/comparer/main.js',
                             '/protected/pages/dashboard/portefeuille/comparer/script.js',
                         ]

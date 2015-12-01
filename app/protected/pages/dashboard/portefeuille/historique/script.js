@@ -77,7 +77,5 @@ function load_historique_valo_trades(valo, trades) {
 		}
 	];
 
-	LoadStockChart(series, '#portefeuille-historique-stockchart', function (prices) {
-		return reference_etf(prices, valo, data_valo, trades_cash_stockin, true);
-	});
+	LoadStockChart(series, $('#portefeuille-historique-stockchart'), true);
 }
