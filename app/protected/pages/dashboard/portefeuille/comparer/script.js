@@ -420,7 +420,7 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 	chart.get(2).setVisible(visible_2, false);
 	show_legend(chart, chart.get(2));
 
-	if(ref_name == null) {
+	if(ref_name == '') {
 		return;
 	}
 

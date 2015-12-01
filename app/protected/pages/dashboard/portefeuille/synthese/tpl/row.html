@@ -3,5 +3,5 @@
     <td class="etf-column quantity number" data-etf-attr-name="quantity" >{{etf.quantity}}</td>
     <td class="etf-column price" data-etf-attr-name="price">{{etf.price}} {{client.portofolio.currencySymb}}</td>
     <td class="etf-column value" data-etf-attr-name="value">{{etf.quantity * etf.price | number: 2}} &euro;</td>
-    <td class="etf-column gains"><span class="gain-loss">{{etf.gains}}</span> {{client.portofolio.currencySymb}}</td>
+    <td class="etf-column gains"><span class="gain-loss">{{etf.gains | number: 2}}</span> {{client.portofolio.currencySymb}}</td>
 </tr>
