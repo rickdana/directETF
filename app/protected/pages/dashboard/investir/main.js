@@ -204,15 +204,15 @@ angular.module('MetronicApp')
 
             var catch_max = $('#catch-max');
 
-            catch_max.ionRangeSlider({
-                min: catch_max.attr('data-min'),
-                max: infos.cash,
-                from: infos.cash,
-                postfix: catch_max.attr('data-postfix'),
-                //            grid: true,
-                hide_min_max: true,
-                grid_num: 10
-            });
+            //catch_max.ionRangeSlider({
+            //    min: catch_max.attr('data-min'),
+            //    max: infos.cash,
+            //    from: infos.cash,
+            //    postfix: catch_max.attr('data-postfix'),
+            //    //            grid: true,
+            //    hide_min_max: true,
+            //    grid_num: 10
+            //});
         });
 
         // set sidebar closed and body solid layout mode
