@@ -1,0 +1,53 @@
+<div class="client-portfolio-settings-component">
+    <div class="portlet">
+        <div class="portlet-body">
+            <form role="form" action="#">
+                <div class="form-group">
+                    <label class="caption-subject bold control-label display-block">Objectif d'investissement</label>
+                    <p ng-show="settingInlineDesc == true">{{portfolio.prototype.goal(client.portfolio.infos.goal).tooltip}}</p>
+                    <div ng-repeat="goal in portfolio.prototype.goals()" class="radio-box goal {{goal.code}}">
+                        <input id="goal-{{goal.code}}" type="radio" ng-model="client.portfolio.infos.goal" ng-value="goal.code">
+                        <label for="goal-{{goal.code}}" popover-trigger="mouseenter" popover="{{goal.tooltip}}">
+                            <i class="{{goal.icon}}"></i>{{goal.label}}
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="well opts-timeframe">
+                        <div class="row goal-just-invest" ng-show="client.portfolio.infos.goal == 'just-invest'">
+                            <div class="col-xs-12">{{portfolio.prototype.goal(client.portfolio.infos.goal).questionComment}}</div>
+                        </div>
+                        <div class="row" ng-hide="client.portfolio.infos.goal == 'just-invest'">
+                            <div class="col-xs-9">
+                                <strong>{{portfolio.prototype.goal(client.portfolio.infos.goal).question}}</strong>
+                            </div>
+                            <div class="col-xs-3">
+                                <input type="number" class="form-control" maxlength="2" ng-model="client.portfolio.infos.timeframe">
+                                <span>ans</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="caption-subject bold control-label">Investissement mensuel</label>
+                    <input type="real" placeholder="Renseignez le montant mensuel d'investissement"
+                           class="form-control portfolio-amount-monthly" ng-model="client.portfolio.infos.amountMonthly" required>
+                    <div class="portfolio-amount-monthly" data-currency="{{client.portfolio.infos.currencySymb}}">
+                        <rzslider rz-slider-model="client.portfolio.infos.amountMonthly"
+                                  rz-slider-options="sliderAmmount.options"></rzslider></div></div>
+                <!--<div class="form-group">-->
+                    <!--<label class="caption-subject font-blue-madison bold control-label display-block">Niveau de risque accepté</label>-->
+                    <!--<p>{{portfolio.prototype.risk(client.portfolio.infos.risk).tooltip}}</p>-->
+                    <!--<div class="radio-box" ng-repeat="risk in portfolio.prototype.risks()">-->
+                        <!--<input id="risk-{{risk.level}}" type="radio" ng-model="client.portfolio.infos.risk" ng-value="risk.level">-->
+                        <!--<label for="risk-{{risk.level}}" class="risk {{risk.level}}" title="{{risk.tooltip}}">{{risk.label}}</label></div></div>-->
+                <div class="form-group">
+                    <label class="caption-subject bold control-label display-block">Niveau de risque accepté</label>
+                    <p>{{portfolio.prototype.risk(client.portfolio.infos.risk).tooltip}}</p>
+                    <rzslider class="portfolio-risks" rz-slider-model="sliderRisks.value"
+                              rz-slider-options="sliderRisks.options"></rzslider>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
