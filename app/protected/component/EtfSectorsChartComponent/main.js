@@ -138,18 +138,7 @@ angular.module('MetronicApp')
         function parse(etfs) {
             var sum = 0
               , percents = {}
-              , percents_by_sector = {}
               , series = [];
-
-            // Compute all etfs
-            for (var i = 0; i < etfs.length; i++) {
-                sum += etfs[i].quantity;
-            }
-
-            // Compute the percents of each etf
-            for (var i = 0; i < etfs.length; i++) {
-                percents[etfs[i].isin] = etfs[i].quantity * 100 / sum;
-            }
 
             // Compute the percents by sector
             for (var i = 0; i < etfs.length; i++) {
@@ -158,20 +147,23 @@ angular.module('MetronicApp')
                 // for each sector of the etf
                 for (var j = 0; j < etf.sectors.length; j++) {
                     for (var sector in etf.sectors[j]) {
-                        if (typeof percents_by_sector[sector] == 'undefined') {
-                            percents_by_sector[sector] = 0;
+                        if (typeof percents[sector] == 'undefined') {
+                            percents[sector] = 0;
+                            sum++; // count sectors
                         }
 
-                        percents_by_sector[sector] += parseFloat(percents[etf.isin]);
+                        percents[sector] += etf.sectors[j][sector];
                     }
                 }
             }
 
             // Build the serie
-            for (var s in percents_by_sector) {
+            for (var sector in percents) {
+                percents[sector] = percents[sector] * 100 / sum;
+
                 series.push({
-                    name: s,
-                    y: parseFloat(percents_by_sector[s])
+                    name: sector,
+                    y: parseFloat(percents[sector])
                 });
             }
 

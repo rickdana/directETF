@@ -75,20 +75,9 @@ angular.module('MetronicApp')
         }
 
         function parse(etfs) {
-            var sum = 0
+            var sum = {}
               , percents = {}
-              , percents_by_country = {}
               , series = [];
-
-            // Compute all etfs
-            for (var i = 0; i < etfs.length; i++) {
-                sum += etfs[i].quantity;
-            }
-
-            // Compute the percents of each etf
-            for (var i = 0; i < etfs.length; i++) {
-                percents[etfs[i].isin] = etfs[i].quantity * 100 / sum;
-            }
 
             // Compute the percents by country
             for (var i = 0; i < etfs.length; i++) {
@@ -97,25 +86,23 @@ angular.module('MetronicApp')
                 // for each country of an etf
                 for (var j = 0; j < etf.countries.length; j++) {
                     for (var country in etf.countries[j]) {
-                        if (country === 'UK') {
-                            country = 'GB';
+                        if (typeof percents[country] == 'undefined') {
+                            percents[country] = 0;
+                            sum[country] = 0;
                         }
 
-                        if (typeof percents_by_country[country] == 'undefined') {
-                            percents_by_country[country] = 0;
-                        }
-
-                        percents_by_country[country] += parseFloat(percents[etf.isin]);
+                        percents[country] += etf.countries[j][country];
                     }
                 }
             }
 
-            // structure data
-            for (var country in percents_by_country) {
+            for (var country in percents) {
+                percents[country] = percents[country] / etfs.length;
+
                 series.push({
-                    country: country,
-                    value: percents_by_country[country],
-                    p: percents_by_country[country],
+                    country: country === 'UK' ? 'GB' : country,
+                    value: percents[country],
+                    p: percents[country],
                 });
             }
 

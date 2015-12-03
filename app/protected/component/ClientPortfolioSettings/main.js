@@ -1,6 +1,23 @@
-angular.module('MetronicApp', ['rzModule', 'ui.bootstrap'])
-    .controller('PortfolioSettingsController', function($ClientFactory, $PortfolioFactory, $scope, $element) {
-        $scope.client = {
+angular.module('MetronicApp')
+    .directive("clientPortfolioSettings",
+        function() {
+            return {
+                controller: "PortfolioSettingsController",
+                templateUrl: "/protected/component/ClientPortfolioSettings/template.html"
+            };
+        }
+    )
+    .controller('PortfolioSettingsController', function($ocLazyLoad, $ClientFactory, $PortfolioFactory, $rootScope, $scope, $element, $attrs) {
+        $ocLazyLoad.load({
+            insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+            files: [
+                '/protected/component/ClientPortfolioSettings/style.css',
+            ]
+        });
+
+        $scope.settingInlineDesc = $attrs.settingInlineDesc || false;
+
+        $rootScope.client = {
             portfolio: {
                 infos: {
                     goal: {},

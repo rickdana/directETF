@@ -12,7 +12,7 @@ angular.module('MetronicApp')
 
         // Exposition initiale
         $scope.client = {
-            portofolio: {
+            portfolio: {
                 value: 0,
                 gains: 0,
                 totalEtfs: 0,
@@ -44,7 +44,7 @@ angular.module('MetronicApp')
             }
 
             for (var property in infos) {
-                $scope.client.portofolio[property] = infos[property];
+                $scope.client.portfolio[property] = infos[property];
             }
         });
 
@@ -54,7 +54,7 @@ angular.module('MetronicApp')
                 return console.error(err);
             }
 
-            $scope.client.portofolio.value = value;
+            $scope.client.portfolio.value = value;
         });
 
         // Gains totals
@@ -63,7 +63,7 @@ angular.module('MetronicApp')
                 return console.error(err);
             }
 
-            $scope.client.portofolio.gains = gains;
+            $scope.client.portfolio.gains = gains;
         });
 
         // Total des titres
@@ -72,7 +72,7 @@ angular.module('MetronicApp')
                 return console.error(err);
             }
 
-            $scope.client.portofolio.etfsValue = etfsValue;
+            $scope.client.portfolio.etfsValue = etfsValue;
         });
 
         // set sidebar closed and body solid layout mode

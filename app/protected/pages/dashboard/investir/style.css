@@ -1,3 +1,45 @@
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+    background-color: #fff;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-content h3 {
+    margin-top: 0;
+}
+
+.wizard-steps {
+    position: absolute;
+    margin-top:-33px;
+    width: 93%;
+    text-align: right;
+
+}
+.wizard-steps span {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    
+    margin-top: -15px;
+    margin-left:20px;
+
+    text-align: center;
+
+    background-color: #cccccc;
+
+    -webkit-border-radius:50% !important;;
+    -moz-border-radius:50% !important;;
+    border-radius:50% !important;
+}
+
+.wizard-steps span.active {
+    color: #fff;
+    background-color: #00a7d0;
+}
+
+.wizard-steps span:first-child {
+    margin-left: 0;
+}
+
 .content-header {
     position: fixed !important;
     width: 80%;

@@ -18,6 +18,27 @@
     </div>
 </div>
 <h3 class="page-title"> Nouvel ordre d'investissement </h3>
+
+<script type="text/ng-template" id="template-client-portfolio-settings" ng-controller="WizardPortfolioInitController">
+    <h5 class="caption-subject font-green bold uppercase">Configuration du portefeuille</h5>
+    <hr>
+    <div class="wizard-steps">
+        <span ng-class="active0">1</span>
+        <span ng-class="active1">2</span>
+    </div>
+    <div ng-show="wizard.step == 0" client-portfolio-settings></div>
+    <div ng-show="wizard.step == 1" class="portlet light bordered">
+        <div id="wizard-portfolio-model" data-lazy="true" ng-etf-list></div>
+    </div>
+    <div class="margiv-top-10">
+        <a ng-show="wizard.step == 1" href="javascript:void(0)" class="btn default pull-left"
+           ng-click="wizard.prev()"> Etape précédent </a>
+        <a href="javascript:void(0)" class="btn green-haze pull-right"
+           ng-click="wizard.next()"> {{wizard.nextButtonLabel[wizard.step]}} </a>
+        <span class="clearfix"></span>
+    </div>
+</script>
+
 <!-- END PAGE HEADER-->
 <!-- BEGIN MAIN CONTENT -->
 <!--<div class="note note-info">-->
@@ -129,8 +150,8 @@
                     <div class="entry">Combien souhaitez-vous investir ?
                         <div class="range-wrapper-wallet text-center">
                             <input id="catch-max" name="wallet-range" type="text" class="input-range"
-                                   data-min="1" data-max="{{client.portofolio.cash}}"
-                                   data-from="{{client.portofolio.cash}}"
+                                   data-min="1" data-max="{{client.portfolio.cash}}"
+                                   data-from="{{client.portfolio.cash}}"
                                    data-postfix="&euro;">
                         </div>
                     </div>
@@ -239,7 +260,7 @@
                     <tbody>
                     <tr>
                         <td>Liquidités disponibles</td>
-                        <td class="text-right">{{client.portofolio.cash | number: 2}}&nbsp;&euro;</td>
+                        <td class="text-right">{{client.portfolio.infos.cash | number: 2}}&nbsp;&euro;</td>
                     </tr>
                     <tr>
                         <td>Liquidités sortantes</td>
@@ -254,7 +275,7 @@
                     <tfoot>
                     <tr>
                         <td class="text-left">Liquidités restantes estimées après transaction</td>
-                        <td class="text-right">{{client.portofolio.cash - cash | number: 2}}&nbsp;&euro;</td>
+                        <td class="text-right">{{client.portfolio.infos.cash - cash | number: 2}}&nbsp;&euro;</td>
                     </tr>
                     </tfoot>
 

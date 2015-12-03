@@ -1,3 +1,8 @@
+.client-portfolio-settings-component {
+    position: relative;
+
+}
+
 .display-block {
     display: block;
 }
@@ -5,7 +10,7 @@
 .radio-box {
     display: inline-block;
     position: relative;
-    margin: 0 .4em .4em 0;
+    margin: 0 7px 1px 0;
 }
 
 .radio-box input {
@@ -15,10 +20,11 @@
 
 .radio-box input + label {
     cursor: pointer;
+    font-size: 14px;
 
     background-color: #fff;
 
-    padding: .5em 2em;
+    padding: 7px 27px;
 
     border: 1px solid #ccc;
 
@@ -95,7 +101,7 @@
     width: 90px !important;
     float: right;
     position: relative;
-    top: 45px;
+    top: 18px;
 }
 
 .form-group div.portfolio-amount-monthly {
@@ -110,8 +116,8 @@
     content: attr(data-currency);
     position: absolute;
     right: 10px;
-    top: 45px;
-    font-size: 1.5em;
+    bottom: 8px;
+    font-size: 21px;
     font-weight: normal;
     z-index: 1;
     color: #00a7d0;
@@ -152,6 +158,10 @@
     background-color: #95002d;
 }
 
+.opts-timeframe {
+    font-size: 14px;
+}
+
 .opts-timeframe .goal-just-invest {
     height: 34px;
     padding-top: 7px;
@@ -166,7 +176,7 @@
 }
 
 .opts-timeframe span {
-    margin: 10px 0 0 10px;
+    margin: 5px 0 0 10px;
     font-size: 10px;
 }
 

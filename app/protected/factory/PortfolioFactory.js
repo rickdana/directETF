@@ -121,7 +121,7 @@ angular.module('MetronicApp')
                 return cb(false, models[key]);
             }
 
-            $http.get(WS_URL + '/portfolio/model/' + riskLevel)
+            $http.get(WS_URL + '/portfolio/model/' + goal + '/' + amountMonthly + '/' + riskLevel)
                 .success(function (model, status, headers, config) {
                     models[key] = model;
                     cb(false, model);
