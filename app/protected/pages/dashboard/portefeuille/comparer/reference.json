@@ -24,7 +24,7 @@
     "color": "rgba(255, 112, 77, .8)"
   },
   {
-    "name": "Compte-épargne-livretA",
+    "name": "Compte d'épargne Livret A",
     "data": 0.0075,
     "tax": 0,
     "text": "La comparaison: livret, taux annuel: 0.75%.",
