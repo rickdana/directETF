@@ -76,19 +76,19 @@ angular.module('MetronicApp')
                     }
 
                     $http.get(WS_URL + '/client/portfolio/' + client.id)
-                        .success(function(portofolio) {
-                            var currency = typeof portofolio['dividends']['EUR'] != 'undefined' ? 'EUR' : 'USD';
+                        .success(function(portfolio) {
+                            var currency = typeof portfolio['dividends']['EUR'] != 'undefined' ? 'EUR' : 'USD';
 
                             client.portfolio.infos = {
-                                goal: portofolio.desc.goal,
-                                risk: portofolio.desc.risk,
-                                amountMonthly: portofolio.desc.amountMonthly,
-                                timeframe: portofolio.desc.timeframe,
+                                goal: portfolio.investorProfile.goal,
+                                risk: portfolio.investorProfile.risk,
+                                amountMonthly: portfolio.investorProfile.amountMonthly,
+                                timeframe: portfolio.investorProfile.timeframe,
                                 currency: currency,
                                 currencySymb: currency == 'EUR' ? '€' : '$',
-                                dividends: portofolio['dividends'][currency],
-                                cash: portofolio.cash[currency],
-                                etfs: portofolio.etfs,
+                                dividends: portfolio['dividends'][currency],
+                                cash: portfolio.cash[currency],
+                                etfs: portfolio.etfs,
                             };
 
                             done(false, client.portfolio.infos);
@@ -279,7 +279,7 @@ angular.module('MetronicApp')
                         clone_object(profile, client.profile);
 
                         $http.post(WS_URL + '/client/desc/' + client.id, client.profile)
-                            .success(function(portofolio) {
+                            .success(function(portfolio) {
                                 done(false, client.profile);
                             })
                             .error(function(data, status, headers, config) {
@@ -301,7 +301,7 @@ angular.module('MetronicApp')
                         clone_object(portfolio.infos, client.portfolio.infos);
 
                         $http.post(WS_URL + '/client/portfolio/' + client.id, client.portfolio.infos)
-                            .success(function(portofolio) {
+                            .success(function(portfolio) {
                                 done(false, client.portfolio.infos);
                             })
                             .error(function(data, status, headers, config) {

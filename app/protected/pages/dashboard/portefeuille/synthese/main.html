@@ -51,7 +51,7 @@
                     <i class="fa fa-euro"></i>
                 </div>
                 <div class="details">
-                    <div class="number"> {{format(client.portofolio.value)}} {{client.portofolio.currencySymb}}</div>
+                    <div class="number"> {{format(client.portfolio.value)}} {{client.portfolio.currencySymb}}</div>
                     <div class="desc"> dans le portefeuille</div>
                 </div>
                 <a class="more" href="#"> Approvisionner
@@ -65,8 +65,8 @@
                     <i class="fa fa-line-chart"></i>
                 </div>
                 <div class="details">
-                    <div id="gains-wallet" class="number">{{format(client.portofolio.gains)}}
-                        {{client.portofolio.currencySymb}}
+                    <div id="gains-wallet" class="number">{{format(client.portfolio.gains)}}
+                        {{client.portfolio.currencySymb}}
                     </div>
                     <div class="desc"> gains totals</div>
                 </div>
@@ -82,7 +82,7 @@
                     <i class="fa fa-line-chart"></i>
                 </div>
                 <div class="details">
-                    <div class="number"> {{format(client.portofolio.dividends)}} {{client.portofolio.currencySymb}}
+                    <div class="number"> {{format(client.portfolio.dividends)}} {{client.portfolio.currencySymb}}
                     </div>
                     <div class="desc"> dividente prévisionnelle</div>
                 </div>
@@ -118,7 +118,7 @@
                 </div>
                 <div class="portlet-body">
                     <div id="sectors-overview" data-height="200" data-lazy="true"
-                         data-filter="{{client.portofolio.etfs}}"
+                         data-filter="{{client.portfolio.etfs}}"
                          data-show-in-legend="true" ng-etf-sectors-chart></div>
                 </div>
             </div>
@@ -133,7 +133,7 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <div id="maps-repartition" height="200" data-lazy="true" data-filter="{{client.portofolio.etfs}}"
+                    <div id="maps-repartition" height="200" data-lazy="true" data-filter="{{client.portfolio.etfs}}"
                          ng-etf-maps></div>
                 </div>
             </div>
@@ -148,7 +148,7 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <div id="investment-list" data-lazy="true" data-filter="{{client.portofolio.etfs}}"
+                    <div id="investment-list" data-lazy="true" data-filter="{{client.portfolio.etfs}}"
                          data-header-template="/protected/pages/dashboard/portefeuille/synthese/tpl/header.html"
                          data-row-template="/protected/pages/dashboard/portefeuille/synthese/tpl/row.html"
                          data-footer-template="/protected/pages/dashboard/portefeuille/synthese/tpl/footer.html"

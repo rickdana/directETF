@@ -232,20 +232,6 @@ angular.module('MetronicApp')
                     // delta parsing
                     load(filters_array, function(etfs) {
                         for (var i = 0; i < etfs.length; i++) {
-                            var delta = etfs[i].quantity - filters[etfs[i].isin];
-
-                            for (var j = 0; j < etfs[i].countries.length; j++) {
-                                for (var country in etfs[i].countries[j]) {
-                                    etfs[i].countries[j][country] = Math.abs(etfs[i].countries[j][country] - delta);
-                                }
-                            }
-
-                            for (var j = 0; j < etfs[i].sectors.length; j++) {
-                                for (var sector in etfs[i].sectors[j]) {
-                                    etfs[i].sectors[j][sector] = Math.abs(etfs[i].sectors[j][sector] - delta);
-                                }
-                            }
-
                             etfs[i].quantity = filters[etfs[i].isin];
                         }
 

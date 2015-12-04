@@ -4,10 +4,12 @@ Metronic AngularJS App Main Script
 
 /* Metronic App */
 var MetronicApp = angular.module("MetronicApp", [
-    "ui.router", 
+    "ui.router",
+    "rzModule",
     "ui.bootstrap", 
     "oc.lazyLoad",
     "ngSanitize",
+    "ngDialog"
 ]);
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
@@ -323,23 +325,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         .state("profile.settings", {
             url: "/settings",
             templateUrl: "/protected/pages/dashboard/profile/settings/main.html",
-            data: {pageTitle: 'Mes préférences'},
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            '/angularjs-slider/dist/rzslider.min.css',
-                            '/protected/pages/dashboard/profile/settings/style.css',
-
-                            '/angular-bootstrap/ui-bootstrap-tpls.min.js',
-                            '/angularjs-slider/dist/rzslider.min.js',
-                            '/protected/pages/dashboard/profile/settings/PortfolioSettingsController.js'
-                        ]
-                    });
-                }]
-            }
+            data: {pageTitle: 'Mes préférences'}
         })
 
         // User Profile Account
