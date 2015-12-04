@@ -1,8 +1,26 @@
 angular.module('MetronicApp')
-    .controller('PortefeuilleComparerController', function($ClientFactory, $rootScope, $scope, $http, $EtfsFactory) {
+    .controller('PortefeuilleComparerController', function($ClientFactory, $rootScope, $scope, $http, $EtfsFactory, $element) {
         $scope.$on('$viewContentLoaded', function () {
             // initialize core components
             App.initAjax();
+
+        });
+
+        // Checkbox
+        var checkbox = $element.find('input');
+        var tex_fis =  $element.find('#text-fiscalite');
+        $(checkbox).iCheck({
+            checkboxClass: 'icheckbox_square-green'
+        });
+
+        $(checkbox).on('ifChecked', function() {
+            show_fiscalite ($scope.data.repeatSelect + ' fiscalité');
+            tex_fis.show();
+        });
+
+        $(checkbox).on('ifUnchecked', function() {
+            hide_fiscalite ($scope.data.repeatSelect + ' fiscalité');
+            tex_fis.hide();
         });
 
 
@@ -30,6 +48,7 @@ angular.module('MetronicApp')
                                 "data": "",
                                 "tax": 0,
                                 "text": "Sélectionner un élément de comparaison",
+                                "taxText": ""
                             })
 
                             $scope.data = {
@@ -44,6 +63,13 @@ angular.module('MetronicApp')
                                     }
                                 }
                             };
+                            $scope.taxText = function(name) {
+                                for (var i in ref_infos) {
+                                    if(name == ref_infos[i].name) {
+                                        return ref_infos[i].taxText;
+                                    }
+                                }
+                            };
 
                             $scope.$watch(function () {
                                 return $scope.data.repeatSelect;
@@ -53,7 +79,11 @@ angular.module('MetronicApp')
                         })
 
                 });
+
             });
+
+
+
 
             // set sidebar closed and body solid layout mode
             $rootScope.settings.layout.pageContentWhite = true;
