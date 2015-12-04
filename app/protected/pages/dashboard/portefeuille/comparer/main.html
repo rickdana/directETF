@@ -48,9 +48,16 @@
                                 <label class="control-label">Comparaison</label>
                             </div>
                             <div class="display-cell">
-                                <select class="control-input form-control" name="repeatSelect" id="comparaison" ng-model="data.repeatSelect">
-                                    <option ng-repeat="option in data.availableOptions">{{option.name}}</option>
-                                </select>
+                                <div class="comparaison-inputs">
+                                    <select class="control-input form-control" name="repeatSelect" id="comparaison" ng-model="data.repeatSelect">
+                                        <option ng-repeat="option in data.availableOptions">{{option.name}}</option>
+                                    </select>
+
+                                        <label id="ref_fis_checkbox">
+                                            <input type="checkbox">
+                                            Fiscalité
+                                        </label>
+                                </div>
 
                                 <ul id="text-comparaiso" class="chats">
                                     <li class="in">
@@ -58,10 +65,12 @@
                                             <span class="arrow"></span>
                                             <span class="datetime">{{data.repeatSelect}}</span>
                                             <span class="body">{{text(data.repeatSelect)}}</span>
+                                            <span class="body" id="text-fiscalite">{{taxText(data.repeatSelect)}}</span>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
+
                         </div>
                     </div>
                 </div>

@@ -182,15 +182,19 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
+                            '/icheck/skins/square/green.css',
+                            '/icheck/skins/flat/green.css',
                             '/protected/pages/dashboard/portefeuille/comparer/style.css',
+
+                            '/icheck/icheck.min.js',
                             '/protected/assets/lib/StockChart.js',
                             '/protected/pages/dashboard/portefeuille/comparer/reference.json',
                             '/protected/pages/dashboard/portefeuille/comparer/main.js',
-                            '/protected/pages/dashboard/portefeuille/comparer/script.js',
-                        ]
+                            '/protected/pages/dashboard/portefeuille/comparer/script.js'
+                        ],
+                        name: 'MetronicApp'
                     });
                 }]
             }
