@@ -2,7 +2,6 @@
 
 var session = require('express-session')
   , router = require('express').Router()
-  , flash = require('connect-flash')
   , path = require('path');
 
 // Configuring Passport
@@ -12,11 +11,10 @@ var User = require('./User');
 module.exports = function(app) {
     app.use(session({
         secret: 'TODO SET REDIS SECRET KEY HERE',
-//        cookie: { maxAge: 60000 },
+        cookie: { maxAge: 60000 },
         resave: true,
         saveUninitialized: true
     }));
-    app.use(flash());
     app.use(passport.initialize());
     app.use(passport.session());
 

@@ -10,8 +10,8 @@ function generateHash(password) {
 
 var db = {
     'demo@directetf.com': {
-        firstName: '',
-        secondName: '',
+        firstName: 'Demo',
+        secondName: 'User',
         password: generateHash('demo')
     },
     'user1@directetf.com': {

@@ -85,18 +85,19 @@ app.get('/logout', function(req, res, next) {
     res.redirect('/');
 });
 
-app.get('/login', function(req, res, next) {
-    if (req.isAuthenticated()) {
-        res.redirect('/dashboard');
+app.head('/login', function(req, res, next) {
+    if (!req.isAuthenticated()) {
+        return res.sendStatus(401);
     }
-    res.render('login', { message: req.flash('message') });
+    res.sendStatus(200);
 });
 
-app.post('/login', passport.authenticate('login', {
-    successRedirect: '/dashboard',
-    failureRedirect: '/login',
-    failureFlash : true
-}));
+app.post('/login', function(req, res, next) {
+    if (!req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/dashboard');
+}, passport.authenticate('login'));
 
 app.get('/signup', function(req, res){
     res.render('signup',{ message: req.flash('message') });
@@ -139,6 +140,7 @@ app.get('/dashboard', function(req, res){
 });
 
 app.use(serveStatic(APP_DIR, {index: ['public/pages/index/index.html']}));
+app.use(serveStatic(path.join(APP_DIR, 'public/pages')));
 app.use(serveStatic(path.join(APP_DIR, '/bower_components')));
 
 // view engine setup
