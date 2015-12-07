@@ -33,10 +33,9 @@ a {
     transition: all .35s;
 }
 
-
 a:hover,
 a:focus {
-    color: #6257ff;
+    color: #ffffff;
 }
 
 h1,
@@ -55,14 +54,14 @@ p {
 }
 
 .bg-primary {
-    background: rgba(95,197,206,1);
-    background: -moz-radial-gradient(center, ellipse cover, rgba(95,197,206,1) 0%, rgba(71,184,194,1) 47%, rgba(57,154,162,1) 81%, rgba(57,154,162,1) 100%);
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(95,197,206,1)), color-stop(47%, rgba(71,184,194,1)), color-stop(81%, rgba(57,154,162,1)), color-stop(100%, rgba(57,154,162,1)));
-    background: -webkit-radial-gradient(center, ellipse cover, rgba(95,197,206,1) 0%, rgba(71,184,194,1) 47%, rgba(57,154,162,1) 81%, rgba(57,154,162,1) 100%);
-    background: -o-radial-gradient(center, ellipse cover, rgba(95,197,206,1) 0%, rgba(71,184,194,1) 47%, rgba(57,154,162,1) 81%, rgba(57,154,162,1) 100%);
-    background: -ms-radial-gradient(center, ellipse cover, rgba(95,197,206,1) 0%, rgba(71,184,194,1) 47%, rgba(57,154,162,1) 81%, rgba(57,154,162,1) 100%);
-    background: radial-gradient(ellipse at center, rgba(95,197,206,1) 0%, rgba(71,184,194,1) 47%, rgba(57,154,162,1) 81%, rgba(57,154,162,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5fc5ce', endColorstr='#399aa2', GradientType=1 );
+    background: rgba(95, 197, 206, 1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(95, 197, 206, 1) 0%, rgba(71, 184, 194, 1) 47%, rgba(57, 154, 162, 1) 81%, rgba(57, 154, 162, 1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(95, 197, 206, 1)), color-stop(47%, rgba(71, 184, 194, 1)), color-stop(81%, rgba(57, 154, 162, 1)), color-stop(100%, rgba(57, 154, 162, 1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(95, 197, 206, 1) 0%, rgba(71, 184, 194, 1) 47%, rgba(57, 154, 162, 1) 81%, rgba(57, 154, 162, 1) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(95, 197, 206, 1) 0%, rgba(71, 184, 194, 1) 47%, rgba(57, 154, 162, 1) 81%, rgba(57, 154, 162, 1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(95, 197, 206, 1) 0%, rgba(71, 184, 194, 1) 47%, rgba(57, 154, 162, 1) 81%, rgba(57, 154, 162, 1) 100%);
+    background: radial-gradient(ellipse at center, rgba(95, 197, 206, 1) 0%, rgba(71, 184, 194, 1) 47%, rgba(57, 154, 162, 1) 81%, rgba(57, 154, 162, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#5fc5ce', endColorstr='#399aa2', GradientType=1);
     color: #fff;
     background-color: #222;
 }
@@ -76,7 +75,13 @@ section {
 }
 
 /*aside {*/
-    padding: 50px 0;
+padding:
+
+50
+px
+
+0
+;
 }
 
 .no-padding {
@@ -84,8 +89,26 @@ section {
 }
 
 /*#mainNav {*/
-    font-family: 'Poiret One', cursive;
-    background-color: rgba(255, 74, 254, 0.48);
+font-family:
+
+'Poiret One'
+,
+cursive
+
+;
+background-color:
+
+rgba
+(
+255
+,
+74
+,
+254
+,
+0.48
+)
+;
 }
 
 .navbar-default {
@@ -106,7 +129,7 @@ section {
 
 .navbar-default .navbar-header .navbar-brand:,
 .navbar-default .navbar-header .navbar-brand:focus {
-    color: #49a5bf;
+    color: #d0d0d0;
 }
 
 .navbar-default .nav > li > a,
@@ -119,12 +142,12 @@ section {
 
 .navbar-default .nav > li > a:hover,
 .navbar-default .nav > li > a:focus:hover {
-    color: #49a5bf;
+    color: #d0d0d0;
 }
 
 .navbar-default .nav > li.active > a,
 .navbar-default .nav > li.active > a:focus {
-    color: #49a5bf !important;
+    color: #d0d0d0 !important;
     background-color: transparent;
 }
 
@@ -160,17 +183,17 @@ section {
 
     .navbar-default.affix {
         border-color: rgba(156, 170, 255, 0.05);
-        background-color: #49a5bf;
+        background-color: #23a2bf;
     }
 
     .navbar-default.affix .navbar-header .navbar-brand {
         font-size: 20px;
-        color: #af5fff;
+        color: #a467ff;
     }
 
     .navbar-default.affix .navbar-header .navbar-brand:hover,
     .navbar-default.affix .navbar-header .navbar-brand:focus {
-        color: #af5fff;
+        color: #a467ff;
     }
 
     .navbar-default.affix .nav > li > a,
@@ -180,7 +203,7 @@ section {
 
     .navbar-default.affix .nav > li > a:hover,
     .navbar-default.affix .nav > li > a:focus:hover {
-        color: #af5fff;
+        color: #a467ff;
     }
 }
 
@@ -257,6 +280,7 @@ header .header-content .header-content-inner p {
 
 .section-heading {
     margin-top: 0;
+    color: #fffefd;
 }
 
 .service-box {
@@ -349,7 +373,7 @@ header .header-content .header-content-inner p {
 
 .btn-default {
     border-color: #fff;
-    color: #222;
+    color: #000000;
     background-color: #fff;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
@@ -362,8 +386,8 @@ header .header-content .header-content-inner p {
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-    border-color: #ededed;
-    color: #222;
+    border-color: #ffffff;
+    color: #000000;
     background-color: #f2f2f2;
 }
 
@@ -397,7 +421,7 @@ fieldset[disabled] .btn-default.active {
 
 .btn-default .badge {
     color: #fff;
-    background-color: #222;
+    background-color: #000000;
 }
 
 #about small {
@@ -405,11 +429,10 @@ fieldset[disabled] .btn-default.active {
     display: block;
 }
 
-
 .btn-primary {
-    border-color: #a4c6ff;
+    border-color: #3a96bf;
     color: #fff;
-    background-color: #a4c6ff;
+    background-color: #3a96bf;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
@@ -431,7 +454,6 @@ fieldset[disabled] .btn-default.active {
 .open > .dropdown-toggle.btn-primary {
     background-image: none;
 }
-
 
 .btn-primary.disabled,
 .btn-primary[disabled],
@@ -455,16 +477,41 @@ fieldset[disabled] .btn-primary.active {
     background-color: #a4c6ff;
 }
 
-#services {font-size: 20px}
-#contact {background-image: url(/public/assets/img/iphone.jpg)}
+#services {
+    font-size: 20px
+}
 
+#contact {
+    background-image: url(/public/assets/img/iphooone.jpg);
+    color: #faf8ff;
+}
 
 .btn-primary .badge {
-    color: #a4c6ff;
+    color: #3a96bf;
     background-color: #fff;
 }
 
-.btn {margin-top: 30px;
+.btn-default, .btn-primary {
+    transition: none;
+}
+
+.btn-primary:hover, .btn-primary:focus,
+.btn-default:hover, .btn-default:focus {
+    background-color: #e2e2e6;
+    background-position: 0 -65px;
+    transition: none;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #23a2bf;
+}
+.btn-primary, .btn-primary {
+    background-color: #319abf;
+    background-image: none;
+}
+
+.btn {
+    margin-top: 30px;
     border: 0;
     border-radius: 300px;
     text-transform: uppercase;
@@ -499,14 +546,20 @@ img::-moz-selection {
     background: 0 0;
 }
 
+#about
 body {
-    webkit-tap-highlight-color: #222;
+    webkit-tap-highlight-color: #000000;
 }
 
-.navbar-brand, .navbar-nav>li>a{
-    font-size: 25px;
+.navbar-brand, .navbar-nav > li > a {
+    font-size: 20px;
 }
+
+.nav>li>a:hover, .nav>li>a:focus {
+    text-decoration: none;
+    background-color: transparent;
+
 
 #premier-bouton {
-    background-image: linear-gradient(to bottom,#49a5bf 0,#49a5bf 100%);
+    background-image: linear-gradient(to bottom, #48a2bf 0, #3a96bf 100%);
 }
