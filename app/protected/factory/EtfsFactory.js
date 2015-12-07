@@ -101,9 +101,9 @@ angular.module('MetronicApp')
 
             $http.get(WS_URL + '/etf/prices/' + isin)
                 .success(function (prices) {
-                    isin_prices[isin] = prices;
+                    isin_prices[isin] = prices.slice();
 
-                    cb(false, prices);
+                    cb(false, isin_prices[isin]);
                 })
                 .error(function(data, status, headers, config) {
                     var err = new Error("Failed to get prices of ETF " + isin);
