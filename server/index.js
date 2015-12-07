@@ -73,7 +73,7 @@ var passport = require('./passport')(app);
 var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
         return next();
-    res.redirect('/login');
+    res.redirect('/');
 }
 
 var protected_dir = path.join(APP_DIR, '/protected');
@@ -85,28 +85,25 @@ app.get('/logout', function(req, res, next) {
     res.redirect('/');
 });
 
-app.get('/login', function(req, res, next) {
-    if (req.isAuthenticated()) {
-        res.redirect('/dashboard');
+app.head('/login', function(req, res, next) {
+    if (!req.isAuthenticated()) {
+        return res.sendStatus(401);
     }
-    res.render('login', { message: req.flash('message') });
+    res.sendStatus(200);
 });
 
-app.post('/login', passport.authenticate('login', {
-    successRedirect: '/dashboard',
-    failureRedirect: '/login',
-    failureFlash : true
-}));
-
-app.get('/signup', function(req, res){
-    res.render('signup',{ message: req.flash('message') });
+app.post('/login', function(req, res, next) {
+    if (!req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/dashboard');
+}, passport.authenticate('login'), function(req, res, next) {
+    res.sendStatus(200);
 });
 
-app.post('/signup', passport.authenticate('signup', {
-    successRedirect: '/dashboard',
-    failureRedirect: '/signup',
-    failureFlash : true
-}));
+app.post('/signup', passport.authenticate('signup'), function(req, res, next) {
+    res.sendStatus(200);
+});
 
 ['/protected', '/dashboard'].forEach(function(route) {
     app.use(route, function(req, res, next) {
@@ -139,6 +136,7 @@ app.get('/dashboard', function(req, res){
 });
 
 app.use(serveStatic(APP_DIR, {index: ['public/pages/index/index.html']}));
+app.use(serveStatic(path.join(APP_DIR, 'public/pages')));
 app.use(serveStatic(path.join(APP_DIR, '/bower_components')));
 
 // view engine setup

@@ -10,28 +10,41 @@ angular.module('MetronicApp')
             unlock: function() {
                 locked = false;
             },
-            set: function(isin, price) {
+            set: function(isin, quantity, price) {
                 if (locked) {
                     return;
                 }
                 if (!etfs[isin]) {
-                    //if (typeof quantity == 'undefined') {
-                    //    throw new Error('Quantity of %s must be set!', isin);
-                    //}
+                    if (typeof quantity == 'undefined') {
+                        throw new Error('Quantity of ' + isin + ' must be set!');
+                    }
                     if (typeof price == 'undefined') {
-                        throw new Error('Price of %s must be set!', isin);
+                        throw new Error('Price of % ' + isin + ' must be set!');
                     }
 
                     if (!etfs[isin]) {
                         etfs[isin] = {
                             isin: isin,
-                            //quantity: quantity,
-                            //limit: quantity,
+                            quantity: quantity,
+                            limit: quantity,
                             price: price,
-                            priceLimit: price
+                            priceLimit: price,
+                            cash: quantity * price,
                         };
                     }
-                    return console.log("-> %s was added in the selection list", isin);
+                    return console.log("-> %s(quantity: %s, price: %s) was added in the selection list", isin, quantity, price);
+                }
+
+                if (typeof quantity != 'undefined') {
+                    quantity = parseInt(quantity);
+
+                    if (quantity > etfs[isin].limit) {
+                        throw new Error('Quantity of ' + isin + ' must be less than ' + etfs[isin].limit + '! #' + quantity);
+                    }
+
+                    etfs[isin].quantity = quantity;
+                } else {
+                    quantity = etfs[isin].limit;
                 }
 
                 if (price) {
@@ -44,7 +57,9 @@ angular.module('MetronicApp')
                     etfs[isin].price = price;
                 }
 
-                console.log("-- Set %s(price: %s)", isin, price || etfs[isin].priceLimit);
+                etfs[isin].cash = etfs[isin].quantity * etfs[isin].price;
+
+                console.log("-- Set %s(quantity: %s, price: %s)", isin, quantity, price || etfs[isin].priceLimit);
             },
             get: function(isin) {
                 if (isin) {
@@ -57,10 +72,12 @@ angular.module('MetronicApp')
                 var array = [];
 
                 for (var isin in etfs) {
-                    if (etfs[isin] && etfs[isin].price) {
+                    if (etfs[isin] && etfs[isin].quantity) {
                         array.push({
                             isin: etfs[isin].isin,
+                            quantity: etfs[isin].quantity,
                             price: etfs[isin].price,
+                            cash: etfs[isin].cash,
                         });
                     }
                 }
@@ -71,7 +88,7 @@ angular.module('MetronicApp')
                 var i = 0;
 
                 for (var isin in etfs) {
-                    if (etfs[isin] && etfs[isin].price) {
+                    if (etfs[isin] && etfs[isin].quantity) {
                         i++;
                     }
                 }
@@ -83,16 +100,18 @@ angular.module('MetronicApp')
 
                 for (var isin in etfs) {
                     if (etfs[isin]) {
-                        cash += etfs[isin].price;
+                        cash += etfs[isin].cash;
                     }
                 }
+
+                console.log('cash = ', cash)
 
                 return cash;
             }
         };
     })
     .controller('WizardPortfolioInitController', function($PortfolioFactory, $rootScope, $scope, ngDialog) {
-        if (!$.cookie('client_portfolio_initialized')) {
+        if (!!$.cookie('client_portfolio_initialized')) {
             $rootScope.showPortfolioSettings = true;
 
             ngDialog.open({
@@ -113,7 +132,6 @@ angular.module('MetronicApp')
                     switch (step) {
                         case 1:
                             $PortfolioFactory.model($rootScope.client.portfolio.infos.goal, $rootScope.client.portfolio.infos.amountMonthly, $rootScope.client.portfolio.infos.risk, function(err, portfolio) {
-                                console.log(portfolio)
                                 var etfs = [];
 
                                 for (var i in portfolio) {
@@ -123,8 +141,6 @@ angular.module('MetronicApp')
 
                                     etfs.push(etf);
                                 }
-
-                                console.log(etfs)
 
                                 $('#wizard-portfolio-model').attr('filter', JSON.stringify(etfs))
                             });
@@ -276,7 +292,7 @@ angular.module('MetronicApp')
                         $(this).iCheck({ checkboxClass: 'icheckbox_square-blue' });
 
                         $(this).on('ifChecked', function() {
-                            $OrdersFactory.set(etf.isin, etf.price);
+                            $OrdersFactory.set(etf.isin, 3, etf.price);
                         });
 
                         $(this).on('ifUnchecked', function() {
@@ -296,7 +312,7 @@ angular.module('MetronicApp')
                         var selection = $OrdersFactory.get();
 
                         for (var i = 0; i < selection.length; i++) {
-                            if (selection[i].price) {
+                            if (selection[i].quantity) {
                                 $element.find('[data-isin=' + selection[i].isin + '] [type=checkbox]').iCheck('check');
                             }
                         }
@@ -478,6 +494,14 @@ angular.module('MetronicApp')
         };
     })
     .controller('InvestirMontantAjustementController', function($OrdersFactory, $ClientFactory, $rootScope, $scope, $element) {
+        $scope.cbEtfsListBeforeRendering = function(etfs, done) {
+            for (var i = 0; i < etfs.length; i++) {
+                etfs[i].cash = etfs[i].quantity * etfs[i].price;
+            }
+
+            done(etfs);
+        };
+
         /**
          TODO Bug: step1: sélectioner les 3 premiers etfs. step2: désélectionner les 3 etfs. step1: resélectionner les
          3 premiers etfs. step2-bug: les 3 etfs sélectionnés sont chargés dans le tableau, mais la valeur de leur
@@ -543,7 +567,7 @@ angular.module('MetronicApp')
             });
         };
     })
-    .controller('InvestirRevoirController', function($ClientFactory, $OrdersFactory, $rootScope, $scope, $element) {
+    .controller('InvestirRevoirController', function($ClientFactory, $OrdersFactory, $EtfsFactory, $rootScope, $scope, $element) {
         //regroup the invests
         function join_simulation(simulation, simulation_total) {
         	for(var i in simulation) {
@@ -557,13 +581,6 @@ angular.module('MetronicApp')
         	}
 
         	return simulation_total;
-        }
-
-        //return the l'historique de prix de ETF
-        function etf_price(ref_isin, done) {
-        	$.getJSON(WS_URL + '/etf/prices/' + ref_isin, function (prices) {
-        		done(prices);
-        	});
         }
 
         //format utc to yyyy/mm/dd
@@ -587,7 +604,7 @@ angular.module('MetronicApp')
         		n = ref_etfs.length;
         	var prices_concat = [];
 
-        	var prices_callback = function(prices) {
+        	var prices_callback = function(err, prices) {
         		var value_invest_firstDay = 0;
         		var firstDay = formatDate(data_valo[0][0]);
 
@@ -624,11 +641,10 @@ angular.module('MetronicApp')
         			return;
         		}
 
-        		etf_price(ref_etfs[index++][0], prices_callback);
+                $EtfsFactory.prices(ref_etfs[index++][0], prices_callback);
         	};
 
-
-        	etf_price(ref_etfs[index++][0], prices_callback);
+            $EtfsFactory.prices(ref_etfs[index++][0], prices_callback);
         }
 
         //Simulation of investments in the portfolio
@@ -639,14 +655,14 @@ angular.module('MetronicApp')
         		n = ref_etfs.length;
         	var prices_concat = [];
 
-        	var prices_callback = function(prices) {
+        	var prices_callback = function(err, prices) {
         		// Get the value of the ETF for each date?????
         		var value_invest_firstDay = 0;
         		var firstDay = formatDate(data_valo[0][0]);
 
         		firstDayloop:
         		for (var i = 0, size = prices.length; i < size; i++) {
-        			for (var date in prices[i]) {
+                    for (var date in prices[i]) {
         				if (date == firstDay) {
         					value_invest_firstDay = ref_etfs[index - 1][1] * prices[i][date];
         					break firstDayloop;
@@ -682,11 +698,10 @@ angular.module('MetronicApp')
         			return;
         		}
 
-        		etf_price(ref_etfs[index++][0], prices_callback);
+                $EtfsFactory.prices(ref_etfs[index++][0], prices_callback);
         	};
 
-
-        	etf_price(ref_etfs[index++][0], prices_callback);
+            $EtfsFactory.prices(ref_etfs[index++][0], prices_callback);
         }
 
 
@@ -799,7 +814,7 @@ angular.module('MetronicApp')
                     }];
 
                     //simulation-graph of the past
-                    LoadStockChart(series, $('#simulation-past'), null, true);
+                    LoadStockChart(series, $('#simulation-past'), true);
 
                     //Benefice
                     $rootScope.profit = new_invest[new_invest.length - 1][1] - data_valo[data_valo.length - 1][1]
@@ -898,7 +913,7 @@ angular.module('MetronicApp')
                             zIndex: 0
                         }];
 
-                        LoadStockChart(series, $('#simulation-future'), null, true);
+                        LoadStockChart(series, $('#simulation-future'), true);
                     });
                 }
             });

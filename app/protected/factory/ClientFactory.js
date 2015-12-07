@@ -123,7 +123,7 @@ angular.module('MetronicApp')
                                 return a[0] - b[0];
                             });
 
-                            client.portfolio.valo = [valo, data_valo];
+                            client.portfolio.valo = [angular.copy(valo), data_valo];
 
                             done(false, valo, data_valo);
                         })
@@ -160,6 +160,8 @@ angular.module('MetronicApp')
 
                     $http.get(WS_URL + '/client/trades/' + client.id)
                         .success(function(trades) {
+                            client.portfolio.trades = angular.copy(trades)
+
                             done(false, trades);
                         })
                         .error(function(data, status, headers, config) {
@@ -268,6 +270,8 @@ angular.module('MetronicApp')
                         for (var i = 0; i < etfs.length; i++) {
                             gains += etfs[i].gains;
                         }
+
+                        client.portfolio.gains = gains;
 
                         done(false, gains);
                     });

@@ -78,8 +78,8 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
             pageBodySolid: false, // solid body color state
             pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
         },
-        assetsPath: '/protected/assets',
-        globalPath: '/protected/assets/global',
+        assetsPath: '/public/assets',
+        globalPath: '/public/assets/global',
         layoutPath: '/protected/assets/layouts/layout',
     };
 
@@ -276,29 +276,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             }
         })
 
-        // AngularJS plugins
-        .state('fileupload', {
-            url: "/file_upload.html",
-            templateUrl: "views/file_upload.html",
-            data: {pageTitle: 'AngularJS File Upload'},
-            controller: "GeneralPageController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load([{
-                        name: 'angularFileUpload',
-                        files: [
-                            '/protected/assets/global/plugins/angularjs/plugins/angular-file-upload/angular-file-upload.min.js',
-                        ] 
-                    }, {
-                        name: 'MetronicApp',
-                        files: [
-                            '/protected/pages/dashboard/controllers/GeneralPageController.js'
-                        ]
-                    }]);
-                }]
-            }
-        })
-
         // User Profile
         .state("profile", {
             url: "/profile",
@@ -311,7 +288,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                         name: 'MetronicApp',  
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
-                            '/bootstrap-fileinput/css/fileinput.min.css',
                             '/protected/pages/dashboard/profile/style.css',
 
                             '/protected/pages/dashboard/profile/UserProfileController.js'
