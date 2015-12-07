@@ -73,7 +73,7 @@ var passport = require('./passport')(app);
 var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
         return next();
-    res.redirect('/login');
+    res.redirect('/');
 }
 
 var protected_dir = path.join(APP_DIR, '/protected');
@@ -97,17 +97,13 @@ app.post('/login', function(req, res, next) {
         return next();
     }
     res.redirect('/dashboard');
-}, passport.authenticate('login'));
-
-app.get('/signup', function(req, res){
-    res.render('signup',{ message: req.flash('message') });
+}, passport.authenticate('login'), function(req, res, next) {
+    res.sendStatus(200);
 });
 
-app.post('/signup', passport.authenticate('signup', {
-    successRedirect: '/dashboard',
-    failureRedirect: '/signup',
-    failureFlash : true
-}));
+app.post('/signup', passport.authenticate('signup'), function(req, res, next) {
+    res.sendStatus(200);
+});
 
 ['/protected', '/dashboard'].forEach(function(route) {
     app.use(route, function(req, res, next) {
