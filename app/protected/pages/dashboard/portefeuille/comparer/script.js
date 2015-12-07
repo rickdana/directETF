@@ -1,4 +1,4 @@
-//Comparison with ETF
+//Comparison with ETF sans fiscalité
 function reference_etf(prices, valo_wallet, data_valo_wallet, trades_cashin_stockin) {
 	var evolution = {};
 	var info_invest = [];
@@ -52,6 +52,29 @@ function reference_etf(prices, valo_wallet, data_valo_wallet, trades_cashin_stoc
 	return data_ref_etf;
 }
 
+//Comparison with ETF avec fiscalité
+function reference_fiscalite(data_ref_etf, tax, trades_by_date) {
+	var data_ref_etf_fis = [];
+	var fiscalite = 0;
+	var trades = {};
+
+	for (var date in trades_by_date) {
+		trades[new Date(date).getTime()] = trades_by_date[date];
+	}
+
+	for (var i in data_ref_etf) {
+		var valeur_initial = trades[data_ref_etf[i][0]];
+		fiscalite += calcul_fiscalite(data_ref_etf[i][1], valeur_initial, tax);
+		data_ref_etf_fis.push([data_ref_etf[i][0], data_ref_etf[i][1] - fiscalite]);
+	}
+
+	data_ref_etf_fis.sort(function (a, b) {
+		return a[0] - b[0];
+	});
+	return data_ref_etf_fis;
+
+}
+
 //comparison of dates
 function comparator_date(a, b) {
 	var d1 = a.split('-');
@@ -98,6 +121,12 @@ function comparator_year_month(a, b) {
 	}
 }
 
+//calcul la fiscalite
+function calcul_fiscalite (data, valeur_initial, tax) {
+	var x = data - valeur_initial;
+	return  x > 0 ? x * tax : 0;
+}
+
 //Comparaispon compte-epargne
 	function reference_livret ( rate, trades, valo ) {
 		var rate_by_month = rate / 24;
@@ -129,7 +158,7 @@ function comparator_year_month(a, b) {
 				if (typeof evolution[date_quinzaine] =='undefined') {
 					evolution[date_quinzaine] = sum + interest;
 				} else {
-					evolution[date_quinzaine] +=  (money_invest+ interest);
+					evolution[date_quinzaine] +=  (money_invest + interest);
 				}
 			}
 
@@ -275,12 +304,13 @@ function get_amount_month(trades_by_date, time) {
 
 }
 
-//Reference housing
-function reference_house(rates, trades_by_date, valo_wallet) {
+//Reference housing sans fiscalité
+function reference_house(rates, trades_by_date, valo_wallet, ref_infos) {
 	var ref_house =[];
 	var start = new Date(valo_wallet[0][0]);
 	var start_time = 0;
 	var end_time = 0;
+	var num_ref = 0;
 
 	if(start.getMonth() < 9){
 		start_time = start.getFullYear() + '-0' + (parseInt(start.getMonth())+1);
@@ -297,20 +327,36 @@ function reference_house(rates, trades_by_date, valo_wallet) {
 	}
 
 	var is_first_month = true;
+
+	var percent;
+	var day_year_fiscalite;
+	var fiscalite = 0;
+	for (var i in ref_infos) {
+		if (typeof ref_infos[i].data == 'object') {
+			percent = ref_infos[i].tax;
+			day_year_fiscalite = ref_infos[i].date_tax;
+		}
+	}
+
 	for(var i in rates) {
 		if(comparator_year_month(rates[i][0], start_time) != -1 && comparator_year_month(rates[i][0], end_time) != 1) {
-			var amount = get_amount_month(trades_by_date,rates[i][0]);
+			var amount = get_amount_month(trades_by_date, rates[i][0]);
+			var d2 = amount[0];
+
 			if (is_first_month) {
 				ref_house.push([new Date(amount[0]).getTime(),amount[1]]);
+				num_ref++;
 				is_first_month = false;
 			} else {
-				ref_house.push([new Date(amount[0]).getTime(),amount[1] * (rates[i - 1][1] / 100 + 1)]);
+				ref_house.push([new Date(amount[0]).getTime(),amount[1] * (rates[i - 1][1] / 100 + 1) - fiscalite]);
+				num_ref++;
 			}
 		}
 	}
 
 	return ref_house;
 }
+
 
 function load_comparaison_valo_trades(data_valo, trades, trades_by_date) {
 	var invests_by_date = {};
@@ -421,6 +467,8 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 	show_legend(chart, chart.get(2));
 
 	if(ref_name == '') {
+		$('#ref_fis_checkbox').iCheck('uncheck');
+		$('#ref_fis_checkbox').iCheck('disable');
 		return;
 	}
 
@@ -428,6 +476,15 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 		if (chart.series[i].name == ref_name) {
 			chart.series[i].show();
 			show_legend(chart, chart.series[i]);
+			if (chart.get(ref_name + ' fiscalité') != null) {
+				var serie_fiscalite = chart.get(ref_name + ' fiscalité');
+				show_legend(chart, serie_fiscalite);
+				$('#ref_fis_checkbox').iCheck('uncheck');
+				$('#ref_fis_checkbox').iCheck('enable');
+			} else {
+				$('#ref_fis_checkbox').iCheck('uncheck');
+				$('#ref_fis_checkbox').iCheck('disable');
+			}
 			return;
 		}
 	}
@@ -457,44 +514,100 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 
 	for (var j in ref_infos) {
 		if (ref_infos[j].name == ref_name) {
-			var serie = {};
-			serie.color = ref_infos[j].color;
-			serie.type = ref_infos[j].type;
-			serie.name = ref_name;
-			//serie.showInLegend = false;
-			serie.events = {
+			var serie_1 = {};  //référence sans fiscalité
+			var serie_2 = {}; //référence avec fiscalité
+			var series = [];
+			serie_1.color = ref_infos[j].color;
+			serie_1.type = ref_infos[j].type;
+			serie_1.name = ref_name;
+		/*	serie_1.events = {
 				legendItemClick : function() {
 					$scope.$apply(function () {
 						$scope.data.repeatSelect = "";
 					})
 					return false;
 				}
+			};*/
+			serie_1.events = {
+				legendItemClick : function() {
+					return false;
+				}
 			};
+			serie_2.color = ref_infos[j].taxColor;
+			serie_2.type = ref_infos[j].type;
+			serie_2.name = ref_name + ' fiscalité';
+			serie_2.id = serie_2.name;
+			/*	serie_2.events = {
+                    legendItemClick : function() {
+                        $scope.$apply(function () {
+                            $scope.data.repeatSelect = "";
+                        })
+                        return false;
+                    }
+                };*/
+			serie_2.events = {
+				legendItemClick : function() {
+					return false;
+				}
+			};
+			serie_2.tax = ref_infos[j].tax;
+			serie_2.visible = false;
+			$('#ref_fis_checkbox').iCheck('uncheck');
+			$('#ref_fis_checkbox').iCheck('enable');
 
 			switch (typeof ref_infos[j].data) {
 				case 'string':    //Référence ETF
-					serie.isin = ref_infos[j].data;
-					$EtfsFactory.prices(serie.isin, (function(series) {
+					serie_1.isin = ref_infos[j].data;
+					$EtfsFactory.prices(serie_1.isin, (function(serie) {
 						return function (err, prices) {
-							series.data = on_prices(prices);
-							LoadStockChart(series, $('#portefeuille-comparaison-stockchart'), false);
+							serie_1.data = on_prices(prices);
+							serie_2.data = reference_fiscalite(serie_1.data, serie_2.tax / 356, trades_by_date);
+							series.push(serie_1);
+							series.push(serie_2);
+							LoadStockChart(serie, $('#portefeuille-comparaison-stockchart'), false);
 						}
-					})(serie));
+					})(series));
 					break;
 				case 'number': //Référence LivretA
-					serie.dashStyle = 'shortdot';
-					serie.data = reference_livret (ref_infos[j].data, trades_cash_stockin, data_valo);
-					LoadStockChart(serie, $('#portefeuille-comparaison-stockchart'), false);
+					serie_1.dashStyle = 'shortdot';
+					serie_2.dashStyle = 'shortdot';
+					serie_1.data = reference_livret (ref_infos[j].data, trades_cash_stockin, data_valo);
+					serie_2.data = reference_fiscalite(serie_1.data, serie_2.tax / 24, trades_by_date);
+					series.push(serie_1);
+					series.push(serie_2);
+					LoadStockChart(series, $('#portefeuille-comparaison-stockchart'), false);
 					break;
 				case 'object': //Référence Imobilier
-					serie.data = reference_house(ref_infos[j].data, trades_by_date, data_valo);
-					LoadStockChart(serie, $('#portefeuille-comparaison-stockchart'), false);
+					serie_1.data = reference_house(ref_infos[j].data, trades_by_date, data_valo, ref_infos);
+					serie_2.data = reference_fiscalite(serie_1.data, serie_2.tax / 12, trades_by_date);
+					series.push(serie_1);
+					series.push(serie_2);
+					LoadStockChart(series, $('#portefeuille-comparaison-stockchart'), false);
 			}
 
 			break;
 		}
 	}
+}
 
+function show_fiscalite (serie_name) {
+	var chart = $('#portefeuille-comparaison-stockchart').highcharts();
 
+		for(var i in chart.series) {
+			if (chart.series[i].name == serie_name) {
+				chart.series[i].show();
+				return;
+			}
+		}
+}
 
+function hide_fiscalite (serie_name) {
+	var chart = $('#portefeuille-comparaison-stockchart').highcharts();
+
+	for(var i in chart.series) {
+		if (chart.series[i].name == serie_name) {
+			chart.series[i].hide();
+			return;
+		}
+	}
 }

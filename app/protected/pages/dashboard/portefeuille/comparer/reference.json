@@ -2,34 +2,42 @@
   {
     "name": "Actions France",
     "data": "FR0010424135",
-    "tax": 0,
-    "text": "La comparaison: Lyxor EURO STOXX 50 Daily Short UCITS ETF.",
     "type": "spline",
-    "color": "rgb(91, 173, 255)"
+    "color": "rgb(91, 173, 255)",
+    "text": "La comparaison: Lyxor EURO STOXX 50 Daily Short UCITS ETF.",
+    "tax": 0.2,
+    "taxText": "Taux d'imposition sur les actions de 20%",
+    "taxColor": "rgba(91, 173, 255, .5)"
   },
   {
     "name": "Actions US",
     "data": "FR0010168773",
-    "tax": 0,
-    "text": "La comparaison: Lyxor MSCI EMU Small Cap UCITS ETF.",
     "type": "spline",
-    "color": "rgb(91, 173, 0)"
+    "color": "rgb(91, 173, 0)",
+    "text": "La comparaison: Lyxor MSCI EMU Small Cap UCITS ETF.",
+    "tax": 0.3,
+    "taxText": "Taux d'imposition sur les actions de 30%",
+    "taxColor": "rgba(91, 173, 0, .5)"
   },
   {
     "name": "Actions World",
     "data": "FR0010361683",
-    "tax": 0,
-    "text": "La comparaison: Lyxor MSCI India UCITS ETF.",
     "type": "spline",
-    "color": "rgba(255, 112, 77, .8)"
+    "color": "rgba(255, 112, 77, .8)",
+    "text": "La comparaison: Lyxor MSCI India UCITS ETF.",
+    "tax": 0.3,
+    "taxText": "Taux d'imposition sur les actions de 30%",
+    "taxColor": "rgba(255, 112, 77, .5)"
   },
   {
     "name": "Compte d'épargne Livret A",
     "data": 0.0075,
-    "tax": 0,
     "text": "La comparaison: livret, taux annuel: 0.75%.",
     "type": "spline",
-    "color": "rgba(255, 12, 77, .8)"
+    "color": "rgba(255, 12, 77, .8)",
+    "tax":0,
+    "taxText": "Livret A non imposable",
+    "taxColor": "rgba(255, 12, 77, .3)"
   },
   {
     "name": "Imobilier",
@@ -39,9 +47,11 @@
              ["2014-07", 2.50], ["2014-08", 2.40], ["2014-09", 2.35],["2014-10", 2.25], ["2014-11", 2.15], ["2014-12", 2.10],
              ["2015-01", 2.10], ["2015-02", 1.95], ["2015-03", 1.90],["2015-04", 1.80], ["2015-05", 1.75], ["2015-06", 1.80],
              ["2015-07", 2.05], ["2015-08", 2.15], ["2015-09", 2.10],["2015-10", 2.20]],
-    "tax": 15,
-    "text": "La comparaison: l'investissement à immobilier.",
     "type": "spline",
-    "color": "rgba(130, 12, 77, .8)"
+    "color": "rgba(130, 12, 77, .8)",
+    "text": "La comparaison: l'investissement à immobilier.",
+    "tax": 0.2,
+    "taxText": "Taux d'imposition sur l'immobilier de 10%",
+    "taxColor": "rgba(130, 12, 77, .5)"
   }
 ]
