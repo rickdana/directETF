@@ -28,10 +28,11 @@ angular.module('MetronicApp')
                             quantity: quantity,
                             limit: quantity,
                             price: price,
-                            priceLimit: price
+                            priceLimit: price,
+                            cash: quantity * price,
                         };
                     }
-                    return console.log("-> %s was added in the selection list", isin);
+                    return console.log("-> %s(quantity: %s, price: %s) was added in the selection list", isin, quantity, price);
                 }
 
                 if (typeof quantity != 'undefined') {
@@ -56,6 +57,8 @@ angular.module('MetronicApp')
                     etfs[isin].price = price;
                 }
 
+                etfs[isin].cash = etfs[isin].quantity * etfs[isin].price;
+
                 console.log("-- Set %s(quantity: %s, price: %s)", isin, quantity, price || etfs[isin].priceLimit);
             },
             get: function(isin) {
@@ -74,6 +77,7 @@ angular.module('MetronicApp')
                             isin: etfs[isin].isin,
                             quantity: etfs[isin].quantity,
                             price: etfs[isin].price,
+                            cash: etfs[isin].cash,
                         });
                     }
                 }
@@ -96,9 +100,11 @@ angular.module('MetronicApp')
 
                 for (var isin in etfs) {
                     if (etfs[isin]) {
-                        cash += etfs[isin].quantity * etfs[isin].price;
+                        cash += etfs[isin].cash;
                     }
                 }
+
+                console.log('cash = ', cash)
 
                 return cash;
             }
@@ -286,7 +292,7 @@ angular.module('MetronicApp')
                         $(this).iCheck({ checkboxClass: 'icheckbox_square-blue' });
 
                         $(this).on('ifChecked', function() {
-                            $OrdersFactory.set(etf.isin, 1, etf.price);
+                            $OrdersFactory.set(etf.isin, 3, etf.price);
                         });
 
                         $(this).on('ifUnchecked', function() {
@@ -488,6 +494,14 @@ angular.module('MetronicApp')
         };
     })
     .controller('InvestirMontantAjustementController', function($OrdersFactory, $ClientFactory, $rootScope, $scope, $element) {
+        $scope.cbEtfsListBeforeRendering = function(etfs, done) {
+            for (var i = 0; i < etfs.length; i++) {
+                etfs[i].cash = etfs[i].quantity * etfs[i].price;
+            }
+
+            done(etfs);
+        };
+
         /**
          TODO Bug: step1: sélectioner les 3 premiers etfs. step2: désélectionner les 3 etfs. step1: resélectionner les
          3 premiers etfs. step2-bug: les 3 etfs sélectionnés sont chargés dans le tableau, mais la valeur de leur
