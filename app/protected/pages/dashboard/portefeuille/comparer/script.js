@@ -468,8 +468,8 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 	show_legend(chart, chart.get(2));
 
 	if(ref_name == '') {
-		$('#ref_fis_checkbox').iCheck('uncheck');
-		$('#ref_fis_checkbox').iCheck('disable');
+		document.getElementById('ref_fis_checkbox').checked = false;
+		document.getElementById('ref_fis_checkbox').disabled = true;
 		return;
 	}
 
@@ -477,14 +477,15 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 		if (chart.series[i].name == ref_name) {
 			chart.series[i].show();
 			show_legend(chart, chart.series[i]);
+
 			if (chart.get(ref_name + ' fiscalité') != null) {
 				var serie_fiscalite = chart.get(ref_name + ' fiscalité');
 				show_legend(chart, serie_fiscalite);
-				$('#ref_fis_checkbox').iCheck('uncheck');
-				$('#ref_fis_checkbox').iCheck('enable');
+				document.getElementById('ref_fis_checkbox').checked = false;
+				document.getElementById('ref_fis_checkbox').disabled = false;
 			} else {
-				$('#ref_fis_checkbox').iCheck('uncheck');
-				$('#ref_fis_checkbox').iCheck('disable');
+				document.getElementById('ref_fis_checkbox').checked = false;
+				document.getElementById('ref_fis_checkbox').disabled = true;
 			}
 			return;
 		}
@@ -553,8 +554,8 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 			};
 			serie_2.tax = ref_infos[j].tax;
 			serie_2.visible = false;
-			$('#ref_fis_checkbox').iCheck('uncheck');
-			$('#ref_fis_checkbox').iCheck('enable');
+			document.getElementById('ref_fis_checkbox').checked = false;
+			document.getElementById('ref_fis_checkbox').disabled = false;
 
 			switch (typeof ref_infos[j].data) {
 				case 'string':    //Référence ETF
