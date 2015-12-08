@@ -38,6 +38,7 @@
     "select2": "~4.0.1",
     "jquery-validation": "jquery.validate#~1.13.0",
     "jquery.uniform": "~2.1.2",
-    "blockUI": "jquery.blockUI#*"
+    "blockUI": "jquery.blockUI#*",
+    "jquery-appear": "~0.2.4"
   }
 }
