@@ -26,6 +26,12 @@ hr.light {
     margin: 30px auto;
 }
 
+hr.middle {
+    border #f2f2f2;
+    margin: 300px
+    border-width: 2px;
+}
+
 a {
     color: #fffefd;
     -webkit-transition: all .35s;
@@ -47,13 +53,64 @@ h6 {
     font-family: 'Poiret One', cursive;
 }
 
-
 #mainNav {margin-top: 10px}
 
 p {
     margin-bottom: 20px;
     font-size: 20px;
     line-height: 1.5;
+}
+
+.bar {
+    /* font-size: 10px */
+    height: 0.7em;
+    border-radius: 0em;
+    position: relative;
+    background: rgba(242, 242, 242, 0.17);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    margin-bottom:40px;
+    margin-top: 15px;
+
+}
+
+.bar .percentage {
+    position: relative;
+    font-size: 0.7em;
+    background: #ffffff;
+    height: 1em;
+    border-radius: 0em;
+}
+
+.has-tip:before,
+.has-tip:after {
+    content: "";
+    position: absolute;
+    opacity: 0;
+}
+
+.has-tip:before {
+    bottom: -10px;
+    right: -5px;
+    border: 5px solid;
+    border-color: transparent transparent #d0d0d0 transparent;
+    transition: opacity 0.1s;
+}
+
+div.box {
+    background: rgba(242, 242, 242, 0.17);
+    padding-top: 35px;
+    margin-top: -150px;
+}
+
+.has-tip:hover:before,
+.has-tip.active:before {
+    opacity: 1;
+}
+
+.has-tip:hover:after,
+.has-tip.active:after {
+    opacity: 1;
+    transform: translateX(50%) translateY(100%) translateY(10px);
 }
 
 .bg-primary {
@@ -77,41 +134,8 @@ section {
     padding: 100px 0;
 }
 
-/*aside {*/
-padding:
-
-50
-px
-
-0
-;
-}
-
 .no-padding {
     padding: 0;
-}
-
-/*#mainNav {*/
-font-family:
-
-'Poiret One'
-,
-cursive
-
-;
-background-color:
-
-rgba
-(
-255
-,
-74
-,
-254
-,
-0.48
-)
-;
 }
 
 .navbar-default {
@@ -217,7 +241,7 @@ header {
     text-align: center;
     color: #fff;
     background-color: #a4c6ff;
-    background-image: url(/public/assets/img/osezinvestir.jpg);
+    background-image: url(/public/assets/img/essaifond.jpg);
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -234,16 +258,26 @@ header .header-content {
 
 header .header-content .header-content-inner h1 {
     font-family: 'Poiret One', cursive;
-    margin-top: 50px;
-    margin-bottom: 0;
-    text-transform: uppercase;
-    font-weight: 700;
+    font-size: 32px !important;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    text-transform: none;
+    font-weight: 100;
     color: rgb(246, 253, 255);
 }
 
 header .header-content .header-content-inner hr {
-    margin: 30px auto;
     color: rgb(251, 253, 255);
+    width: 60px;
+}
+
+h2, .h2 {
+    font-size: 20px;
+    margin-bottom: 80px;
+}
+
+h3, .h3 {
+    font-size: 22px
 }
 
 header .header-content .header-content-inner p {
@@ -485,7 +519,7 @@ fieldset[disabled] .btn-primary.active {
 }
 
 #contact {
-    background-image: url(/public/assets/img/iphooone.jpg);
+    background-image: url(/public/assets/img/essaifond.jpg);
     color: #faf8ff;
 }
 
@@ -508,6 +542,7 @@ fieldset[disabled] .btn-primary.active {
 .btn-primary:hover, .btn-primary:focus {
     background-color: #238ba7;
 }
+
 .btn-primary, .btn-primary {
     background-color: #23a2bf;
     background-image: none;
@@ -558,10 +593,9 @@ body {
     font-size: 20px;
 }
 
-.nav>li>a:hover, .nav>li>a:focus {
+.nav > li > a:hover, .nav > li > a:focus {
     text-decoration: none;
     background-color: transparent;
-
 
 #premier-bouton {
     background-image: linear-gradient(to bottom, #48a2bf 0, #3a96bf 100%);

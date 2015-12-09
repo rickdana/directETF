@@ -12,7 +12,7 @@
     "angular-mocks": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
     "bootstrap": "~3.1.1",
-    "font-awesome": "~4.4.0",
+    "font-awesome": "4.5.0",
     "datatables": "~1.10.9",
     "icheck": "~1.0.2",
     "highcharts": "~4.1.9",
@@ -38,6 +38,7 @@
     "select2": "~4.0.1",
     "jquery-validation": "jquery.validate#~1.13.0",
     "jquery.uniform": "~2.1.2",
-    "blockUI": "jquery.blockUI#*"
+    "blockUI": "jquery.blockUI#*",
+    "jquery-appear": "~0.2.4"
   }
 }
