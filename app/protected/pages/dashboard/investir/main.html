@@ -214,7 +214,19 @@
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <div class="caption caption-md">
-                        <span class="caption-subject font-green bold uppercase">Simulation future</span>
+                        <span class="caption-subject font-green bold uppercase">Projection sur {{timeframe}} ans</span>
+                    </div>
+                    <div class="col-lg-5" style="float: right">
+                        <div id="slider-timeframe" class="form-group">
+                            <div class="slider-col">
+                                <label class="caption-subject control-label">Durée</label></div>
+                            <div class="slider-col">
+                                <rzslider rz-slider-model="timeframe"
+                                          rz-slider-options="sliderTimeframe.options"></rzslider></div>
+                            <div class="slider-col">
+                                <input type="number" min="3" max="50"
+                                       class="form-control" ng-model="timeframe" required></div>
+                        </div>
                     </div>
                 </div>
                 <div class="portlet-body">
