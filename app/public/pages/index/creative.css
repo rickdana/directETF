@@ -27,7 +27,7 @@ hr.light {
 }
 
 a {
-    color: #fffefd;
+    color: #000000;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
@@ -35,7 +35,7 @@ a {
 
 a:hover,
 a:focus {
-    color: #ffffff;
+    color: #1eaa98;
 }
 
 h1,
@@ -58,14 +58,14 @@ p {
 
 .bg-primary {
     background: rgba(95, 197, 206, 1);
-    background: -moz-radial-gradient(center, ellipse cover, rgba(95, 197, 206, 1) 0%, rgba(71, 184, 194, 1) 47%, rgba(57, 154, 162, 1) 81%, rgba(57, 154, 162, 1) 100%);
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(95, 197, 206, 1)), color-stop(47%, rgba(71, 184, 194, 1)), color-stop(81%, rgba(57, 154, 162, 1)), color-stop(100%, rgba(57, 154, 162, 1)));
-    background: -webkit-radial-gradient(center, ellipse cover, rgba(95, 197, 206, 1) 0%, rgba(71, 184, 194, 1) 47%, rgba(57, 154, 162, 1) 81%, rgba(57, 154, 162, 1) 100%);
-    background: -o-radial-gradient(center, ellipse cover, rgba(95, 197, 206, 1) 0%, rgba(71, 184, 194, 1) 47%, rgba(57, 154, 162, 1) 81%, rgba(57, 154, 162, 1) 100%);
-    background: -ms-radial-gradient(center, ellipse cover, rgba(95, 197, 206, 1) 0%, rgba(71, 184, 194, 1) 47%, rgba(57, 154, 162, 1) 81%, rgba(57, 154, 162, 1) 100%);
-    background: radial-gradient(ellipse at center, rgba(95, 197, 206, 1) 0%, rgba(71, 184, 194, 1) 47%, rgba(57, 154, 162, 1) 81%, rgba(57, 154, 162, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#5fc5ce', endColorstr='#399aa2', GradientType=1);
-    color: #fff;
+    background: rgba(66,212,192,1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(66,212,192,1)), color-stop(47%, rgba(69,190,199,1)), color-stop(81%, rgba(30,168,168,1)), color-stop(100%, rgba(30,170,152,1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
+    background: radial-gradient(ellipse at center, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#42d4c0', endColorstr='#1eaa98', GradientType=1 );
     background-color: #222;
 }
 
@@ -77,42 +77,11 @@ section {
     padding: 100px 0;
 }
 
-/*aside {*/
-padding:
-
-50
-px
-
-0
-;
-}
-
 .no-padding {
     padding: 0;
 }
 
-/*#mainNav {*/
-font-family:
 
-'Poiret One'
-,
-cursive
-
-;
-background-color:
-
-rgba
-(
-255
-,
-74
-,
-254
-,
-0.48
-)
-;
-}
 
 .navbar-default {
     border-color: rgba(34, 34, 34, 0);
@@ -130,7 +99,7 @@ rgba
     color: #f05f40;
 }
 
-.navbar-default .navbar-header .navbar-brand:,
+.navbar-default .navbar-header .navbar-brand,
 .navbar-default .navbar-header .navbar-brand:focus {
     color: #d0d0d0;
 }
@@ -217,7 +186,7 @@ header {
     text-align: center;
     color: #fff;
     background-color: #a4c6ff;
-    background-image: url(/public/assets/img/osezinvestir.jpg);
+    background-image: url(/public/assets/img/fondecrann.jpg);
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -234,23 +203,24 @@ header .header-content {
 
 header .header-content .header-content-inner h1 {
     font-family: 'Poiret One', cursive;
-    margin-top: 50px;
-    margin-bottom: 0;
+    margin-top: -50px;
+    margin-bottom: 30px;
     text-transform: uppercase;
     font-weight: 700;
-    color: rgb(246, 253, 255);
+    color: rgb(0, 0, 0);
 }
 
 header .header-content .header-content-inner hr {
     margin: 30px auto;
-    color: rgb(251, 253, 255);
+    color: rgb(0, 0, 0);
 }
 
 header .header-content .header-content-inner p {
-    margin-bottom: 30px;
-    font-size: 20px;
+    margin-bottom: 60px;
+    margin-top: -50px;
+    font-size: 60px;
     font-weight: 800;
-    color: rgba(249, 249, 255, 0.9);
+    color: rgba(0, 0, 0, 0.9);
 }
 
 @media (min-width: 768px) {
@@ -485,7 +455,7 @@ fieldset[disabled] .btn-primary.active {
 }
 
 #contact {
-    background-image: url(/public/assets/img/iphooone.jpg);
+    background: url(/public/assets/img/iphooone.jpg) no-repeat top center;
     color: #faf8ff;
 }
 
@@ -501,7 +471,7 @@ fieldset[disabled] .btn-primary.active {
 .btn-primary:hover, .btn-primary:focus,
 .btn-default:hover, .btn-default:focus {
     background-color: #e2e2e6;
-    background-position: 0 -65px;
+    background-position: 0-65px;
     transition: none;
 }
 
@@ -561,8 +531,9 @@ body {
 .nav>li>a:hover, .nav>li>a:focus {
     text-decoration: none;
     background-color: transparent;
-
+}
 
 #premier-bouton {
-    background-image: linear-gradient(to bottom, #48a2bf 0, #3a96bf 100%);
+    background-image: linear-gradient(to bottom, #1eaa98 0, #13867d 100%);
+    margin-top: -30px;
 }
