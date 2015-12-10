@@ -533,3 +533,35 @@ tfoot td {
 .wizard-panel .dataTables_wrapper div.dataTables_paginate {
     padding-right: 15px;
 }
+
+#slider-timeframe {
+    display: table;
+    position: absolute;
+    right: 0;
+    top: -10px;
+}
+
+.slider-col {
+    display: table-cell;
+    padding: 0 5px;
+    line-height: 50px;
+}
+
+#slider-timeframe input {
+    display: inline;
+    width: initial;
+    padding: 2px 7px;
+}
+
+#slider-timeframe rzslider {
+    width: 200px;
+    margin: auto;
+}
+
+#slider-timeframe label {
+    font-weight: 600;
+}
+
+#slider-timeframe rzslider .rz-pointer {
+    border-radius: 16px !important;
+}
