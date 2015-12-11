@@ -27,8 +27,8 @@ hr.light {
 }
 
 hr.middle {
-    border #f2f2f2;
-    margin: 300px
+    border: #f2f2f2;
+    margin: 300px;
     border-width: 2px;
 }
 
@@ -97,9 +97,21 @@ p {
 }
 
 div.box {
-    background: rgba(242, 242, 242, 0.17);
+    background: rgba(58, 58, 58, 0.20);
     padding-top: 35px;
-    margin-top: -150px;
+    flex: 1 100%;
+}
+
+div.box label {
+    display: block;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+div.box .form-group {
+    max-width: 500px;
+    margin: auto;
 }
 
 .has-tip:hover:before,
@@ -154,7 +166,7 @@ section {
     color: #f05f40;
 }
 
-.navbar-default .navbar-header .navbar-brand:,
+.navbar-default .navbar-header .navbar-brand,
 .navbar-default .navbar-header .navbar-brand:focus {
     color: #d0d0d0;
 }
@@ -241,7 +253,7 @@ header {
     text-align: center;
     color: #fff;
     background-color: #a4c6ff;
-    background-image: url(/public/assets/img/essaifond.jpg);
+    background-image: url(/public/assets/img/fondecranessai.jpg);
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -256,10 +268,14 @@ header .header-content {
     text-align: center;
 }
 
+header .header-content-inner {
+    display: flex;
+}
+
 header .header-content .header-content-inner h1 {
     font-family: 'Poiret One', cursive;
     font-size: 32px !important;
-    margin-top: 20px;
+    margin-top: 25px;
     margin-bottom: 50px;
     text-transform: none;
     font-weight: 100;
@@ -274,10 +290,12 @@ header .header-content .header-content-inner hr {
 h2, .h2 {
     font-size: 20px;
     margin-bottom: 80px;
+    margin-top: -30px;
 }
 
 h3, .h3 {
-    font-size: 22px
+    font-size: 22px;
+    margin-bottom: 40px;
 }
 
 header .header-content .header-content-inner p {
@@ -549,7 +567,8 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .btn {
-    margin-top: 30px;
+    margin-top: 120px;
+    margin-bottom: 60px;
     border: 0;
     border-radius: 300px;
     text-transform: uppercase;
@@ -596,7 +615,9 @@ body {
 .nav > li > a:hover, .nav > li > a:focus {
     text-decoration: none;
     background-color: transparent;
+}
 
 #premier-bouton {
     background-image: linear-gradient(to bottom, #48a2bf 0, #3a96bf 100%);
 }
+

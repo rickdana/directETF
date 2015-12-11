@@ -6,25 +6,23 @@ config(['$routeProvider', function($routeProvider) {
   //$routeProvider.otherwise({redirectTo: '/view1'});
 }]);
 
-$(document).ready(function() {
-    $('.navbar-nav > li > a').on('mouseover', function() {
-        $(this).addClass('animated flash');
-    });
+angular.module('myApp')
+    .controller('SlideController', function($scope, $element) {
+        $scope.step = 1;
+        $scope.next = function() {
+            $('#slide' + $scope.step).addClass('fadeOutLeftBig');
 
-    $('.navbar-nav > li > a').on('mouseout', function() {
-        $(this).removeClass('animated flash');
-    });
+            $scope.step = $scope.step + 1;
 
-    $('.fa-4x').bind('appear', function () {
-        $(this).addClass('bounceIn');
-    });
+            //setTimeout(function () {
+            //    $scope.step = $scope.step + 1;
+            //
+            //    $('#slide' + $scope.step).hide();
+            //    $('#slide' + $scope.step).show();
+            //    $('#slide' + $scope.step).addClass('fadeOutLeftBig');
+            //}, 1000)
+        };
 
-    $('.fa-4x').on('mouseover', function(){
-        $(this).removeClass('bounceIn');
-        $(this).addClass('bounce');
+        $('.box').hide();
+        $('#slide1').show();
     });
-
-    $('.fa-4x').on('mouseout', function(){
-        $(this).removeClass('bounce');
-    });
-})
