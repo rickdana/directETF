@@ -75,6 +75,14 @@
                     </div>
                 </div>
                 <div class="portlet-body">
+                    <!--<select id="choix-period" class="control-input form-control" name="repeatSelect" ng-model="data.repeatSelect">-->
+                        <!--<option ng-repeat="option in data.availableOptions">{{option.name}}</option>-->
+                    <!--</select>-->
+                    <div class="form-group form-md-line-input">
+                        <select class="form-control" id="choix-period-comparaison" name="" ng-model="periodeSelect" data-id-container="portefeuille-comparaison-stockchart" link-to-stcokchart>
+                            <option ng-repeat="option in periodeData">{{option}}</option>
+                        </select>
+                    </div>
                     <div id="portefeuille-comparaison-stockchart"></div>
                 </div>
             </div>

@@ -41,7 +41,7 @@ angular.module('MetronicApp')
 
                     $http.get('/protected/pages/dashboard/portefeuille/comparer/reference.json')
                         .success(function (ref_infos) {
-                            load_comparaison_valo_trades(data_valo, trades, trades_by_date);
+                            load_comparaison_valo_trades(data_valo, trades, trades_by_date, $scope);
 
                             ref_infos.unshift({
                                 "name": "",
@@ -76,6 +76,7 @@ angular.module('MetronicApp')
                             }, function () {
                                 load_comparaison_reference($scope, $EtfsFactory, valo, data_valo, trades, $scope.data.repeatSelect, ref_infos, trades_by_date)
                             })
+
                         })
 
                 });

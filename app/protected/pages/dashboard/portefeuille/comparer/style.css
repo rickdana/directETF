@@ -130,3 +130,8 @@ table .selected {
 #text-fiscalite {
 	display: none;
 }
+
+#choix-period-comparaison {
+	width: initial;
+	float: right;
+}

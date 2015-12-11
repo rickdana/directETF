@@ -46,6 +46,11 @@
                     </div>
                 </div>
                 <div class="portlet-body">
+                    <div class="form-group form-md-line-input">
+                        <select class="form-control" id="choix-period-historique" name="" ng-model="periodeSelect" data-id-container="portefeuille-historique-stockchart" link-to-stcokchart>
+                            <option ng-repeat="option in periodeData">{{option}}</option>
+                        </select>
+                    </div>
                     <div id="portefeuille-historique-stockchart"></div>
                 </div>
             </div>
