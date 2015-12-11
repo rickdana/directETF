@@ -72,3 +72,8 @@ table .selected {
 .etf-list-component .etf-column.total-gains, {
 	font-weight: 700;
 }
+
+#choix-period-historique {
+	width: initial;
+	float: right;
+}

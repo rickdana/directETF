@@ -358,7 +358,7 @@ function reference_house(rates, trades_by_date, valo_wallet, ref_infos) {
 }
 
 
-function load_comparaison_valo_trades(data_valo, trades, trades_by_date) {
+function load_comparaison_valo_trades(data_valo, trades, trades_by_date, $scope) {
 	var invests_by_date = {};
 	var data_trades = [];
 
@@ -434,6 +434,7 @@ function load_comparaison_valo_trades(data_valo, trades, trades_by_date) {
 	};*/
 
 	LoadStockChart(series, $('#portefeuille-comparaison-stockchart'), false);
+
 
 
 }
@@ -611,3 +612,4 @@ function hide_fiscalite (serie_name) {
 		}
 	}
 }
+

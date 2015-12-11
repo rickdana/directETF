@@ -1,14 +1,6 @@
 angular.module('MetronicApp')
-    .controller('PortefeuilleHistoriqueController', function($ClientFactory, $rootScope, $scope, $ocLazyLoad) {
+    .controller('PortefeuilleHistoriqueController', function($ClientFactory, $rootScope, $scope) {
         $scope.$on('$viewContentLoaded', function() {
-            $ocLazyLoad.load({
-                name: 'MetronicApp',
-                insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
-                files: [
-                    '/protected/assets/lib/StockChart.js',
-                ]
-            });
-
             // initialize core components
             App.initAjax();
         });

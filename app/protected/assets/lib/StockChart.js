@@ -1,14 +1,10 @@
-function LoadStockChart(series, container, clear, cb) {
+function LoadStockChart(series, container, clear, cb, options) {
     if (series instanceof Array) {
         for (var i = 0; i < series.length; i++) {
             LoadStockChart(series[i], container, clear, cb);
             clear = false;
         }
         return;
-    }
-
-    if (series.length == 0) {
-        throw new Error("First argument must be an array of object's series");
     }
 
     if (typeof container == 'string') {
@@ -18,7 +14,7 @@ function LoadStockChart(series, container, clear, cb) {
     var chart = container.highcharts();
 
     if (typeof chart == 'undefined') {
-        container.highcharts('StockChart', {
+        var default_options = {
             //colors: ['rgba(0, 166, 90,.3)', 'rgba(255, 166, 90,.8)', 'rgba(0, 15, 255,.7)', 'rgba(0, 5, 30,.5)'],
 
             chart: {
@@ -32,24 +28,24 @@ function LoadStockChart(series, container, clear, cb) {
             },
 
             yAxis: [{ // Primary yAxis
-                    labels: {
-                        style: {
-                            color: 'rgb(243, 156, 18)',
-                            fontWeight: 'bold',
-                            fontSize: '11px'
-                        },
-                        useHTML: true,
-                        format: '{value} &euro;',
+                labels: {
+                    style: {
+                        color: 'rgb(243, 156, 18)',
+                        fontWeight: 'bold',
+                        fontSize: '11px'
                     },
-                    opposite: false,
-                }, { // Secondary yAxis
-                    labels: {
-                        style: {
+                    useHTML: true,
+                    format: '{value} &euro;',
+                },
+                opposite: false,
+            }, { // Secondary yAxis
+                labels: {
+                    style: {
 //                            color: 'rgba(0, 0, 0, .8)',
-                            fontSize: '11px'
-                        }
-                    },
-                }, { // Third yAxis
+                        fontSize: '11px'
+                    }
+                },
+            }, { // Third yAxis
                 labels: {
                     style: {
                         //color: 'rgba(255, 255, 255, .8)',
@@ -83,6 +79,30 @@ function LoadStockChart(series, container, clear, cb) {
             },
 
             rangeSelector: {
+                //enabled: false,
+                buttons: [{
+                    type: 'month',
+                    count: 1,
+                    text: '1m'
+                }, {
+                    type: 'month',
+                    count: 3,
+                    text: '3m'
+                }, {
+                    type: 'month',
+                    count: 6,
+                    text: '6m'
+                }, {
+                    type: 'ytd',
+                    text: '2015'
+                }, {
+                    type: 'year',
+                    count: 1,
+                    text: '1an'
+                }, {
+                    type: 'all',
+                    text: 'Tout'
+                }],
                 buttonTheme: {
                     fill: 'none',
                     stroke: 'none',
@@ -102,18 +122,19 @@ function LoadStockChart(series, container, clear, cb) {
                         }
                     }
                 },
+                inputEnabled: false,
                 inputBoxBorderColor: 'rgb(216, 216, 216)',
                 /*							inputBoxWidth: 120,
-                inputBoxHeight: 18,*/
+                 inputBoxHeight: 18,*/
                 inputStyle: {
                     color: 'rgb(69, 114, 167)',
                     fontWeight: 'bold',
                     backgroundColor: '#39cccc'
                 },
                 /*labelStyle: {
-                    color: 'silver',
-                    fontWeight: 'bold'
-                },*/
+                 color: 'silver',
+                 fontWeight: 'bold'
+                 },*/
                 selected: 5
             },
 
@@ -141,8 +162,22 @@ function LoadStockChart(series, container, clear, cb) {
             },
 
             series: []
-        });
+        };
+
+        console.log(container)
+        if (options) {
+            for (var o in options) {
+                default_options[o] = options[o];
+            }
+        }
+
+        container.highcharts('StockChart', default_options);
+
         chart = container.highcharts();
+        chart.rangeSelector.zoomText.hide();
+        $.each(chart.rangeSelector.buttons,function(i,b){
+            b.hide();
+        });
     }
 
     clear = clear || false;
@@ -154,5 +189,7 @@ function LoadStockChart(series, container, clear, cb) {
         chart.redraw();
     }
 
-    chart.addSeries(series, true, true);
+    if (series !== null) {
+        chart.addSeries(series, true, true);
+    }
 }

@@ -565,3 +565,13 @@ tfoot td {
 #slider-timeframe rzslider .rz-pointer {
     border-radius: 16px !important;
 }
+
+.explication-courbe {
+    font-size: 14px;
+    margin-top: 7px;
+}
+
+#choix-period-invest-past {
+    width: initial;
+    float: right;
+}
