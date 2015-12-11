@@ -17,7 +17,6 @@
         <a id="wizard-step-4" data-step="4" data-state="unvalid" href="javascript:void(0)">Validation</a>
     </div>
 </div>
-<h3 class="page-title"> Nouvel ordre d'investissement </h3>
 
 <script type="text/ng-template" id="template-client-portfolio-settings" ng-controller="WizardPortfolioInitController">
     <h5 class="caption-subject font-green bold uppercase">Configuration du portefeuille</h5>
@@ -39,105 +38,72 @@
     </div>
 </script>
 
-<!-- END PAGE HEADER-->
-<!-- BEGIN MAIN CONTENT -->
-<!--<div class="note note-info">-->
-<!--<h3>Assistant Nouvel Investissement-->
-<!--<span class="close" data-close="note"></span>-->
-<!--</h3>-->
-<!--<p> Utilisez cet assistant pour passer de nouveaux ordres d'investissement toute sécurité.</p>-->
-<!--<br>-->
-<!--<button class="btn blue">Démarrer l'assistant</button>-->
-<!--</div>-->
-<div class="wizard-panel" data-wizard-panel-step="1" ng-controller="InvestirController">
-    <!-- Map box -->
-    <div id="filter-view">
-        <div id="filters-container" class="sidebar">
-            <div id="filters-searchbar">
-                <i class="fa fa-search"></i>
-                <input type="text" id="search-etf" placeholder="rechercher...">
+<div class="wizard-panel" data-wizard-panel-step="1" ng-controller="InvestirController" ng-showx="wizard.step == 1">
+    <div id="filters-container">
+        <div id="filters-list">
+            <div ng-repeat="filter in filters.entries">
+                <input type="radio" name="filter" id="{{filter.id}}" class="filter-group aCheck filter-checkbox"
+                       ng-model="filters.current.category"
+                       ng-value="filter.id">
+                <label for="{{filter.id}}">
+                    <i class="fa fa-check"></i>
+                    <span>{{filter.name}}</span>
+                    <i class="fa fa-angle-right"
+                       ng-class="{'fa-angle-down': filters.current.category == filter.id}"></i></label>
+
+                <div class="filter-items">
+                    <div ng-repeat="item in filter.items">
+                        <input type="radio" name="{{filter.id}}-item" id="{{item.id}}" class="aCheck filter-checkbox"
+                               ng-model="filters.current.value"
+                               ng-value="item.id">
+                        <label for="{{item.id}}">
+                            <i class="fa fa-check"></i>
+                            <span>{{item.name}}</span></label></div>
+                    <div ng-if="filter.questions" ng-init="filter.history = []">
+                        <div class="filter-question filter-history"
+                             ng-init="q = h[0]; a = h[1]"
+                             ng-repeat="(i, h) in filter.history">
+                            <input type="radio" name="h-{{a.id}}" id="h-{{a.id}}" class="aCheck filter-checkbox"
+                                   ng-init="h.checked = true"
+                                   ng-model="h.checked">
+                            <label for="h-{{a.id}}"
+                                   ng-click="filters.current.question = q.id; filters.current.anwser = '';
+                                             filters.history.remove(filter.history, i, filter.history.length)">
+                                <span>{{a.resume}}</span>
+                                <i class="fa fa-undo"></i></label></div>
+                        <div class="filter-question"
+                             ng-repeat="q in filter.questions"
+                             ng-show="filters.current.question == q.id">
+                            <label class="bold">
+                                <span>{{q.string}}</span></label>
+                            <div class="filter-question-end" ng-if="q.id == 'end'">
+                                <div data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html" ng-etf-list></div>
+                                <button class="btn green" ng-click="q.exec(filter.history)">{{q.button}}</button></div>
+                            <div class="filter-question-anwser" ng-repeat="a in q.anwsers">
+                                <input type="radio" name="{{filter.id}}" id="{{a.id}}" class="aCheck filter-checkbox"
+                                       ng-model="filters.current.anwser"
+                                       ng-click="filters.current.question = a.goto; filter.history.push([q, a])">
+                                <label for="{{a.id}}">
+                                    <i class="fa fa-check"></i>
+                                    <span>{{a.string}}</span></label></div>
+                        </div></div>
+                </div>
             </div>
-            <ul class="sidebar-menu">
-                <li class="activeX"><a href="#"><i class="fa fa-th-list"></i> <span>Secteurs</span>
-                    <i class="fa fa-angle-left pull-right"></i></a>
-
-                    <label>
-                        <input type="checkbox" data-type="sector" data-value="Finance">
-                        <span>Finance</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" data-type="sector" data-value="Industrie">
-                        <span>Industrie</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" data-type="sector" data-value="Santé|Sante|Sant">
-                        <span>Santé</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" data-type="sector" data-value="Energie">
-                        <span>Energie</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" data-type="sector"
-                               data-value="Services aux collectivité|Services aux collectivit">
-                        <span>Services aux collectivité</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" data-type="sector" data-value="Technologie">
-                        <span>Technologies de l'information</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" data-type="sector" data-value="Biens de consomation cyclique">
-                        <span>Biens de consomation cyclique</span>
-                    </label>
-                </li>
-                <li><a href="#"><i class="fa fa-map-marker"></i> <span>Régions</span>
-                    <i class="fa fa-angle-left pull-right"></i></a>
-                    <label>
-                        <input type="checkbox" data-type="region" data-value="FR|France|Paris">
-                        <span>France</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" data-type="region" data-value="DE|Allemagne|Germany">
-                        <span>Allemagne</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" data-type="region" data-value="ES|Espagne|Madrid">
-                        <span>Espagne</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" data-type="region" data-value="IT|Italie">
-                        <span>Itablie</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" data-type="region" data-value="JP|Japon|Japan|Tokyo">
-                        <span>Japon</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" data-type="region" data-value="GB|UK|Londre|London">
-                        <span>Royaume-Uni</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" data-type="region" data-value="HK|CH|Chine|Hong|Kong">
-                        <span>Hong Kong</span>
-                    </label>
-                </li>
-            </ul>
         </div>
-        <div id="maps-container" data-height="320" data-null-color="#fff" ng-etf-maps></div>
+    </div>
+    <div ng-show="filters.current.category == 'filter-maps-list'">
+        <div id="maps-container" data-null-color="#fff" ng-etf-maps></div>
+        <div class="portlet light bordered" ng-hide="">
+            <div id="investir-etfs-list"
+                 data-header-template="/protected/pages/dashboard/investir/tpl/list-header.html"
+                 data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html" ng-etf-list></div>
+        </div>
     </div>
 
-    <!-- List of ETFs -->
-    <div class="portlet light bordered">
-        <div id="investir-etfs-list" data-header-template="/protected/pages/dashboard/investir/tpl/list-header.html"
-             data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html" ng-etf-list></div>
-    </div>
-
-    <button class="btn btn-success">Etape suivante: Montant &amp; Ajustement</button>
 </div>
 
 <!--Step 2-->
-<div class="wizard-panel" data-wizard-panel-step="2" ng-controller="InvestirMontantAjustementController">
+<div class="wizard-panel" data-wizard-panel-step="2" ng-controller="InvestirMontantAjustementController" ng-show="wizard.step == 2">
     <div class="row">
         <div class="col-md-4">
             <div class="portlet light bordered">
@@ -152,7 +118,7 @@
                             <input id="catch-max" name="wallet-range" type="text" class="input-range"
                                    data-min="1" data-max="{{client.portfolio.cash}}"
                                    data-from="{{client.portfolio.cash}}"
-                                   data-postfix="&euro;">
+                                   data-postfix="{{client.portfolio.infos.currencySymb}}">
                         </div>
                     </div>
                 </div>
@@ -170,45 +136,11 @@
         </div>
     </div>
 
-    <div class="etf-action-dropdown collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle no-padding" data-toggle="dropdown"><span
-                        class="order-number"></span>/<span class="order-price"></span>&euro; <span
-                        class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li>
-                        <span class="natural-language">Acheter une quantité de <b class="order-number"></b> au coût unitaire de <b><span
-                                class="order-price"></span>&euro;</b></span>
-                    </li>
-                    <li>
-                                <span class="entry">Investir un pourcentage
-                                    <input name="percent-range" class="input-range" type="text" value=""
-                                           data-postfix="%">
-                                </span>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                                <span class="entry">Définir le prix de l'achat
-                                    <input name="price-range" class="input-range" type="text" value=""
-                                           data-postfix="&euro;">
-                                </span>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                                <span class="entry">Définir la quantité
-                                    <input name="number-range" class="input-range" type="text" value="">
-                                </span>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
     <button class="btn btn-success">Etape suivante: Revoir</button>
 </div>
 
 <!--Step 3-->
-<div class="wizard-panel" data-wizard-panel-step="3" ng-controller="InvestirRevoirController">
+<div class="wizard-panel" data-wizard-panel-step="3" ng-controller="InvestirRevoirController" ng-show="wizard.step == 3">
     <div class="row">
         <div class="col-lg-12">
             <div class="portlet light bordered">
@@ -266,7 +198,7 @@
 </div>
 
 <!--Step 4-->
-<div class="wizard-panel" data-wizard-panel-step="4" ng-controller="InvestirValidationController">
+<div class="wizard-panel" data-wizard-panel-step="4" ng-controller="InvestirValidationController" ng-show="wizard.step == 4">
     <div class="row">
         <div class="col-lg-8">
             <div class="portlet light bordered">
@@ -285,22 +217,22 @@
                     <tbody>
                     <tr>
                         <td>Liquidités disponibles</td>
-                        <td class="text-right">{{client.portfolio.infos.cash | number: 2}}&nbsp;&euro;</td>
+                        <td class="text-right">{{client.portfolio.infos.cash | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
                     </tr>
                     <tr>
                         <td>Liquidités sortantes</td>
-                        <td class="text-right">{{cash | number: 2}}&nbsp;&euro;</td>
+                        <td class="text-right">{{$OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
                     </tr>
                     <tr>
                         <td>Liquidités entrantes estimées</td>
-                        <td class="text-right">{{profit | number: 2}}&nbsp;&euro;</td>
+                        <td class="text-right">{{profit | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
                     </tr>
                     </tbody>
 
                     <tfoot>
                     <tr>
                         <td class="text-left">Liquidités restantes estimées après transaction</td>
-                        <td class="text-right">{{client.portfolio.infos.cash - cash | number: 2}}&nbsp;&euro;</td>
+                        <td class="text-right">{{client.portfolio.infos.cash - $OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
                     </tr>
                     </tfoot>
 

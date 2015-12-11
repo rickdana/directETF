@@ -26,9 +26,7 @@ angular.module('MetronicApp')
                         etfs[isin] = {
                             isin: isin,
                             quantity: quantity,
-                            limit: quantity,
                             price: price,
-                            priceLimit: price,
                             cash: quantity * price,
                         };
                     }
@@ -36,30 +34,18 @@ angular.module('MetronicApp')
                 }
 
                 if (typeof quantity != 'undefined') {
-                    quantity = parseInt(quantity);
-
-                    if (quantity > etfs[isin].limit) {
-                        throw new Error('Quantity of ' + isin + ' must be less than ' + etfs[isin].limit + '! #' + quantity);
-                    }
-
-                    etfs[isin].quantity = quantity;
+                    etfs[isin].quantity = parseInt(quantity);
                 } else {
-                    quantity = etfs[isin].limit;
+                    quantity = etfs[isin].quantity;
                 }
 
                 if (price) {
-                    price = parseFloat(price);
-
-                    if (price > etfs[isin].priceLimit) {
-                        throw new Error('Price of ' + isin + ' must be less than ' + etfs[isin].priceLimit + '! %' + price);
-                    }
-
-                    etfs[isin].price = price;
+                    etfs[isin].price = parseFloat(price);
                 }
 
                 etfs[isin].cash = etfs[isin].quantity * etfs[isin].price;
 
-                console.log("-- Set %s(quantity: %s, price: %s)", isin, quantity, price || etfs[isin].priceLimit);
+                console.log("-- Set %s(quantity: %s, price: %s)", isin, quantity, price || etfs[isin].price);
             },
             get: function (isin) {
                 if (isin) {
@@ -171,7 +157,15 @@ angular.module('MetronicApp')
         var current_step = 1;
         var wizard_state = $("#wizard-state");
 
+<<<<<<< HEAD
         $rootScope.wizard_button = function (step) {
+=======
+        $rootScope.wizard = {
+            step: 1
+        };
+
+        $rootScope.wizard_button = function(step) {
+>>>>>>> 18c9edd... Add aCheck and improve the first step of page Investir by adding a survey
             return wizard_state.find("a[data-step=" + step + "]");
         };
 
@@ -197,6 +191,9 @@ angular.module('MetronicApp')
                 switch (current.attr('data-step')) {
                     case '1':
                         $OrdersFactory.unlock();
+                        $scope.$apply(function() {
+                            $('[data-wizard-panel-step=2] [ng-etf-list]').attr('data-filter', '');
+                        });
                         break;
 
                     case '2':
@@ -251,33 +248,26 @@ angular.module('MetronicApp')
 
         $('[data-wizard-panel-step=1]').show('slow');
 
+<<<<<<< HEAD
         $ClientFactory.portfolio.infos(function (err, infos) {
+=======
+        $rootScope.client = {
+            portfolio: {
+                infos: {}
+            }
+        };
+
+        $ClientFactory.portfolio.infos(function(err, infos) {
+>>>>>>> 18c9edd... Add aCheck and improve the first step of page Investir by adding a survey
             if (err) {
                 throw err;
             }
 
-            $rootScope.client = {
-                portfolio: infos
-            };
-
-            var catch_max = $('#catch-max');
-
-            //catch_max.ionRangeSlider({
-            //    min: catch_max.attr('data-min'),
-            //    max: infos.cash,
-            //    from: infos.cash,
-            //    postfix: catch_max.attr('data-postfix'),
-            //    //            grid: true,
-            //    hide_min_max: true,
-            //    grid_num: 10
-            //});
+            $rootScope.client.portfolio.infos = infos;
         });
 
-        // set sidebar closed and body solid layout mode
-        $rootScope.settings.layout.pageContentWhite = true;
-        $rootScope.settings.layout.pageBodySolid = false;
-        $rootScope.settings.layout.pageSidebarClosed = false;
     })
+<<<<<<< HEAD
     .controller('InvestirController', function ($OrdersFactory, $rootScope, $scope, $element) {
         // TODO Configuration à partir du portefeuille: affichier le cash disponible et définir le montant à investir
         // TODO Permettre l'ajustement (quantité et prix) des ordres d'investissement
@@ -495,11 +485,163 @@ angular.module('MetronicApp')
         $scope.cbEtfsListBeforeRendering = function (etfs, done) {
             for (var i = 0; i < etfs.length; i++) {
                 etfs[i].cash = etfs[i].quantity * etfs[i].price;
+=======
+    .controller('InvestirController', function($OrdersFactory, $rootScope, $scope, $element) {
+        $scope.$OrdersFactory = $OrdersFactory;
+        $scope.wizard = {
+            map: {
+                enabled: false
+>>>>>>> 18c9edd... Add aCheck and improve the first step of page Investir by adding a survey
             }
-
-            done(etfs);
         };
+        $scope.filters = {
+            current: {
+                category: 'filter-regions',
+                value: '',
+                question: 'q1',
+                anwser: '',
+            },
+            history: {
+                entries: [],
+                remove: function(array, from, to) {
+                    var rest = array.slice((to || from) + 1 || array.length);
+                    array.length = from < 0 ? array.length + from : from;
+                    array.push.apply(array, rest)
+                    return array.push.apply(array, rest);
+                }
+            },
+            entries: [
+                {
+                    id: 'filter-sectors',
+                    name: 'Je souhaite investir dans un secteur en particulier',
+                    items: [
+                        {id: 'sector-finance', name: 'Finance'},
+                        {id: 'sector-industry', name: 'Industrie'},
+                        {id: 'sector-health', name: 'Santé'},
+                        {id: 'sector-energy', name: 'Energie'},
+                        {id: 'sector-collectivity', name: 'Services aux collectivité'},
+                        {id: 'sector-technology', name: 'Technologies de l\'information'},
+                        {id: 'sector-consomer', name: 'Biens de consomation cyclique'},
+                    ]
+                },
+                {
+                    id: 'filter-regions',
+                    name: 'Je souhaite investir dans une région',
+                    questions: [
+                        {
+                            id: "q1",
+                            string: "Etes-vous plutôt intéressés par les marchés développés ou émergents ?",
+                            anwsers: [
+                                {
+                                    id: "q1a1",
+                                    string: "Marchés développés",
+                                    resume: "Je suis intéressé par les marchés développés",
+                                    goto: "q2.2"
+                                },
+                                {
+                                    id: "q1a2",
+                                    string: "Marchés émergents",
+                                    resume: "Je suis intéressé par les marchés émergents",
+                                    goto: "q2.1"
+                                },
+                            ]
+                        },
+                        {
+                            id: "q2.1",
+                            string: "Quel continent/sous-continent plus particulièrement ?",
+                            anwsers: [
+                                {
+                                    id: "q2a1",
+                                    string: "Afrique",
+                                    resume: "Investir en Afrique",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "q2a4",
+                                    string: "Asia Pacific",
+                                    resume: "Investir en Asie Pacifique",
+                                    goto: "q4"
+                                },
+                            ]
+                        },
+                        {
+                            id: "q2.2",
+                            string: "Quel continent/sous-continent plus particulièrement ?",
+                            anwsers: [
+                                {
+                                    id: "q2a2",
+                                    string: "Europe",
+                                    resume: "Investir en Europe",
+                                    goto: "q3"
+                                },
+                                {
+                                    id: "q2a3",
+                                    string: "Amérique",
+                                    resume: "Investir en Amérique",
+                                    goto: "end"
+                                },
+                            ]
+                        },
+                        {
+                            id: "q3",
+                            string: "Quel stratégie vous parle le plus, investir sur tende la région, un pays particulier ou un secteur d’activité ?",
+                            anwsers: [
+                                {
+                                    id: "q3a1",
+                                    string: "La région",
+                                    resume: "Investir sur tende la région",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "q3a2",
+                                    string: "Un pays",
+                                    resume: "Investir dans un pays en particulier",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "q3a3",
+                                    string: "Un secteur",
+                                    resume: "Investir dans un secteur en particulier",
+                                    goto: "end"
+                                },
+                            ]
+                        },
+                        {
+                            id: "q4",
+                            string: "Préférez-vous investir sur l'ensemble de la région, ou plutôt sur un pays particulier ?",
+                            anwsers: [
+                                {
+                                    id: "q4a1",
+                                    string: "Investir en Australie",
+                                    resume: "Investir en Australie",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "q4a2",
+                                    string: "Investir au Japon",
+                                    resume: "Investir au Japon",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "q4a3",
+                                    string: "Investir sur l'ensemble de la région",
+                                    resume: "Investir sur l'ensemble de la région",
+                                    goto: "end"
+                                },
+                            ]
+                        },
+                        {
+                            id: "end",
+                            string: "Voici une liste d'ETFs correspondants à vos réponses. Faites votre sélection et passez à l'étape suivante.",
+                            button: "Etape suivante",
+                            exec: function(history) {
+                                var query = [];
 
+                                for(var i in history) {
+                                    query.push(history[i][1].id);
+                                }
+
+<<<<<<< HEAD
         /**
          TODO Bug: step1: sélectioner les 3 premiers etfs. step2: désélectionner les 3 etfs. step1: resélectionner les
          3 premiers etfs. step2-bug: les 3 etfs sélectionnés sont chargés dans le tableau, mais la valeur de leur
@@ -536,13 +678,14 @@ angular.module('MetronicApp')
                         $OrdersFactory.unlock();
                         $OrdersFactory.set(isin, quantity);
                         $OrdersFactory.lock();
+=======
+                                console.log(query.join('-'))
+>>>>>>> 18c9edd... Add aCheck and improve the first step of page Investir by adding a survey
 
-                        for (var i = 0; i < $scope.etfs.length; i++) {
-                            if ($scope.etfs[i].isin == isin) {
-                                $scope.etfs[i].quantity = quantity;
-                                break;
+                                $rootScope.wizard.step = 2;
                             }
                         }
+<<<<<<< HEAD
                     });
                 });
 
@@ -553,18 +696,23 @@ angular.module('MetronicApp')
                         $OrdersFactory.unlock();
                         $OrdersFactory.set(isin, 0);
                         $OrdersFactory.lock();
+=======
+                    ]
+                },
+                {
+                    id: 'filter-news',
+                    name: 'Investir à partir de l\'actualité',
+>>>>>>> 18c9edd... Add aCheck and improve the first step of page Investir by adding a survey
 
-                        for (var i = 0; i < $scope.etfs.length; i++) {
-                            if ($scope.etfs[i].isin == isin) {
-                                $scope.etfs[i].quantity = 0;
-                                break;
-                            }
-                        }
-                    });
-                });
-            });
+                },
+                {
+                    id: 'filter-maps-list',
+                    name: 'Je souhaite passer au mode expert',
+                },
+            ]
         };
     })
+<<<<<<< HEAD
     .controller('InvestirRevoirController', function ($ClientFactory, $OrdersFactory, $EtfsFactory, $rootScope, $scope, $element) {
         var _invest_simu_past = null;
         var _data_valo = null;
@@ -586,6 +734,12 @@ angular.module('MetronicApp')
             }
         };
 
+=======
+    .controller('InvestirMontantAjustementController', function($OrdersFactory, $ClientFactory, $rootScope, $scope, $element) {
+        $scope.$OrdersFactory = $OrdersFactory;
+    })
+    .controller('InvestirRevoirController', function($ClientFactory, $OrdersFactory, $EtfsFactory, $rootScope, $scope) {
+>>>>>>> 18c9edd... Add aCheck and improve the first step of page Investir by adding a survey
         //regroup the invests
         function join_simulation(simulation, simulation_total) {
             for (var i in simulation) {
@@ -859,5 +1013,10 @@ angular.module('MetronicApp')
             });
         });
     })
+<<<<<<< HEAD
     .controller('InvestirValidationController', function ($scope, $element) {
+=======
+    .controller('InvestirValidationController', function($OrdersFactory, $scope) {
+        $scope.$OrdersFactory = $OrdersFactory;
+>>>>>>> 18c9edd... Add aCheck and improve the first step of page Investir by adding a survey
     });

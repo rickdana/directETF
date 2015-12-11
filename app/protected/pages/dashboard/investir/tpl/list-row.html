@@ -1,6 +1,13 @@
-<tr ng-repeat="etf in etfs" data-isin="{{etf.isin}}">
+<tr ng-repeat="etf in etfs" data-isin="{{etf.isin}}" ng-init="etf.quantity = 1">
     <td class="etf-column name" data-etf-attr-name="name">{{etf.name}}</td>
     <td class="etf-column sector sectors" data-etf-attr-name="sector">{{etf.sectorsStr}}</td>
     <td class="etf-column country countries" data-etf-attr-name="countries">{{etf.countriesStr}}</td>
-    <td class="etf-column option"><input type="checkbox"></td>
+    <td class="etf-column option">
+        <input id="{{etf.isin}}-checkbox" type="checkbox" class="aCheck"
+               ng-model="etf.enabled"
+               ng-init="etf.enabled = false"
+               ng-change="$OrdersFactory.unlock();
+                          $OrdersFactory.set(etf.isin, etf.enabled ? etf.quantity : 0, etf.price);
+                          $OrdersFactory.lock()">
+        <label for="{{etf.isin}}-checkbox" class="fa fa-check"></label></td>
 </tr>
