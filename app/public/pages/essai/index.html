@@ -41,40 +41,7 @@
 
 <nav id="mainNav" class="navbar navbar-fixed-top">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand page-scroll" href="/">Direct ETF</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a class="page-scroll" href="#about">Offre</a>
-                </li>
-                <li>
-                    <!--<a class="page-scroll" href="#services">Direct ETF</a>-->
-                </li>
-                <!--
-                <li>
-                    <a class="page-scroll" href="#portfolio">Portfolio</a>
-                </li>
-                -->
-                <li>
-                    <a class="page-scroll" href="#contact">FAQ</a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="/account/#/login">S'inscrire</a>
-                </li>
-            </ul>
-        </div>
+        <div ng-include="'/public/pages/index/header.html'"></div>
          <!--/.navbar-collapse-->
 
         <div class="bar">
@@ -93,17 +60,19 @@
                 <h2>Afin de générer un portefeuille adapté à votre profil,<br>
                     nous avons besoin de quelques informations<br>
                 </h2>
-                <h3>Quelle est votre capacité d’épargne mensuelle ?</h3>
+                <h3> Comment souhaitez-vous investir votre argent ?</h3>
                 <div class="form-group">
                     <div class="radio-list" >
                         <label>
-                            <input type="radio" name="optionsRadios" id="" value="option1" checked> je veux faire un versement initial</label>
+                            <input type="radio" name="optionsRadios" id="" value="option1" checked> Dans un secteur particulier (précisez) </label>
                         <label>
-                            <input type="radio" name="optionsRadios" id="" value="option2"> je ne souhaite pas faire de versements réguliers, je préfère investir ____ euros. </label>
+                        <label>
+                            <input type="radio" name="optionsRadios" id="" value="option 7"> Je ne sais pas encore dans quoi investir </label>
+
                     </div>
                 </div>
 
-                <a id="premier-bouton" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 2; percents = 10">Continuer</a>
+                <a id="premier-bouton" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 2; percents = 20">Continuer</a>
             </div>
 
             <div class="box animated" ng-show="step == 2">
@@ -111,17 +80,23 @@
                 <!--<hr class="middle">-->
                 <h2>Afin de générer un portefeuille adapté à votre profil,<br>
                     nous avons besoin de quelques informations</h2>
-                <h3>Avez-vous un objectif précis en tête ?</h3>
+                <h3>Quelle est la raison principale de vos investissements ?</h3>
                 <div class="form-group">
                     <div class="radio-list" >
                         <label>
-                            <input type="radio" name="optionsRadios" id="" value="option1" checked> Non</label>
+                            <input type="radio" name="optionsRadios" id="" value="option1" checked> Achat important </label>
                         <label>
-                            <input type="radio" name="optionsRadios" id="" value="option2"> Oui, je souhaite réunir___pour maison/don/projet personnel </label>
+                            <input type="radio" name="optionsRadios" id="" value="option2"> Pojet personnel </label>
+                        <label>
+                            <input type="radio" name="optionsRadios" id="" value="option3"> Don </label>
+                        <label>
+                            <input type="radio" name="optionsRadios" id="" value="option3"> Retraite</label>
+                        <label>
+                            <input type="radio" name="optionsRadios" id="" value="option3"> Autre (précisez)</label>
                     </div>
                 </div>
 
-                <a id="" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 3; percents = 20">Continuer</a>
+                <a id="" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 3; percents = 40">Continuer</a>
             </div>
 
             <div class="box animated" ng-show="step == 3">
@@ -129,23 +104,24 @@
                 <!--<hr class="middle">-->
                 <h2>Afin de générer un portefeuille adapté à votre profil,<br>
                     nous avons besoin de quelques informations</h2>
-                <h3>Savez-vous déjà où placer votre argent ?</h3>
+                <h3>Quel est votre revenu annuel ?</h3>
                 <div class="form-group">
                     <div class="radio-list" >
                         <label>
-                            <input type="radio" name="optionsRadios" id="" value="option1" checked> Non. C'est normal. Nous vous proposons de démarrer avec un____</label>
+                            <input type="radio" name="optionsRadios" id="" value="option1" checked> Moins de 25,000€</label>
                         <label>
-                            <input type="radio" name="optionsRadios" id="" value="option2"> Oui => financer l’économie (plutôt dans les entreprises)
-                            => en fonction d’une valeur (écologie, profit, éthique)
-                            => par pays
-                            => par secteur
-                            => en fonction des sujets d’actualité du moment (ex Grèce, Allemagne, Chine)
-                            => financer un état (acheter de la dette publique)
-                            => par région
+                            <input type="radio" name="optionsRadios" id="" value="option2"> 25,000 - 50,000€</label>
+                            <label>
+                                <input type="radio" name="optionsRadios" id="" value="option3"> 50,000 - 100,000€</label>
+                        <label>
+                            <input type="radio" name="optionsRadios" id="" value="option4"> 100,000 - 250,000€</label>
+                        <label>
+                            <input type="radio" name="optionsRadios" id="" value="option5"> Plus de 250,000€</label>
+
                         </label>
                     </div>
                 </div>
-                <a id="" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 4; percents = 30">Continuer</a>
+                <a id="" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 4; percents = 60">Continuer</a>
             </div>
 
             <div class="box animated" ng-show="step == 4">
@@ -153,120 +129,52 @@
                 <!--<hr class="middle">-->
                 <h2>Afin de générer un portefeuille adapté à votre profil,<br>
                     nous avons besoin de quelques informations</h2>
-                <h3>Etes-vous prêts à accepter un risque de pertes plus important pour maximiser vos gains ?</h3>
+                <h3>Quelle est votre capacité d'épargne mensuelle ?</h3>
                 <div class="form-group">
                     <div class="radio-list" >
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> Non. C'est normal. Nous vous proposons de démarrer avec un____</label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> Moins de 100€ </label>
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Oui</label>
-                    <a id="" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 5; percents = 40">Continuer</a>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> De 100 à 500€</label>
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> De 500 à 1000€</label>
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Plus de 1000€</label>
+                    <a id="" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 5; percents = 80">Continuer</a>
                     </div>
                 </div>
             </div>
+
+
 
             <div class="box animated" ng-show="step == 5">
                 <h1>Mais d'abord, parlez-nous un peu de vous</h1>
                 <!--<hr class="middle">-->
                 <h2>Afin de générer un portefeuille adapté à votre profil,<br>
                     nous avons besoin de quelques informations</h2>
-                <h3>Pour finir, décrivez vous en tant qu’investisseurs</h3>
+                <h3> Quel âge avez-vous ? </h3>
                 <div class="form-group">
                     <div class="radio-list" >
                         <label>
-                            <input type="radio" name="optionsRadios" id="" value="option1" checked> Homme/femme</label>
+                            <input type="radio" name="optionsRadios" id="" value="option1" checked> Moins de 25 ans</label>
                         <label>
-                            <input type="radio" name="optionsRadios" id="" value="option2"> Mon patrimoine</label>
+                            <input type="radio" name="optionsRadios" id="" value="option2"> 25-30 ans</label>
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Mes revenus</label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> 30-35 ans</label>
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4">Mon âge</label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4"> 35-40 ans</label>
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4"> 40-45 ans</label>
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4"> Plus de 45 ans</label>
 
-                            <a id="" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 5; percents = 50">Continuer</a>
+                            <a id="" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 5; percents = 100">Continuer</a>
                     </div>
                 </div>
              </div>
         </div>
      </div>
 </header>
-
-<section class="bg-primary" id="about">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 text-center">
-                <h2 class="section-heading">Simple et transparent</h2>
-                <hr class="light">
-                <p class="text-faded">Que vous souhaitiez investir dans un projet précis ou que nous ne
-                    sachiez pas encore où placer votre argent, nous serons là pour vous guider.
-                    <!--Vous saurez toujours où est votre argent. </p>-->
-
-                <small>
-                    <!--Votre argent est investi sur un panier d'actif qui permet de diversifier votre placement dans le respect de vos choix: ainsi, le risque est réduit.-->
-                    <!--Votre investissement est placé sur une assurance vie, dans une banque réputée : sécurité et maitrise de la fiscalité.-->
-                </small>
-                <BR>
-                <small>
-                    <!--Votre argent est disponible à tout moment. Grâce à notre site, vous savez à chaque instant où vous en êtes.-->
-                    <!--« une interface innovante pour piloter vos projets. Nos outils vous montrent où vous en êtes, et vous expliquent les conséquences de chaque décision.-->
-                    <!--Nous sommes partout avec vous. Montrer sur un dessin avec iphone + ordinateur»--> </small>
-                <h2 class="section-heading">Des frais réduits</h2>
-                <small>
-                    <hr class="light">
-                    Pas de frais cachés. Vous ne payez qu’un abonnement.
-                </small>
-
-                <a href="#" class="btn btn-default btn-xl">En savoir plus</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="services">
-
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="service-box">
-                    <i class="fa fa-4x fa-thumbs-up animated text-primary"></i>
-
-                    <h3>Vous êtes prêts à créer votre projet</h3>
-
-
-                    <!--<a href="#" class="btn btn-default btn-xl">Démarrer</a>-->
-                    <p class="text-muted">Vous décrivez votre projet d'investissement, pour investir dans l'économie
-                        réelle.</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="service-box">
-                    <i class="fa fa-4x fa-key animated text-primary"></i>
-
-                    <h3>Sécurisé</h3>
-
-                    <p class="text-muted">En investissement sur des indices, votre placement est diversifié.</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="service-box">
-                    <i class="fa fa-4x fa-calendar-check-o animated text-primary"></i>
-
-                    <h3>Toujours à jour</h3>
-
-                    <p class="text-muted">Suivez en temps réel votre portefeuille. Contrôlez les mouvements.</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="service-box">
-                    <i class="fa fa-4x fa-credit-card-alt animated text-primary"></i>
-
-                    <h3>Frais réduits</h3>
-
-                    <p class="text-muted">Des frais réduits comparé à un placement sous mandat classique.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!--
 <section class="no-padding" id="portfolio">
@@ -374,31 +282,6 @@
         </div>
     </div>
 </aside>
-
-<section id="contact">
-    <!--<div class="container">-->
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 text-center">
-                <h2 class="section-heading">Creéz un projet avec nous</h2>
-                <hr class="primary">
-                <!--<p>Prêt à investir? Indiquez nous combien vous souhaitez épargner et de quelle manière. Nous-->
-                    <!--construisons avec vous un portefeuille adapté à vos projets.-->
-                    <!--((créer mon projet))-->
-                </p>
-            </div>
-            <div class="col-lg-4 col-lg-offset-2 text-center">
-                <i class="fa fa-phone fa-3x wow bounceIn"></i>
-
-                <p>123-456-6789</p>
-            </div>
-            <div class="col-lg-4 text-center">
-                <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
-
-                <p><a href="mailto:your-email@your-domain.com">feedback@directETF.com</a></p>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!--
 <body>
