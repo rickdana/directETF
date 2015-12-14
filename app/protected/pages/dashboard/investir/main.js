@@ -94,9 +94,9 @@ angular.module('MetronicApp')
             }
         };
     })
-    .controller('WizardPortfolioInitController', function($PortfolioFactory, $rootScope, $scope, ngDialog) {
+    .controller('WizardPortfolioInitController', function($PortfolioFactory, $scope, ngDialog) {
         if (!!$.cookie('client_portfolio_initialized')) {
-            $rootScope.showPortfolioSettings = true;
+            $scope.showPortfolioSettings = true;
 
             ngDialog.open({
                 template: 'template-client-portfolio-settings',
@@ -104,9 +104,9 @@ angular.module('MetronicApp')
                 closeByDocument: false
             });
 
-            $rootScope['active0'] = 'active';
+            $scope['active0'] = 'active';
 
-            $rootScope.wizard = {
+            $scope.wizard = {
                 step: 0,
                 nextButtonLabel: ["Générer un portefeuille", "Ajuster ce portefeuille", "Chargement en cours"],
                 goto: function (step) {
@@ -148,23 +148,19 @@ angular.module('MetronicApp')
             //client.settings.portfolio.save()
         }
     })
-    .controller('WizardController', function($ClientFactory, $OrdersFactory, $rootScope, $scope) {
+    .controller('WizardController', function($ClientFactory, $OrdersFactory, $scope, $element) {
         $scope.$on('$viewContentLoaded', function() {
             // initialize core components
             App.initAjax();
         });
 
-        var current_step = 1;
         var wizard_state = $("#wizard-state");
 
-        $rootScope.wizard_button = function(step) {
-            return wizard_state.find("a[data-step=" + step + "]");
-        };
-
-        wizard_state.find("a").each(function() {
-            $(this).click(function() {
-                var active = wizard_state.find('[data-state=current]'),
-                current = $(this);
+        $scope.wizard = {
+            step: 1,
+            goto: function(step) {
+                var active = $element.find('[data-step=' + this.step + ']'),
+                    current = $element.find('[data-step=' + step + ']');
 
                 if (active.attr('data-step') == current.attr('data-step')) {
                     return false;
@@ -178,69 +174,45 @@ angular.module('MetronicApp')
                     return false;
                 }
 
-                console.log("Go to step " + current.attr('data-step'), 'log');
+                this.step = step;
+
+                console.log("Go to step " + current.attr('data-step'));
 
                 switch (current.attr('data-step')) {
                     case '1':
                         $OrdersFactory.unlock();
-                        $scope.$apply(function() {
-                            $('[data-wizard-panel-step=2] [ng-etf-list]').attr('data-filter', '');
-                        });
+                        $element.find('[data-step=2] [ng-etf-list]').attr('data-filter', '');
                         break;
 
                     case '2':
                         $OrdersFactory.lock();
-                        $scope.$apply(function() {
-                            $('[data-wizard-panel-step=2] [ng-etf-list]')
-                                .attr('data-filter', JSON.stringify($OrdersFactory.get()));
-                        });
+                        $element.find('[data-step=2] [ng-etf-list]')
+                            .attr('data-filter', JSON.stringify($OrdersFactory.get()));
                         break;
 
                     case '3':
                         $OrdersFactory.lock();
                         setTimeout(function() {
-                            $rootScope.runSimulation();
+                            $scope.runSimulation();
                         }, 500);
                         break;
 
                     case '4':
                         $OrdersFactory.lock();
                         setTimeout(function() {
-                            $rootScope.$apply(function() {
-                                $('[data-wizard-panel-step=4] .update-with-etfs-selection')
+                            $scope.$apply(function() {
+                                $element.find('[data-step=4] .update-with-etfs-selection')
                                     .attr('data-filter', JSON.stringify($OrdersFactory.get()));
                             });
                         }, 500);
                         break;
                 }
 
-                wizard_state.find("a").each(function() {
-                    if ($(this).attr('data-step') <= current.attr('data-step')) {
-                        $(this).attr('data-state', 'valid');
-                    } else {
-                        $(this).attr('data-state', 'unvalid');
-                    }
-                });
+                document.body.scrollTop = 0;
+            }
+        };
 
-                current_step = current.attr('data-step');
-                $(this).attr('data-state', 'current');
-
-                $(window).scrollTop(0);
-
-                $('.wizard-panel').hide();
-                $('[data-wizard-panel-step=' + current.attr('data-step') + ']').show();
-            });
-
-            var step = parseInt($(this).attr('data-step'));
-
-            $('[data-wizard-panel-step=' + step + '] .button').click(function() {
-                $rootScope.wizard_button(step + 1).click();
-            });
-        });
-
-        $('[data-wizard-panel-step=1]').show('slow');
-
-        $rootScope.client = {
+        $scope.client = {
             portfolio: {
                 infos: {}
             }
@@ -251,17 +223,13 @@ angular.module('MetronicApp')
                 throw err;
             }
 
-            $rootScope.client.portfolio.infos = infos;
+            $scope.client.portfolio.infos = infos;
         });
 
     })
-    .controller('InvestirController', function($OrdersFactory, $rootScope, $scope, $element) {
+    .controller('InvestirController', function($OrdersFactory, $rootScope, $scope) {
         $scope.$OrdersFactory = $OrdersFactory;
-        $scope.wizard = {
-            map: {
-                enabled: false
-            }
-        };
+
         $scope.filters = {
             current: {
                 category: 'filter-regions',
@@ -411,7 +379,7 @@ angular.module('MetronicApp')
 
                                 console.log(query.join('-'))
 
-                                $rootScope.wizard_button(2).click();
+                                $scope.wizard.goto(2);
                             }
                         }
                     ]
@@ -428,193 +396,224 @@ angular.module('MetronicApp')
             ]
         };
     })
-    .controller('InvestirMontantAjustementController', function($OrdersFactory, $ClientFactory, $rootScope, $scope, $element) {
+    .controller('InvestirMontantAjustementController', function($OrdersFactory, $ClientFactory, $rootScope, $scope) {
         $scope.$OrdersFactory = $OrdersFactory;
     })
-    .controller('InvestirRevoirController', function($ClientFactory, $OrdersFactory, $EtfsFactory, $rootScope, $scope) {
+    .controller('InvestirRevoirController', function ($ClientFactory, $OrdersFactory, $EtfsFactory, $rootScope, $scope, $element) {
+        var _invest_simu_past = null;
+        var _data_valo = null;
+
+        $scope.timeframe = 3;
+
+        $scope.sliderTimeframe = {
+            options: {
+                floor: 3,
+                ceil: 50,
+                showSelectionBar: true,
+                hideLimitLabels: true,
+                onEnd: function () {
+                    draw_simulation_future(_data_valo, _invest_simu_past);
+                },
+                translate: function() {
+                    return '';
+                }
+            }
+        };
+
         //regroup the invests
         function join_simulation(simulation, simulation_total) {
-        	for(var i in simulation) {
-        		for(var date in simulation[i]){
-        			if(typeof simulation_total[date] == 'undefined') {
-        				simulation_total[date] = simulation[i][date];
-        			}else {
-        				simulation_total[date] += simulation[i][date];
-        			}
-        		}
-        	}
+            for (var i in simulation) {
+                for (var date in simulation[i]) {
+                    if (typeof simulation_total[date] == 'undefined') {
+                        simulation_total[date] = simulation[i][date];
+                    } else {
+                        simulation_total[date] += simulation[i][date];
+                    }
+                }
+            }
 
-        	return simulation_total;
+            return simulation_total;
         }
 
         //format utc to yyyy/mm/dd
         function formatDate(date) {
-        	var d = new Date(date),
-        		month = '' + (d.getMonth() + 1),
-        		day = '' + d.getDate(),
-        		year = d.getFullYear();
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
 
-        	if (month.length < 2) month = '0' + month;
-        	if (day.length < 2) day = '0' + day;
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
 
-        	return [year, month, day].join('-');
+            return [year, month, day].join('-');
         }
 
-        //Simulation of investments in the portfolio
-        function evolution_invests(ref_etfs, data_valo,  done_evolution) {
-        	var evolution_etfs = [];
-        	var evolution_one_etf = {};
-        	var index = 0,
-        		n = ref_etfs.length;
-        	var prices_concat = [];
+        //Proportion des ETFS d'un nouvel investissement
+        function proportion_etfs(ref_etfs) {
+            var proportion_etfs = [];
+            var montant = $OrdersFactory.cash();
 
-        	var prices_callback = function(err, prices) {
-        		var value_invest_firstDay = 0;
-        		var firstDay = formatDate(data_valo[0][0]);
+            for (var i in ref_etfs) {
+                var proportion = ref_etfs[i][3] / montant;
+                proportion_etfs.push([ref_etfs[i][0], proportion])
+            }
 
-        		firstDayloop:
-        			for (var i = 0, size = prices.length; i < size; i++) {
-        				for (var date in prices[i]) {
-        					if (date == firstDay) {
-        						value_invest_firstDay = ref_etfs[index - 1][1] * prices[i][date];
-        						break firstDayloop;
-        					}
-        				}
-        			}
-
-        		for (var i = 0, size = prices.length; i < size; i++) {
-        			for (var date in prices[i]) {
-        				prices[i][date] *= ref_etfs[index - 1][1];
-        				prices[i][date] -= value_invest_firstDay;
-        			}
-        		}
-
-        		prices_concat = prices_concat.concat(prices);
-
-        		if (index == n) {
-        			evolution_one_etf = join_simulation(prices_concat, evolution_one_etf);
-        			for(var date in evolution_one_etf) {
-        				evolution_etfs.push([new Date(date).getTime(),evolution_one_etf[date]]);
-        			}
-        			evolution_etfs.sort(function (a, b) {
-        				return a[0] - b[0];
-        			});
-
-        			done_evolution(evolution_etfs);
-
-        			return;
-        		}
-
-                $EtfsFactory.prices(ref_etfs[index++][0], prices_callback);
-        	};
-
-            $EtfsFactory.prices(ref_etfs[index++][0], prices_callback);
+            return proportion_etfs;
         }
 
-        //Simulation of investments in the portfolio
-        function simulation(ref_etfs, valo, data_valo,  done_simulation) {
-        	var simulation_etfs = [];
-        	var simul_etfs = {};
-        	var index = 0,
-        		n = ref_etfs.length;
-        	var prices_concat = [];
+        //Simulation passée
+        function simulation_past(ref_etfs, valo, data_valo, done_simulation) {
+            var simulation_etfs = [],
+                simul_etfs = {},
+                index = 0,
+                n = ref_etfs.length,
+                prices_concat = [],
+                firstDay = formatDate(data_valo[0][0]);
 
-        	var prices_callback = function(err, prices) {
-        		// Get the value of the ETF for each date?????
-        		var value_invest_firstDay = 0;
-        		var firstDay = formatDate(data_valo[0][0]);
+            var prices_callback = function (err, prices) {
+                var value_etf_firstDay = 0;
 
-        		firstDayloop:
-        		for (var i = 0, size = prices.length; i < size; i++) {
+                firstDayloop:
+                    for (var i = 0, size = prices.length; i < size; i++) {
+                        for (var date in prices[i]) {
+                            if (date == firstDay) {
+                                value_etf_firstDay = ref_etfs[index - 1][1] * prices[i][date];
+                                break firstDayloop;
+                            }
+                        }
+                    }
+
+                for (var i = 0, size = prices.length; i < size; i++) {
                     for (var date in prices[i]) {
-        				if (date == firstDay) {
-        					value_invest_firstDay = ref_etfs[index - 1][1] * prices[i][date];
-        					break firstDayloop;
-        				}
-        			}
-        		}
+                        //evolutions de tous etfs
+                        prices[i][date] = prices[i][date] * ref_etfs[index - 1][1] - value_etf_firstDay;
+                    }
+                }
 
-        		for (var i = 0, size = prices.length; i < size; i++) {
-        			for (var date in prices[i]) {
-        				prices[i][date] *= ref_etfs[index - 1][1];
-        				prices[i][date] -= value_invest_firstDay;
-        			}
-        		}
+                prices_concat = prices_concat.concat(prices);
 
-        		prices_concat = prices_concat.concat(prices);
+                if (index == n) {
+                    simul_etfs = join_simulation(prices_concat, simul_etfs);
+                    for (var date_valo in valo) {
+                        for (var date in simul_etfs) {
+                            if (date == date_valo) {
+                                simulation_etfs.push([new Date(date).getTime(), simul_etfs[date] + valo[date_valo]]);
+                            }
+                        }
+                    }
 
-        		if (index == n) {
-        			simul_etfs = join_simulation(prices_concat, simul_etfs);
-        			for(var date_valo in valo) {
-        				for(var date in simul_etfs) {
-        					if(date == date_valo){
-        						simulation_etfs.push([new Date(date).getTime(),simul_etfs[date] + valo[date_valo]]);
-        					}
-        				}
-        			}
+                    simulation_etfs.sort(function (a, b) {
+                        return a[0] - b[0];
+                    });
 
-        			simulation_etfs.sort(function (a, b) {
-        				return a[0] - b[0];
-        			});
+                    done_simulation(simulation_etfs);
 
-        			done_simulation(simulation_etfs);
-
-        			return;
-        		}
+                    return;
+                }
 
                 $EtfsFactory.prices(ref_etfs[index++][0], prices_callback);
-        	};
+            };
 
             $EtfsFactory.prices(ref_etfs[index++][0], prices_callback);
         }
 
+        //Simulation future
+        function simulation_future(time_frame, data_valo_today, data) {
+            var simulation_future_etfs = [];
+            var value_invest_today = data_valo_today[1];
+            var firstDay = formatDate(data_valo_today[0]);
 
-        //caculuate the rate of change of etf between tow days
-        function rate_change_day(price_d1, price_d2) {
-        	return (price_d2 - price_d1) / price_d1;
+            var taux = rate_change_year(data);
+            var montant = value_invest_today;
+            var month = firstDay;
+            simulation_future_etfs.push([new Date(firstDay).getTime(), montant]);
+            for (var i = 0; i < time_frame; i++) {
+                for (var j = 1; j <= 12; j++) {
+                    month = next_month(month);
+                    simulation_future_etfs.push([new Date(month).getTime(), montant * (taux / 12 * j + 1)]);
+                }
+                montant *= (1 + taux);
+            }
+
+            return simulation_future_etfs;
         }
 
-        //caculuate the moyen of rate of change between one year
-        function rate_change_year(prices){
-        	var rates = 0;
-        	for (var i = 0; i < prices.length - 1 ; i++){
-        		if (prices[i] != 0){
-        			rates += rate_change_day(prices[i], prices[i + 1]);
-        		}
-        	}
+        function draw_simulation_future(data_valo, invest_simu_past) {
+            //simulation-graph of the future
+            var range_valo_future = [];
+            var range_invest_future = [];
+            var time_frame = $scope.timeframe;
+            var montant_today = data_valo[data_valo.length - 1];
 
-        	rates = rates / (prices.length - 1);
+            var data_invest_future = simulation_future(time_frame, montant_today, invest_simu_past);
+            var data_valo_future = simulation_future(time_frame, montant_today, data_valo);
 
-        	return rates;
+            var data_invest_future_varia = [];
+            for (var i = 0; i < data_invest_future.length; i++) {
+                data_invest_future_varia.push([data_invest_future[i][0], data_invest_future[i][1] * 0.8, data_invest_future[i][1]]);
+            }
+
+            //simulation-graph of the future
+            var series = [{
+                name: 'Portefeuille',
+                type: 'spline',
+                data: data_valo_future,
+                color: 'rgb(243, 156, 18)',
+                threshold: null,
+                zIndex: 10,
+                visible: false
+            }, {
+                name: 'Nouveaux investissements',
+                type: 'arearange',
+                data: data_invest_future_varia,
+                color: '#00802b',
+                threshold: null
+            }];
+
+            LoadStockChart(series, $('#simulation-future'), true);
         }
+
+        //taux de rentabilité
+        function rate_change_year(data) {
+            var rentabilite = 0;
+            var capital = data[0][1];
+            var profit = data[data.length - 1][1] - capital;
+            var time_diff = Math.abs(data[data.length - 1][0] - data[0][0]);
+            var days_diff = Math.ceil(time_diff / (1000 * 3600 * 24));
+
+            //nombre de jours ouverts est 365
+            rentabilite = profit / capital * 365 / days_diff;
+            return rentabilite;
+        }
+
 
         //get the date of next month
         function next_month(date) {
-        	var date_1 = new Date(date);
-        	var month = date_1.getMonth() + 1;
-        	var year = date_1.getFullYear();
-        	if (month != 12) {
-        		month += 1;
-        	}else {
-        		year +=  1;
-        		month = 1;
-        	}
-        	var d = date_1.getDate();
+            var date_1 = new Date(date);
+            var month = date_1.getMonth() + 1;
+            var year = date_1.getFullYear();
+            if (month != 12) {
+                month += 1;
+            } else {
+                year += 1;
+                month = 1;
+            }
 
-        	if (month < 10){
-        		return new Date(year + '-0' + month + '-' + d).getTime();
-        	} else {
-        		return new Date(year + '-' + month + '-' + d).getTime();
-        	}
+
+            if (month < 10) {
+                return new Date(year + '-0' + month + '-01').getTime();
+            } else {
+                return new Date(year + '-' + month + '-01').getTime();
+            }
         }
 
-        $ClientFactory.portfolio.valo(function(err, valo, data_valo) {
+        $ClientFactory.portfolio.valo(function (err, valo, data_valo) {
             if (err) {
                 throw err;
             }
 
             // Trades
-            $ClientFactory.portfolio.trades(function(err, trades) {
+            $ClientFactory.portfolio.trades(function (err, trades) {
                 if (err) {
                     throw err;
                 }
@@ -643,21 +642,21 @@ angular.module('MetronicApp')
                 //Investements
                 var invest_etfs = [];
 
-                $rootScope.runSimulation = function() {
+                $rootScope.runSimulation = function () {
                     invest_etfs = [];
 
                     var orders = $OrdersFactory.get();
 
                     if (orders.length) {
                         for (var i = 0; i < orders.length; i++) {
-                            invest_etfs.push([orders[i].isin, orders[i].quantity]);
+                            invest_etfs.push([orders[i].isin, orders[i].quantity, orders[i].price, orders[i].cash]);
                         }
 
-                        simulation(invest_etfs, valo, data_valo, simulation_cb);
+                        simulation_past(invest_etfs, valo, data_valo, simulation_cb);
                     }
                 };
 
-                function simulation_cb(new_invest) {
+                function simulation_cb(invest_simu_past) {
                     var series = [{      //the value of portfolio
                         name: 'Portefeuille',
                         type: 'spline',
@@ -672,114 +671,25 @@ angular.module('MetronicApp')
                         dashStyle: 'longdash'
                     }, {
                         name: 'Nouveaux investissements',
-                        data: new_invest,
+                        data: invest_simu_past,
                         type: 'spline',
                         color: 'rgb(91, 173, 255)'
                     }];
+
 
                     //simulation-graph of the past
                     LoadStockChart(series, $('#simulation-past'), true);
 
                     //Benefice
-                    $rootScope.profit = new_invest[new_invest.length - 1][1] - data_valo[data_valo.length - 1][1]
-                                            - (new_invest[0][1] - data_valo[0][1]);
+                    $rootScope.profit = invest_simu_past[invest_simu_past.length - 1][1] - data_valo[data_valo.length - 1][1]
+                        - (invest_simu_past[0][1] - data_valo[0][1]);
 
-                    //simulation-graph of the future
-                    var prices_one_year_invests = [];
-                    var prices_one_year_wallet = [];
-                    var data_valo_future = [];
-                    var range_valo_future = [];
-                    var data_invest_future = [];
-                    var range_invest_future = [];
+                    draw_simulation_future(data_valo, invest_simu_past);
 
-                    evolution_invests(invest_etfs, data_valo, function(evolution_new_invests) {
-                        for (i = evolution_new_invests.length - 1, n = 1; evolution_new_invests.length > 365 ? n < 366 : n <= evolution_new_invests.length; i--, n++) {
-                            prices_one_year_invests.push(evolution_new_invests[i][1]);
-                        }
-
-                        var rate_average_invest = rate_change_year(prices_one_year_invests) / 12;
-
-                        for (i = data_valo.length - 1, n = 1; data_valo.length > 365 ? n < 366 : n <= data_valo.length; i--, n++) {
-                            prices_one_year_wallet.push(data_valo[i][1]);
-                        }
-
-                        var rate_average_wallet = rate_change_year(prices_one_year_wallet) / 12;
-
-                        var date_after_two_years = 0;
-                        var today = new Date(data_valo[data_valo.length - 1][0]);
-                        var year = today.getFullYear() + 2;
-                        var month = today.getMonth() + 1;
-
-                        date_after_two_years = year + '-' + month + '-' + today.getDate();
-
-                        var value_wallet = data_valo[data_valo.length - 1][1];
-                        var predict_time = data_valo[data_valo.length - 1][0];
-
-                        for (var i = 1; i < 25; i++) {
-                            data_valo_future.push([predict_time,value_wallet]);
-                            predict_time = next_month(predict_time);
-                            value_wallet *= (1 + rate_average_wallet);
-                        }
-                        data_valo_future.push([predict_time,value_wallet]);
-
-                        for (var i = 0; i < 25; i++) {
-                            range_valo_future.push([data_valo_future[i][0],data_valo_future[i][1] * 0.995,
-                                data_valo_future[i][1] * 1.005]);
-                        }
-
-                        var value_invest = evolution_new_invests[evolution_new_invests.length - 1][1];
-                        var value_invest_initial = value_invest;
-
-                        predict_time = data_valo[data_valo.length - 1][0];
-                        data_invest_future.push([predict_time, data_valo[data_valo.length - 1][1]]);
-
-                        for (var i = 1; i < 25; i++) {
-                            predict_time = next_month(predict_time);
-                            value_invest *= (1 + rate_average_invest);
-                            data_invest_future.push([predict_time, value_invest - value_invest_initial + data_valo_future[i - 1][1]]);
-                        }
-
-                        for (var i = 0; i < 25; i++) {
-                            range_invest_future.push([data_invest_future[i][0],data_invest_future[i][1] * 0.995,
-                                data_invest_future[i][1] * 1.005]);
-                        }
-
-                        //simulation-graph of the future
-                        var series = [{
-                            name: 'Nouveaux investissements',
-                            data: data_invest_future,
-                            type: 'spline',
-                            color: '#327E00',
-                            threshold: null
-                        },{
-                            name: 'Variation des investissements',
-                            data: range_invest_future,
-                            type: 'arearange',
-                            lineWidth: 0,
-                            linkedTo: ':previous',
-                            color: '#F9FFF6',
-                            fillOpacity: 0.6,
-                            zIndex: 1
-                        },{
-                            name: 'Portefeuille',
-                            type: 'spline',
-                            data: data_valo_future,
-                            color: '#AD6F00',
-                            threshold: null
-                        },{
-                            name: 'Variation des portefeuille',
-                            data: range_valo_future,
-                            type: 'arearange',
-                            lineWidth: 0,
-                            linkedTo: ':previous',
-                            color: '#FFFDF4',
-                            fillOpacity: 0.6,
-                            zIndex: 0
-                        }];
-
-                        LoadStockChart(series, $('#simulation-future'), true);
-                    });
+                    _invest_simu_past = invest_simu_past;
+                    _data_valo = data_valo;
                 }
+
             });
         });
     })

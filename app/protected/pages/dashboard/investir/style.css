@@ -119,7 +119,7 @@
     background-color: #fff;
 }
 
-#wizard-state a[data-state=current] {
+#wizard-state a.current {
     color: rgba(255,255,255,.8);
     background-color: #00a65a;
     border-color: rgb(231, 236, 242);
@@ -130,22 +130,18 @@
     background-color: #B1BED7;
 }
 
-#wizard-state a[data-state=current]::before {
+#wizard-state a.current::before {
     color: #046136;
     background-color: #fff;
 }
 
-#wizard-state a[data-state=valid]::before {
+#wizard-state a.valid::before {
     background-color: #00a65a;
 }
 
 .wizard-panel {
-    display:none;
     position:relative;
-}
-
-.wizard-panel:first-child {
-    display: block;
+    margin-top: 90px;
 }
 
 #maps-container {
@@ -327,15 +323,6 @@ tfoot td {
     text-decoration: line-through;
 }
 
-<<<<<<< HEAD
-.wizard-panel .dataTables_wrapper div.dataTables_info {
-    padding-left: 13px;
-}
-
-.wizard-panel .dataTables_wrapper div.dataTables_paginate {
-    padding-right: 15px;
-}
-
 #slider-timeframe {
     display: table;
     position: absolute;
@@ -376,9 +363,9 @@ tfoot td {
 #choix-period-invest-past {
     width: initial;
     float: right;
-=======
+}
+
 .wizard-panel tr.strike-line input {
     background-color: transparent;
     cursor: default;
->>>>>>> 18c9edd... Add aCheck and improve the first step of page Investir by adding a survey
 }

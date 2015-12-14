@@ -1,23 +1,3 @@
-<!-- BEGIN PAGE HEADER-->
-<div class="page-bar content-header" ng-controller="WizardController">
-    <ul class="page-breadcrumb">
-        <li>
-            <a href="/">Direct ETF</a>
-            <i class="fa fa-circle"></i>
-        </li>
-        <li>
-            <a href="#">Investir</a>
-        </li>
-    </ul>
-
-    <div id="wizard-state">
-        <a id="wizard-step-1" data-step="1" data-state="current" href="javascript:void(0)">Sélection</a>
-        <a id="wizard-step-2" data-step="2" data-state="unvalid" href="javascript:void(0)">Montant &amp; Ajustement</a>
-        <a id="wizard-step-3" data-step="3" data-state="unvalid" href="javascript:void(0)">Revoir</a>
-        <a id="wizard-step-4" data-step="4" data-state="unvalid" href="javascript:void(0)">Validation</a>
-    </div>
-</div>
-
 <script type="text/ng-template" id="template-client-portfolio-settings" ng-controller="WizardPortfolioInitController">
     <h5 class="caption-subject font-green bold uppercase">Configuration du portefeuille</h5>
     <hr>
@@ -38,234 +18,260 @@
     </div>
 </script>
 
-<div class="wizard-panel" data-wizard-panel-step="1" ng-controller="InvestirController" ng-showx="wizard.step == 1">
-    <div id="filters-container">
-        <div id="filters-list">
-            <div ng-repeat="filter in filters.entries">
-                <input type="radio" name="filter" id="{{filter.id}}" class="filter-group aCheck filter-checkbox"
-                       ng-model="filters.current.category"
-                       ng-value="filter.id">
-                <label for="{{filter.id}}">
-                    <i class="fa fa-check"></i>
-                    <span>{{filter.name}}</span>
-                    <i class="fa fa-angle-right"
-                       ng-class="{'fa-angle-down': filters.current.category == filter.id}"></i></label>
+<div ng-controller="WizardController">
+    <div class="page-bar content-header">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="/">Direct ETF</a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <a href="#">Investir</a>
+            </li>
+        </ul>
 
-                <div class="filter-items">
-                    <div ng-repeat="item in filter.items">
-                        <input type="radio" name="{{filter.id}}-item" id="{{item.id}}" class="aCheck filter-checkbox"
-                               ng-model="filters.current.value"
-                               ng-value="item.id">
-                        <label for="{{item.id}}">
-                            <i class="fa fa-check"></i>
-                            <span>{{item.name}}</span></label></div>
-                    <div ng-if="filter.questions" ng-init="filter.history = []">
-                        <div class="filter-question filter-history"
-                             ng-init="q = h[0]; a = h[1]"
-                             ng-repeat="(i, h) in filter.history">
-                            <input type="radio" name="h-{{a.id}}" id="h-{{a.id}}" class="aCheck filter-checkbox"
-                                   ng-init="h.checked = true"
-                                   ng-model="h.checked">
-                            <label for="h-{{a.id}}"
-                                   ng-click="filters.current.question = q.id; filters.current.anwser = '';
-                                             filters.history.remove(filter.history, i, filter.history.length)">
-                                <span>{{a.resume}}</span>
-                                <i class="fa fa-undo"></i></label></div>
-                        <div class="filter-question"
-                             ng-repeat="q in filter.questions"
-                             ng-show="filters.current.question == q.id">
-                            <label class="bold">
-                                <span>{{q.string}}</span></label>
-                            <div class="filter-question-end" ng-if="q.id == 'end'">
-                                <div data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html" ng-etf-list></div>
-                                <button class="btn green" ng-click="q.exec(filter.history)">{{q.button}}</button></div>
-                            <div class="filter-question-anwser" ng-repeat="a in q.anwsers">
-                                <input type="radio" name="{{filter.id}}" id="{{a.id}}" class="aCheck filter-checkbox"
-                                       ng-model="filters.current.anwser"
-                                       ng-click="filters.current.question = a.goto; filter.history.push([q, a])">
-                                <label for="{{a.id}}">
-                                    <i class="fa fa-check"></i>
-                                    <span>{{a.string}}</span></label></div>
-                        </div></div>
+        <div id="wizard-state">
+            <a ng-class="{valid: wizard.step <= 1, current: wizard.step == 1}">Sélection</a>
+            <a ng-class="{valid: wizard.step <= 2, current: wizard.step == 2}">Montant &amp; Ajustement</a>
+            <a ng-class="{valid: wizard.step <= 3, current: wizard.step == 3}">Revoir</a>
+            <a ng-class="{valid: wizard.step <= 4, current: wizard.step == 4}">Validation</a>
+        </div>
+    </div>
+
+    <!--Step 1-->
+    <div class="wizard-panel" data-step="1" ng-controller="InvestirController" ng-show="wizard.step == 1">
+        <div id="filters-container">
+            <div id="filters-list">
+                <div ng-repeat="filter in filters.entries">
+                    <input type="radio" name="filter" id="{{filter.id}}" class="filter-group aCheck filter-checkbox"
+                           ng-model="filters.current.category"
+                           ng-value="filter.id">
+                    <label for="{{filter.id}}">
+                        <i class="fa fa-check"></i>
+                        <span>{{filter.name}}</span>
+                        <i class="fa fa-angle-right"
+                           ng-class="{'fa-angle-down': filters.current.category == filter.id}"></i></label>
+
+                    <div class="filter-items">
+                        <div ng-repeat="item in filter.items">
+                            <input type="radio" name="{{filter.id}}-item" id="{{item.id}}" class="aCheck filter-checkbox"
+                                   ng-model="filters.current.value"
+                                   ng-value="item.id">
+                            <label for="{{item.id}}">
+                                <i class="fa fa-check"></i>
+                                <span>{{item.name}}</span></label></div>
+                        <div ng-if="filter.questions" ng-init="filter.history = []">
+                            <div class="filter-question filter-history"
+                                 ng-init="q = h[0]; a = h[1]"
+                                 ng-repeat="(i, h) in filter.history">
+                                <input type="radio" name="h-{{a.id}}" id="h-{{a.id}}" class="aCheck filter-checkbox"
+                                       ng-init="h.checked = true"
+                                       ng-model="h.checked">
+                                <label for="h-{{a.id}}"
+                                       ng-click="filters.current.question = q.id; filters.current.anwser = '';
+                                                 filters.history.remove(filter.history, i, filter.history.length)">
+                                    <span>{{a.resume}}</span>
+                                    <i class="fa fa-undo"></i></label></div>
+                            <div class="filter-question"
+                                 ng-repeat="q in filter.questions"
+                                 ng-show="filters.current.question == q.id">
+                                <label class="bold">
+                                    <span>{{q.string}}</span></label>
+                                <div class="filter-question-end" ng-if="q.id == 'end'">
+                                    <div data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html" ng-etf-list></div>
+                                    <button class="btn green" ng-click="q.exec(filter.history)">{{q.button}}</button></div>
+                                <div class="filter-question-anwser" ng-repeat="a in q.anwsers">
+                                    <input type="radio" name="{{filter.id}}" id="{{a.id}}" class="aCheck filter-checkbox"
+                                           ng-model="filters.current.anwser"
+                                           ng-click="filters.current.question = a.goto; filter.history.push([q, a])">
+                                    <label for="{{a.id}}">
+                                        <i class="fa fa-check"></i>
+                                        <span>{{a.string}}</span></label></div>
+                            </div></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div ng-show="filters.current.category == 'filter-maps-list'">
-        <div id="maps-container" data-null-color="#fff" ng-etf-maps></div>
-        <div class="portlet light bordered" ng-hide="">
-            <div id="investir-etfs-list"
-                 data-header-template="/protected/pages/dashboard/investir/tpl/list-header.html"
-                 data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html" ng-etf-list></div>
-        </div>
+        <div ng-show="filters.current.category == 'filter-maps-list'">
+            <div id="maps-container" data-null-color="#fff" ng-etf-maps></div>
+            <div class="portlet light bordered" ng-hide="">
+                <div id="investir-etfs-list"
+                     data-header-template="/protected/pages/dashboard/investir/tpl/list-header.html"
+                     data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html" ng-etf-list></div>
+            </div>
+            <button class="btn green" ng-click="wizard.step = 2">Etape suivante</button></div>
     </div>
 
-</div>
-
-<!--Step 2-->
-<div class="wizard-panel" data-wizard-panel-step="2" ng-controller="InvestirMontantAjustementController" ng-show="wizard.step == 2">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption caption-md">
-                        <span class="caption-subject font-green bold uppercase">Portefeuille</span>
+    <!--Step 2-->
+    <div class="wizard-panel" data-step="2" ng-controller="InvestirMontantAjustementController" ng-show="wizard.step == 2">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption caption-md">
+                            <span class="caption-subject font-green bold uppercase">Portefeuille</span>
+                        </div>
                     </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="entry">Combien souhaitez-vous investir ?
-                        <div class="range-wrapper-wallet text-center">
-                            <input id="catch-max" name="wallet-range" type="text" class="input-range"
-                                   data-min="1" data-max="{{client.portfolio.cash}}"
-                                   data-from="{{client.portfolio.cash}}"
-                                   data-postfix="{{client.portfolio.infos.currencySymb}}">
+                    <div class="portlet-body">
+                        <div class="entry">Combien souhaitez-vous investir ?
+                            <div class="range-wrapper-wallet text-center">
+                                <input id="catch-max" name="wallet-range" type="text" class="input-range"
+                                       data-min="1" data-max="{{client.portfolio.cash}}"
+                                       data-from="{{client.portfolio.cash}}"
+                                       data-postfix="{{client.portfolio.infos.currencySymb}}">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-8">
-            <div class="portlet light bordered">
-                <div id="investir-selection-list" data-lazy="true"
-                     data-header-template="/protected/pages/dashboard/investir/tpl/selection-header.html"
-                     data-row-template="/protected/pages/dashboard/investir/tpl/selection-row.html"
-                     data-footer-template="/protected/pages/dashboard/investir/tpl/selection-footer.html"
-                     ng-etf-list></div>
+            <div class="col-md-8">
+                <div class="portlet light bordered">
+                    <div id="investir-selection-list" data-lazy="true"
+                         data-header-template="/protected/pages/dashboard/investir/tpl/selection-header.html"
+                         data-row-template="/protected/pages/dashboard/investir/tpl/selection-row.html"
+                         data-footer-template="/protected/pages/dashboard/investir/tpl/selection-footer.html"
+                         ng-etf-list></div>
+                </div>
             </div>
         </div>
+
+        <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
+        <button class="btn green" ng-click="wizard.goto(3)">Etape suivante</button>
     </div>
 
-    <button class="btn btn-success">Etape suivante: Revoir</button>
-</div>
-
-<!--Step 3-->
-<div class="wizard-panel" data-wizard-panel-step="3" ng-controller="InvestirRevoirController" ng-show="wizard.step == 3">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="col-lg-5" style="float: right">
-                        <div id="slider-timeframe" class="form-group">
-                            <div class="slider-col">
-                                <label class="caption-subject control-label">Durée</label></div>
-                            <div class="slider-col">
-                                <rzslider rz-slider-model="timeframe"
-                                          rz-slider-options="sliderTimeframe.options"></rzslider></div>
-                            <div class="slider-col">
-                                <input type="number" min="3" max="50"
-                                       class="form-control" ng-model="timeframe" required></div>
+    <!--Step 3-->
+    <div class="wizard-panel" data-step="3" ng-controller="InvestirRevoirController" ng-show="wizard.step == 3">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="col-lg-5" style="float: right">
+                            <div id="slider-timeframe" class="form-group">
+                                <div class="slider-col">
+                                    <label class="caption-subject control-label">Durée</label></div>
+                                <div class="slider-col">
+                                    <rzslider rz-slider-model="timeframe"
+                                              rz-slider-options="sliderTimeframe.options"></rzslider></div>
+                                <div class="slider-col">
+                                    <input type="number" min="3" max="50"
+                                           class="form-control" ng-model="timeframe" required></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="caption caption-md">
+                        <div class="caption caption-md">
                         <span class="caption-subject font-green bold uppercase">
                             Projection sur {{timeframe}} ans</span>
-                        <div class="explication-courbe">Voici une analyse de votre nouvel investissement
-                        (rappeler l'investissement)
-                        (faire 2 tab: futur / passé)</div>
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <div id="simulation-future"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption caption-md">
-                        <span class="caption-subject font-green bold uppercase">Simulation pasée</span>
-                        <div class="explication-courbe">Si vous aviez passé cet ordre il y a (mettre une combo) mois, la performance
-                            de votre portefeuille aurait été:
-                            La différence est : augmenter la part des actions US.
+                            <div class="explication-courbe">Voici une analyse de votre nouvel investissement
+                                (rappeler l'investissement)
+                                (faire 2 tab: futur / passé)</div>
                         </div>
                     </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="form-group form-md-line-input">
-                        <select class="form-control" id="choix-period-invest-past" name="" ng-model="periodeSelect" data-id-container="simulation-past" link-to-stcokchart>
-                            <option ng-repeat="option in periodeData">{{option}}</option>
-                        </select>
+                    <div class="portlet-body">
+                        <div id="simulation-future"></div>
                     </div>
-                    <div id="simulation-past"></div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<!--Step 4-->
-<div class="wizard-panel" data-wizard-panel-step="4" ng-controller="InvestirValidationController" ng-show="wizard.step == 4">
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="portlet light bordered">
-                <div id="investir-order-list" class="update-with-etfs-selection" data-lazy="true"
-                     data-header-template="/protected/pages/dashboard/investir/tpl/order-header.html"
-                     data-row-template="/protected/pages/dashboard/investir/tpl/order-row.html"
-                     data-footer-template="/protected/pages/dashboard/investir/tpl/order-footer.html" ng-etf-list></div>
-            </div>
-
-            <!-- Wallet -->
-            <div class="portlet light bordered">
-                <table class="table table-hover">
-                    <thead>
-                    <th colspan="2">Récaputilatif</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Liquidités disponibles</td>
-                        <td class="text-right">{{client.portfolio.infos.cash | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
-                    </tr>
-                    <tr>
-                        <td>Liquidités sortantes</td>
-                        <td class="text-right">{{$OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
-                    </tr>
-                    <tr>
-                        <td>Liquidités entrantes estimées</td>
-                        <td class="text-right">{{profit | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
-                    </tr>
-                    </tbody>
-
-                    <tfoot>
-                    <tr>
-                        <td class="text-left">Liquidités restantes estimées après transaction</td>
-                        <td class="text-right">{{client.portfolio.infos.cash - $OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
-                    </tr>
-                    </tfoot>
-
-                </table>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption caption-md">
+                            <span class="caption-subject font-green bold uppercase">Simulation pasée</span>
+                            <div class="explication-courbe">Si vous aviez passé cet ordre il y a (mettre une combo) mois, la performance
+                                de votre portefeuille aurait été:
+                                La différence est : augmenter la part des actions US.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="form-group form-md-line-input">
+                            <select class="form-control" id="choix-period-invest-past" name="" ng-model="periodeSelect" data-id-container="simulation-past" link-to-stcokchart>
+                                <option ng-repeat="option in periodeData">{{option}}</option>
+                            </select>
+                        </div>
+                        <div id="simulation-past"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Repartition des secteurs -->
-        <div class="col-lg-4">
+        <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
+        <button class="btn green" ng-click="wizard.goto(4)">Etape suivante</button>
+    </div>
+
+    <!--Step 4-->
+    <div class="wizard-panel" data-step="4" ng-controller="InvestirValidationController" ng-show="wizard.step == 4">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="portlet light bordered">
+                    <div id="investir-order-list" class="update-with-etfs-selection" data-lazy="true"
+                         data-header-template="/protected/pages/dashboard/investir/tpl/order-header.html"
+                         data-row-template="/protected/pages/dashboard/investir/tpl/order-row.html"
+                         data-footer-template="/protected/pages/dashboard/investir/tpl/order-footer.html" ng-etf-list></div>
+                </div>
+
+                <!-- Wallet -->
+                <div class="portlet light bordered">
+                    <table class="table table-hover">
+                        <thead>
+                        <th colspan="2">Récaputilatif</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Liquidités disponibles</td>
+                            <td class="text-right">{{client.portfolio.infos.cash | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
+                        </tr>
+                        <tr>
+                            <td>Liquidités sortantes</td>
+                            <td class="text-right">{{$OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
+                        </tr>
+                        <tr>
+                            <td>Liquidités entrantes estimées</td>
+                            <td class="text-right">{{profit | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
+                        </tr>
+                        </tbody>
+
+                        <tfoot>
+                        <tr>
+                            <td class="text-left">Liquidités restantes estimées après transaction</td>
+                            <td class="text-right">{{client.portfolio.infos.cash - $OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
+                        </tr>
+                        </tfoot>
+
+                    </table>
+                </div>
+            </div>
+
             <!-- Repartition des secteurs -->
-            <div id="sector" class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption caption-md">
-                        <span class="caption-subject font-green bold uppercase">Répartition sectorielle</span>
+            <div class="col-lg-4">
+                <!-- Repartition des secteurs -->
+                <div id="sector" class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption caption-md">
+                            <span class="caption-subject font-green bold uppercase">Répartition sectorielle</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="update-with-etfs-selection" data-height="200" data-lazy="true"
+                             data-show-in-legend="true" ng-etf-sectors-chart></div>
                     </div>
                 </div>
-                <div class="portlet-body">
-                    <div class="update-with-etfs-selection" data-height="200" data-lazy="true"
-                         data-show-in-legend="true" ng-etf-sectors-chart></div>
-                </div>
-            </div>
 
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption caption-md">
-                        <span class="caption-subject font-green bold uppercase">Répartition dans le monde</span>
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption caption-md">
+                            <span class="caption-subject font-green bold uppercase">Répartition dans le monde</span>
+                        </div>
                     </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="update-with-etfs-selection" data-height="200" data-lazy="true" ng-etf-maps></div>
+                    <div class="portlet-body">
+                        <div class="update-with-etfs-selection" data-height="200" data-lazy="true" ng-etf-maps></div>
+                    </div>
                 </div>
             </div>
         </div>
+        <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
+        <button class="btn green" ng-click="wizard.step = 1">Valider l'ordre d'achat</button>
     </div>
-    <button class="btn btn-success">Valider l'ordre d'achat</button>
 </div>
