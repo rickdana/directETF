@@ -11,7 +11,8 @@ body {
 }
 
 body {
-    font-family: 'Poiret One', cursive;
+    font-family: 'Josefin Sans', sans-serif;
+
 }
 
 hr {
@@ -36,6 +37,7 @@ a {
 a:hover,
 a:focus {
     color: #1eaa98;
+    text-decoration: none;
 }
 
 h1,
@@ -44,7 +46,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Poiret One', cursive;
+
 }
 
 
@@ -206,7 +208,7 @@ header .header-content .header-content-inner h1 {
     margin-top: -50px;
     margin-bottom: 30px;
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 500;
     color: rgb(0, 0, 0);
 }
 
@@ -221,6 +223,12 @@ header .header-content .header-content-inner p {
     font-size: 60px;
     font-weight: 800;
     color: rgba(0, 0, 0, 0.9);
+}
+
+header .header-content .header-content-inner .page-scroll i {
+    display: block;
+    position: relative;
+    bottom: 27px;
 }
 
 @media (min-width: 768px) {
@@ -241,6 +249,7 @@ header .header-content .header-content-inner p {
         margin-right: auto;
         margin-left: auto;
         max-width: 1000px;
+        height: 528px;
     }
 
     header .header-content .header-content-inner p {
@@ -536,4 +545,12 @@ body {
 #premier-bouton {
     background-image: linear-gradient(to bottom, #1eaa98 0, #13867d 100%);
     margin-top: -30px;
+}
+
+.dropdown-menu {
+    font-size: 18px;
+}
+
+#contact p a {
+    color: #ffffff;
 }
