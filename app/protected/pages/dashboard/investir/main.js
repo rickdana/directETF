@@ -1,6 +1,7 @@
 angular.module('MetronicApp')
     .factory('$OrdersFactory', function() {
         var etfs = {};
+        var quantities = {};
         var locked = false;
 
         return {
@@ -10,42 +11,36 @@ angular.module('MetronicApp')
             unlock: function() {
                 locked = false;
             },
-            set: function(isin, quantity, price) {
+            set: function(etf, quantity, price) {
                 if (locked) {
                     return;
                 }
-                if (!etfs[isin]) {
+                if (!etfs[etf.isin]) {
                     if (typeof quantity == 'undefined') {
-                        throw new Error('Quantity of ' + isin + ' must be set!');
+                        throw new Error('Quantity of ' + etf.isin + ' must be set!');
                     }
                     if (typeof price == 'undefined') {
-                        throw new Error('Price of % ' + isin + ' must be set!');
+                        throw new Error('Price of % ' + etf.isin + ' must be set!');
                     }
 
-                    if (!etfs[isin]) {
-                        etfs[isin] = {
-                            isin: isin,
-                            quantity: quantity,
-                            price: price,
-                            cash: quantity * price,
-                        };
+                    if (!etfs[etf.isin]) {
+                        etfs[etf.isin] = etf;
+                        quantities[etf.isin] = etf.quantity;
                     }
-                    return console.log("-> %s(quantity: %s, price: %s) was added in the selection list", isin, quantity, price);
+                    return console.log("-> %s(quantity: %s, price: %s) was added in the selection list", etf.isin, quantity, price);
                 }
 
                 if (typeof quantity != 'undefined') {
-                    etfs[isin].quantity = parseInt(quantity);
+                    quantities[etf.isin] = parseInt(quantity);
                 } else {
-                    quantity = etfs[isin].quantity;
+                    quantity = etfs[etf.isin].quantity;
                 }
 
                 if (price) {
-                    etfs[isin].price = parseFloat(price);
+                    etfs[etf.isin].price = parseFloat(price);
                 }
 
-                etfs[isin].cash = etfs[isin].quantity * etfs[isin].price;
-
-                console.log("-- Set %s(quantity: %s, price: %s)", isin, quantity, price || etfs[isin].price);
+                console.log("-- Set %s(quantity: %s, price: %s)", etf.isin, quantity, price || etfs[etf.isin].price);
             },
             get: function(isin) {
                 if (isin) {
@@ -58,13 +53,9 @@ angular.module('MetronicApp')
                 var array = [];
 
                 for (var isin in etfs) {
-                    if (etfs[isin] && etfs[isin].quantity) {
-                        array.push({
-                            isin: etfs[isin].isin,
-                            quantity: etfs[isin].quantity,
-                            price: etfs[isin].price,
-                            cash: etfs[isin].cash,
-                        });
+                    if (etfs[isin] && quantities[isin]) {
+                        etfs[isin].quantity = quantities[isin];
+                        array.push(etfs[isin]);
                     }
                 }
 
@@ -74,7 +65,7 @@ angular.module('MetronicApp')
                 var i = 0;
 
                 for (var isin in etfs) {
-                    if (etfs[isin] && etfs[isin].quantity) {
+                    if (etfs[isin] && quantities[isin]) {
                         i++;
                     }
                 }
@@ -86,7 +77,7 @@ angular.module('MetronicApp')
 
                 for (var isin in etfs) {
                     if (etfs[isin]) {
-                        cash += etfs[isin].cash;
+                        cash += quantities[isin] * etfs[isin].price;
                     }
                 }
 
