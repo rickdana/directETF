@@ -34,47 +34,14 @@
           rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
-
+    <link href='https://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
 </head>
 
 <body id="page-top">
 
 <nav id="mainNav" class="navbar navbar-fixed-top">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand page-scroll" href="/">Direct ETF</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a class="page-scroll" href="#about">Offre</a>
-                </li>
-                <li>
-                    <!--<a class="page-scroll" href="#services">Direct ETF</a>-->
-                </li>
-                <!--
-                <li>
-                    <a class="page-scroll" href="#portfolio">Portfolio</a>
-                </li>
-                -->
-                <li>
-                    <a class="page-scroll" href="#contact">FAQ</a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="/account/#/login">S'inscrire</a>
-                </li>
-            </ul>
-        </div>
+        <div ng-include="'/public/pages/index/header.html'"></div>
         <!-- /.navbar-collapse -->
     </div>
     <!-- /.container-fluid -->
@@ -138,12 +105,11 @@
                 <div class="service-box">
                     <i class="fa fa-4x fa-thumbs-up animated text-primary"></i>
 
-                    <h3>Vous êtes prêts à créer votre projet</h3>
+                    <h3>Vous êtes prêts à investir</h3>
 
 
                     <!--<a href="#" class="btn btn-default btn-xl">Démarrer</a>-->
-                    <p class="text-muted">Vous décrivez votre projet d'investissement, pour investir dans l'économie
-                        réelle.</p>
+                    <p class="text-muted">Nous vous aidons à définir un projet d'investissement en fonction de votre profil</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
@@ -152,7 +118,7 @@
 
                     <h3>Sécurisé</h3>
 
-                    <p class="text-muted">En investissement sur des indices, votre placement est diversifié.</p>
+                    <p class="text-muted">En investissement sur des indices, votre placement est diversifié</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
@@ -161,7 +127,7 @@
 
                     <h3>Toujours à jour</h3>
 
-                    <p class="text-muted">Suivez en temps réel votre portefeuille. Contrôlez les mouvements.</p>
+                    <p class="text-muted">Vous pouvez suivre en temps réel les mouvements de votre portefeuille</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
@@ -170,7 +136,7 @@
 
                     <h3>Frais réduits</h3>
 
-                    <p class="text-muted">Des frais réduits comparé à un placement sous mandat classique.</p>
+                    <p class="text-muted">Les frais sont réduits comparé à un placement sous mandat classique.</p>
                 </div>
             </div>
         </div>

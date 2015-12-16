@@ -57,6 +57,9 @@ table .selected {
 	margin-bottom: 6px;
 }
 
+#comparaison {
+	margin-bottom: 8px;
+}
 
 #text-comparaison{
 	position: fixed;

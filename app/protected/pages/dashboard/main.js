@@ -186,11 +186,8 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                     return $ocLazyLoad.load({
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
-                            '/icheck/skins/square/green.css',
-                            '/icheck/skins/flat/green.css',
                             '/protected/pages/dashboard/portefeuille/comparer/style.css',
 
-                            '/icheck/icheck.min.js',
                             '/protected/assets/lib/StockChart.js',
                             '/protected/pages/dashboard/portefeuille/comparer/reference.json',
                             '/protected/pages/dashboard/portefeuille/comparer/main.js',
@@ -213,14 +210,11 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
-                            '/icheck/skins/flat/blue.css',
-                            '/icheck/skins/square/blue.css',
                             '/protected/pages/dashboard/investir/style.css',
                             '/bootstrap-tagsinput/src/bootstrap-tagsinput.css',
 
                             '/datatables/media/js/jquery.dataTables.min.js',
                             '/datatables/media/js/dataTables.bootstrap.min.js',
-                            '/icheck/icheck.min.js',
                             '/bootstrap-tagsinput/src/bootstrap-tagsinput.js',
 
                             '/protected/pages/dashboard/investir/main.js',

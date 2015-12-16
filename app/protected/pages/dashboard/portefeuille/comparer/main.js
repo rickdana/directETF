@@ -7,22 +7,18 @@ angular.module('MetronicApp')
         });
 
         // Checkbox
-        var checkbox = $element.find('input');
+        var checkbox = $element.find('#ref_fis_checkbox');
         var tex_fis =  $element.find('#text-fiscalite');
-        $(checkbox).iCheck({
-            checkboxClass: 'icheckbox_square-green'
-        });
 
-        $(checkbox).on('ifChecked', function() {
-            show_fiscalite ($scope.data.repeatSelect + ' fiscalité');
-            tex_fis.show();
+        $(checkbox).on('change', function() {
+            if (this.checked) {
+                show_fiscalite ($scope.data.repeatSelect + ' fiscalité');
+                tex_fis.show();
+            } else {
+                hide_fiscalite ($scope.data.repeatSelect + ' fiscalité');
+                tex_fis.hide();
+            }
         });
-
-        $(checkbox).on('ifUnchecked', function() {
-            hide_fiscalite ($scope.data.repeatSelect + ' fiscalité');
-            tex_fis.hide();
-        });
-
 
         $ClientFactory.portfolio.valo(function (err, valo, data_valo) {
             if (err) {

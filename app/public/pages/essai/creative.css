@@ -105,7 +105,7 @@ div.box {
 div.box label {
     display: block;
     text-align: left;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 500;
 }
 
@@ -275,7 +275,7 @@ header .header-content-inner {
 header .header-content .header-content-inner h1 {
     font-family: 'Poiret One', cursive;
     font-size: 32px !important;
-    margin-top: 25px;
+    margin-top: -10px;
     margin-bottom: 50px;
     text-transform: none;
     font-weight: 100;
@@ -288,7 +288,7 @@ header .header-content .header-content-inner hr {
 }
 
 h2, .h2 {
-    font-size: 20px;
+    font-size: 25px;
     margin-bottom: 80px;
     margin-top: -30px;
 }
