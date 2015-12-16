@@ -151,6 +151,7 @@ function LoadStockChart(series, container, clear, cb, options) {
             },
 
             navigator: {
+                enabled: false,
                 outlineWidth: 2,
                 height: 35,
                 margin: 25,
@@ -158,7 +159,7 @@ function LoadStockChart(series, container, clear, cb, options) {
             },
 
             scrollbar: {
-                enabled: true,
+                enabled: false,
             },
 
             series: []

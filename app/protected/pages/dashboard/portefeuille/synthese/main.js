@@ -26,6 +26,7 @@ angular.module('MetronicApp')
                     return console.error(err);
                 }
 
+
                 done(etfs_with_gains);
             });
         };
