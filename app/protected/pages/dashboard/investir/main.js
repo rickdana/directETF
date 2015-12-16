@@ -16,13 +16,6 @@ angular.module('MetronicApp')
                     return;
                 }
                 if (!etfs[etf.isin]) {
-                    if (typeof quantity == 'undefined') {
-                        throw new Error('Quantity of ' + etf.isin + ' must be set!');
-                    }
-                    if (typeof price == 'undefined') {
-                        throw new Error('Price of % ' + etf.isin + ' must be set!');
-                    }
-
                     if (!etfs[etf.isin]) {
                         etfs[etf.isin] = etf;
                         quantities[etf.isin] = etf.quantity;
@@ -139,7 +132,7 @@ angular.module('MetronicApp')
             //client.settings.portfolio.save()
         }
     })
-    .controller('WizardController', function($ClientFactory, $OrdersFactory, $scope, $element) {
+    .controller('WizardController', function($ClientFactory, $OrdersFactory, $rootScope, $scope, $element) {
         $scope.$on('$viewContentLoaded', function() {
             // initialize core components
             App.initAjax();
@@ -184,7 +177,7 @@ angular.module('MetronicApp')
                     case '3':
                         $OrdersFactory.lock();
                         setTimeout(function() {
-                            $scope.runSimulation();
+                            $rootScope.runSimulation();
                         }, 500);
                         break;
 
@@ -567,7 +560,7 @@ angular.module('MetronicApp')
         //}
 
         //Simulation future
-        function simulation_future(ref_etfs, time_frame, data_valo_today, n_volatilite) {
+        function simulation_future(ref_etfs, time_frame, data_valo_today, left_vol, right_vol) {
             var simulation_future_etfs = {};
             var simulation_future_etfs_moins_vola = {};
             var simulation_future_etfs_ajoute_vola = {};
@@ -580,7 +573,8 @@ angular.module('MetronicApp')
                 var taux_rentabilite = ref_etfs[i][3];
                 var value_etf = ref_etfs[i][1] * ref_etfs[i][2];
                 var month = firstDay;
-                var volatilite = ref_etfs[i][4] * n_volatilite * ref_etfs[i][1];
+                var left_volatilite = ref_etfs[i][4] * left_vol * ref_etfs[i][1];
+                var right_volatilite = ref_etfs[i][4] * right_vol * ref_etfs[i][1];
 
 
                 for (var i = 0; i < time_frame; i++) {
@@ -588,11 +582,11 @@ angular.module('MetronicApp')
                         month = next_month(month);
                         simulation_future_etfs[month] = value_etf * (taux_rentabilite / 12 * j + 1);
                         if(typeof simulation_future_etfs_moins_vola[month] == 'undefined') {
-                            simulation_future_etfs_moins_vola[month] = simulation_future_etfs[month] - volatilite;
-                            simulation_future_etfs_ajoute_vola[month] = simulation_future_etfs[month] + volatilite;
+                            simulation_future_etfs_moins_vola[month] = simulation_future_etfs[month] + left_volatilite;
+                            simulation_future_etfs_ajoute_vola[month] = simulation_future_etfs[month] + right_volatilite;
                         } else {
-                            simulation_future_etfs_moins_vola[month] += simulation_future_etfs[month] - volatilite;
-                            simulation_future_etfs_ajoute_vola[month] += simulation_future_etfs[month] + volatilite;
+                            simulation_future_etfs_moins_vola[month] += simulation_future_etfs[month] + left_volatilite;
+                            simulation_future_etfs_ajoute_vola[month] += simulation_future_etfs[month] + right_volatilite;
                         }
                     }
                     value_etf *= (1 + taux_rentabilite);
@@ -601,7 +595,7 @@ angular.module('MetronicApp')
             for (var date in simulation_future_etfs) {
                 data_simu_future.push([new Date(date).getTime(), simulation_future_etfs_moins_vola[date], simulation_future_etfs_ajoute_vola[date]]);
             }
-            console.log(JSON.stringify(data_simu_future))
+
             data_simu_future.sort(function (a, b) {
                 return a[0] - b[0];
             });
@@ -617,17 +611,19 @@ angular.module('MetronicApp')
             var time_frame = $scope.timeframe;
             var data_valo_today = data_valo[data_valo.length - 1];
 
-            var data_invest_future_1 = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, 1);
-            var data_invest_future_2 = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, 2);
-            var data_valo_future_1 = simulation_future(ref_etfs, time_frame, data_valo_today, 1);
-            var data_valo_future_2 = simulation_future(ref_etfs, time_frame, data_valo_today, 2);
+            var data_invest_future_attendu = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, -1, 1);
+            var data_invest_future_favorable = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, 1, 2);
+            var data_invest_future_defavorable = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, -2, -1);
+            var data_valo_future_attendu = simulation_future(ref_etfs, time_frame, data_valo_today, -1, 1);
+            var data_valo_future_favorable = simulation_future(ref_etfs, time_frame, data_valo_today, 1, 2);
+            var data_valo_future_defavorable = simulation_future(ref_etfs, time_frame, data_valo_today, -2, -1);
 
 
             //simulation-graph of the future
             var series = [{
                 name: 'Portefeuille - 68%',
                 type: 'arearange',
-                data: data_valo_future_1,
+                data: data_valo_future_attendu,
                 color: 'rgb(243, 156, 18)',
                 threshold: null,
                 zIndex: 10,
@@ -635,23 +631,30 @@ angular.module('MetronicApp')
             }, {
                 name: 'Prévision - 68%',
                 type: 'arearange',
-                data: data_invest_future_1,
-                color: 'rgb(63, 159, 95)',
+                data: data_invest_future_attendu,
+                color: 'rgb(43, 161, 76)',
                 zIndex: 12,
                 threshold: null
             },{
                 name: 'Portefeuille - 27%',
                 type: 'arearange',
-                data: data_valo_future_2,
+                data: data_valo_future_favorable,
                 color: 'rgba(243, 156, 18, 0.5)',
                 threshold: null,
                 zIndex: 9,
                 visible: false
             }, {
-                name: 'Prévision - 27%',
+                name: 'Prévision - favorable 13%',
                 type: 'arearange',
-                data: data_invest_future_2,
-                color: 'rgba(63, 159, 95, .5)',
+                data: data_invest_future_favorable,
+                color: 'rgb(130, 208, 151)',
+                zIndex: 11,
+                threshold: null
+            }, {
+                name: 'Prévision - defavorable 13%',
+                type: 'arearange',
+                data: data_invest_future_defavorable,
+                color: 'rgb(140, 140, 140)',
                 zIndex: 11,
                 threshold: null
             }];
@@ -747,7 +750,7 @@ angular.module('MetronicApp')
                             for (var i = 0; i < orders.length; i++) {
                                 invest_etfs.push([orders[i].isin, orders[i].quantity, orders[i].price, orders[i].profitability, orders[i].volatility]);
                             }
-                            console.log(JSON.stringify(invest_etfs));
+
                             simulation_past(invest_etfs, valo, data_valo, simulation_cb);
                             draw_simulation_future(data_valo, ref_etfs, invest_etfs);
                             _ref_etfs = ref_etfs;
@@ -796,6 +799,21 @@ angular.module('MetronicApp')
 
             });
         });
+
+        [
+            {"profitability":0.015,"sectors":[{"Finance":100}],"name":"Lyxor MSCI World UCITS ETF","description":"","countries":[{"US":100}],"volatility":1.46,"isin":"FR0010315770","countriesStr":"US","sectorsStr":"Finance","price":14.06,"$$hashKey":"object:107","quantity":1,"enabled":true},
+            {"profitability":0.01,"sectors":[{"Industrie":100}],"name":"Lyxor MSCI USA","description":"","countries":[{"US":100}],"volatility":37.64,"isin":"QS0011029939","countriesStr":"US","sectorsStr":"Industrie","price":191.92,"$$hashKey":"object:219","quantity":1,"enabled":true},
+            {"profitability":0.003,"sectors":[{"Technologies de l'information":100}],"name":"Lyxor Smart Cash - UCITS ETF C-EUR","description":"","countries":[{"FR":100}],"volatility":0.29,"isin":"LU1190417599","countriesStr":"FR","sectorsStr":"Technologies de l'information","price":125,"$$hashKey":"object:225","quantity":1,"enabled":true},
+            {"profitability":0.01,"sectors":[{"Technologies de l'information":100}],"name":"Lyxor MSCI USA UCITS ETF","description":"","countries":[{"US":100}],"volatility":0.2,"isin":"FR0010296061","countriesStr":"US","sectorsStr":"Technologies de l'information","price":334.73,"$$hashKey":"object:237","quantity":1,"enabled":true},
+            {"profitability":0.002,"sectors":[{"Finance":100}],"name":"Lyxor EURO STOXX 50 CHF Daily Hedged UCITS ETF","description":"","countries":[{"FR":100}],"volatility":0.3,"isin":"FR0012399731","countriesStr":"FR","sectorsStr":"Finance","price":60.59,"$$hashKey":"object:251","quantity":1,"enabled":true}
+        ].forEach(function(etf) {
+                $OrdersFactory.set(etf);
+            });
+
+        setTimeout(function() {
+            $scope.wizard.goto(3);
+        }, 500)
+
     })
     .controller('InvestirValidationController', function($OrdersFactory, $scope) {
         $scope.$OrdersFactory = $OrdersFactory;

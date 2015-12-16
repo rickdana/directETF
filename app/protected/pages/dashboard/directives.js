@@ -70,12 +70,16 @@ angular.module("MetronicApp").directive('ngSpinnerBar', ['$rootScope',
 
             $scope.$watch(function () {
                 return $scope.periodeSelect;
-            }, function () {
+            }, function (value) {
                 $scope.updateTimeRange();
             })
 
             $scope.updateTimeRange = function() {
                 var chart = container.highcharts();
+
+                if (!chart) {
+                    return;
+                }
 
                 switch($scope.periodeSelect) {
                     case '6 mois':
