@@ -11,7 +11,7 @@
     <td class="etf-column name text-center" data-etf-attr-name="quantity">
         <input type="number" min="0" max="999" ng-model="etf.quantity"
                ng-change="$OrdersFactory.unlock();
-                          $OrdersFactory.set(etf.isin, etf.quantity);
+                          $OrdersFactory.set(etf, etf.quantity);
                           $OrdersFactory.lock()"
                ng-disabled="!etf.enabled"></td>
     <td class="etf-column price cash">
