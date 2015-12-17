@@ -71,20 +71,22 @@ angular.module('MetronicApp')
               , varTemplateBodyCacheName = 'templateBodyCache' + uid
               , varTemplateFootCacheName = 'templateFootCache' + uid;
 
-            $element.find('table thead').remove();
-            $attrs.headerTemplate = $attrs.headerTemplate || "/protected/component/EtfListComponent/template-head.html";
+            if ($attrs.headerTemplate && $attrs.headerTemplate.length) {
+                $element.find('table thead').remove();
+                $attrs.headerTemplate = $attrs.headerTemplate || "/protected/component/EtfListComponent/template-head.html";
 
-            $q.all([
-                $http.get($attrs.headerTemplate, { cache : $templateCache })
-            ]).then(function(resp) {
-                $rootScope[varTemplateHeadCacheName] = resp;
-            });
+                $q.all([
+                    $http.get($attrs.headerTemplate, { cache : $templateCache })
+                ]).then(function(resp) {
+                    $rootScope[varTemplateHeadCacheName] = resp;
+                });
 
-            $scope.$watch(varTemplateHeadCacheName, function(n, o) {
-                if(n) {
-                    tbody.before($compile($templateCache.get($attrs.headerTemplate)[1])($scope));
-                }
-            });
+                $scope.$watch(varTemplateHeadCacheName, function(n, o) {
+                    if(n) {
+                        tbody.before($compile($templateCache.get($attrs.headerTemplate)[1])($scope));
+                    }
+                });
+            }
 
             // Table Body Row
             $attrs.rowTemplate = $attrs.rowTemplate || "/protected/component/EtfListComponent/template-row.html";
@@ -105,7 +107,7 @@ angular.module('MetronicApp')
             });
 
             // Table Foot
-            if ($attrs.footerTemplate) {
+            if ($attrs.footerTemplate && $attrs.footerTemplate.length) {
                 $element.find('table tfoot').remove();
 
                 $q.all([

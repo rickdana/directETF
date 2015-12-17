@@ -1,6 +1,6 @@
 <tfoot>
 <tr>
     <td class="etf-column total">Total des lignes :</td>
-    <td class="etf-column price cash"><span class="value">{{cash | number: 2}}</span>&nbsp;&euro;</td>
+    <td class="etf-column price cash">{{$OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
 </tr>
 </tfoot>

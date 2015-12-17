@@ -1,67 +1,41 @@
 angular.module('MetronicApp')
-    .factory('$OrdersFactory', function () {
+    .factory('$OrdersFactory', function() {
         var etfs = {};
+        var quantities = {};
         var locked = false;
 
         return {
-            lock: function () {
+            lock: function() {
                 locked = true;
             },
-            unlock: function () {
+            unlock: function() {
                 locked = false;
             },
-            set: function (isin, quantity, price) {
+            set: function(etf, quantity, price) {
                 if (locked) {
                     return;
                 }
-                if (!etfs[isin]) {
-                    if (typeof quantity == 'undefined') {
-                        throw new Error('Quantity of ' + isin + ' must be set!');
+                if (!etfs[etf.isin]) {
+                    if (!etfs[etf.isin]) {
+                        etfs[etf.isin] = etf;
+                        quantities[etf.isin] = etf.quantity;
                     }
-                    if (typeof price == 'undefined') {
-                        throw new Error('Price of % ' + isin + ' must be set!');
-                    }
-
-                    if (!etfs[isin]) {
-                        etfs[isin] = {
-                            isin: isin,
-                            quantity: quantity,
-                            limit: quantity,
-                            price: price,
-                            priceLimit: price,
-                            cash: quantity * price,
-                        };
-                    }
-                    return console.log("-> %s(quantity: %s, price: %s) was added in the selection list", isin, quantity, price);
+                    return console.log("-> %s(quantity: %s, price: %s) was added in the selection list", etf.isin, quantity, price);
                 }
 
                 if (typeof quantity != 'undefined') {
-                    quantity = parseInt(quantity);
-
-                    if (quantity > etfs[isin].limit) {
-                        throw new Error('Quantity of ' + isin + ' must be less than ' + etfs[isin].limit + '! #' + quantity);
-                    }
-
-                    etfs[isin].quantity = quantity;
+                    quantities[etf.isin] = parseInt(quantity);
                 } else {
-                    quantity = etfs[isin].limit;
+                    quantity = etfs[etf.isin].quantity;
                 }
 
                 if (price) {
-                    price = parseFloat(price);
-
-                    if (price > etfs[isin].priceLimit) {
-                        throw new Error('Price of ' + isin + ' must be less than ' + etfs[isin].priceLimit + '! %' + price);
-                    }
-
-                    etfs[isin].price = price;
+                    etfs[etf.isin].price = parseFloat(price);
                 }
 
-                etfs[isin].cash = etfs[isin].quantity * etfs[isin].price;
-
-                console.log("-- Set %s(quantity: %s, price: %s)", isin, quantity, price || etfs[isin].priceLimit);
+                console.log("-- Set %s(quantity: %s, price: %s)", etf.isin, quantity, price || etfs[etf.isin].price);
             },
-            get: function (isin) {
+            get: function(isin) {
                 if (isin) {
                     if (etfs[isin]) {
                         return etfs[isin];
@@ -72,35 +46,31 @@ angular.module('MetronicApp')
                 var array = [];
 
                 for (var isin in etfs) {
-                    if (etfs[isin] && etfs[isin].quantity) {
-                        array.push({
-                            isin: etfs[isin].isin,
-                            quantity: etfs[isin].quantity,
-                            price: etfs[isin].price,
-                            cash: etfs[isin].cash,
-                        });
+                    if (etfs[isin] && quantities[isin]) {
+                        etfs[isin].quantity = quantities[isin];
+                        array.push(etfs[isin]);
                     }
                 }
 
                 return array;
             },
-            length: function () {
+            length: function() {
                 var i = 0;
 
                 for (var isin in etfs) {
-                    if (etfs[isin] && etfs[isin].quantity) {
+                    if (etfs[isin] && quantities[isin]) {
                         i++;
                     }
                 }
 
                 return i;
             },
-            cash: function () {
+            cash: function() {
                 var cash = 0;
 
                 for (var isin in etfs) {
                     if (etfs[isin]) {
-                        cash += etfs[isin].cash;
+                        cash += quantities[isin] * etfs[isin].price;
                     }
                 }
 
@@ -108,9 +78,9 @@ angular.module('MetronicApp')
             }
         };
     })
-    .controller('WizardPortfolioInitController', function ($PortfolioFactory, $rootScope, $scope, ngDialog) {
+    .controller('WizardPortfolioInitController', function($PortfolioFactory, $scope, ngDialog) {
         if (!!$.cookie('client_portfolio_initialized')) {
-            $rootScope.showPortfolioSettings = true;
+            $scope.showPortfolioSettings = true;
 
             ngDialog.open({
                 template: 'template-client-portfolio-settings',
@@ -118,9 +88,9 @@ angular.module('MetronicApp')
                 closeByDocument: false
             });
 
-            $rootScope['active0'] = 'active';
+            $scope['active0'] = 'active';
 
-            $rootScope.wizard = {
+            $scope.wizard = {
                 step: 0,
                 nextButtonLabel: ["Générer un portefeuille", "Ajuster ce portefeuille", "Chargement en cours"],
                 goto: function (step) {
@@ -129,7 +99,7 @@ angular.module('MetronicApp')
 
                     switch (step) {
                         case 1:
-                            $PortfolioFactory.model($rootScope.client.portfolio.infos.goal, $rootScope.client.portfolio.infos.amountMonthly, $rootScope.client.portfolio.infos.risk, function (err, portfolio) {
+                            $PortfolioFactory.model($rootScope.client.portfolio.infos.goal, $rootScope.client.portfolio.infos.amountMonthly, $rootScope.client.portfolio.infos.risk, function(err, portfolio) {
                                 var etfs = [];
 
                                 for (var i in portfolio) {
@@ -162,23 +132,19 @@ angular.module('MetronicApp')
             //client.settings.portfolio.save()
         }
     })
-    .controller('WizardController', function ($ClientFactory, $OrdersFactory, $rootScope, $scope) {
-        $scope.$on('$viewContentLoaded', function () {
+    .controller('WizardController', function($ClientFactory, $OrdersFactory, $rootScope, $scope, $element) {
+        $scope.$on('$viewContentLoaded', function() {
             // initialize core components
             App.initAjax();
         });
 
-        var current_step = 1;
         var wizard_state = $("#wizard-state");
 
-        $rootScope.wizard_button = function (step) {
-            return wizard_state.find("a[data-step=" + step + "]");
-        };
-
-        wizard_state.find("a").each(function () {
-            $(this).click(function () {
-                var active = wizard_state.find('[data-state=current]'),
-                    current = $(this);
+        $scope.wizard = {
+            step: 1,
+            goto: function(step) {
+                var active = $element.find('[data-step=' + this.step + ']'),
+                    current = $element.find('[data-step=' + step + ']');
 
                 if (active.attr('data-step') == current.attr('data-step')) {
                     return false;
@@ -192,381 +158,234 @@ angular.module('MetronicApp')
                     return false;
                 }
 
-                console.log("Go to step " + current.attr('data-step'), 'log');
+                this.step = step;
+
+                console.log("Go to step " + current.attr('data-step'));
 
                 switch (current.attr('data-step')) {
                     case '1':
                         $OrdersFactory.unlock();
+                        $element.find('[data-step=2] [ng-etf-list]').attr('data-filter', '');
                         break;
 
                     case '2':
                         $OrdersFactory.lock();
-                        $scope.$apply(function () {
-                            $('[data-wizard-panel-step=2] [ng-etf-list]')
-                                .attr('data-filter', JSON.stringify($OrdersFactory.get()));
-                        });
+                        $element.find('[data-step=2] [ng-etf-list]')
+                            .attr('data-filter', JSON.stringify($OrdersFactory.get()));
                         break;
 
                     case '3':
                         $OrdersFactory.lock();
-                        setTimeout(function () {
+                        setTimeout(function() {
                             $rootScope.runSimulation();
                         }, 500);
                         break;
 
                     case '4':
                         $OrdersFactory.lock();
-                        setTimeout(function () {
-                            $rootScope.$apply(function () {
-                                $('[data-wizard-panel-step=4] .update-with-etfs-selection')
+                        setTimeout(function() {
+                            $scope.$apply(function() {
+                                $element.find('[data-step=4] .update-with-etfs-selection')
                                     .attr('data-filter', JSON.stringify($OrdersFactory.get()));
                             });
                         }, 500);
                         break;
                 }
 
-                wizard_state.find("a").each(function () {
-                    if ($(this).attr('data-step') <= current.attr('data-step')) {
-                        $(this).attr('data-state', 'valid');
-                    } else {
-                        $(this).attr('data-state', 'unvalid');
-                    }
-                });
+                document.body.scrollTop = 0;
+            }
+        };
 
-                current_step = current.attr('data-step');
-                $(this).attr('data-state', 'current');
+        $scope.client = {
+            portfolio: {
+                infos: {}
+            }
+        };
 
-                $(window).scrollTop(0);
-
-                $('.wizard-panel').hide();
-                $('[data-wizard-panel-step=' + current.attr('data-step') + ']').show();
-            });
-
-            var step = parseInt($(this).attr('data-step'));
-
-            $('[data-wizard-panel-step=' + step + '] .button').click(function () {
-                $rootScope.wizard_button(step + 1).click();
-            });
-        });
-
-        $('[data-wizard-panel-step=1]').show('slow');
-
-        $ClientFactory.portfolio.infos(function (err, infos) {
+        $ClientFactory.portfolio.infos(function(err, infos) {
             if (err) {
                 throw err;
             }
 
-            $rootScope.client = {
-                portfolio: infos
-            };
-
-            var catch_max = $('#catch-max');
-
-            //catch_max.ionRangeSlider({
-            //    min: catch_max.attr('data-min'),
-            //    max: infos.cash,
-            //    from: infos.cash,
-            //    postfix: catch_max.attr('data-postfix'),
-            //    //            grid: true,
-            //    hide_min_max: true,
-            //    grid_num: 10
-            //});
+            $scope.client.portfolio.infos = infos;
         });
 
-        // set sidebar closed and body solid layout mode
-        $rootScope.settings.layout.pageContentWhite = true;
-        $rootScope.settings.layout.pageBodySolid = false;
-        $rootScope.settings.layout.pageSidebarClosed = false;
     })
-    .controller('InvestirController', function ($OrdersFactory, $rootScope, $scope, $element) {
-        // TODO Configuration à partir du portefeuille: affichier le cash disponible et définir le montant à investir
-        // TODO Permettre l'ajustement (quantité et prix) des ordres d'investissement
+    .controller('InvestirController', function($OrdersFactory, $rootScope, $scope) {
+        $scope.$OrdersFactory = $OrdersFactory;
 
-        $scope.cbEtfsListLoaded = function (etfs) {
-            for (var i = 0; i < etfs.length; i++) {
-                // Checkbox init
-                $element.find('[data-isin=' + etfs[i].isin + '] [type=checkbox]').each((function (etf) {
-                    return function () {
-                        $(this).iCheck({checkboxClass: 'icheckbox_square-blue'});
-
-                        $(this).on('ifChecked', function () {
-                            $OrdersFactory.set(etf.isin, 3, etf.price);
-                        });
-
-                        $(this).on('ifUnchecked', function () {
-                            $OrdersFactory.set(etf.isin, 0);
-                        });
-                    };
-                })(etfs[i]));
-
-                $scope.$apply(function () {
-                    $scope.$watch(function () {
-                        return $OrdersFactory.length();
-                    }, function (length) {
-                        $element.find('[type=checkbox]').each(function (event) {
-                            $(this).iCheck('uncheck');
-                        });
-
-                        var selection = $OrdersFactory.get();
-
-                        for (var i = 0; i < selection.length; i++) {
-                            if (selection[i].quantity) {
-                                $element.find('[data-isin=' + selection[i].isin + '] [type=checkbox]').iCheck('check');
-                            }
-                        }
-                    });
-                });
-            }
-
-//            return;
-
-            var wizard_panel_1 = $('[data-wizard-panel-step=1]'),
-                wizard_panel_1_table = wizard_panel_1.find('table').first(),
-                wizard_panel_1_list = wizard_panel_1_table.find("tbody");
-
-            var wizard_panel_2 = $('[data-wizard-panel-step=2]'),
-                wizard_panel_2_table = wizard_panel_2.find('table').first(),
-                wizard_panel_2_list = wizard_panel_2_table.find('tbody'),
-                wizard_panel_2_action = wizard_panel_2.find('.etf-action-dropdown').first().hide();
-
-            var wizard_panel_3 = $('[data-wizard-panel-step=3]'),
-                wizard_panel_3_table = wizard_panel_3.find('table#summary-table'),
-                wizard_panel_3_list = wizard_panel_3_table.find("tbody");
-
-            //      var oTable = wizard_panel_1_table.dataTable({
-            //          bFilter: !false,
-            //          bInfo: wizard_panel_1_list.find('tr').length > 20,
-            //          paging: wizard_panel_1_list.find('tr').length > 20,
-            //          lengthChange: false,
-            //          searching: !false,
-            //          ordering: true,
-            //          info: true,
-            //          autoWidth: false,
-            //          columnDefs: [
-            //              { searchable: false, targets: 5 }
-            //          ],
-            //          order: [0, "asc"]
-            //      });
-
-            $(".dataTables_filter").hide();
-
-            //      $.AdminLTE.tree('#filters-container');
-
-            var filters = {};
-
-            clear_search = function () {
-                oTable.fnResetAllFilters();
-                $('#filters-container a.filter').attr('data-selected', 'false');
-                console.log('clear')
-            };
-            start_search = function (q, c, callback) {
-                if (typeof c == 'undefined') {
-                    oTable.fnFilter(q.replace(/,/g, '|'), null, true, false, true, true);
-                } else {
-                    if (typeof filters[c] == 'undefined') {
-                        filters[c] = q.trim();
-                    } else if (filters[c].length > 0) {
-                        if (filters[c].search(q) >= 0) {
-                            return;
-                        }
-                        filters[c] = filters[c] + '|' + q.trim();
-                    }
-
-                    oTable.fnFilter(filters[c], c, true, false, true, true);
-
-                    console.log('Queries:')
-                    for (var i in filters) {
-                        console.log('\t[%s]: %s', i, filters[i]);
-                    }
+        $scope.filters = {
+            current: {
+                category: 'filter-regions',
+                value: '',
+                question: 'q1',
+                anwser: '',
+            },
+            history: {
+                entries: [],
+                remove: function(array, from, to) {
+                    var rest = array.slice((to || from) + 1 || array.length);
+                    array.length = from < 0 ? array.length + from : from;
+                    array.push.apply(array, rest)
+                    return array.push.apply(array, rest);
                 }
-            };
-
-            var filters_container = $('#filters-container')
-                , filter_searchbar = filters_container.find('#filters-searchbar')
-                , search_input = $('#search-etf')
-                , sidebar_menu = filters_container.find('.sidebar-menu');
-
-            search_input.tagsinput();
-
-            var sidebar_menu_position = function () {
-                console.log(filter_searchbar.outerHeight())
-                sidebar_menu.css('margin-top', filter_searchbar.outerHeight() + 'px');
-            };
-
-            filters_container.css({
-                height: 'initial',
-                opacity: '1'
-            });
-
-            var search_input_keyup_click_handle = function (o, value, code) {
-                    //$('#out')[0].textContent = `${e.type}: ${this.value.replace(/,/g,', ')}`;
-                    //console.log(this.value.replace(/,/g,', '));
-
-                    var prev = tag = o.getAttribute('data-previous-tags')
-                        , column = o.getAttribute('data-type');
-
-                    if (typeof prev == 'string') {
-                        tag = value.substr(prev.length);
-                        console.log(prev)
-                        console.log(tag)
-                    } else {
-                        tag = value;
-                    }
-
-                    if (typeof column == 'string') {
-                        start_search(tag, column == 'sector' ? 1 : 2);
-
-                        o.setAttribute('data-previous-tags', value);
-                    } else {
-                        start_search(tag);
-                    }
+            },
+            entries: [
+                {
+                    id: 'filter-sectors',
+                    name: 'Je souhaite investir dans un secteur en particulier',
+                    items: [
+                        {id: 'sector-finance', name: 'Finance'},
+                        {id: 'sector-industry', name: 'Industrie'},
+                        {id: 'sector-health', name: 'Santé'},
+                        {id: 'sector-energy', name: 'Energie'},
+                        {id: 'sector-collectivity', name: 'Services aux collectivité'},
+                        {id: 'sector-technology', name: 'Technologies de l\'information'},
+                        {id: 'sector-consomer', name: 'Biens de consomation cyclique'},
+                    ]
                 },
-                search_input_change_handle = function (e) {
-                    sidebar_menu_position();
+                {
+                    id: 'filter-regions',
+                    name: 'Je souhaite investir dans une région',
+                    questions: [
+                        {
+                            id: "q1",
+                            string: "Etes-vous plutôt intéressés par les marchés développés ou émergents ?",
+                            anwsers: [
+                                {
+                                    id: "q1a1",
+                                    string: "Marchés développés",
+                                    resume: "Je suis intéressé par les marchés développés",
+                                    goto: "q2.2"
+                                },
+                                {
+                                    id: "q1a2",
+                                    string: "Marchés émergents",
+                                    resume: "Je suis intéressé par les marchés émergents",
+                                    goto: "q2.1"
+                                },
+                            ]
+                        },
+                        {
+                            id: "q2.1",
+                            string: "Quel continent/sous-continent plus particulièrement ?",
+                            anwsers: [
+                                {
+                                    id: "q2a1",
+                                    string: "Afrique",
+                                    resume: "Investir en Afrique",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "q2a4",
+                                    string: "Asia Pacific",
+                                    resume: "Investir en Asie Pacifique",
+                                    goto: "q4"
+                                },
+                            ]
+                        },
+                        {
+                            id: "q2.2",
+                            string: "Quel continent/sous-continent plus particulièrement ?",
+                            anwsers: [
+                                {
+                                    id: "q2a2",
+                                    string: "Europe",
+                                    resume: "Investir en Europe",
+                                    goto: "q3"
+                                },
+                                {
+                                    id: "q2a3",
+                                    string: "Amérique",
+                                    resume: "Investir en Amérique",
+                                    goto: "end"
+                                },
+                            ]
+                        },
+                        {
+                            id: "q3",
+                            string: "Quel stratégie vous parle le plus, investir sur tende la région, un pays particulier ou un secteur d’activité ?",
+                            anwsers: [
+                                {
+                                    id: "q3a1",
+                                    string: "La région",
+                                    resume: "Investir sur tende la région",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "q3a2",
+                                    string: "Un pays",
+                                    resume: "Investir dans un pays en particulier",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "q3a3",
+                                    string: "Un secteur",
+                                    resume: "Investir dans un secteur en particulier",
+                                    goto: "end"
+                                },
+                            ]
+                        },
+                        {
+                            id: "q4",
+                            string: "Préférez-vous investir sur l'ensemble de la région, ou plutôt sur un pays particulier ?",
+                            anwsers: [
+                                {
+                                    id: "q4a1",
+                                    string: "Investir en Australie",
+                                    resume: "Investir en Australie",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "q4a2",
+                                    string: "Investir au Japon",
+                                    resume: "Investir au Japon",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "q4a3",
+                                    string: "Investir sur l'ensemble de la région",
+                                    resume: "Investir sur l'ensemble de la région",
+                                    goto: "end"
+                                },
+                            ]
+                        },
+                        {
+                            id: "end",
+                            string: "Voici une liste d'ETFs correspondants à vos réponses. Faites votre sélection et passez à l'étape suivante.",
+                            button: "Etape suivante",
+                            exec: function(history) {
+                                var query = [];
 
-                    var keys = search_input.tagsinput('items');
+                                for(var i in history) {
+                                    query.push(history[i][1].id);
+                                }
 
-                    clear_search();
-                    $('#filters-container a.filter').attr('data-selected', 'false');
+                                console.log(query.join('-'))
 
-                    if (keys.length > 0) {
-                        for (var i in keys) {
-                            var filter = $('.filter[data-value*="' + keys[i] + '"]').attr('data-selected', 'true');
-
-                            start_search(keys[i],
-                                filter.attr('data-type') == 'sector'
-                                    ? 1
-                                    : filter.attr('data-type') == 'region'
-                                    ? 2
-                                    : 0);
+                                $scope.wizard.goto(2);
+                            }
                         }
-                    }
+                    ]
+                },
+                {
+                    id: 'filter-news',
+                    name: 'Investir à partir de l\'actualité',
 
-                    sidebar_menu_position();
-                }
-
-            var search_key = ''
-                , search_keys = '';
-
-            function filterbar_add_key(key, code) {
-                var pos = search_keys.search(key);
-
-                key = key.toLowerCase();
-
-                if (pos == -1) {
-                    search_input.tagsinput('add', code);
-                } else {
-                    search_input.tagsinput('remove', code);
-                }
-            }
-
-            filter_searchbar.on('click', search_input_change_handle);
-
-            filter_searchbar.find('input').each(function () {
-                $(this).on('keyup', function (e) {
-                    if (e.keyCode == 13 || e.keyCode == 188) {
-                        filterbar_add_key(search_key, search_key);
-                        search_input_keyup_click_handle(this, search_key, search_key, search_key);
-                    } else {
-                        sidebar_menu_position();
-                    }
-
-                    search_key = $(this).val().trim();
-                })
-                    .on('change', function (e) {
-                        console.log('search_input_change_handle:change')
-                        search_input_change_handle();
-                        search_input_keyup_click_handle(this, search_key, search_key, search_key);
-                    });
-            });
-
-            $('#filters-container a.filter').each(function () {
-                $(this).on('click', function () {
-                    var value = $(this).attr('data-value').toLowerCase()
-                        , code = $(this).text().trim();
-
-                    filterbar_add_key(value, code);
-                    search_input_keyup_click_handle($(this).get(0), value, code);
-                });
-            });
+                },
+                {
+                    id: 'filter-maps-list',
+                    name: 'Je souhaite passer au mode expert',
+                },
+            ]
         };
     })
-    .controller('InvestirMontantAjustementController', function ($OrdersFactory, $ClientFactory, $rootScope, $scope, $element) {
-        $scope.cbEtfsListBeforeRendering = function (etfs, done) {
-            for (var i = 0; i < etfs.length; i++) {
-                etfs[i].cash = etfs[i].quantity * etfs[i].price;
-            }
-
-            done(etfs);
-        };
-
-        /**
-         TODO Bug: step1: sélectioner les 3 premiers etfs. step2: désélectionner les 3 etfs. step1: resélectionner les
-         3 premiers etfs. step2-bug: les 3 etfs sélectionnés sont chargés dans le tableau, mais la valeur de leur
-         n'est pas reinitialisée
-         */
-        $scope.cbEtfsListLoaded = function (etfs) {
-            $scope.$apply(function () {
-                $scope.$watch(function () {
-                    return $OrdersFactory.cash();
-                }, function (cash) {
-                    $rootScope.cash = cash;
-
-                    if (cash == 0) {
-                        $rootScope.wizard_button(1).click();
-                    }
-                });
-            });
-
-            // Checkbox init
-            $element.find('input[type=checkbox]').each(function () {
-                var row = $(this).parent().parent()
-                    , isin = row.attr('data-isin')
-                    , quantity = parseInt(row.find('.quantity').first().text());
-
-                $(this).iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    increaseArea: '20%'
-                });
-
-                $(this).on('ifChecked', function () {
-                    row.css('text-decoration', 'none');
-
-                    $scope.$apply(function () {
-                        $OrdersFactory.unlock();
-                        $OrdersFactory.set(isin, quantity);
-                        $OrdersFactory.lock();
-
-                        for (var i = 0; i < $scope.etfs.length; i++) {
-                            if ($scope.etfs[i].isin == isin) {
-                                $scope.etfs[i].quantity = quantity;
-                                break;
-                            }
-                        }
-                    });
-                });
-
-                $(this).on('ifUnchecked', function () {
-                    row.css('text-decoration', 'line-through');
-
-                    $scope.$apply(function () {
-                        $OrdersFactory.unlock();
-                        $OrdersFactory.set(isin, 0);
-                        $OrdersFactory.lock();
-
-                        for (var i = 0; i < $scope.etfs.length; i++) {
-                            if ($scope.etfs[i].isin == isin) {
-                                $scope.etfs[i].quantity = 0;
-                                break;
-                            }
-                        }
-                    });
-                });
-            });
-        };
+    .controller('InvestirMontantAjustementController', function($OrdersFactory, $ClientFactory, $rootScope, $scope) {
+        $scope.$OrdersFactory = $OrdersFactory;
     })
     .controller('InvestirRevoirController', function ($ClientFactory, $OrdersFactory, $EtfsFactory, $rootScope, $scope, $element) {
-        var _invest_simu_past = null;
+        var _invest_etfs = null;
+        var _ref_etfs = null;
         var _data_valo = null;
 
         $scope.timeframe = 3;
@@ -578,7 +397,7 @@ angular.module('MetronicApp')
                 showSelectionBar: true,
                 hideLimitLabels: true,
                 onEnd: function () {
-                    draw_simulation_future(_data_valo, _invest_simu_past);
+                    draw_simulation_future(_data_valo, _ref_etfs, _invest_etfs);
                 },
                 translate: function() {
                     return '';
@@ -620,6 +439,7 @@ angular.module('MetronicApp')
             var montant = $OrdersFactory.cash();
 
             for (var i in ref_etfs) {
+
                 var proportion = ref_etfs[i][3] / montant;
                 proportion_etfs.push([ref_etfs[i][0], proportion])
             }
@@ -683,61 +503,165 @@ angular.module('MetronicApp')
             $EtfsFactory.prices(ref_etfs[index++][0], prices_callback);
         }
 
+        ////Simulation future
+        //function simulation_future(time_frame, data_valo_today, data) {
+        //    var simulation_future_etfs = [];
+        //    var value_invest_today = data_valo_today[1];
+        //    var firstDay = formatDate(data_valo_today[0]);
+        //
+        //    var taux = rate_change_year(data);
+        //    var montant = value_invest_today;
+        //    var month = firstDay;
+        //    simulation_future_etfs.push([new Date(firstDay).getTime(), montant]);
+        //    for (var i = 0; i < time_frame; i++) {
+        //        for (var j = 1; j <= 12; j++) {
+        //            month = next_month(month);
+        //            simulation_future_etfs.push([new Date(month).getTime(), montant * (taux / 12 * j + 1)]);
+        //        }
+        //        montant *= (1 + taux);
+        //    }
+        //
+        //    return simulation_future_etfs;
+        //}
+
+        //function draw_simulation_future(data_valo, invest_simu_past) {
+        //    //simulation-graph of the future
+        //    var range_valo_future = [];
+        //    var range_invest_future = [];
+        //    var time_frame = $scope.timeframe;
+        //    var montant_today = data_valo[data_valo.length - 1];
+        //
+        //    var data_invest_future = simulation_future(time_frame, montant_today, invest_simu_past);
+        //    var data_valo_future = simulation_future(time_frame, montant_today, data_valo);
+        //
+        //    var data_invest_future_varia = [];
+        //    for (var i = 0; i < data_invest_future.length; i++) {
+        //        data_invest_future_varia.push([data_invest_future[i][0], data_invest_future[i][1] * 0.8, data_invest_future[i][1]]);
+        //    }
+        //
+        //    //simulation-graph of the future
+        //    var series = [{
+        //        name: 'Portefeuille',
+        //        type: 'spline',
+        //        data: data_valo_future,
+        //        color: 'rgb(243, 156, 18)',
+        //        threshold: null,
+        //        zIndex: 10,
+        //        visible: false
+        //    }, {
+        //        name: 'Nouveaux investissements',
+        //        type: 'arearange',
+        //        data: data_invest_future_varia,
+        //        color: '#00802b',
+        //        threshold: null
+        //    }];
+        //
+        //    LoadStockChart(series, $('#simulation-future'), true);
+        //}
+
         //Simulation future
-        function simulation_future(time_frame, data_valo_today, data) {
-            var simulation_future_etfs = [];
-            var value_invest_today = data_valo_today[1];
+        function simulation_future(ref_etfs, time_frame, data_valo_today, left_vol, right_vol) {
+            var simulation_future_etfs = {};
+            var simulation_future_etfs_moins_vola = {};
+            var simulation_future_etfs_ajoute_vola = {};
+            var data_simu_future = [];
+
             var firstDay = formatDate(data_valo_today[0]);
 
-            var taux = rate_change_year(data);
-            var montant = value_invest_today;
-            var month = firstDay;
-            simulation_future_etfs.push([new Date(firstDay).getTime(), montant]);
-            for (var i = 0; i < time_frame; i++) {
-                for (var j = 1; j <= 12; j++) {
-                    month = next_month(month);
-                    simulation_future_etfs.push([new Date(month).getTime(), montant * (taux / 12 * j + 1)]);
+            //ref-etfs = [isin, qdt, price, rentabilite, volatilire]
+            for (var i in ref_etfs) {
+                var taux_rentabilite = ref_etfs[i][3];
+                var value_etf = ref_etfs[i][1] * ref_etfs[i][2];
+                var month = firstDay;
+                var left_volatilite = ref_etfs[i][4] * left_vol * ref_etfs[i][1];
+                var right_volatilite = ref_etfs[i][4] * right_vol * ref_etfs[i][1];
+
+
+                for (var i = 0; i < time_frame; i++) {
+                    for (var j = 1; j <= 12; j++) {
+                        month = next_month(month);
+                        simulation_future_etfs[month] = value_etf * (taux_rentabilite / 12 * j + 1);
+                        if(typeof simulation_future_etfs_moins_vola[month] == 'undefined') {
+                            simulation_future_etfs_moins_vola[month] = simulation_future_etfs[month] + left_volatilite;
+                            simulation_future_etfs_ajoute_vola[month] = simulation_future_etfs[month] + right_volatilite;
+                        } else {
+                            simulation_future_etfs_moins_vola[month] += simulation_future_etfs[month] + left_volatilite;
+                            simulation_future_etfs_ajoute_vola[month] += simulation_future_etfs[month] + right_volatilite;
+                        }
+                    }
+                    value_etf *= (1 + taux_rentabilite);
                 }
-                montant *= (1 + taux);
+            }
+            for (var date in simulation_future_etfs) {
+                data_simu_future.push([new Date(date).getTime(), simulation_future_etfs_moins_vola[date], simulation_future_etfs_ajoute_vola[date]]);
             }
 
-            return simulation_future_etfs;
+            data_simu_future.sort(function (a, b) {
+                return a[0] - b[0];
+            });
+
+            return data_simu_future;
+
         }
 
-        function draw_simulation_future(data_valo, invest_simu_past) {
+
+
+        function draw_simulation_future(data_valo, ref_etfs, ref_etfs_new_invests) {
             //simulation-graph of the future
-            var range_valo_future = [];
-            var range_invest_future = [];
             var time_frame = $scope.timeframe;
-            var montant_today = data_valo[data_valo.length - 1];
+            var data_valo_today = data_valo[data_valo.length - 1];
 
-            var data_invest_future = simulation_future(time_frame, montant_today, invest_simu_past);
-            var data_valo_future = simulation_future(time_frame, montant_today, data_valo);
+            var data_invest_future_attendu = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, -1, 1);
+            var data_invest_future_favorable = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, 1, 2);
+            var data_invest_future_defavorable = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, -2, -1);
+            var data_valo_future_attendu = simulation_future(ref_etfs, time_frame, data_valo_today, -1, 1);
+            var data_valo_future_favorable = simulation_future(ref_etfs, time_frame, data_valo_today, 1, 2);
+            var data_valo_future_defavorable = simulation_future(ref_etfs, time_frame, data_valo_today, -2, -1);
 
-            var data_invest_future_varia = [];
-            for (var i = 0; i < data_invest_future.length; i++) {
-                data_invest_future_varia.push([data_invest_future[i][0], data_invest_future[i][1] * 0.8, data_invest_future[i][1]]);
-            }
 
             //simulation-graph of the future
             var series = [{
-                name: 'Portefeuille',
-                type: 'spline',
-                data: data_valo_future,
+                name: 'Portefeuille - 68%',
+                type: 'arearange',
+                data: data_valo_future_attendu,
                 color: 'rgb(243, 156, 18)',
                 threshold: null,
                 zIndex: 10,
                 visible: false
             }, {
-                name: 'Nouveaux investissements',
+                name: 'Prévision - 68%',
                 type: 'arearange',
-                data: data_invest_future_varia,
-                color: '#00802b',
+                data: data_invest_future_attendu,
+                color: 'rgb(43, 161, 76)',
+                zIndex: 12,
+                threshold: null
+            },{
+                name: 'Portefeuille - 27%',
+                type: 'arearange',
+                data: data_valo_future_favorable,
+                color: 'rgba(243, 156, 18, 0.5)',
+                threshold: null,
+                zIndex: 9,
+                visible: false
+            }, {
+                name: 'Prévision - favorable 13%',
+                type: 'arearange',
+                data: data_invest_future_favorable,
+                color: 'rgb(130, 208, 151)',
+                zIndex: 11,
+                threshold: null
+            }, {
+                name: 'Prévision - defavorable 13%',
+                type: 'arearange',
+                data: data_invest_future_defavorable,
+                color: 'rgb(140, 140, 140)',
+                zIndex: 11,
                 threshold: null
             }];
 
             LoadStockChart(series, $('#simulation-future'), true);
         }
+
 
         //taux de rentabilité
         function rate_change_year(data) {
@@ -767,9 +691,9 @@ angular.module('MetronicApp')
 
 
             if (month < 10) {
-                return new Date(year + '-0' + month + '-01').getTime();
+                return new Date(year + '-0' + month + '-01');
             } else {
-                return new Date(year + '-' + month + '-01').getTime();
+                return new Date(year + '-' + month + '-01');
             }
         }
 
@@ -808,19 +732,36 @@ angular.module('MetronicApp')
                 //Investements
                 var invest_etfs = [];
 
-                $rootScope.runSimulation = function () {
-                    invest_etfs = [];
-
-                    var orders = $OrdersFactory.get();
-
-                    if (orders.length) {
-                        for (var i = 0; i < orders.length; i++) {
-                            invest_etfs.push([orders[i].isin, orders[i].quantity, orders[i].price, orders[i].cash]);
-                        }
-
-                        simulation_past(invest_etfs, valo, data_valo, simulation_cb);
+                $ClientFactory.portfolio.etfs(function(err, etfs_with_gains) {
+                    if (err) {
+                        return console.error(err);
                     }
-                };
+
+                    $rootScope.runSimulation = function () {
+                        var ref_etfs = []
+                        var invest_etfs = [];
+                        for(var i in etfs_with_gains) {
+                            ref_etfs.push([etfs_with_gains[i].isin, etfs_with_gains[i].quantity, etfs_with_gains[i].price, etfs_with_gains[i].profitability, etfs_with_gains[i].volatility]);
+                            invest_etfs.push([etfs_with_gains[i].isin, etfs_with_gains[i].quantity, etfs_with_gains[i].price, etfs_with_gains[i].profitability, etfs_with_gains[i].volatility]);
+                        }
+                        var orders = $OrdersFactory.get();
+
+                        if (orders.length) {
+                            for (var i = 0; i < orders.length; i++) {
+                                invest_etfs.push([orders[i].isin, orders[i].quantity, orders[i].price, orders[i].profitability, orders[i].volatility]);
+                            }
+
+                            simulation_past(invest_etfs, valo, data_valo, simulation_cb);
+                            draw_simulation_future(data_valo, ref_etfs, invest_etfs);
+                            _ref_etfs = ref_etfs;
+                            _invest_etfs = invest_etfs;
+                            _data_valo = data_valo;
+                        }
+                    };
+
+                });
+
+
 
                 function simulation_cb(invest_simu_past) {
                     var series = [{      //the value of portfolio
@@ -850,14 +791,30 @@ angular.module('MetronicApp')
                     $rootScope.profit = invest_simu_past[invest_simu_past.length - 1][1] - data_valo[data_valo.length - 1][1]
                         - (invest_simu_past[0][1] - data_valo[0][1]);
 
-                    draw_simulation_future(data_valo, invest_simu_past);
-
-                    _invest_simu_past = invest_simu_past;
-                    _data_valo = data_valo;
+                    //draw_simulation_future(data_valo, invest_simu_past);
+                    //
+                    //_invest_simu_past = invest_simu_past;
+                    //_data_valo = data_valo;
                 }
 
             });
         });
+
+        //[
+        //    {"profitability":0.015,"sectors":[{"Finance":100}],"name":"Lyxor MSCI World UCITS ETF","description":"","countries":[{"US":100}],"volatility":1.46,"isin":"FR0010315770","countriesStr":"US","sectorsStr":"Finance","price":14.06,"$$hashKey":"object:107","quantity":1,"enabled":true},
+        //    {"profitability":0.01,"sectors":[{"Industrie":100}],"name":"Lyxor MSCI USA","description":"","countries":[{"US":100}],"volatility":37.64,"isin":"QS0011029939","countriesStr":"US","sectorsStr":"Industrie","price":191.92,"$$hashKey":"object:219","quantity":1,"enabled":true},
+        //    {"profitability":0.003,"sectors":[{"Technologies de l'information":100}],"name":"Lyxor Smart Cash - UCITS ETF C-EUR","description":"","countries":[{"FR":100}],"volatility":0.29,"isin":"LU1190417599","countriesStr":"FR","sectorsStr":"Technologies de l'information","price":125,"$$hashKey":"object:225","quantity":1,"enabled":true},
+        //    {"profitability":0.01,"sectors":[{"Technologies de l'information":100}],"name":"Lyxor MSCI USA UCITS ETF","description":"","countries":[{"US":100}],"volatility":0.2,"isin":"FR0010296061","countriesStr":"US","sectorsStr":"Technologies de l'information","price":334.73,"$$hashKey":"object:237","quantity":1,"enabled":true},
+        //    {"profitability":0.002,"sectors":[{"Finance":100}],"name":"Lyxor EURO STOXX 50 CHF Daily Hedged UCITS ETF","description":"","countries":[{"FR":100}],"volatility":0.3,"isin":"FR0012399731","countriesStr":"FR","sectorsStr":"Finance","price":60.59,"$$hashKey":"object:251","quantity":1,"enabled":true}
+        //].forEach(function(etf) {
+        //        $OrdersFactory.set(etf);
+        //    });
+        //
+        //setTimeout(function() {
+        //    $scope.wizard.goto(3);
+        //}, 500)
+
     })
-    .controller('InvestirValidationController', function ($scope, $element) {
+    .controller('InvestirValidationController', function($OrdersFactory, $scope) {
+        $scope.$OrdersFactory = $OrdersFactory;
     });

@@ -11,7 +11,7 @@ var User = require('./User');
 module.exports = function(app) {
     app.use(session({
         secret: 'TODO SET REDIS SECRET KEY HERE',
-        cookie: { maxAge: 600000 },
+        //cookie: { maxAge: 600000 },
         resave: true,
         saveUninitialized: true
     }));

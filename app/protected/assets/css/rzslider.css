@@ -1,0 +1,30 @@
+.form-group rzslider .rz-pointer:hover {
+    -webkit-box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+    -ms-box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+    -o-box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+}
+
+.form-group rzslider .rz-bar.rz-selection,
+.form-group rzslider .rz-pointer {
+    color: #fff;
+    color: rgba(255,255,255,.8);
+    border-color: #0b97c4;
+    background-color: #00a7d0;
+}
+
+.form-group .portfolio-risks .rz-pointer {
+    -webkit-transition: background-color .5s, border-color, .5s;
+    -moz-transition: background-color .5s, border-color, .5s;
+    -ms-transition: background-color .5s, border-color, .5s;
+    -o-transition: background-color .5s, border-color, .5s;
+    transition: background-color .5s, border-color, .5s;
+}
+
+.rz-ticks .tick, .rz-pointer {
+    -webkit-border-radius:50% !important;
+    -moz-border-radius:50% !important;
+    border-radius:50% !important;
+}
+

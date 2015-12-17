@@ -1,0 +1,64 @@
+input.aCheck[type=checkbox] {
+    position: absolute;
+    visibility: hidden;
+    left: -111px;
+    padding:0;
+    margin:0;
+    height:0;
+    width:0;
+}
+
+input.aCheck[type=checkbox] + label {
+    display: inline-block;
+    position: relative;
+    height: 20px;
+    line-height: 20px !important;
+    cursor: pointer;
+    margin:0;
+    padding: 0 0 0 12px;
+}
+
+input.aCheck[type=checkbox]:disabled + label {
+    cursor: default;
+    opacity: .6;
+}
+
+input.aCheck[type=checkbox] + label:after {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    position: absolute;
+    left:0;
+    top: 0;
+}
+
+input.aCheck[type=checkbox] + label:before {
+    position: relative;
+    top: 0;
+    left: 0;
+    color: transparent;
+    -webkit-transition: left .1s, color .1s;
+    -moz-transition: left .1s, color .1s;
+    -ms-transition: left .1s, color .1s;
+    -o-transition: left .1s, color .1s;
+    transition: left .1s, color .1s;
+}
+
+input.aCheck[type=checkbox]:focus + label,
+input.aCheck[type=checkbox] + label:hover {
+    border-color: #36c6d3;
+}
+
+input.aCheck[type=checkbox]:checked + label:after {
+    border-color: #36c6d3;
+    background-color: #36c6d3;
+}
+
+input.aCheck[type=checkbox]:checked + label:before {
+    color: #fff;
+    z-index: 1;
+    left: -9px;
+}

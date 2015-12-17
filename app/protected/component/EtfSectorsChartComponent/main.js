@@ -174,7 +174,7 @@ angular.module('MetronicApp')
             });
 
             for (var i = 3; i < series.length; i++) {
-                series[i].visible = false;
+                //series[i].visible = false;
             }
 
             return series;
