@@ -7,7 +7,7 @@
                ng-model="etf.enabled"
                ng-init="etf.enabled = false"
                ng-change="$OrdersFactory.unlock();
-                          $OrdersFactory.set(etf, etf.enabled ? etf.quantity : 0, etf.price);
+                          $OrdersFactory.set(etf, etf.enabled ? 1 : 0);
                           $OrdersFactory.lock()">
         <label for="{{etf.isin}}-checkbox" class="fa fa-check"></label></td>
 </tr>
