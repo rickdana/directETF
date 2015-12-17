@@ -34,6 +34,7 @@
           rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
 
 </head>
 
@@ -42,10 +43,11 @@
 <nav id="mainNav" class="navbar navbar-fixed-top">
     <div class="container-fluid">
         <div ng-include="'/public/pages/index/header.html'"></div>
-         <!--/.navbar-collapse-->
+        <!--/.navbar-collapse-->
 
         <div class="bar">
-            <div class="percentage has-tip" ng-init="percents = 7"  style="width: {{percents}}%" data-perc="{{percents}}%">
+            <div class="percentage has-tip" ng-init="percents = 7" style="width:{{percents}}%"
+                 data-perc="{{percents}}%">
             </div>
         </div>
     </div>
@@ -55,125 +57,149 @@
     <div class="header-content">
         <div class="header-content-inner" ng-init="step = 1">
             <div class="box animated" ng-show="step == 1">
-                <h1>Mais d'abord, parlez-nous un peu de vous</h1>
-                <!--<hr class="middle">-->
+                <i class="fa fa-comment-o"></i>
+                <h1>Mais d'abord, parlez-nous un peu de vous </h1>
+
                 <h2>Afin de générer un portefeuille adapté à votre profil,<br>
                     nous avons besoin de quelques informations<br>
                 </h2>
-                <h3> Comment souhaitez-vous investir votre argent ?</h3>
-                <div class="form-group">
-                    <div class="radio-list" >
-                        <label>
-                            <input type="radio" name="optionsRadios" id="" value="option1" checked> Dans un secteur particulier (précisez) </label>
-                        <label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="" value="option 7"> Je ne sais pas encore dans quoi investir </label>
+                <hr class="middle">
+                <h3> Savez vous déjà où placer votre argent ?</h3>
 
+                <div class="form-group">
+                    <div class="radio-list">
+                        <input type="radio" name="optionsRadios" value="option1" id="choice1" checked>
+                        <label for="choice1">Dans une entreprise</label>
+                        <div class="multiplechoices">
+                            <input type="radio" name="optionsRadios" value="option1" id="choice1a" checked>
+                            <label for="choice1a">en fonction d’une valeur (écologie, profit, éthique)</label>
+
+                            <input type="radio" name="optionsRadios" value="option1" id="choice1b" checked>
+                            <label for="choice1b">Par pays</label>
+
+                            <input type="radio" name="optionsRadios" value="option1" id="choice1c" checked>
+                            <label for="choice1c">Par secteur</label>
+
+                            <input type="radio" name="optionsRadios" value="option1" id="choice1d" checked>
+                            <label for="choice1d">en fonction des sujets d’actualité du moment (ex Grèce, Allemagne, Chine)</label>
+
+                        </div>
+
+                        <input type="radio" name="optionsRadios" value="option 7" id="choice2">
+                        <label for="choice2">Dans un sujet d'actualité du moment</label>
+                        <div class="multiplechoices">
+                            <input type="radio" name="optionsRadios" value="option1" id="choice1e" checked>
+                            <label for="choice1e">par région</label>
+
+                        </div>
+
+                        <input type="radio" name="optionsRadios" value="option 7" id="choice3a">
+                        <label for="choice2">Je ne sais pas encore dans quoi investir </label>
                     </div>
                 </div>
 
-                <a id="premier-bouton" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 2; percents = 20">Continuer</a>
+                <a id="premier-bouton" href="#" class="btn btn-primary btn-xl page-scroll"
+                   ng-click="step = 2; percents = 20">Continuer</a>
             </div>
 
             <div class="box animated" ng-show="step == 2">
+                <i class="fa fa-comment-o"></i>
                 <h1>Mais d'abord, parlez-nous un peu de vous</h1>
                 <!--<hr class="middle">-->
                 <h2>Afin de générer un portefeuille adapté à votre profil,<br>
                     nous avons besoin de quelques informations</h2>
+
                 <h3>Quelle est la raison principale de vos investissements ?</h3>
+
                 <div class="form-group">
-                    <div class="radio-list" >
-                        <label>
-                            <input type="radio" name="optionsRadios" id="" value="option1" checked> Achat important </label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="" value="option2"> Pojet personnel </label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="" value="option3"> Don </label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="" value="option3"> Retraite</label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="" value="option3"> Autre (précisez)</label>
+                    <div class="radio-list">
+                        <input type="radio" name="optionsRadios" value="option1" checked id="choice3"><label for="choice3"> Achat important
+                        </label>
+                        <input type="radio" name="optionsRadios" value="option2" id="choice4"><label for="choice4"> Projet personnel </label>
+                        <input type="radio" name="optionsRadios" value="option3" id="choice5"><label for="choice5"> Don </label>
+                        <input type="radio" name="optionsRadios" value="option3" id="choice6"><label for="choice6"> Retraite</label>
+                        <input type="radio" name="optionsRadios" value="option3" id="choice7"><label for="choice7"> Autre (précisez)</label>
                     </div>
                 </div>
 
-                <a id="" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 3; percents = 40">Continuer</a>
+                <a href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 3; percents = 40">Continuer</a>
             </div>
 
             <div class="box animated" ng-show="step == 3">
+                <i class="fa fa-comment-o"></i>
                 <h1>Mais d'abord, parlez-nous un peu de vous</h1>
                 <!--<hr class="middle">-->
                 <h2>Afin de générer un portefeuille adapté à votre profil,<br>
                     nous avons besoin de quelques informations</h2>
+
                 <h3>Quel est votre revenu annuel ?</h3>
+
                 <div class="form-group">
-                    <div class="radio-list" >
-                        <label>
-                            <input type="radio" name="optionsRadios" id="" value="option1" checked> Moins de 25,000€</label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="" value="option2"> 25,000 - 50,000€</label>
-                            <label>
-                                <input type="radio" name="optionsRadios" id="" value="option3"> 50,000 - 100,000€</label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="" value="option4"> 100,000 - 250,000€</label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="" value="option5"> Plus de 250,000€</label>
+                    <div class="radio-list">
+                        <input type="radio" name="optionsRadios" value="option1" checked id="choice8"><label for="choice8"> Moins de
+                            25,000€</label>
+                        <input type="radio" name="optionsRadios" value="option2" id="choice9"><label for="choice9"> 25,000 - 50,000€</label>
+                        <input type="radio" name="optionsRadios" value="option3" id="choice10"><label for="choice10"> 50,000 - 100,000€</label>
+                        <input type="radio" name="optionsRadios" value="option4" id="choice11"><label for="choice11"> 100,000 - 250,000€</label>
+                        <input type="radio" name="optionsRadios" value="option5" id="choice12"><label for="choice12"> Plus de 250,000€</label>
 
                         </label>
                     </div>
                 </div>
-                <a id="" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 4; percents = 60">Continuer</a>
+                <a href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 4; percents = 60">Continuer</a>
             </div>
 
             <div class="box animated" ng-show="step == 4">
+                <i class="fa fa-comment-o"></i>
                 <h1>Mais d'abord, parlez-nous un peu de vous</h1>
                 <!--<hr class="middle">-->
                 <h2>Afin de générer un portefeuille adapté à votre profil,<br>
                     nous avons besoin de quelques informations</h2>
+
                 <h3>Quelle est votre capacité d'épargne mensuelle ?</h3>
+
                 <div class="form-group">
-                    <div class="radio-list" >
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> Moins de 100€ </label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> De 100 à 500€</label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> De 500 à 1000€</label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Plus de 1000€</label>
-                    <a id="" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 5; percents = 80">Continuer</a>
+                    <div class="radio-list">
+                        <input type="radio" name="optionsRadios" value="option1" checked id="choice13"><label for="choice13"> Moins
+                            de 100€ </label>
+                        <input type="radio" name="optionsRadios" value="option2" id="choice14"><label for="choice14"> De 100 à 500€</label>
+                        <input type="radio" name="optionsRadios" value="option2" id="choice15"><label for="choice15"> De 500 à 1000€</label>
+                        <input type="radio" name="optionsRadios" value="option2" id="choice16"><label for="choice16"> Plus de 1000€</label>
+                        <a href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 5; percents = 80">Continuer</a>
                     </div>
                 </div>
             </div>
 
 
-
             <div class="box animated" ng-show="step == 5">
+                <i class="fa fa-comment-o"></i>
                 <h1>Mais d'abord, parlez-nous un peu de vous</h1>
                 <!--<hr class="middle">-->
                 <h2>Afin de générer un portefeuille adapté à votre profil,<br>
                     nous avons besoin de quelques informations</h2>
-                <h3> Quel âge avez-vous ? </h3>
-                <div class="form-group">
-                    <div class="radio-list" >
-                        <label>
-                            <input type="radio" name="optionsRadios" id="" value="option1" checked> Moins de 25 ans</label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="" value="option2"> 25-30 ans</label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> 30-35 ans</label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4"> 35-40 ans</label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4"> 40-45 ans</label>
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4"> Plus de 45 ans</label>
 
-                            <a id="" href="#" class="btn btn-primary btn-xl page-scroll" ng-click="step = 5; percents = 100">Continuer</a>
+                <h3> Quel âge avez-vous ? </h3>
+
+                <div class="form-group">
+                    <div class="radio-list">
+                        <input type="radio" name="optionsRadios" value="option1" checked id="choice17"><label for="choice17"> Moins de 25
+                            ans</label>
+                        <input type="radio" name="optionsRadios" value="option2" id="choice18"><label for="choice18"> 25-30 ans</label>
+                        <input type="radio" name="optionsRadios" value="option3" id="choice19"><label for="choice19"> 30-35
+                            ans</label>
+                        <input type="radio" name="optionsRadios" value="option4" id="choice20"><label for="choice20"> 35-40
+                            ans</label>
+                        <input type="radio" name="optionsRadios" value="option4" id="choice21"><label for="choice21"> 40-45
+                            ans</label>
+                        <input type="radio" name="optionsRadios" value="option4" id="choice22"><label for="choice22"> Plus de 45 ans</label>
+
+                        <a href="#" class="btn btn-primary btn-xl page-scroll"
+                           ng-click="step = 5; percents = 100">Continuer</a>
                     </div>
                 </div>
-             </div>
+            </div>
         </div>
-     </div>
+    </div>
 </header>
 
 <!--

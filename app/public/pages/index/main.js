@@ -27,4 +27,13 @@ $(document).ready(function() {
     $('.fa-4x').on('mouseout', function(){
         $(this).removeClass('bounce');
     });
+
+    $('#about').bind('appear', function () {
+        $(this).find('.animated')
+            .addClass('pulse')
+            .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+                $(this).addClass('');
+            });
+
+    });
 })

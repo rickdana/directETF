@@ -11,29 +11,30 @@ body {
 }
 
 body {
-    font-family: 'Poiret One', cursive;
+    font-family: 'Josefin Sans';
 }
 
 hr {
     max-width: 50px;
-    border-color: #f6fdff;
+    border-color: #19b2b9;
     border-width: 2px;
     margin: 30px auto;
 }
 
 hr.light {
-    border-color: #fff;
+    border-color: #19b2b9;
     margin: 30px auto;
 }
 
 hr.middle {
-    border: #f2f2f2;
-    margin: 300px;
-    border-width: 2px;
+    border: #19b2b9;
+    border-width: 10px;
+    color: #19b2b9;
+
 }
 
 a {
-    color: #fffefd;
+    color: #ffffff;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
@@ -41,7 +42,7 @@ a {
 
 a:hover,
 a:focus {
-    color: #ffffff;
+    color: #47a2aa;
 }
 
 h1,
@@ -50,7 +51,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Poiret One', cursive;
+    font-family: "Josefin Sans";
 }
 
 #mainNav {margin-top: 10px}
@@ -64,21 +65,22 @@ p {
 .bar {
     /* font-size: 10px */
     height: 0.7em;
-    border-radius: 0em;
-    position: relative;
-    background: rgba(242, 242, 242, 0.17);
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-    margin-bottom:40px;
-    margin-top: 15px;
-
+    width: 900px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.45);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0);
+    margin-bottom:0px;
+    margin-top: 35px;
+    margin-left: 175px;
 }
 
 .bar .percentage {
     position: relative;
     font-size: 0.7em;
-    background: #ffffff;
+    background: #47a2aa;
     height: 1em;
-    border-radius: 0em;
+    border-radius: 10px;
+
 }
 
 .has-tip:before,
@@ -92,21 +94,18 @@ p {
     bottom: -10px;
     right: -5px;
     border: 5px solid;
-    border-color: transparent transparent #d0d0d0 transparent;
+    border-color: transparent transparent #ffffff transparent;
     transition: opacity 0.1s;
 }
 
 div.box {
-    background: rgba(58, 58, 58, 0.20);
-    padding-top: 35px;
+    background: rgba(255, 255, 255, 0.92);
+    padding-top: 10px;
     flex: 1 100%;
-}
+    margin-left: 150px;
+    margin-right: 150px;
+    border-radius: 15px;
 
-div.box label {
-    display: block;
-    text-align: left;
-    font-size: 20px;
-    font-weight: 500;
 }
 
 div.box .form-group {
@@ -176,7 +175,7 @@ section {
     text-transform: uppercase;
     font-size: 20px;
     font-weight: 700;
-    color: #222;
+    color: #ffffff;
 }
 
 .navbar-default .nav > li > a:hover,
@@ -237,7 +236,7 @@ section {
 
     .navbar-default.affix .nav > li > a,
     .navbar-default.affix .nav > li > a:focus {
-        color: #222;
+        color: #000000;
     }
 
     .navbar-default.affix .nav > li > a:hover,
@@ -251,9 +250,9 @@ header {
     width: 100%;
     min-height: auto;
     text-align: center;
-    color: #fff;
+    color: #959595;
     background-color: #a4c6ff;
-    background-image: url(/public/assets/img/fondecranessai.jpg);
+    background-image: url(/public/assets/img/fonddecran.jpg);
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -273,29 +272,43 @@ header .header-content-inner {
 }
 
 header .header-content .header-content-inner h1 {
-    font-family: 'Poiret One', cursive;
+    font-family: "Josefin Sans";
     font-size: 32px !important;
     margin-top: -10px;
     margin-bottom: 50px;
     text-transform: none;
-    font-weight: 100;
-    color: rgb(246, 253, 255);
+    font-weight: 500;
+    color: rgb(160, 165, 171);
 }
 
 header .header-content .header-content-inner hr {
-    color: rgb(251, 253, 255);
+    color: rgb(160, 165, 171);
     width: 60px;
 }
 
 h2, .h2 {
-    font-size: 25px;
-    margin-bottom: 80px;
-    margin-top: -30px;
+    font-size:18px;
+    margin-bottom: 60px;
+    margin-top: -45px;
+    color: rgb(160, 165, 171);
+
+}
+
+.navbar-brand, .navbar-nav>li>a {
+
+     text-shadow: none;
+
+}
+
+.radio-list {
+    /* width: 300px; */
+    padding: 0 92px;
 }
 
 h3, .h3 {
-    font-size: 22px;
+    font-size: 20px;
     margin-bottom: 40px;
+    font-weight: 500;
 }
 
 header .header-content .header-content-inner p {
@@ -303,6 +316,53 @@ header .header-content .header-content-inner p {
     font-size: 20px;
     font-weight: 800;
     color: rgba(249, 249, 255, 0.9);
+}
+
+
+div.box input[type=radio], div.box input[type=checkbox] {
+    position: absolute;
+    left: -111px;
+    visibility: hidden;
+}
+
+div.box label {
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius:30px
+}
+
+div.multiplechoices label {
+    font-size: 17px;
+}
+
+div.box input[type=radio] + label + div, div.box input[type=checkbox] + label + div {
+    display: none;
+}
+
+div.box input[type=radio]:checked + label + div, div.box input[type=checkbox]:checked + label + div {
+    display: block;
+}
+
+.fa-comment-o:before {
+    content: "\f075";
+    font-size: 60px;
+}
+
+.fa-comment-o {
+    margin-bottom: 30px;
+    color: #32b5b9
+
+}
+
+div.box label:hover,
+div.box input[type=radio]:checked + label, div.box input[type=checkbox]:checked + label {
+    background-color: rgba(50, 181, 185, 0.8);
+    color: rgba(255,255,255,.9);
+}
+
+div.box input[type=radio]:checked + label, div.box input[type=checkbox]:checked + label {
+    background-color: rgb(19, 135, 141);
 }
 
 @media (min-width: 768px) {
@@ -433,6 +493,7 @@ header .header-content .header-content-inner p {
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
+    font-family: "Poiret One";
 }
 
 .btn-default:hover,
@@ -537,9 +598,27 @@ fieldset[disabled] .btn-primary.active {
 }
 
 #contact {
-    background-image: url(/public/assets/img/essaifond.jpg);
+    background-image: url(/public/assets/img/fonecran.jpg);
     color: #faf8ff;
 }
+.navbar-nav>li>.dropdown-menu {
+    margin-top: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    margin-right: 65px;
+}
+
+.navbar-brand, .navbar-nav > li > a {
+    font-size: 20px;
+    margin-left: -65px;
+    padding-right: 80px;
+    margin-top: 20px;
+}
+
+.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+    margin-left: 55px
+}
+
 
 .btn-primary .badge {
     color: #3a96bf;
@@ -555,30 +634,36 @@ fieldset[disabled] .btn-primary.active {
     background-color: #e2e2e6;
     background-position: 0 -65px;
     transition: none;
+
+
 }
 
 .btn-primary:hover, .btn-primary:focus {
-    background-color: #238ba7;
+    background-color: #32b5b9;
 }
 
 .btn-primary, .btn-primary {
-    background-color: #23a2bf;
+    background-color: #3ca4ac;
     background-image: none;
+
 }
 
 .btn {
-    margin-top: 120px;
-    margin-bottom: 60px;
-    border: 0;
-    border-radius: 300px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    border: 2px;
     text-transform: uppercase;
-    font-family: 'Poiret One', cursive;
     font-weight: 700;
-    font-size: larger;
+    background-image: linear-gradient(to bottom, #37c4c7 0, #47a2aa 100%);
+    font-family: "Poiret One";
+    font-size: medium;
+    padding: 20px 35px;
+    border-radius: 30px;
+
 }
 
 .btn-xl {
-    padding: 20px 55px;
+    padding: 20px 35px;
 }
 
 ::-moz-selection {
@@ -617,7 +702,20 @@ body {
     background-color: transparent;
 }
 
+nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
+    background-color: rgba(0, 0, 0, 0);
+    border-color: rgba(66, 139, 202, 0);
+}
+
+.dropdown-menu {
+    font-size: 18px;
+}
+
 #premier-bouton {
-    background-image: linear-gradient(to bottom, #48a2bf 0, #3a96bf 100%);
+    background-image: linear-gradient(to bottom, #37c4c7 0, #47a2aa 100%);
+    font-family: "Poiret One";
+    font-size: medium;
+    padding: 20px 35px;
+    border-radius: 30px;
 }
 
