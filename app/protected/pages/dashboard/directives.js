@@ -40,70 +40,74 @@ angular.module("MetronicApp").directive('ngSpinnerBar', ['$rootScope',
         };
     }
 ])
-    .directive('linkToStcokchart', function() {
-        return {
-            restrict: 'A',
-            link: function($scope, $element, $attrs) {
-                var container = $('#' + $element.attr('data-id-container'));
+.directive('linkToStcokchart', function() {
+    return {
+        restrict: 'A',
+        link: function($scope, $element, $attrs) {
+            var container = $('#' + $element.attr('data-id-container'));
 
-                $scope.isComboSelectPeriode = false;
-                $scope.periodeData = ['Select une période', '6 mois', 'Année en cours', 'Un an', 'Toute la période'];
-                $scope.periodeSelect = $scope.periodeData[0];
+            //$scope.isComboSelectPeriode = false;
+            $scope.periodeData = ['6 mois', 'Année en cours', 'Un an', 'Toute la période'];
+            $scope.periodeSelect = $scope.periodeData[3];
 
-                var options = {
-                    xAxis: {
-                        events: {
-                            setExtremes: function (e) {
-                                if(!$scope.isComboSelectPeriode) {
-                                    $scope.$apply(function () {
-                                        $scope.periodeSelect = $scope.periodeData[0];
-                                    });
-                                } else {
-                                    $scope.isComboSelectPeriode = false;
-                                }
-                            }
-                        }
-                    },
-                };
+            //var options = {
+            //    xAxis: {
+            //        events: {
+            //            setExtremes: function (e) {
+            //                if(!$scope.isComboSelectPeriode) {
+            //                    $scope.$apply(function () {
+            //                        $scope.periodeSelect = $scope.periodeData[0];
+            //                    });
+            //                } else {
+            //                    $scope.isComboSelectPeriode = false;
+            //                }
+            //            }
+            //        }
+            //    },
+            //};
+            //
+            //LoadStockChart({}, container, false, null, options);
 
-                LoadStockChart({}, container, false, null, options);
+            $scope.$watch(function () {
+                return $scope.periodeSelect;
+            }, function (value) {
+                $scope.updateTimeRange();
+            })
 
-                $scope.$watch(function () {
-                    return $scope.periodeSelect;
-                }, function () {
-                    $scope.updateTimeRange();
-                })
+            $scope.updateTimeRange = function() {
+                var chart = container.highcharts();
 
-                $scope.updateTimeRange = function() {
-                    var chart = container.highcharts();
-
-                    switch($scope.periodeSelect) {
-                        case '6 mois':
-                            $scope.isComboSelectPeriode = true;
-                            chart.rangeSelector.buttons[2].setState(2);
-                            chart.rangeSelector.clickButton(2,2,true);
-                            break;
-                        case 'Année en cours':
-                            $scope.isComboSelectPeriode = true;
-                            chart.rangeSelector.buttons[3].setState(2);
-                            chart.rangeSelector.clickButton(3,3,true);
-                            break;
-                        case 'Un an':
-                            $scope.isComboSelectPeriode = true;
-                            chart.rangeSelector.buttons[4].setState(2);
-                            chart.rangeSelector.clickButton(4,4,true);
-                            break;
-                        case 'Toute la période':
-                            $scope.isComboSelectPeriode = true;
-                            chart.rangeSelector.buttons[5].setState(2);
-                            chart.rangeSelector.clickButton(5,5,true);
-                            break;
-                    }
-
+                if (!chart) {
+                    return;
                 }
+
+                switch($scope.periodeSelect) {
+                    case '6 mois':
+                        //$scope.isComboSelectPeriode = true;
+                        chart.rangeSelector.buttons[2].setState(2);
+                        chart.rangeSelector.clickButton(2,2,true);
+                        break;
+                    case 'Année en cours':
+                        //$scope.isComboSelectPeriode = true;
+                        chart.rangeSelector.buttons[3].setState(2);
+                        chart.rangeSelector.clickButton(3,3,true);
+                        break;
+                    case 'Un an':
+                        //$scope.isComboSelectPeriode = true;
+                        chart.rangeSelector.buttons[4].setState(2);
+                        chart.rangeSelector.clickButton(4,4,true);
+                        break;
+                    case 'Toute la période':
+                        //$scope.isComboSelectPeriode = true;
+                        chart.rangeSelector.buttons[5].setState(2);
+                        chart.rangeSelector.clickButton(5,5,true);
+                        break;
+                }
+
             }
-        };
-    })
+        }
+    };
+})
 
 
 // Handle global LINK click

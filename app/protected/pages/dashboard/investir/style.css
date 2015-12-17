@@ -370,3 +370,7 @@ tfoot td {
     background-color: transparent;
     cursor: default;
 }
+
+#legend-radios {
+    text-align: -webkit-center;
+}
