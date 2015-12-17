@@ -388,7 +388,7 @@ angular.module('MetronicApp')
         var _ref_etfs = null;
         var _data_valo = null;
 
-        $scope.timeframe = 3;
+        $scope.timeframe = 20;
 
         $scope.sliderTimeframe = {
             options: {
@@ -622,44 +622,98 @@ angular.module('MetronicApp')
             //simulation-graph of the future
             var series = [{
                 name: 'Portefeuille - 68%',
+                id: 'Portefeuille_1',
                 type: 'arearange',
                 data: data_valo_future_attendu,
                 color: 'rgb(243, 156, 18)',
                 threshold: null,
                 zIndex: 10,
-                visible: false
+                visible: false,
+                showCheckbox: true,
+                showInLegend: false
+
             }, {
                 name: 'Prévision - 68%',
+                id: 'Prévision_1',
                 type: 'arearange',
                 data: data_invest_future_attendu,
                 color: 'rgb(43, 161, 76)',
-                zIndex: 12,
-                threshold: null
-            },{
-                name: 'Portefeuille - 27%',
-                type: 'arearange',
-                data: data_valo_future_favorable,
-                color: 'rgba(243, 156, 18, 0.5)',
+                zIndex: 11,
                 threshold: null,
-                zIndex: 9,
-                visible: false
+                showCheckbox: true,
+                showInLegend: false
             }, {
                 name: 'Prévision - favorable 13%',
+                id: 'Prévision_2',
                 type: 'arearange',
                 data: data_invest_future_favorable,
                 color: 'rgb(130, 208, 151)',
                 zIndex: 11,
-                threshold: null
+                threshold: null,
+                showInLegend: false
             }, {
                 name: 'Prévision - defavorable 13%',
+                id: 'Prévision_3',
                 type: 'arearange',
                 data: data_invest_future_defavorable,
                 color: 'rgb(140, 140, 140)',
                 zIndex: 11,
-                threshold: null
+                threshold: null,
+                showInLegend: false
+            },{
+                name: 'Portefeuille - favorable 13%',
+                id: 'Portefeuille_2',
+                type: 'arearange',
+                data: data_valo_future_favorable,
+                color: 'rgb(255, 204, 102)',
+                threshold: null,
+                zIndex: 10,
+                visible: false,
+                showInLegend: false
+            },{
+                name: 'Portefeuille - défavorable 13%',
+                id: 'Portefeuille_3',
+                type: 'arearange',
+                data: data_valo_future_defavorable,
+                color: 'rgb(140, 140, 140)',
+                threshold: null,
+                zIndex: 10,
+                visible: false,
+                showInLegend: false
             }];
 
             LoadStockChart(series, $('#simulation-future'), true);
+
+            var radio_investissement = document.getElementById("radio-investissements");
+            var radio_portefueille = document.getElementById("radio-portefeuille");
+            var chart_future = $('#simulation-future').highcharts();
+            var first = true;
+
+            $(radio_investissement).change(function() {
+                if (this.checked) {
+                    chart_future.get('Prévision_1').setVisible(true, false);
+                    chart_future.get('Prévision_2').setVisible(true, false);
+                    chart_future.get('Prévision_3').setVisible(true, false);
+                    chart_future.get('Portefeuille_1').setVisible(false, false);
+                    chart_future.get('Portefeuille_2').setVisible(false, false);
+                    chart_future.get('Portefeuille_3').setVisible(false, false);
+                }
+            });
+
+
+            $(radio_portefueille).change(function() {
+                if (this.checked) {
+                    chart_future.get('Portefeuille_1').setVisible(true, first);
+                    chart_future.get('Portefeuille_2').setVisible(true, first);
+                    chart_future.get('Portefeuille_3').setVisible(true, first);
+                    chart_future.get('Prévision_1').setVisible(false, false);
+                    chart_future.get('Prévision_2').setVisible(false, false);
+                    chart_future.get('Prévision_3').setVisible(false, false);
+                    first = false;
+                }
+            });
+            //$('#simulation-future').highcharts().legend.allItems[1].update({name:'Prévision avec nouveaux investissements'});
+            //$('#simulation-future').highcharts().legend.allItems[0].update({name:'Prévision sans nouveaux investissements'});
         }
 
 
@@ -756,6 +810,7 @@ angular.module('MetronicApp')
                             _ref_etfs = ref_etfs;
                             _invest_etfs = invest_etfs;
                             _data_valo = data_valo;
+
                         }
                     };
 
@@ -800,21 +855,23 @@ angular.module('MetronicApp')
             });
         });
 
-        //[
-        //    {"profitability":0.015,"sectors":[{"Finance":100}],"name":"Lyxor MSCI World UCITS ETF","description":"","countries":[{"US":100}],"volatility":1.46,"isin":"FR0010315770","countriesStr":"US","sectorsStr":"Finance","price":14.06,"$$hashKey":"object:107","quantity":1,"enabled":true},
-        //    {"profitability":0.01,"sectors":[{"Industrie":100}],"name":"Lyxor MSCI USA","description":"","countries":[{"US":100}],"volatility":37.64,"isin":"QS0011029939","countriesStr":"US","sectorsStr":"Industrie","price":191.92,"$$hashKey":"object:219","quantity":1,"enabled":true},
-        //    {"profitability":0.003,"sectors":[{"Technologies de l'information":100}],"name":"Lyxor Smart Cash - UCITS ETF C-EUR","description":"","countries":[{"FR":100}],"volatility":0.29,"isin":"LU1190417599","countriesStr":"FR","sectorsStr":"Technologies de l'information","price":125,"$$hashKey":"object:225","quantity":1,"enabled":true},
-        //    {"profitability":0.01,"sectors":[{"Technologies de l'information":100}],"name":"Lyxor MSCI USA UCITS ETF","description":"","countries":[{"US":100}],"volatility":0.2,"isin":"FR0010296061","countriesStr":"US","sectorsStr":"Technologies de l'information","price":334.73,"$$hashKey":"object:237","quantity":1,"enabled":true},
-        //    {"profitability":0.002,"sectors":[{"Finance":100}],"name":"Lyxor EURO STOXX 50 CHF Daily Hedged UCITS ETF","description":"","countries":[{"FR":100}],"volatility":0.3,"isin":"FR0012399731","countriesStr":"FR","sectorsStr":"Finance","price":60.59,"$$hashKey":"object:251","quantity":1,"enabled":true}
-        //].forEach(function(etf) {
-        //        $OrdersFactory.set(etf);
-        //    });
-        //
-        //setTimeout(function() {
-        //    $scope.wizard.goto(3);
-        //}, 500)
+        [
+            {"profitability":0.015,"sectors":[{"Finance":100}],"name":"Lyxor MSCI World UCITS ETF","description":"","countries":[{"US":100}],"volatility":1.46,"isin":"FR0010315770","countriesStr":"US","sectorsStr":"Finance","price":14.06,"$$hashKey":"object:107","quantity":1,"enabled":true},
+            {"profitability":0.01,"sectors":[{"Industrie":100}],"name":"Lyxor MSCI USA","description":"","countries":[{"US":100}],"volatility":37.64,"isin":"QS0011029939","countriesStr":"US","sectorsStr":"Industrie","price":191.92,"$$hashKey":"object:219","quantity":1,"enabled":true},
+            {"profitability":0.003,"sectors":[{"Technologies de l'information":100}],"name":"Lyxor Smart Cash - UCITS ETF C-EUR","description":"","countries":[{"FR":100}],"volatility":0.29,"isin":"LU1190417599","countriesStr":"FR","sectorsStr":"Technologies de l'information","price":125,"$$hashKey":"object:225","quantity":1,"enabled":true},
+            {"profitability":0.01,"sectors":[{"Technologies de l'information":100}],"name":"Lyxor MSCI USA UCITS ETF","description":"","countries":[{"US":100}],"volatility":0.2,"isin":"FR0010296061","countriesStr":"US","sectorsStr":"Technologies de l'information","price":334.73,"$$hashKey":"object:237","quantity":1,"enabled":true},
+            {"profitability":0.002,"sectors":[{"Finance":100}],"name":"Lyxor EURO STOXX 50 CHF Daily Hedged UCITS ETF","description":"","countries":[{"FR":100}],"volatility":0.3,"isin":"FR0012399731","countriesStr":"FR","sectorsStr":"Finance","price":60.59,"$$hashKey":"object:251","quantity":1,"enabled":true}
+        ].forEach(function(etf) {
+                $OrdersFactory.set(etf);
+            });
+
+        setTimeout(function() {
+            $scope.wizard.goto(3);
+        }, 500)
+
 
     })
     .controller('InvestirValidationController', function($OrdersFactory, $scope) {
         $scope.$OrdersFactory = $OrdersFactory;
     });
+

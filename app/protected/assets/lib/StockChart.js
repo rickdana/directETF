@@ -29,29 +29,17 @@ function LoadStockChart(series, container, clear, cb, options) {
 
             yAxis: [{ // Primary yAxis
                 labels: {
-                    style: {
-                        color: 'rgb(243, 156, 18)',
-                        fontWeight: 'bold',
-                        fontSize: '11px'
-                    },
+                    //style: {
+                    //    color: 'rgb(243, 156, 18)',
+                    //    fontWeight: 'bold',
+                    //    fontSize: '11px'
+                    //},
                     useHTML: true,
                     format: '{value} &euro;',
                 },
                 opposite: false,
-            }, { // Secondary yAxis
-                labels: {
-                    style: {
-//                            color: 'rgba(0, 0, 0, .8)',
-                        fontSize: '11px'
-                    }
-                },
-            }, { // Third yAxis
-                labels: {
-                    style: {
-                        //color: 'rgba(255, 255, 255, .8)',
-                        fontSize: '11px'
-                    }
-                },
+                gridLineColor: 'white',
+                lineWidth: 0.5
             }],
 
             exporting: {
