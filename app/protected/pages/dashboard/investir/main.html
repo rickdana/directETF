@@ -76,17 +76,19 @@
                                  ng-repeat="q in filter.questions"
                                  ng-show="filters.current.question == q.id">
                                 <label class="bold">
-                                    <span>{{q.string}}</span></label>
+                                    <span>{{q.text}}</span></label>
                                 <div class="filter-question-end" ng-if="q.id == 'end'">
                                     <div data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html" ng-etf-list></div>
-                                    <button class="btn green" ng-click="q.exec(filter.history)">{{q.button}}</button></div>
+                                    <div class="">
+                                        <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
+                                    </div></div>
                                 <div class="filter-question-anwser" ng-repeat="a in q.anwsers">
                                     <input type="radio" name="{{filter.id}}" id="{{a.id}}" class="aCheck filter-checkbox"
                                            ng-model="filters.current.anwser"
-                                           ng-click="filters.current.question = a.goto; filter.history.push([q, a])">
+                                           ng-click="filters.current.question = a.goto; filter.history.push([q, a]); filters.exec(filter.history, q, a)">
                                     <label for="{{a.id}}">
                                         <i class="fa fa-check"></i>
-                                        <span>{{a.string}}</span></label></div>
+                                        <span>{{a.text}}</span></label></div>
                             </div></div>
                     </div>
                 </div>
@@ -99,7 +101,11 @@
                      data-header-template="/protected/pages/dashboard/investir/tpl/list-header.html"
                      data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html" ng-etf-list></div>
             </div>
-            <button class="btn green" ng-click="wizard.step = 2">Etape suivante</button></div>
+
+            <div class="">
+                <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
+            </div>
+        </div>
     </div>
 
     <!--Step 2-->
@@ -114,12 +120,8 @@
                     </div>
                     <div class="portlet-body">
                         <div class="entry">Combien souhaitez-vous investir ?
-                            <div class="range-wrapper-wallet text-center">
-                                <input id="catch-max" name="wallet-range" type="text" class="input-range"
-                                       data-min="1" data-max="{{client.portfolio.cash}}"
-                                       data-from="{{client.portfolio.cash}}"
-                                       data-postfix="{{client.portfolio.infos.currencySymb}}">
-                            </div>
+                            <rzslider rz-slider-model="sliderInvestLimit.value"
+                                      rz-slider-options="sliderInvestLimit.options"></rzslider>
                         </div>
                     </div>
                 </div>
@@ -136,8 +138,10 @@
             </div>
         </div>
 
-        <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
-        <button class="btn green" ng-click="wizard.goto(3)">Etape suivante</button>
+        <div class="pull-right">
+            <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
+            <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
+        </div>
     </div>
 
     <!--Step 3-->
@@ -197,8 +201,10 @@
             </div>
         </div>
 
-        <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
-        <button class="btn green" ng-click="wizard.goto(4)">Etape suivante</button>
+        <div class="pull-right">
+            <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
+            <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
+        </div>
     </div>
 
     <!--Step 4-->
@@ -271,7 +277,10 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
-        <button class="btn green" ng-click="wizard.step = 1">Valider l'ordre d'achat</button>
+
+        <div class="">
+            <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
+            <button class="btn green" ng-click="wizard.goto(1)">Valider l'ordre d'achat</button>
+        </div>
     </div>
 </div>
