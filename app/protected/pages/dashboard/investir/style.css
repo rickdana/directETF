@@ -259,6 +259,7 @@
 #filters-list .filter-question-end,
 #filters-list .filter-question-anwser label {
     padding-left: 30px;
+    padding-right: 30px;
 }
 
 #filters-list .filter-question-end [ng-etf-list] {
