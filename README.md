@@ -17,7 +17,7 @@ PEut aussi être lancé en JAR (attention refactorng à faire sur getFile / getR
 #### Web:
 configurer environnement (prod par defaut, dev explicite)
 Sous mac:
-NODE_END=dev
+NODE_ENV=dev
 (Npm install si packages.json a été modifié)
 (modifier le prox si besoin dans config bower , npm install appelle bower)
 npm start
