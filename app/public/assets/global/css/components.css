@@ -41,7 +41,7 @@ General reset
 /* Set default body */
 body {
   color: #34495e;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   padding: 0px !important;
   margin: 0px !important;
   direction: "ltr";
@@ -877,8 +877,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Open Sans", sans-serif;
-  font-weight: 300; }
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 400; }
 
 h1 {
   font-size: 36px; }
@@ -890,7 +890,7 @@ h3 {
   font-size: 24px; }
 
 h4 {
-  font-size: 18px; }
+  font-size: 23px; }
 
 h5 {
   font-size: 14px; }
@@ -999,7 +999,7 @@ Utilities
   display: none !important; }
 
 .primary-font {
-  font-family: "Open Sans", sans-serif !important; }
+  font-family: "Josefin Sans", sans-serif !important; }
 
 .bold {
   font-weight: 700 !important; }
@@ -1027,7 +1027,7 @@ Utilities
   font-size: 23px; }
 
 .font-lg {
-  font-size: 18px; }
+  font-size: 23px; }
 
 .font-md {
   font-size: 14px; }
@@ -1169,7 +1169,7 @@ Users
   .user-info .details {
     display: inline-block; }
   .user-info .label {
-    font-weight: 300;
+    font-weight: 400;
     font-size: 11px; }
 
 /***
@@ -1194,7 +1194,7 @@ Custom vertical inline menu
       background: #e0eaf0 !important; }
     .ver-inline-menu li a {
       font-size: 14px;
-      font-weight: 300;
+      font-weight: 400;
       color: #557386;
       display: block;
       background: #f0f6fa;
@@ -1497,7 +1497,7 @@ Custom Bootstrap Badges
 ***/
 .badge {
   font-size: 11px !important;
-  font-weight: 300;
+  font-weight: 400;
   text-align: center;
   height: 18px;
   color: #fff;
@@ -6022,7 +6022,7 @@ Charts and statistics
   overflow: hidden;
   height: 300px;
   width: 100%;
-  font-family: "Open Sans", sans-serif !important;
+  font-family: "Josefin Sans", sans-serif !important;
   font-size: 14px; }
 
 /***
@@ -6224,7 +6224,7 @@ Dropdown Menu
     text-decoration: none;
     display: block;
     clear: both;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 18px;
     white-space: nowrap; }
     .dropdown-menu > li > a > [class^="fa-"],
@@ -6341,7 +6341,7 @@ Dropdown Menu
     font-family: FontAwesome;
     height: auto;
     content: "\f105";
-    font-weight: 300; }
+    font-weight: 400; }
   .dropdown-submenu:hover > .dropdown-menu {
     display: block; }
   .dropdown-submenu:hover > a:after {
@@ -6411,7 +6411,7 @@ Dropdown Checkboxes
   .dropdown-radiobuttons label,
   .dropdown-checkboxes label {
     display: block;
-    font-weight: 300;
+    font-weight: 400;
     color: #333;
     margin-bottom: 4px;
     margin-top: 4px; }
@@ -7402,11 +7402,11 @@ Custom icon buttons
     margin-bottom: 20px;
     color: #3f444a;
     font-size: 12px;
-    font-weight: 300; }
+    font-weight: 400; }
   .icon-btn > .badge {
     position: absolute;
     font-size: 11px;
-    font-weight: 300;
+    font-weight: 400;
     top: -5px;
     right: -5px;
     padding: 3px 6px 3px 6px;
@@ -7421,7 +7421,7 @@ Custom icon buttons
     -moz-box-shadow: none;
     box-shadow: none; }
   .icon-btn > i {
-    font-size: 18px; }
+    font-size: 23px; }
   .ie8 .icon-btn:hover {
     filter: none; }
 
@@ -7485,10 +7485,10 @@ Customized Bootstrap Labels
 .label {
   text-shadow: none !important;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   padding: 3px 6px 3px 6px;
   color: #fff;
-  font-family: "Open Sans", sans-serif; }
+  font-family: "Josefin Sans", sans-serif; }
   .label.label-sm {
     font-size: 13px;
     padding: 2px 5px 2px 5px; }
@@ -7882,7 +7882,7 @@ Customized Bootstrap Modal
   .modal .modal-header {
     border-bottom: 1px solid #EFEFEF; }
     .modal .modal-header h3 {
-      font-weight: 300; }
+      font-weight: 400; }
     .modal .modal-header .close {
       margin-top: 0px !important; }
   .modal.draggable-modal .modal-header {
@@ -8088,8 +8088,9 @@ Portlets
 /* Basic portlet */
 .portlet {
   margin-top: 0px;
-  margin-bottom: 25px;
-  padding: 0px;
+  /*margin-bottom: 25px;*/
+  padding: 10px;
+  background-color: #fff;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -8113,7 +8114,7 @@ Portlets
     .portlet.portlet-fullscreen > .portlet-title {
       padding: 0 10px; }
   .portlet > .portlet-title {
-    border-bottom: 1px solid #eee;
+    /*border-bottom: 1px solid #eee;*/
     padding: 0;
     margin-bottom: 10px;
     min-height: 41px;
@@ -8131,9 +8132,9 @@ Portlets
     .portlet > .portlet-title > .caption {
       float: left;
       display: inline-block;
-      font-size: 18px;
-      line-height: 18px;
-      padding: 10px 0; }
+      font-size: 23px;
+      line-height: 23px;
+      padding: 0 0 10px; }
       .portlet > .portlet-title > .caption.bold {
         font-weight: 400; }
       .portlet > .portlet-title > .caption > i {
@@ -8357,7 +8358,7 @@ Portlets
       .portlet.light > .portlet-title > .caption > i {
         color: #777;
         font-size: 15px;
-        font-weight: 300;
+        font-weight: 400;
         margin-top: 3px; }
       .portlet.light > .portlet-title > .caption.caption-md > .caption-subject {
         font-size: 15px; }
@@ -11832,7 +11833,7 @@ Dashboard Stats
 ***/
 .dashboard-stat {
   display: block;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   overflow: hidden;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -11858,33 +11859,43 @@ Dashboard Stats
     font-size: 35px;
     line-height: 35px; }
     .dashboard-stat .visual > i {
-      margin-left: -35px;
-      font-size: 110px;
-      line-height: 110px; }
+      margin-top: 13px;
+      margin-left: -8px;
+      font-size: 60px;
+      line-height: 60px;
+      opacity: 0.2 !important;}
+
   .dashboard-stat .details {
     position: absolute;
     right: 15px;
-    padding-right: 15px; }
+    padding-top: 15px;
+    padding-right: 15px;
+    width: 71%;}
     .dashboard-stat .details .number {
-      padding-top: 25px;
+
       text-align: right;
       font-size: 34px;
       line-height: 36px;
       letter-spacing: -1px;
       margin-bottom: 0px;
-      font-weight: 300; }
+      font-weight: 400;
+      bottom: -9px;
+      position: relative;
+      right: -13px;
+    }
     .dashboard-stat .details .desc {
-      text-align: right;
-      font-size: 16px;
+      /*text-align: right;*/
+      font-family: "Poiret One";
+      font-size: 20px;
       letter-spacing: 0px;
-      font-weight: 300; }
+      font-weight: 400; }
   .dashboard-stat .more {
     clear: both;
     display: block;
     padding: 6px 10px 6px 10px;
     position: relative;
     text-transform: uppercase;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 11px;
     opacity: 0.7;
     filter: alpha(opacity=70); }
@@ -12929,7 +12940,7 @@ Dashboard Stats
   .dashboard-stat-light .details {
     margin-bottom: 5px; }
     .dashboard-stat-light .details .number {
-      font-weight: 300;
+      font-weight: 400;
       margin-bottom: 0px; }
 
 /***
@@ -13002,7 +13013,7 @@ Text Stats
 .text-stat h3 {
   margin-top: 5px;
   margin-bottom: 0px;
-  font-size: 18px; }
+  font-size: 23px; }
 
 .text-stat span {
   font-size: 13px !important; }
@@ -13508,7 +13519,7 @@ Light Table
     font-weight: 600;
     font-size: 13px;
     color: #93a2a9;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     border: 0;
     border-bottom: 1px solid #F2F5F8; }
   .table.table-light > tbody > tr:last-child > td {
@@ -13881,7 +13892,7 @@ Tiles(new in v1.1.1)
     text-decoration: none;
     color: #ffffff;
     position: relative;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 12px;
     letter-spacing: 0.02em;
     line-height: 20px;
@@ -14639,7 +14650,7 @@ AngularJS Basic Animations
     font-weight: 500;
     margin: 0 0 15px 0; }
     .m-heading-1 > h3 > i {
-      font-size: 18px;
+      font-size: 23px;
       color: #88909a; }
   .m-heading-1 > p {
     color: #5c6873;
@@ -14656,7 +14667,7 @@ AngularJS Basic Animations
       border-top: 0;
       border-bottom: 0; }
   .m-heading-1.m-title-md > h3 {
-    font-size: 18px;
+    font-size: 23px;
     margin-bottom: 10px; }
     .m-heading-1.m-title-md > h3 > i {
       font-size: 16px;
@@ -16431,7 +16442,7 @@ Color library demo
   .color-demo .color-view {
     padding: 35px 10px;
     text-align: center;
-    font-size: 18px; }
+    font-size: 23px; }
   .color-demo .color-info {
     border-top: 1px solid #eee;
     padding: 10px 10px;

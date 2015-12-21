@@ -12,8 +12,8 @@ angular.module('MetronicApp')
                     });
             },
 
-            get: function (anwsers, cb) {
-                $http.get(WS_URL + '/questionnaire/anwsers', {anwsers: anwsers})
+            answers: function (type, answers, cb) {
+                $http.post(WS_URL + '/questionnaire/' + type, {answers: answers})
                     .success(function (portfolio, status, headers, config) {
                         cb(false, null);
                     })
