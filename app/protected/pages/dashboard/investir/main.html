@@ -59,8 +59,10 @@
                                    ng-value="item.id">
                             <label for="{{item.id}}">
                                 <i class="fa fa-check"></i>
-                                <span>{{item.name}}</span></label></div>
+                                <span>{{item.text}}</span></label></div>
                         <div ng-if="filter.questions" ng-init="filter.history = []">
+                            <div ng-if="!filters.current.question"
+                                 ng-init="filters.current.question = filter.questions[0].id"></div>
                             <div class="filter-question filter-history"
                                  ng-init="q = h[0]; a = h[1]"
                                  ng-repeat="(i, h) in filter.history">
@@ -68,25 +70,26 @@
                                        ng-init="h.checked = true"
                                        ng-model="h.checked">
                                 <label for="h-{{a.id}}"
-                                       ng-click="filters.current.question = q.id; filters.current.anwser = '';
+                                       ng-click="filters.current.question = q.id; filters.current.answer = '';
                                                  filters.history.remove(filter.history, i, filter.history.length)">
-                                    <span>{{a.resume}}</span>
-                                    <i class="fa fa-undo"></i></label></div>
+                                    <span>{{a.resume}}</span></label></div>
                             <div class="filter-question"
                                  ng-repeat="q in filter.questions"
                                  ng-show="filters.current.question == q.id">
                                 <label class="bold">
-                                    <span>{{q.string}}</span></label>
+                                    <span>{{q.text}}</span></label>
                                 <div class="filter-question-end" ng-if="q.id == 'end'">
                                     <div data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html" ng-etf-list></div>
-                                    <button class="btn green" ng-click="q.exec(filter.history)">{{q.button}}</button></div>
-                                <div class="filter-question-anwser" ng-repeat="a in q.anwsers">
+                                    <div class="">
+                                        <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
+                                    </div></div>
+                                <div class="filter-question-answer" ng-repeat="a in q.answers">
                                     <input type="radio" name="{{filter.id}}" id="{{a.id}}" class="aCheck filter-checkbox"
-                                           ng-model="filters.current.anwser"
-                                           ng-click="filters.current.question = a.goto; filter.history.push([q, a])">
+                                           ng-model="filters.current.answer"
+                                           ng-click="filters.current.question = a.goto; filter.history.push([q, a]); filters.exec(filter.history, q, a)">
                                     <label for="{{a.id}}">
                                         <i class="fa fa-check"></i>
-                                        <span>{{a.string}}</span></label></div>
+                                        <span>{{a.text}}</span></label></div>
                             </div></div>
                     </div>
                 </div>
@@ -99,7 +102,11 @@
                      data-header-template="/protected/pages/dashboard/investir/tpl/list-header.html"
                      data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html" ng-etf-list></div>
             </div>
-            <button class="btn green" ng-click="wizard.step = 2">Etape suivante</button></div>
+
+            <div class="">
+                <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
+            </div>
+        </div>
     </div>
 
     <!--Step 2-->
@@ -114,12 +121,8 @@
                     </div>
                     <div class="portlet-body">
                         <div class="entry">Combien souhaitez-vous investir ?
-                            <div class="range-wrapper-wallet text-center">
-                                <input id="catch-max" name="wallet-range" type="text" class="input-range"
-                                       data-min="1" data-max="{{client.portfolio.cash}}"
-                                       data-from="{{client.portfolio.cash}}"
-                                       data-postfix="{{client.portfolio.infos.currencySymb}}">
-                            </div>
+                            <rzslider rz-slider-model="sliderInvestLimit.value"
+                                      rz-slider-options="sliderInvestLimit.options"></rzslider>
                         </div>
                     </div>
                 </div>
@@ -136,8 +139,10 @@
             </div>
         </div>
 
-        <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
-        <button class="btn green" ng-click="wizard.goto(3)">Etape suivante</button>
+        <div class="pull-right">
+            <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
+            <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
+        </div>
     </div>
 
     <!--Step 3-->
@@ -145,7 +150,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="tabbable-line boxless tabbable-reversed">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs" id="tab-simulation">
                         <li class="active">
                             <a href="/investir/#tab_0" data-toggle="tab"> Simulation future </a>
                         </li>
@@ -175,31 +180,29 @@
                                             <span class="caption-subject font-green bold uppercase">
                                                 Projection sur {{timeframe}} ans</span>
                                                 <div class="explication-courbe">Voici une analyse de votre nouvel investissement
-                                                    (rappeler l'investissement)
-                                                    (faire 2 tab: futur / passé)</div>
+                                                    (rappeler l'investissement)</div>
                                             </div>
                                         </div>
                                         <div class="portlet-body">
                                             <div id="simulation-future"></div>
-                                            <!-- Radiobox-->
-                                            <div class="form-group form-md-radios" id="legend-radios">
-                                                <div class="md-radio-inline">
-                                                    <div class="md-radio">
-                                                        <input type="radio" id="radio-investissements" name="radios" class="md-radiobtn" checked>
-                                                        <label for="radio-investissements">
-                                                            <span></span>
-                                                            <span class="check"></span>
-                                                            <span class="box"></span> Prévision avec nouveaux investissements </label>
-                                                    </div>
-                                                    <div class="md-radio">
-                                                        <input type="radio" id="radio-portefeuille" name="radios" class="md-radiobtn">
-                                                        <label for="radio-portefeuille">
-                                                            <span></span>
-                                                            <span class="check"></span>
-                                                            <span class="box"></span> Prévision sans nouveaux investissements </label>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <table id="fund_read_chart" style="display: table;">
+                                                <tbody>
+                                                <tr class="hi" style="display: table-row;">
+                                                    <td>Favorable</td>
+                                                    <td>13% chance</td>
+                                                </tr>
+
+                                                <tr class="med" style="display: table-row;">
+                                                    <td>Attendu</td>
+                                                    <td>68% chance</td>
+                                                </tr>
+
+                                                <tr class="lo" style="display: table-row;">
+                                                    <td>Défavorable</td>
+                                                    <td>13% chance</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -236,10 +239,10 @@
             </div>
         </div>
 
-
-
-        <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
-        <button class="btn green" ng-click="wizard.goto(4)">Etape suivante</button>
+        <div class="pull-right">
+            <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
+            <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
+        </div>
     </div>
 
     <!--Step 4-->
@@ -312,7 +315,10 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
-        <button class="btn green" ng-click="wizard.step = 1">Valider l'ordre d'achat</button>
+
+        <div class="">
+            <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
+            <button class="btn green" ng-click="wizard.goto(1)">Valider l'ordre d'achat</button>
+        </div>
     </div>
 </div>

@@ -679,7 +679,7 @@ body {
     font-weight: 400; }
     .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li > a > i,
     .page-sidebar .page-sidebar-menu li > a > i {
-      font-weight: 300; }
+      font-weight: 400; }
   .page-sidebar-closed .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li:hover .sub-menu,
   .page-sidebar-closed .page-sidebar .page-sidebar-menu li:hover .sub-menu {
     background-color: #F9F9F9; }
@@ -688,7 +688,7 @@ body {
     font-weight: normal; }
     .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li .sub-menu li > a > i,
     .page-sidebar .page-sidebar-menu li .sub-menu li > a > i {
-      font-weight: 300; }
+      font-weight: 400; }
   .page-sidebar-closed:not(.page-sidebar-reversed) .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sidebar-search.open .input-group,
   .page-sidebar-closed:not(.page-sidebar-reversed) .page-sidebar .page-sidebar-menu .sidebar-search.open .input-group {
     margin-left: 16px;

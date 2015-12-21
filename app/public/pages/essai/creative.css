@@ -151,7 +151,7 @@ section {
 
 .navbar-default {
     border-color: rgba(34, 34, 34, 0);
-    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Josefin Sans', 'Helvetica Neue', Arial, sans-serif;
     background-color: #a4c6ff;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
@@ -160,7 +160,7 @@ section {
 
 .navbar-default .navbar-header .navbar-brand {
     text-transform: uppercase;
-    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Josefin Sans', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 700;
     color: #f05f40;
 }
@@ -456,7 +456,7 @@ div.box input[type=radio]:checked + label, div.box input[type=checkbox]:checked 
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category,
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-name {
     padding: 0 15px;
-    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Josefin Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category {
@@ -466,7 +466,7 @@ div.box input[type=radio]:checked + label, div.box input[type=checkbox]:checked 
 }
 
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-name {
-    font-size: 18px;
+    font-size: 23px;
 }
 
 .portfolio-box:hover .portfolio-box-caption {
@@ -718,7 +718,7 @@ nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
 }
 
 .dropdown-menu {
-    font-size: 18px;
+    font-size: 23px;
 }
 
 #premier-bouton {

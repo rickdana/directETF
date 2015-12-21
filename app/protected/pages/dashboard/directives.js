@@ -48,7 +48,7 @@ angular.module("MetronicApp").directive('ngSpinnerBar', ['$rootScope',
 
             //$scope.isComboSelectPeriode = false;
             $scope.periodeData = ['6 mois', 'Année en cours', 'Un an', 'Toute la période'];
-            $scope.periodeSelect = $scope.periodeData[3];
+            $scope.periodeSelect = $scope.periodeData[2];
 
             //var options = {
             //    xAxis: {

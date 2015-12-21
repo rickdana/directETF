@@ -2,7 +2,7 @@
   "name": "directETF",
   "private": true,
   "version": "0.1.0",
-  "description": "A starter project for AngularJS",
+  "description": "Direct ETF web site",
   "repository": "https://github.com/angular/angular-seed",
   "license": "MIT",
   "devDependencies": {

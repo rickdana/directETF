@@ -19,6 +19,8 @@ var express = require('express')
 var env = process.env.NODE_ENV || "aws"
   , config;
 
+console.log("Starting with environnement: "+env);
+
 try {
   config = require('./app-' + env + '.json');
 } catch (e) {

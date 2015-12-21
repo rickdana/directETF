@@ -24,10 +24,21 @@ function LoadStockChart(series, container, clear, cb, options) {
                             cb(this);
                         }
                     }
+                },
+                style: {
+                    fontFamily: 'Josefin Sans'
                 }
             },
 
-            yAxis: [{ // Primary yAxis
+            xAxis: {
+                lineColor: 'rgb(0, 0, 0)'
+            },
+
+            yAxis: {
+                opposite: false,
+                gridLineColor: 'white',
+                lineColor: 'rgb(0, 0, 0)',
+                lineWidth: 0.5,
                 labels: {
                     //style: {
                     //    color: 'rgb(243, 156, 18)',
@@ -37,10 +48,8 @@ function LoadStockChart(series, container, clear, cb, options) {
                     useHTML: true,
                     format: '{value} &euro;',
                 },
-                opposite: false,
-                gridLineColor: 'white',
-                lineWidth: 0.5
-            }],
+
+            },
 
             exporting: {
                 enabled: false
@@ -49,7 +58,11 @@ function LoadStockChart(series, container, clear, cb, options) {
             tooltip: {
                 useHTML: true,
                 valueDecimals: 2,
-                valueSuffix: ' &euro;'
+                pointFormat: '<span style="color:{point.color}">\u25CF</span> <b>{point.y} &euro;</b><br/>',
+                //valueSuffix: ' &euro;',
+                dateTimeLabelFormats: {
+                    day: "%e %b %Y"
+                },
             },
 
             mapNavigation: {
@@ -58,71 +71,21 @@ function LoadStockChart(series, container, clear, cb, options) {
 
             legend: {
                 enabled: true,
-                //layout: 'vertical',
-                y: 12,
+                align: 'left',
+                verticalAlign: 'top',
+                y: -10,
                 backgroundColor: 'transparent',
-                itemStyle: {
-                    color: 'rgb(69, 114, 167)',
-                }
+                //itemStyle: {
+                //    color: 'rgb(69, 114, 167)',
+                //},
+                symbolHeight: 12,
+                symbolWidth: 12,
+                symbolRadius: 6,
             },
 
             rangeSelector: {
                 //enabled: false,
-                buttons: [{
-                    type: 'month',
-                    count: 1,
-                    text: '1m'
-                }, {
-                    type: 'month',
-                    count: 3,
-                    text: '3m'
-                }, {
-                    type: 'month',
-                    count: 6,
-                    text: '6m'
-                }, {
-                    type: 'ytd',
-                    text: '2015'
-                }, {
-                    type: 'year',
-                    count: 1,
-                    text: '1an'
-                }, {
-                    type: 'all',
-                    text: 'Tout'
-                }],
-                buttonTheme: {
-                    fill: 'none',
-                    stroke: 'none',
-                    'stroke-width': 0,
-                    r: 8,
-                    style: {
-                        color: 'rgb(69, 114, 167)',
-                        fontWeight: 'bold'
-                    },
-                    states: {
-                        hover: {},
-                        select: {
-                            fill: 'rgb(69, 114, 167)',
-                            style: {
-                                color: 'white'
-                            }
-                        }
-                    }
-                },
                 inputEnabled: false,
-                inputBoxBorderColor: 'rgb(216, 216, 216)',
-                /*							inputBoxWidth: 120,
-                 inputBoxHeight: 18,*/
-                inputStyle: {
-                    color: 'rgb(69, 114, 167)',
-                    fontWeight: 'bold',
-                    backgroundColor: '#39cccc'
-                },
-                /*labelStyle: {
-                 color: 'silver',
-                 fontWeight: 'bold'
-                 },*/
                 selected: 5
             },
 
@@ -135,15 +98,12 @@ function LoadStockChart(series, container, clear, cb, options) {
                 series: {
                     borderColor: 'transparent',
                     borderRadius: '3px',
+                    threshold: null
                 }
             },
 
             navigator: {
                 enabled: false,
-                outlineWidth: 2,
-                height: 35,
-                margin: 25,
-                maskFill: 'rgba(19, 159, 159, .5)',
             },
 
             scrollbar: {

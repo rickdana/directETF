@@ -1,3 +1,17 @@
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+	font-style: normal;
+	font-size: 70px;
+	top: 6px;
+	margin-left: -5px;
+	position: relative;
+}
+
+.dashboard-stat .visual > i.fa-euro {
+	font-size: 80px;
+	margin-left: -2px;
+	position: relative;
+	bottom: 2px;
+}
 
 table .compo-filter {
 	padding : 2px 8px;
@@ -69,6 +83,18 @@ table .selected {
 
 .etf-list-component .etf-column.total,
 .etf-list-component .etf-column.cash,
-.etf-list-component .etf-column.total-gains, {
+.etf-list-component .etf-column.total-gains {
 	font-weight: 700;
+}
+
+.portlet {
+	margin-bottom: 10px;
+}
+
+.blue {
+	background-color: #00aabe !important;
+}
+
+#maps .portlet .caption-subject {
+	/*color: #fff;*/
 }
