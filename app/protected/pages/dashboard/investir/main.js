@@ -723,7 +723,9 @@ angular.module('MetronicApp')
                 }
             }
             for (var date in simulation_future_etfs) {
-                data_simu_future.push([new Date(date).getTime(), simulation_future_etfs_moins_vola[date], simulation_future_etfs_ajoute_vola[date]]);
+                var low = parseFloat(simulation_future_etfs_moins_vola[date].toFixed(2));
+                var high = parseFloat(simulation_future_etfs_ajoute_vola[date].toFixed(2));
+                data_simu_future.push([new Date(date).getTime(), low, high]);
             }
 
             data_simu_future.sort(function (a, b) {
@@ -755,7 +757,7 @@ angular.module('MetronicApp')
                 color:'rgb(32, 121, 57)',
                 zIndex: 11,
                 threshold: null,
-                showInLegend: false
+                showInLegend: false,
             },{
                 name: 'Prévision - 68%',
                 id: 'Prévision_1',

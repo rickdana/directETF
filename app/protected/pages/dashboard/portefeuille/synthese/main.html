@@ -114,10 +114,12 @@
                 </div>
             </div>
             <div class="portlet-body text-right">
-                <select id="choix-period-historique" name="" ng-model="periodeSelect" data-id-container="portefeuille-historique-stockchart" link-to-stcokchart>
-                    <option ng-repeat="option in periodeData">{{option}}</option>
-                </select>
-                <div id="portefeuille-historique-stockchart"></div>
+                <div class="form-group form-md-line-input">
+                    <select class="form-control" id="choix-period-historique" name="" ng-model="periodeSelect" data-id-container="portefeuille-synthese-stockchart" link-to-stcokchart>
+                        <option ng-repeat="option in periodeData">{{option}}</option>
+                    </select>
+                </div>
+                <div id="portefeuille-synthese-stockchart"></div>
             </div>
         </div>
     </div>

@@ -65,6 +65,11 @@ angular.module('MetronicApp')
                     pie: {
                         innerSize: 100,
                         depth: 45,
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true,
+                        cursor: 'pointer',
                     },
                 },
 
@@ -115,10 +120,16 @@ angular.module('MetronicApp')
 
                 colorAxis: null,
 
+
+
                 legend: {
                     enabled: true,
                     labelFormat: '{name} ({percentage:.1f}%)',
-                    maxHeight: 81,
+                    align: 'left',
+                    verticalAlign: 'top',
+                    layout: 'vertical',
+                    itemMarginTop: 3,
+                    itemMarginBottom: 3,
                     navigation: {
                         activeColor: '#3E576F',
                         animation: true,
@@ -127,9 +138,12 @@ angular.module('MetronicApp')
                         style: {
                             fontWeight: 'bold',
                             color: '#333',
-                            fontSize: '11px',
+                            fontSize: '13px',
                         },
                     },
+                    symbolHeight: 12,
+                    symbolWidth: 12,
+                    symbolRadius: 6,
                 },
             });
 
