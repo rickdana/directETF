@@ -38,14 +38,7 @@
 </head>
 
 <body id="page-top">
-
-<nav id="mainNav" class="navbar navbar-fixed-top">
-    <div class="container-fluid">
-        <div ng-include="'/public/pages/index/header.html'"></div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
-</nav>
+<div ng-include="'/public/pages/index/header.html'"></div>
 
 <header>
     <div class="header-content">
@@ -53,13 +46,12 @@
 
             <h1>Vos investissements simplifiés</h1>
 
-            <p><BR>Donnez-nous vos idées, nous nous occupons du reste.</p>
+            <p>Donnez-nous vos idées, nous nous occupons du reste.</p>
 
             <a id="premier-bouton" href="/essai" class="btn btn-primary btn-xl page-scroll">J'essaye</a>
 
-            <div class="next-page animated infinite fadeOut">
-
-                <a class="page-scroll" href="#about"><i class="fa fa-angle-down"></i></a>
+            <div class="animated infinite fadeOut">
+                <a class="page-scroll next-page" href="#about"><i class="fa fa-angle-down"></i></a>
             </div>
         </div>
     </div>
@@ -121,25 +113,26 @@
 
                 <h2 class="section-heading">TENTÉS PAR L'AVENTURE ?</h2>
                 <hr class="light">
-                <p class="text-faded">Nous vous aidons à définir un projet d'investissement, peu importe votre capacité d'épargne, en seulement quelques minutes et sans engagement
+                <p class="text-faded">Nous vous aidons à définir un projet d'investissement, peu importe votre capacité
+                    d'épargne, en seulement quelques minutes et sans engagement
                     <!--Vous saurez toujours où est votre argent. </p>-->
 
-                <small>
-                    <!--Votre argent est investi sur un panier d'actif qui permet de diversifier votre placement dans le respect de vos choix: ainsi, le risque est réduit.-->
-                    <!--Votre investissement est placé sur une assurance vie, dans une banque réputée : sécurité et maitrise de la fiscalité.-->
-                </small>
-                <BR>
-                <small>
-                    <!--Votre argent est disponible à tout moment. Grâce à notre site, vous savez à chaque instant où vous en êtes.-->
-                    <!--« une interface innovante pour piloter vos projets. Nos outils vous montrent où vous en êtes, et vous expliquent les conséquences de chaque décision.-->
-                    <!--Nous sommes partout avec vous. Montrer sur un dessin avec iphone + ordinateur»--> </small>
-                <!--<h2 class="section-heading">Des frais réduits</h2>-->
-                <!--<small>-->
+                    <small>
+                        <!--Votre argent est investi sur un panier d'actif qui permet de diversifier votre placement dans le respect de vos choix: ainsi, le risque est réduit.-->
+                        <!--Votre investissement est placé sur une assurance vie, dans une banque réputée : sécurité et maitrise de la fiscalité.-->
+                    </small>
+                    <BR>
+                    <small>
+                        <!--Votre argent est disponible à tout moment. Grâce à notre site, vous savez à chaque instant où vous en êtes.-->
+                        <!--« une interface innovante pour piloter vos projets. Nos outils vous montrent où vous en êtes, et vous expliquent les conséquences de chaque décision.-->
+                        <!--Nous sommes partout avec vous. Montrer sur un dessin avec iphone + ordinateur»--> </small>
+                    <!--<h2 class="section-heading">Des frais réduits</h2>-->
+                    <!--<small>-->
                     <!--<hr class="light">-->
                     <!--Pas de frais cachés. Vous ne payez qu’un abonnement.-->
-                <!--</small>-->
+                    <!--</small>-->
 
-                <a href="/index/investir-directetf.html" class="btn btn-default btn-xl">En savoir plus</a>
+                    <a href="/index/investir-directetf.html" class="btn btn-default btn-xl">En savoir plus</a>
             </div>
         </div>
     </div>
@@ -255,13 +248,13 @@
 
 <section id="contact">
     <!--<div class="container">-->
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 text-center">
-                <h2 class="section-heading">UN DOUTE ? DES QUESTIONS ?</h2>
-                    <div>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 text-center">
+            <h2 class="section-heading">UN DOUTE ? DES QUESTIONS ?</h2>
+            <div>
 
-                         <p>
-                             Nous sommes là pour y répondre
+                <p>
+                    Nous sommes là pour y répondre
                 </p>
             </div>
             <div class="col-lg-4 col-lg-offset-2 text-center">
@@ -279,7 +272,6 @@
 </section>
 
 
-
 <section class="bg-primary" id="footer">
     <div class="footer">
         <div class="row">
@@ -294,7 +286,6 @@
         </div>
     </div>
 </section>
-
 
 
 <!--
@@ -330,7 +321,7 @@
 
 <!-- Plugin JavaScript -->
 <script src="/public/pages/index/jquery.easing.min.js"></script>
-<script src="/public/pages/index/jquery.fittext.js"></script>
+<!--<script src="/public/pages/index/jquery.fittext.js"></script>-->
 
 <!-- Custom Theme JavaScript -->
 <script src="/public/pages/index/creative.js"></script>

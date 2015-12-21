@@ -146,22 +146,27 @@ angular.module('MetronicApp')
                 // Portefeuille
                 {      //the value of wallet
                     name: 'Portefeuille',
-                    type: 'spline',
+                    type: 'area',
                     data: data_valo,
-                    color: 'rgb(243, 156, 18)',
+                    color: 'rgb(50, 197, 210)',
+                    fillOpacity: 0.2
                 },
                 // Investissement
                 {        //trades of client
                     name: 'Investissement',
                     data: data_trades,
-                    type: 'spline',
-                    color: 'rgba(0, 0, 0, .8)',
-                    //yAxis: 1,
-                    dashStyle: 'longdash'
+                    type: 'area',
+                    color: 'rgb(111, 111, 119)',
+                    fillOpacity: 0.15,
                 }
             ];
 
-            LoadStockChart(series, $('#portefeuille-historique-stockchart'), true);
+            LoadStockChart(series, $('#portefeuille-synthese-stockchart'), true);
+
+            var chart =  $('#portefeuille-synthese-stockchart').highcharts();
+            chart.rangeSelector.buttons[4].setState(2);
+            chart.rangeSelector.clickButton(4,4,true);
+
         }
 
         $ClientFactory.portfolio.valo(function(err, valo, data_valo) {
