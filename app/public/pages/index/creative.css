@@ -11,8 +11,7 @@ body {
 }
 
 body {
-    font-family: 'Josefin Sans', sans-serif;
-
+    font-family: "Josefin Sans"
 }
 
 hr {
@@ -50,11 +49,12 @@ h6 {
 }
 
 
+
 #mainNav {margin-top: 10px}
 
 p {
     margin-bottom: 20px;
-    font-size: 22px;
+    font-size: 20px;
     line-height: 1.5;
 }
 
@@ -88,6 +88,16 @@ section {
 }
 
 
+h3, .h3 {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+
+.text-muted {
+    color: #000;
+    font-size: 18px;
+}
 
 .navbar-default {
     border-color: rgba(34, 34, 34, 0);
@@ -232,7 +242,7 @@ header .header-content .header-content-inner p {
 header .header-content .header-content-inner .page-scroll i {
     display: block;
     position: relative;
-    bottom: 27px;
+    bottom: 25px;
 }
 
 @media (min-width: 768px) {
@@ -263,11 +273,10 @@ header .header-content .header-content-inner .page-scroll i {
         font-size: 25px;
     }
 
-
 .section-heading {
     margin-top: 0;
     color: #ffffff;
-    font-size: 25px;
+    font-size: 22px;
 
 }
 
@@ -561,8 +570,13 @@ body {
     background-color: transparent;
 }
 
+    .navbar-brand, .navbar-nav > li > a {
+        font-size: 17px;
+    }
+
+
 #premier-bouton {
-    background-image: linear-gradient(to bottom, #45bec7 0, #13867d 100%);
+    background-image: linear-gradient(to bottom, #37c4c7 0, #47a2aa 100%);
     margin-top: -30px;
 
 }
