@@ -11,29 +11,24 @@ angular.module('MetronicApp')
             unlock: function() {
                 locked = false;
             },
-            set: function(etf, quantity, price) {
+            set: function(etf, quantity) {
                 if (locked) {
                     return;
                 }
                 if (!etfs[etf.isin]) {
-                    if (!etfs[etf.isin]) {
-                        etfs[etf.isin] = etf;
-                        quantities[etf.isin] = etf.quantity;
-                    }
-                    return console.log("-> %s(quantity: %s, price: %s) was added in the selection list", etf.isin, quantity, price);
+                    etfs[etf.isin] = etf;
+                    quantities[etf.isin] = etf.quantity;
+
+                    return console.log("-> %s(quantity: %s, price: %s) was added in the selection list", etf.isin, etf.quantity, etf.price);
                 }
 
                 if (typeof quantity != 'undefined') {
                     quantities[etf.isin] = parseInt(quantity);
                 } else {
-                    quantity = etfs[etf.isin].quantity;
+                    quantity = quantities[etf.isin];
                 }
 
-                if (price) {
-                    etfs[etf.isin].price = parseFloat(price);
-                }
-
-                console.log("-- Set %s(quantity: %s, price: %s)", etf.isin, quantity, price || etfs[etf.isin].price);
+                console.log("-- Set %s(quantity: %s, price: %s)", etf.isin, quantity, etf.price);
             },
             get: function(isin) {
                 if (isin) {
@@ -58,7 +53,7 @@ angular.module('MetronicApp')
                 var i = 0;
 
                 for (var isin in etfs) {
-                    if (etfs[isin] && quantities[isin]) {
+                    if (quantities[isin]) {
                         i++;
                     }
                 }
@@ -68,13 +63,62 @@ angular.module('MetronicApp')
             cash: function() {
                 var cash = 0;
 
-                for (var isin in etfs) {
-                    if (etfs[isin]) {
-                        cash += quantities[isin] * etfs[isin].price;
-                    }
+                for (var isin in quantities) {
+                    cash += quantities[isin] * etfs[isin].price;
                 }
 
                 return cash;
+            },
+            distribution: function($etfs, limit) {
+                if (!$etfs || !$etfs.length) {
+                    return;
+                }
+
+                var initial_cash = 0;
+                var percents = {};
+                var ratio = limit / initial_cash;
+
+                for (var i in $etfs) {
+                    initial_cash += $etfs[i].price;
+                }
+
+                for (var i in $etfs) {
+                    percents[$etfs[i].isin] = $etfs[i].price / initial_cash;
+                }
+
+                this.unlock();
+
+                for (var i in $etfs) {
+                    var isin = $etfs[i].isin;
+                    var quantity = Math.floor(percents[isin] * limit / etfs[isin].price);
+
+                    $etfs[i].quantity = quantity;
+                    this.set($etfs[i], quantity);
+                }
+
+                var diff = limit - this.cash();
+
+                while (diff > 0) {
+                    for (var i = 0, j = 0; i < $etfs.length; i++) {
+                        if ($etfs[i].price <= diff) {
+                            this.set($etfs[i], ++$etfs[i].quantity);
+                            diff -= $etfs[i].price;
+
+                            if (diff <= 0) {
+                                j = i;
+                                break;
+                            }
+                        } else {
+                            j++;
+                        }
+                    }
+
+                    if (i == j) {
+                        break;
+                    }
+                }
+
+                this.lock();
             }
         };
     })
@@ -138,7 +182,7 @@ angular.module('MetronicApp')
             App.initAjax();
         });
 
-        var wizard_state = $("#wizard-state");
+        var wizard_state = $element.find("#wizard-state");
 
         $scope.wizard = {
             step: 1,
@@ -162,43 +206,16 @@ angular.module('MetronicApp')
 
                 console.log("Go to step " + current.attr('data-step'));
 
-                switch (current.attr('data-step')) {
-                    case '1':
-                        $OrdersFactory.unlock();
-                        $element.find('[data-step=2] [ng-etf-list]').attr('data-filter', '');
-                        break;
-
-                    case '2':
-                        $OrdersFactory.lock();
-                        $element.find('[data-step=2] [ng-etf-list]')
-                            .attr('data-filter', JSON.stringify($OrdersFactory.get()));
-                        break;
-
-                    case '3':
-                        $OrdersFactory.lock();
-                        setTimeout(function() {
-                            $rootScope.runSimulation();
-                        }, 500);
-                        break;
-
-                    case '4':
-                        $OrdersFactory.lock();
-                        setTimeout(function() {
-                            $scope.$apply(function() {
-                                $element.find('[data-step=4] .update-with-etfs-selection')
-                                    .attr('data-filter', JSON.stringify($OrdersFactory.get()));
-                            });
-                        }, 500);
-                        break;
-                }
+                $rootScope['step' + current.attr('data-step')]();
+                $OrdersFactory.lock();
 
                 document.body.scrollTop = 0;
             }
         };
 
-        $scope.client = {
+        $rootScope.client = {
             portfolio: {
-                infos: {}
+                infos: {cash: 0}
             }
         };
 
@@ -207,19 +224,21 @@ angular.module('MetronicApp')
                 throw err;
             }
 
-            $scope.client.portfolio.infos = infos;
+            $rootScope.client.portfolio.infos = infos;
         });
 
     })
     .controller('InvestirController', function($OrdersFactory, $rootScope, $scope) {
         $scope.$OrdersFactory = $OrdersFactory;
 
+        $rootScope.step1 = function () {};
+
         $scope.filters = {
             current: {
                 category: 'filter-regions',
                 value: '',
-                question: 'q1',
-                anwser: '',
+                question: '',
+                answer: '',
             },
             history: {
                 entries: [],
@@ -230,163 +249,323 @@ angular.module('MetronicApp')
                     return array.push.apply(array, rest);
                 }
             },
+            exec: function(history, q, a) {
+                if (a.goto != 'end') {
+                    return;
+                }
+
+                var query = [];
+
+                for(var i in history) {
+                    query.push(history[i][1].id);
+                }
+
+                console.log(query.join('-'))
+
+                //$scope.wizard.goto(2);
+            },
             entries: [
                 {
-                    id: 'filter-sectors',
-                    name: 'Je souhaite investir dans un secteur en particulier',
-                    items: [
-                        {id: 'sector-finance', name: 'Finance'},
-                        {id: 'sector-industry', name: 'Industrie'},
-                        {id: 'sector-health', name: 'Santé'},
-                        {id: 'sector-energy', name: 'Energie'},
-                        {id: 'sector-collectivity', name: 'Services aux collectivité'},
-                        {id: 'sector-technology', name: 'Technologies de l\'information'},
-                        {id: 'sector-consomer', name: 'Biens de consomation cyclique'},
-                    ]
-                },
-                {
-                    id: 'filter-regions',
-                    name: 'Je souhaite investir dans une région',
+                    id: 'company',
+                    name: 'Investir dans des entreprises',
                     questions: [
                         {
-                            id: "q1",
-                            string: "Etes-vous plutôt intéressés par les marchés développés ou émergents ?",
-                            anwsers: [
+                            id: "mode",
+                            text: "Quel mode d'investissement souhaitez-vous faire ?",
+                            answers: [
                                 {
-                                    id: "q1a1",
-                                    string: "Marchés développés",
-                                    resume: "Je suis intéressé par les marchés développés",
-                                    goto: "q2.2"
+                                    id: "sector",
+                                    text: "Par secteur d'activité",
+                                    resume: "Investir dans un secteur d'activité",
+                                    goto: "sectors"
                                 },
                                 {
-                                    id: "q1a2",
-                                    string: "Marchés émergents",
-                                    resume: "Je suis intéressé par les marchés émergents",
-                                    goto: "q2.1"
+                                    id: "region",
+                                    text: "Par région",
+                                    resume: "Investir dans une région",
+                                    goto: "regions"
+                                },
+                                {
+                                    id: "theme",
+                                    text: "Par thème (écologie, etc.)",
+                                    resume: "Investir dans thème",
+                                    goto: "themes"
                                 },
                             ]
                         },
                         {
-                            id: "q2.1",
-                            string: "Quel continent/sous-continent plus particulièrement ?",
-                            anwsers: [
+                            id: "sectors",
+                            text: "Dans quel secteur d'activité souhaitez-vous investir ?",
+                            answers: [
                                 {
-                                    id: "q2a1",
-                                    string: "Afrique",
+                                    id: "finance",
+                                    text: "Finance",
+                                    resume: "Investir dans la finance",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "industry",
+                                    text: "Industrie",
+                                    resume: "Investir dans l'industrie",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "health",
+                                    text: "Santé",
+                                    resume: "Investir dans la santé",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "collectivity",
+                                    text: "Services aux collectivité",
+                                    resume: "Investir dans des collectivité",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "technology",
+                                    text: "Technologies de l'information",
+                                    resume: "Investir dans la technologie",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "consomer",
+                                    text: "Biens de consomation cyclique",
+                                    resume: "Investir dans les biens de consomation cyclique",
+                                    goto: "end"
+                                },
+                            ]
+                        },
+                        {
+                            id: "regions",
+                            text: "Dans quelle région du monde souhaitez-vous investir ?",
+                            answers: [
+                                {
+                                    id: "africa",
+                                    text: "Afrique",
                                     resume: "Investir en Afrique",
-                                    goto: "end"
+                                    goto: "regions-details"
                                 },
                                 {
-                                    id: "q2a4",
-                                    string: "Asia Pacific",
-                                    resume: "Investir en Asie Pacifique",
-                                    goto: "q4"
-                                },
-                            ]
-                        },
-                        {
-                            id: "q2.2",
-                            string: "Quel continent/sous-continent plus particulièrement ?",
-                            anwsers: [
-                                {
-                                    id: "q2a2",
-                                    string: "Europe",
+                                    id: "europe",
+                                    text: "Europe",
                                     resume: "Investir en Europe",
-                                    goto: "q3"
+                                    goto: "regions-details"
                                 },
                                 {
-                                    id: "q2a3",
-                                    string: "Amérique",
-                                    resume: "Investir en Amérique",
-                                    goto: "end"
+                                    id: "asia-pacific",
+                                    text: "Asie Pacifique",
+                                    resume: "Investir en Asie Pacifique",
+                                    goto: "regions-details"
+                                },
+                                {
+                                    id: "north-america",
+                                    text: "Amérique du Nord",
+                                    resume: "Investir en Amérique du Nord",
+                                    goto: "regions-details"
+                                },
+                                {
+                                    id: "latin-america",
+                                    text: "Amérique Latine",
+                                    resume: "Investir en Amérique Latine",
+                                    goto: "regions-details"
                                 },
                             ]
                         },
                         {
-                            id: "q3",
-                            string: "Quel stratégie vous parle le plus, investir sur tende la région, un pays particulier ou un secteur d’activité ?",
-                            anwsers: [
+                            id: "regions-details",
+                            text: "Préférez-vous investir sur l'ensemble de la région, ou plutôt sur un pays en particulier ?",
+                            answers: [
                                 {
-                                    id: "q3a1",
-                                    string: "La région",
-                                    resume: "Investir sur tende la région",
-                                    goto: "end"
-                                },
-                                {
-                                    id: "q3a2",
-                                    string: "Un pays",
+                                    id: "by-countries",
+                                    text: "Un pays en particulier",
                                     resume: "Investir dans un pays en particulier",
-                                    goto: "end"
+                                    goto: "countries"
                                 },
                                 {
-                                    id: "q3a3",
-                                    string: "Un secteur",
-                                    resume: "Investir dans un secteur en particulier",
-                                    goto: "end"
-                                },
-                            ]
-                        },
-                        {
-                            id: "q4",
-                            string: "Préférez-vous investir sur l'ensemble de la région, ou plutôt sur un pays particulier ?",
-                            anwsers: [
-                                {
-                                    id: "q4a1",
-                                    string: "Investir en Australie",
-                                    resume: "Investir en Australie",
-                                    goto: "end"
-                                },
-                                {
-                                    id: "q4a2",
-                                    string: "Investir au Japon",
-                                    resume: "Investir au Japon",
-                                    goto: "end"
-                                },
-                                {
-                                    id: "q4a3",
-                                    string: "Investir sur l'ensemble de la région",
+                                    id: "regions",
+                                    text: "Investir sur l'ensemble de la région",
                                     resume: "Investir sur l'ensemble de la région",
                                     goto: "end"
                                 },
                             ]
                         },
                         {
+                            id: "countries",
+                            text: "Sélectionnez le pays souhaité.",
+                            answers: [
+                                {
+                                    id: "fr",
+                                    text: "France",
+                                    resume: "Investir en France",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "us",
+                                    text: "États-Unis",
+                                    resume: "Investir aux États-Unis",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "be",
+                                    text: "Belgique",
+                                    resume: "Investir en Belgique",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "it",
+                                    text: "Italie",
+                                    resume: "Investir en Italie",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "ch",
+                                    text: "Chine",
+                                    resume: "Investir en Chine",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "jp",
+                                    text: "Japon",
+                                    resume: "Investir au Japon",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "es",
+                                    text: "Espagne",
+                                    resume: "Investir en Espagne",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "de",
+                                    text: "Allemagne",
+                                    resume: "Investir en Allemagne",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "ru",
+                                    text: "Russie",
+                                    resume: "Investir en Russie",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "tr",
+                                    text: "Turquie",
+                                    resume: "Investir en Turquie",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "hk",
+                                    text: "Hong-Kong",
+                                    resume: "Investir en Hong-Kong",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "kr",
+                                    text: "Corée",
+                                    resume: "Investir en Corée",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "in",
+                                    text: "Inde",
+                                    resume: "Investir en Inde",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "gr",
+                                    text: "Grèce",
+                                    resume: "Investir en Grèce",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "br",
+                                    text: "Brézil",
+                                    resume: "Investir au Brézil",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "tw",
+                                    text: "Taïwan",
+                                    resume: "Investir en Taïwan",
+                                    goto: "end"
+                                },
+                            ]
+                        },
+                        {
                             id: "end",
-                            string: "Voici une liste d'ETFs correspondants à vos réponses. Faites votre sélection et passez à l'étape suivante.",
-                            button: "Etape suivante",
-                            exec: function(history) {
-                                var query = [];
-
-                                for(var i in history) {
-                                    query.push(history[i][1].id);
-                                }
-
-                                console.log(query.join('-'))
-
-                                $scope.wizard.goto(2);
-                            }
+                            text: "Voici une liste d'ETFs correspondants à vos réponses.",
                         }
                     ]
                 },
                 {
+                    id: 'filter-country',
+                    name: 'Investir dans un pays',
+                    goto: "end"
+                },
+                {
                     id: 'filter-news',
                     name: 'Investir à partir de l\'actualité',
-
+                    goto: "end"
                 },
                 {
                     id: 'filter-maps-list',
                     name: 'Je souhaite passer au mode expert',
+                    goto: "end"
                 },
             ]
         };
     })
-    .controller('InvestirMontantAjustementController', function($OrdersFactory, $ClientFactory, $rootScope, $scope) {
+    .controller('InvestirMontantAjustementController', function($OrdersFactory, $rootScope, $scope, $element) {
+        $scope.sliderInvestLimit = {
+            value: 0,
+            options: {
+                floor: 0,
+                ceil: $scope.client.portfolio.infos.cash,
+                step: 0.1,
+                precision: 2,
+                showSelectionBar: true,
+                hideLimitLabels: true,
+                translate: function(value) {
+                    return value + ' ' + $scope.client.portfolio.infos.currencySymb;
+                }
+            }
+        };
+
         $scope.$OrdersFactory = $OrdersFactory;
+
+        $rootScope.step2 = function () {
+            $scope.sliderInvestLimit.value = $OrdersFactory.cash();
+            $scope.sliderInvestLimit.options.floor = $scope.sliderInvestLimit.value;
+
+            $element.find('[ng-etf-list]').attr('data-filter', '');
+
+            $element.find('[ng-etf-list]')
+                    .attr('data-filter', JSON.stringify($OrdersFactory.get()));
+        };
+
+        $scope.$watch(function() {
+            return $scope.client.portfolio.infos.cash;
+        }, function(cash) {
+            $scope.sliderInvestLimit.options.ceil = cash;
+        });
+
+        $scope.$watch(function() {
+            return $scope.sliderInvestLimit.value;
+        }, function(limit) {
+            $OrdersFactory.distribution($scope.etfs, limit);
+        });
     })
     .controller('InvestirRevoirController', function ($ClientFactory, $OrdersFactory, $EtfsFactory, $rootScope, $scope, $element) {
         var _invest_etfs = null;
         var _ref_etfs = null;
         var _data_valo = null;
+
+        $rootScope.step3 = function () {
+            $OrdersFactory.lock();
+            setTimeout(function() {
+                $scope.runSimulation();
+            }, 500);
+        };
 
         $scope.timeframe = 20;
 
@@ -439,7 +618,6 @@ angular.module('MetronicApp')
             var montant = $OrdersFactory.cash();
 
             for (var i in ref_etfs) {
-
                 var proportion = ref_etfs[i][3] / montant;
                 proportion_etfs.push([ref_etfs[i][0], proportion])
             }
@@ -765,7 +943,17 @@ angular.module('MetronicApp')
 
 
     })
-    .controller('InvestirValidationController', function($OrdersFactory, $scope) {
+    .controller('InvestirValidationController', function($OrdersFactory, $rootScope, $scope, $element) {
         $scope.$OrdersFactory = $OrdersFactory;
+
+        $rootScope.step4 = function () {
+            $OrdersFactory.lock();
+            setTimeout(function() {
+                $scope.$apply(function() {
+                    $element.find('.update-with-etfs-selection')
+                        .attr('data-filter', JSON.stringify($OrdersFactory.get()));
+                });
+            }, 500);
+        };
     });
 

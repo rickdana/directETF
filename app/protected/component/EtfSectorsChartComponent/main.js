@@ -21,14 +21,17 @@ angular.module('MetronicApp')
                 chart: {
                     type: 'pie',
                     plotBackgroundColor: null,
-                    plotBorderWidth: 0,
+                    plotBorderWidth: 10,
                     plotShadow: false,
+                    plotBorderColor: '#fff',
                     height: $attrs.height || null,
                     width: $attrs.width || null,
                     style: {
                         top: '0px',
         //                    left: '-30px'
-                        'margin-bottom': '0px'
+                        'margin-bottom': '0px',
+                        'font-family': 'Poiret one',
+                        'font-size': '20px'
                     },
                     options3d: {
                         enabled: true,
@@ -57,10 +60,19 @@ angular.module('MetronicApp')
                     },
                 },
 
+
+                plotOptions: {
+                    pie: {
+                        innerSize: 100,
+                        depth: 45,
+                    },
+                },
+
                 series: [{
                     type: 'pie',
                     data: parse(etfs),
                     colorByPoint: true,
+                    innerSize: '50%',
                     point: {
                         events: {
                             select: function (e) {

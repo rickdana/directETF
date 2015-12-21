@@ -646,13 +646,13 @@ body {
   /* Change sidebar link font weight */ }
   .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li > a,
   .page-sidebar .page-sidebar-menu li > a {
-    font-weight: 300; }
+    font-weight: 400; }
     .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li > a > i,
     .page-sidebar .page-sidebar-menu li > a > i {
-      font-weight: 300; }
+      font-weight: 400; }
   .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li .sub-menu li > a,
   .page-sidebar .page-sidebar-menu li .sub-menu li > a {
-    font-weight: 300; }
+    font-weight: 400; }
     .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li .sub-menu li > a > i,
     .page-sidebar .page-sidebar-menu li .sub-menu li > a > i {
-      font-weight: 300; }
+      font-weight: 400; }
