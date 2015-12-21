@@ -95,12 +95,12 @@ h3, .h3 {
 
 
 .text-muted {
-    color: #000;
+    color: #767676;
     font-size: 18px;
 }
 
 .navbar-default {
-    border-color: rgba(34, 34, 34, 0);
+    border-color: rgba(0, 0, 0, 0);
     font-family: 'Josefin Sans', 'Helvetica Neue', Arial, sans-serif;
     background-color: #a4c6ff;
     -webkit-transition: all .35s;
@@ -582,7 +582,7 @@ body {
 }
 
 .dropdown-menu {
-    font-size: 23px;
+    font-size: 16px;
     margin-right: 70px;
 
 }
