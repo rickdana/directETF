@@ -389,19 +389,19 @@ function load_comparaison_valo_trades(data_valo, trades, trades_by_date, $scope)
 		{      //the value of wallet
 			id: 1,
 			name: 'Portefeuille',
-			type: 'spline',
+			type: 'area',
 			data: data_valo,
-			color: 'rgb(243, 156, 18)',
+			color: 'rgb(50, 197, 210)',
+			fillOpacity: 0.2
 		},
 		// Investissement
 		{        //trades of client
 			id: 2,
 			name: 'Investissement',
 			data: data_trades,
-			type: 'spline',
-			color: 'rgba(0, 0, 0, .8)',
-			//yAxis: 1,
-			dashStyle: 'longdash'
+			type: 'area',
+			color: 'rgb(111, 111, 119)',
+			fillOpacity: 0.15,
 		}
 	];
 
@@ -435,7 +435,9 @@ function load_comparaison_valo_trades(data_valo, trades, trades_by_date, $scope)
 
 	LoadStockChart(series, $('#portefeuille-comparaison-stockchart'), false);
 
-
+	var chart =  $('#portefeuille-comparaison-stockchart').highcharts();
+	chart.rangeSelector.buttons[4].setState(2);
+	chart.rangeSelector.clickButton(4,4,true);
 
 }
 
@@ -457,6 +459,7 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 	var chart = $('#portefeuille-comparaison-stockchart').highcharts();
 	var visible_1 = chart.get(1).visible;   //la courbe portefeuille
 	var visible_2 = chart.get(2).visible;   //la courbe investissement
+	$scope.periodeSelect = $scope.periodeData[2];
 	$(chart.series).each(function(){
 		hide_legend(chart, this);
 		this.setVisible(false, false);
@@ -522,6 +525,7 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 			serie_1.color = ref_infos[j].color;
 			serie_1.type = ref_infos[j].type;
 			serie_1.name = ref_name;
+			serie_1.fillOpacity = 0.2;
 		/*	serie_1.events = {
 				legendItemClick : function() {
 					$scope.$apply(function () {
@@ -536,9 +540,10 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 				}
 			};
 			serie_2.color = ref_infos[j].taxColor;
-			serie_2.type = ref_infos[j].type;
+			serie_2.type = 'spline';
 			serie_2.name = ref_name + ' fiscalité';
 			serie_2.id = serie_2.name;
+			serie_2.fillOpacity = 0.2;
 			/*	serie_2.events = {
                     legendItemClick : function() {
                         $scope.$apply(function () {
@@ -571,8 +576,6 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 					})(series));
 					break;
 				case 'number': //Référence LivretA
-					serie_1.dashStyle = 'shortdot';
-					serie_2.dashStyle = 'shortdot';
 					serie_1.data = reference_livret (ref_infos[j].data, trades_cash_stockin, data_valo);
 					serie_2.data = reference_fiscalite(serie_1.data, serie_2.tax / 24, trades_by_date);
 					series.push(serie_1);
@@ -586,6 +589,10 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 					series.push(serie_2);
 					LoadStockChart(series, $('#portefeuille-comparaison-stockchart'), false);
 			}
+
+			chart.rangeSelector.buttons[4].setState(2);
+			chart.rangeSelector.clickButton(4,4,true);
+
 
 			break;
 		}

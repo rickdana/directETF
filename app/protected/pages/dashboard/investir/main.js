@@ -503,62 +503,6 @@ angular.module('MetronicApp')
             $EtfsFactory.prices(ref_etfs[index++][0], prices_callback);
         }
 
-        ////Simulation future
-        //function simulation_future(time_frame, data_valo_today, data) {
-        //    var simulation_future_etfs = [];
-        //    var value_invest_today = data_valo_today[1];
-        //    var firstDay = formatDate(data_valo_today[0]);
-        //
-        //    var taux = rate_change_year(data);
-        //    var montant = value_invest_today;
-        //    var month = firstDay;
-        //    simulation_future_etfs.push([new Date(firstDay).getTime(), montant]);
-        //    for (var i = 0; i < time_frame; i++) {
-        //        for (var j = 1; j <= 12; j++) {
-        //            month = next_month(month);
-        //            simulation_future_etfs.push([new Date(month).getTime(), montant * (taux / 12 * j + 1)]);
-        //        }
-        //        montant *= (1 + taux);
-        //    }
-        //
-        //    return simulation_future_etfs;
-        //}
-
-        //function draw_simulation_future(data_valo, invest_simu_past) {
-        //    //simulation-graph of the future
-        //    var range_valo_future = [];
-        //    var range_invest_future = [];
-        //    var time_frame = $scope.timeframe;
-        //    var montant_today = data_valo[data_valo.length - 1];
-        //
-        //    var data_invest_future = simulation_future(time_frame, montant_today, invest_simu_past);
-        //    var data_valo_future = simulation_future(time_frame, montant_today, data_valo);
-        //
-        //    var data_invest_future_varia = [];
-        //    for (var i = 0; i < data_invest_future.length; i++) {
-        //        data_invest_future_varia.push([data_invest_future[i][0], data_invest_future[i][1] * 0.8, data_invest_future[i][1]]);
-        //    }
-        //
-        //    //simulation-graph of the future
-        //    var series = [{
-        //        name: 'Portefeuille',
-        //        type: 'spline',
-        //        data: data_valo_future,
-        //        color: 'rgb(243, 156, 18)',
-        //        threshold: null,
-        //        zIndex: 10,
-        //        visible: false
-        //    }, {
-        //        name: 'Nouveaux investissements',
-        //        type: 'arearange',
-        //        data: data_invest_future_varia,
-        //        color: '#00802b',
-        //        threshold: null
-        //    }];
-        //
-        //    LoadStockChart(series, $('#simulation-future'), true);
-        //}
-
         //Simulation future
         function simulation_future(ref_etfs, time_frame, data_valo_today, left_vol, right_vol) {
             var simulation_future_etfs = {};
@@ -576,6 +520,14 @@ angular.module('MetronicApp')
                 var left_volatilite = ref_etfs[i][4] * left_vol * ref_etfs[i][1];
                 var right_volatilite = ref_etfs[i][4] * right_vol * ref_etfs[i][1];
 
+                simulation_future_etfs[month] = value_etf;
+                if(typeof simulation_future_etfs_moins_vola[month] == 'undefined') {
+                    simulation_future_etfs_moins_vola[month] = simulation_future_etfs[month];
+                    simulation_future_etfs_ajoute_vola[month] = simulation_future_etfs[month];
+                } else {
+                    simulation_future_etfs_moins_vola[month] += simulation_future_etfs[month];
+                    simulation_future_etfs_ajoute_vola[month] += simulation_future_etfs[month];
+                }
 
                 for (var i = 0; i < time_frame; i++) {
                     for (var j = 1; j <= 12; j++) {
@@ -614,105 +566,41 @@ angular.module('MetronicApp')
             var data_invest_future_attendu = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, -1, 1);
             var data_invest_future_favorable = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, 1, 2);
             var data_invest_future_defavorable = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, -2, -1);
-            var data_valo_future_attendu = simulation_future(ref_etfs, time_frame, data_valo_today, -1, 1);
-            var data_valo_future_favorable = simulation_future(ref_etfs, time_frame, data_valo_today, 1, 2);
-            var data_valo_future_defavorable = simulation_future(ref_etfs, time_frame, data_valo_today, -2, -1);
 
 
             //simulation-graph of the future
             var series = [{
-                name: 'Portefeuille - 68%',
-                id: 'Portefeuille_1',
-                type: 'arearange',
-                data: data_valo_future_attendu,
-                color: 'rgb(243, 156, 18)',
-                threshold: null,
-                zIndex: 10,
-                visible: false,
-                showCheckbox: true,
-                showInLegend: false
-
-            }, {
-                name: 'Prévision - 68%',
-                id: 'Prévision_1',
-                type: 'arearange',
-                data: data_invest_future_attendu,
-                color: 'rgb(43, 161, 76)',
-                zIndex: 11,
-                threshold: null,
-                showCheckbox: true,
-                showInLegend: false
-            }, {
                 name: 'Prévision - favorable 13%',
                 id: 'Prévision_2',
                 type: 'arearange',
                 data: data_invest_future_favorable,
-                color: 'rgb(130, 208, 151)',
+                color:'rgb(32, 121, 57)',
                 zIndex: 11,
                 threshold: null,
                 showInLegend: false
-            }, {
+            },{
+                name: 'Prévision - 68%',
+                id: 'Prévision_1',
+                type: 'arearange',
+                data: data_invest_future_attendu,
+                color:  'rgb(43, 161, 76)' ,
+                zIndex: 11,
+                threshold: null,
+                showCheckbox: true,
+                showInLegend: false
+            },{
                 name: 'Prévision - defavorable 13%',
                 id: 'Prévision_3',
                 type: 'arearange',
                 data: data_invest_future_defavorable,
-                color: 'rgb(140, 140, 140)',
+                color: 'rgb(255, 198, 179)',
                 zIndex: 11,
                 threshold: null,
-                showInLegend: false
-            },{
-                name: 'Portefeuille - favorable 13%',
-                id: 'Portefeuille_2',
-                type: 'arearange',
-                data: data_valo_future_favorable,
-                color: 'rgb(255, 204, 102)',
-                threshold: null,
-                zIndex: 10,
-                visible: false,
-                showInLegend: false
-            },{
-                name: 'Portefeuille - défavorable 13%',
-                id: 'Portefeuille_3',
-                type: 'arearange',
-                data: data_valo_future_defavorable,
-                color: 'rgb(140, 140, 140)',
-                threshold: null,
-                zIndex: 10,
-                visible: false,
                 showInLegend: false
             }];
 
             LoadStockChart(series, $('#simulation-future'), true);
 
-            var radio_investissement = document.getElementById("radio-investissements");
-            var radio_portefueille = document.getElementById("radio-portefeuille");
-            var chart_future = $('#simulation-future').highcharts();
-            var first = true;
-
-            $(radio_investissement).change(function() {
-                if (this.checked) {
-                    chart_future.get('Prévision_1').setVisible(true, false);
-                    chart_future.get('Prévision_2').setVisible(true, false);
-                    chart_future.get('Prévision_3').setVisible(true, false);
-                    chart_future.get('Portefeuille_1').setVisible(false, false);
-                    chart_future.get('Portefeuille_2').setVisible(false, false);
-                    chart_future.get('Portefeuille_3').setVisible(false, false);
-                }
-            });
-
-
-            $(radio_portefueille).change(function() {
-                if (this.checked) {
-                    chart_future.get('Portefeuille_1').setVisible(true, first);
-                    chart_future.get('Portefeuille_2').setVisible(true, first);
-                    chart_future.get('Portefeuille_3').setVisible(true, first);
-                    chart_future.get('Prévision_1').setVisible(false, false);
-                    chart_future.get('Prévision_2').setVisible(false, false);
-                    chart_future.get('Prévision_3').setVisible(false, false);
-                    first = false;
-                }
-            });
-            //$('#simulation-future').highcharts().legend.allItems[1].update({name:'Prévision avec nouveaux investissements'});
             //$('#simulation-future').highcharts().legend.allItems[0].update({name:'Prévision sans nouveaux investissements'});
         }
 
@@ -821,27 +709,33 @@ angular.module('MetronicApp')
                 function simulation_cb(invest_simu_past) {
                     var series = [{      //the value of portfolio
                         name: 'Portefeuille',
-                        type: 'spline',
+                        type: 'area',
                         data: data_valo,
-                        color: 'rgb(243, 156, 18)',
+                        color: 'rgb(50, 197, 210)',
+                        fillOpacity: 0.2
                     }, {        //trades of client
                         name: 'Investissement',
                         data: data_trades,
-                        type: 'spline',
-                        color: 'rgba(0, 0, 0, .8)',
+                        type: 'area',
+                        color: 'rgb(111, 111, 119)',
+                        fillOpacity: 0.15,
                         //yAxis: 1,
                         dashStyle: 'longdash'
                     }, {
                         name: 'Nouveaux investissements',
                         data: invest_simu_past,
-                        type: 'spline',
-                        color: 'rgb(91, 173, 255)'
+                        type: 'area',
+                        color: '#5cc586',
+                        fillOpacity: 0.15,
                     }];
 
 
                     //simulation-graph of the past
                     LoadStockChart(series, $('#simulation-past'), true);
 
+                    var chart =  $('#simulation-past').highcharts();
+                    chart.rangeSelector.buttons[4].setState(2);
+                    chart.rangeSelector.clickButton(4,4,true);
                     //Benefice
                     $rootScope.profit = invest_simu_past[invest_simu_past.length - 1][1] - data_valo[data_valo.length - 1][1]
                         - (invest_simu_past[0][1] - data_valo[0][1]);

@@ -145,7 +145,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="tabbable-line boxless tabbable-reversed">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs" id="tab-simulation">
                         <li class="active">
                             <a href="/investir/#tab_0" data-toggle="tab"> Simulation future </a>
                         </li>
@@ -175,31 +175,29 @@
                                             <span class="caption-subject font-green bold uppercase">
                                                 Projection sur {{timeframe}} ans</span>
                                                 <div class="explication-courbe">Voici une analyse de votre nouvel investissement
-                                                    (rappeler l'investissement)
-                                                    (faire 2 tab: futur / passé)</div>
+                                                    (rappeler l'investissement)</div>
                                             </div>
                                         </div>
                                         <div class="portlet-body">
                                             <div id="simulation-future"></div>
-                                            <!-- Radiobox-->
-                                            <div class="form-group form-md-radios" id="legend-radios">
-                                                <div class="md-radio-inline">
-                                                    <div class="md-radio">
-                                                        <input type="radio" id="radio-investissements" name="radios" class="md-radiobtn" checked>
-                                                        <label for="radio-investissements">
-                                                            <span></span>
-                                                            <span class="check"></span>
-                                                            <span class="box"></span> Prévision avec nouveaux investissements </label>
-                                                    </div>
-                                                    <div class="md-radio">
-                                                        <input type="radio" id="radio-portefeuille" name="radios" class="md-radiobtn">
-                                                        <label for="radio-portefeuille">
-                                                            <span></span>
-                                                            <span class="check"></span>
-                                                            <span class="box"></span> Prévision sans nouveaux investissements </label>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <table id="fund_read_chart" style="display: table;">
+                                                <tbody>
+                                                <tr class="hi" style="display: table-row;">
+                                                    <td>Favorable</td>
+                                                    <td>13% chance</td>
+                                                </tr>
+
+                                                <tr class="med" style="display: table-row;">
+                                                    <td>Attendu</td>
+                                                    <td>68% chance</td>
+                                                </tr>
+
+                                                <tr class="lo" style="display: table-row;">
+                                                    <td>Défavorable</td>
+                                                    <td>13% chance</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
