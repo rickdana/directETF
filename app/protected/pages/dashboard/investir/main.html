@@ -59,8 +59,10 @@
                                    ng-value="item.id">
                             <label for="{{item.id}}">
                                 <i class="fa fa-check"></i>
-                                <span>{{item.name}}</span></label></div>
+                                <span>{{item.text}}</span></label></div>
                         <div ng-if="filter.questions" ng-init="filter.history = []">
+                            <div ng-if="!filters.current.question"
+                                 ng-init="filters.current.question = filter.questions[0].id"></div>
                             <div class="filter-question filter-history"
                                  ng-init="q = h[0]; a = h[1]"
                                  ng-repeat="(i, h) in filter.history">
@@ -68,10 +70,9 @@
                                        ng-init="h.checked = true"
                                        ng-model="h.checked">
                                 <label for="h-{{a.id}}"
-                                       ng-click="filters.current.question = q.id; filters.current.anwser = '';
+                                       ng-click="filters.current.question = q.id; filters.current.answer = '';
                                                  filters.history.remove(filter.history, i, filter.history.length)">
-                                    <span>{{a.resume}}</span>
-                                    <i class="fa fa-undo"></i></label></div>
+                                    <span>{{a.resume}}</span></label></div>
                             <div class="filter-question"
                                  ng-repeat="q in filter.questions"
                                  ng-show="filters.current.question == q.id">
@@ -82,9 +83,9 @@
                                     <div class="">
                                         <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
                                     </div></div>
-                                <div class="filter-question-anwser" ng-repeat="a in q.anwsers">
+                                <div class="filter-question-answer" ng-repeat="a in q.answers">
                                     <input type="radio" name="{{filter.id}}" id="{{a.id}}" class="aCheck filter-checkbox"
-                                           ng-model="filters.current.anwser"
+                                           ng-model="filters.current.answer"
                                            ng-click="filters.current.question = a.goto; filter.history.push([q, a]); filters.exec(filter.history, q, a)">
                                     <label for="{{a.id}}">
                                         <i class="fa fa-check"></i>

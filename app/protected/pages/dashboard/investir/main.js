@@ -237,8 +237,8 @@ angular.module('MetronicApp')
             current: {
                 category: 'filter-regions',
                 value: '',
-                question: 'q1',
-                anwser: '',
+                question: '',
+                answer: '',
             },
             history: {
                 entries: [],
@@ -266,118 +266,123 @@ angular.module('MetronicApp')
             },
             entries: [
                 {
-                    id: 'filter-sectors',
-                    name: 'Je souhaite investir dans un secteur en particulier',
-                    items: [
-                        {id: 'sector-finance', name: 'Finance'},
-                        {id: 'sector-industry', name: 'Industrie'},
-                        {id: 'sector-health', name: 'Santé'},
-                        {id: 'sector-energy', name: 'Energie'},
-                        {id: 'sector-collectivity', name: 'Services aux collectivité'},
-                        {id: 'sector-technology', name: 'Technologies de l\'information'},
-                        {id: 'sector-consomer', name: 'Biens de consomation cyclique'},
-                    ]
-                },
-                {
-                    id: 'filter-regions',
-                    name: 'Je souhaite investir dans une région',
+                    id: 'company',
+                    name: 'Investir dans des entreprises',
                     questions: [
                         {
-                            id: "q1",
-                            text: "Etes-vous plutôt intéressés par les marchés développés ou émergents ?",
-                            anwsers: [
+                            id: "mode",
+                            text: "Quel mode d'investissement souhaitez-vous faire ?",
+                            answers: [
                                 {
-                                    id: "q1a1",
-                                    text: "Marchés développés",
-                                    resume: "Je suis intéressé par les marchés développés",
-                                    goto: "q2.2"
+                                    id: "sector",
+                                    text: "Par secteur d'activité",
+                                    resume: "Investir dans un secteur d'activité",
+                                    goto: "sectors"
                                 },
                                 {
-                                    id: "q1a2",
-                                    text: "Marchés émergents",
-                                    resume: "Je suis intéressé par les marchés émergents",
-                                    goto: "q2.1"
+                                    id: "region",
+                                    text: "Par région",
+                                    resume: "Investir dans une région",
+                                    goto: "regions"
+                                },
+                                {
+                                    id: "theme",
+                                    text: "Par thème (écologie, etc.)",
+                                    resume: "Investir dans thème",
+                                    goto: "themes"
                                 },
                             ]
                         },
                         {
-                            id: "q2.1",
-                            text: "Quel continent/sous-continent plus particulièrement ?",
-                            anwsers: [
+                            id: "sectors",
+                            text: "Dans quel secteur d'activité souhaitez-vous investir ?",
+                            answers: [
                                 {
-                                    id: "q2a1",
+                                    id: "finance",
+                                    text: "Finance",
+                                    resume: "Investir dans la finance",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "industry",
+                                    text: "Industrie",
+                                    resume: "Investir dans l'industrie",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "health",
+                                    text: "Santé",
+                                    resume: "Investir dans la santé",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "collectivity",
+                                    text: "Services aux collectivité",
+                                    resume: "Investir dans des collectivité",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "technology",
+                                    text: "Technologies de l'information",
+                                    resume: "Investir dans la technologie",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "consomer",
+                                    text: "Biens de consomation cyclique",
+                                    resume: "Investir dans les biens de consomation cyclique",
+                                    goto: "end"
+                                },
+                            ]
+                        },
+                        {
+                            id: "regions",
+                            text: "Dans quelle région du monde souhaitez-vous investir ?",
+                            answers: [
+                                {
+                                    id: "africa",
                                     text: "Afrique",
                                     resume: "Investir en Afrique",
-                                    goto: "end"
+                                    goto: "regions-details"
                                 },
                                 {
-                                    id: "q2a4",
-                                    text: "Asia Pacific",
-                                    resume: "Investir en Asie Pacifique",
-                                    goto: "q4"
-                                },
-                            ]
-                        },
-                        {
-                            id: "q2.2",
-                            text: "Quel continent/sous-continent plus particulièrement ?",
-                            anwsers: [
-                                {
-                                    id: "q2a2",
+                                    id: "europe",
                                     text: "Europe",
                                     resume: "Investir en Europe",
-                                    goto: "q3"
+                                    goto: "regions-details"
                                 },
                                 {
-                                    id: "q2a3",
-                                    text: "Amérique",
-                                    resume: "Investir en Amérique",
-                                    goto: "end"
+                                    id: "asia-pacific",
+                                    text: "Asie Pacifique",
+                                    resume: "Investir en Asie Pacifique",
+                                    goto: "regions-details"
+                                },
+                                {
+                                    id: "north-america",
+                                    text: "Amérique du Nord",
+                                    resume: "Investir en Amérique du Nord",
+                                    goto: "regions-details"
+                                },
+                                {
+                                    id: "latin-america",
+                                    text: "Amérique Latine",
+                                    resume: "Investir en Amérique Latine",
+                                    goto: "regions-details"
                                 },
                             ]
                         },
                         {
-                            id: "q3",
-                            text: "Quel stratégie vous parle le plus, investir sur tende la région, un pays particulier ou un secteur d’activité ?",
-                            anwsers: [
+                            id: "regions-details",
+                            text: "Préférez-vous investir sur l'ensemble de la région, ou plutôt sur un pays en particulier ?",
+                            answers: [
                                 {
-                                    id: "q3a1",
-                                    text: "La région",
-                                    resume: "Investir sur tende la région",
-                                    goto: "end"
-                                },
-                                {
-                                    id: "q3a2",
-                                    text: "Un pays",
+                                    id: "by-countries",
+                                    text: "Un pays en particulier",
                                     resume: "Investir dans un pays en particulier",
-                                    goto: "end"
+                                    goto: "countries"
                                 },
                                 {
-                                    id: "q3a3",
-                                    text: "Un secteur",
-                                    resume: "Investir dans un secteur en particulier",
-                                    goto: "end"
-                                },
-                            ]
-                        },
-                        {
-                            id: "q4",
-                            text: "Préférez-vous investir sur l'ensemble de la région, ou plutôt sur un pays particulier ?",
-                            anwsers: [
-                                {
-                                    id: "q4a1",
-                                    text: "Investir en Australie",
-                                    resume: "Investir en Australie",
-                                    goto: "end"
-                                },
-                                {
-                                    id: "q4a2",
-                                    text: "Investir au Japon",
-                                    resume: "Investir au Japon",
-                                    goto: "end"
-                                },
-                                {
-                                    id: "q4a3",
+                                    id: "regions",
                                     text: "Investir sur l'ensemble de la région",
                                     resume: "Investir sur l'ensemble de la région",
                                     goto: "end"
@@ -385,19 +390,127 @@ angular.module('MetronicApp')
                             ]
                         },
                         {
+                            id: "countries",
+                            text: "Sélectionnez le pays souhaité.",
+                            answers: [
+                                {
+                                    id: "fr",
+                                    text: "France",
+                                    resume: "Investir en France",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "us",
+                                    text: "États-Unis",
+                                    resume: "Investir aux États-Unis",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "be",
+                                    text: "Belgique",
+                                    resume: "Investir en Belgique",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "it",
+                                    text: "Italie",
+                                    resume: "Investir en Italie",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "ch",
+                                    text: "Chine",
+                                    resume: "Investir en Chine",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "jp",
+                                    text: "Japon",
+                                    resume: "Investir au Japon",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "es",
+                                    text: "Espagne",
+                                    resume: "Investir en Espagne",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "de",
+                                    text: "Allemagne",
+                                    resume: "Investir en Allemagne",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "ru",
+                                    text: "Russie",
+                                    resume: "Investir en Russie",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "tr",
+                                    text: "Turquie",
+                                    resume: "Investir en Turquie",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "hk",
+                                    text: "Hong-Kong",
+                                    resume: "Investir en Hong-Kong",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "kr",
+                                    text: "Corée",
+                                    resume: "Investir en Corée",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "in",
+                                    text: "Inde",
+                                    resume: "Investir en Inde",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "gr",
+                                    text: "Grèce",
+                                    resume: "Investir en Grèce",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "br",
+                                    text: "Brézil",
+                                    resume: "Investir au Brézil",
+                                    goto: "end"
+                                },
+                                {
+                                    id: "tw",
+                                    text: "Taïwan",
+                                    resume: "Investir en Taïwan",
+                                    goto: "end"
+                                },
+                            ]
+                        },
+                        {
                             id: "end",
-                            text: "Voici une liste d'ETFs correspondants à vos réponses. Faites votre sélection et passez à l'étape suivante.",
+                            text: "Voici une liste d'ETFs correspondants à vos réponses.",
                         }
                     ]
                 },
                 {
+                    id: 'filter-country',
+                    name: 'Investir dans un pays',
+                    goto: "end"
+                },
+                {
                     id: 'filter-news',
                     name: 'Investir à partir de l\'actualité',
-
+                    goto: "end"
                 },
                 {
                     id: 'filter-maps-list',
                     name: 'Je souhaite passer au mode expert',
+                    goto: "end"
                 },
             ]
         };

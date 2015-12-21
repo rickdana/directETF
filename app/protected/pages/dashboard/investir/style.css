@@ -233,6 +233,54 @@
     border-top: none;
 }
 
+#filters-list {
+    overflow:hidden;
+}
+
+#filters-list .filter-history {
+    display: inline-block;
+    position: relative;
+}
+
+#filters-list .filter-history:before,
+#filters-list .filter-history:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+}
+
+#filters-list .filter-history:before {
+    width: 40px;
+    height:10px;
+    right: -5px;
+    bottom:-10px;
+    background-color: #fff;
+    z-index:2;
+}
+
+#filters-list .filter-history:after {
+    transform: rotate(45deg);
+    right: -12px;
+    top: 2px;
+    width: 30px;
+    height: 30px;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    background-color: rgb(54, 198, 211);
+    z-index: 1;
+}
+
+#filters-list .filter-history label {
+  padding: 5px 12px 7px;
+}
+
+#filters-list .filter-history span {
+    display:inline-block;
+    position:relative;
+    z-index:2;
+}
+
 #filters-list input.filter-checkbox:checked + label {
     background-color: rgba(0,0,0,.1);
 }
@@ -256,8 +304,7 @@
     padding-bottom: 20px;
 }
 
-#filters-list .filter-question-end,
-#filters-list .filter-question-anwser label {
+#filters-list .filter-question-answer label {
     padding-left: 30px;
     padding-right: 30px;
 }
@@ -265,7 +312,15 @@
 #filters-list .filter-question-end [ng-etf-list] {
     max-height: 310px;
     overflow: auto;
-    margin-bottom: 20px;
+
+    padding-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 0 !important;
+    margin: 0px 30px 15px;
+}
+
+#filters-list .filter-question-end [ng-etf-list] table {
+    margin: 0;
 }
 
 .etf-column.name {
