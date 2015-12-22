@@ -161,9 +161,9 @@ angular.module('MetronicApp')
                 }
             ];
 
-            LoadStockChart(series, $('#portefeuille-synthese-stockchart'), true);
+            LoadStockChart(series, $('#portefeuille-historique-stockchart'), true);
 
-            var chart =  $('#portefeuille-synthese-stockchart').highcharts();
+            var chart =  $('#portefeuille-historique-stockchart').highcharts();
             chart.rangeSelector.buttons[4].setState(2);
             chart.rangeSelector.clickButton(4,4,true);
 
