@@ -8088,7 +8088,7 @@ Portlets
 /* Basic portlet */
 .portlet {
   margin-top: 0px;
-  /*margin-bottom: 25px;*/
+  margin-bottom: 15px;
   padding: 10px;
   background-color: #fff;
   -webkit-border-radius: 4px;
