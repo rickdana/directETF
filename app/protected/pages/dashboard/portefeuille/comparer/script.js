@@ -540,7 +540,7 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 				}
 			};
 			serie_2.color = ref_infos[j].taxColor;
-			serie_2.type = 'spline';
+			serie_2.type = 'line';
 			serie_2.name = ref_name + ' fiscalité';
 			serie_2.id = serie_2.name;
 			serie_2.fillOpacity = 0.2;
@@ -561,6 +561,9 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 			serie_2.visible = false;
 			document.getElementById('ref_fis_checkbox').checked = false;
 			document.getElementById('ref_fis_checkbox').disabled = false;
+
+			Highcharts.seriesTypes.line.prototype.drawLegendSymbol =
+				Highcharts.seriesTypes.area.prototype.drawLegendSymbol;
 
 			switch (typeof ref_infos[j].data) {
 				case 'string':    //Référence ETF
