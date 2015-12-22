@@ -1,7 +1,13 @@
 Highcharts.theme = {
 
-   colors: ['#2599D4', '#3F24D5', '#9524D4', '#2663D6', '#D22581', '#FE7419', '#1BD52A', '#D56D6F',
-            '#CE0C74', '#F0D317'
+   colors: [
+    'rgb(98,87,255)',
+    'rgb(64,181,137)',
+    'rgb(232,172,43)',
+    'rgb(186,74,189)',
+    'rgb(255,87,87)',
+    'rgb(87,140,255)',
+    'rgb(105,65,163)',
    ],
 
    title: {
@@ -36,13 +42,13 @@ Highcharts.theme = {
       }
    },
 
-   colorAxis: {
-       min: 1,
-       max: 1000,
-       type: 'logarithmic',
-       minColor: 'rgba(243, 156, 18, .1)',
-       maxColor: 'rgba(243, 156, 18, 1)',
-   }
+//   colorAxis: {
+//       min: 1,
+//       max: 1000,
+//       type: 'logarithmic',
+//       minColor: 'rgba(243, 156, 18, .1)',
+//       maxColor: 'rgba(243, 156, 18, 1)',
+//   }
 };
 
 // Apply the theme
