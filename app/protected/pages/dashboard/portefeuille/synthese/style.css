@@ -98,3 +98,8 @@ table .selected {
 #maps .portlet .caption-subject {
 	/*color: #fff;*/
 }
+
+#choix-period-historique {
+	width: initial;
+	float: right;
+}
