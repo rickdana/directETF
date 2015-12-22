@@ -1,47 +1,37 @@
-<!-- BEGIN PAGE HEADER-->
-<div class="page-bar">
-    <div class="page-toolbar">
-        <div class="btn-group pull-right">
-            <button type="button" class="btn btn-sm btn-default"><i class="fa fa-cloud"></i></button>
-        </div>
-    </div>
-</div>
-<!-- END PAGE HEADER-->
-<!-- BEGIN MAIN CONTENT -->
-
 <div ng-controller="PortefeuilleSyntheseController">
     <div class="row">
         <!-- Repartition des secteurs -->
         <div class="col-lg-4">
-            <div id="portefeuille-valeur" class="dashboard-stat blue">
+            <div id="portefeuille-valeur" class="dashboard-stat">
                 <div class="visual">
                     <i class="fa fa-euro"></i>
                 </div>
                 <div class="details">
-                    <div class="desc">Valeur du jour</div>
                     <div class="number"> {{format(client.portfolio.value)}} {{client.portfolio.currencySymb}}</div>
+                    <div class="desc"> dans le portefeuille</div>
                 </div>
             </div>
 
-            <div class="dashboard-stat purple">
+            <div id="portefeuille-gains" class="dashboard-stat">
                 <div class="visual">
-                    <i class="flaticon-datastorage22"></i>
+                    <i class="fa fa-line-chart"></i>
                 </div>
                 <div class="details">
-                    <div class="desc">Gains totals</div>
                     <div id="gains-wallet" class="number">{{format(client.portfolio.gains)}}
                         {{client.portfolio.currencySymb}}
                     </div>
+                    <div class="desc"> gains totals</div>
                 </div>
             </div>
 
-            <div id="portefeuille-benefice" class="dashboard-stat blue">
+            <div id="portefeuille-benefice" class="dashboard-stat">
                 <div class="visual">
-                    <i class="flaticon-bars27"></i>
+                    <i class="fa fa-line-chart"></i>
                 </div>
                 <div class="details">
-                    <div class="desc">Estimation gains par année</div>
-                    <div class="number"> {{format(client.portfolio.dividends)}} {{client.portfolio.currencySymb}}</div>
+                    <div class="number"> {{format(client.portfolio.dividends)}} {{client.portfolio.currencySymb}}
+                    </div>
+                    <div class="desc"> dividente prévisionnelle</div>
                 </div>
             </div>
         </div>
@@ -78,6 +68,8 @@
                              data-lazy="true"
                              data-filter="{{client.portfolio.etfs}}"
                              data-null-color="rgba(0,0,0,.02)"
+                             data-border-color="transparent"
+                             data-color="rgba(98,87,255,.66)"
                              ng-etf-maps></div>
                     </div>
                 </div>
