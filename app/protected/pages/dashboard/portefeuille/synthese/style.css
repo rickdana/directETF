@@ -13,6 +13,18 @@
 	bottom: 2px;
 }
 
+#portefeuille-valeur {
+
+}
+
+#portefeuille-gains {
+
+}
+
+#portefeuille-benefice {
+
+}
+
 table .compo-filter {
 	padding : 2px 8px;
 	border : 1px solid #DEDBDB;
@@ -85,10 +97,6 @@ table .selected {
 .etf-list-component .etf-column.cash,
 .etf-list-component .etf-column.total-gains {
 	font-weight: 700;
-}
-
-.portlet {
-	margin-bottom: 10px;
 }
 
 .blue {
