@@ -52,6 +52,14 @@ p {
     margin-bottom: 20px;
     font-size: 20px;
     line-height: 1.5;
+    font-weight: 500;
+}
+.contact2 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    line-height: 1.5;
+    font-weight: 500;
+
 }
 
 .navbar-toggle .icon-bar {
@@ -72,7 +80,7 @@ p {
 }
 
 #footer {
-    background-color: #a0a5ab;
+    background-color: #e9e4ea;
 }
 
 .text-faded {
@@ -290,6 +298,14 @@ header .header-content .header-content-inner .page-scroll i {
 .section-heading {
     margin-top: 0;
     color: #ffffff;
+    font-size: 30px;
+    font-weight: 500;
+
+}
+
+.section-heading1 {
+    margin-top: 0;
+    color: #ffffff;
     font-size: 22px;
 
 }
@@ -500,8 +516,11 @@ fieldset[disabled] body .btn-primary.active {
 }
 
 #contact {
-    background: url(/public/assets/img/iphooone.jpg) no-repeat top center;
-    color: #faf8ff;
+    background: url(/public/assets/img/stockbureau.jpg) no-repeat top center;
+    background-size: cover;
+    background-position: top;
+
+    color: #ffffff;
 }
 
 body .btn-primary .badge {
@@ -603,10 +622,14 @@ body {
 
 .dropdown-menu {
     font-size: 16px;
-    margin-right: 70px;
+
 
 }
 
 #contact p a {
     color: #ffffff;
+}
+
+.footer {
+    color: #000000;
 }
