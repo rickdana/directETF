@@ -389,7 +389,7 @@ function load_comparaison_valo_trades(data_valo, trades, trades_by_date, $scope)
 		{      //the value of wallet
 			id: 1,
 			name: 'Portefeuille',
-			type: 'area',
+			type: 'spline',
 			data: data_valo,
 			color: 'rgb(50, 197, 210)',
 			fillOpacity: 0.2
@@ -399,9 +399,10 @@ function load_comparaison_valo_trades(data_valo, trades, trades_by_date, $scope)
 			id: 2,
 			name: 'Investissement',
 			data: data_trades,
-			type: 'area',
+			type: 'spline',
 			color: 'rgb(111, 111, 119)',
 			fillOpacity: 0.15,
+			dashStyle: 'ShortDot'
 		}
 	];
 
@@ -562,8 +563,8 @@ function load_comparaison_reference ($scope, $EtfsFactory, valo, data_valo, trad
 			document.getElementById('ref_fis_checkbox').checked = false;
 			document.getElementById('ref_fis_checkbox').disabled = false;
 
-			Highcharts.seriesTypes.line.prototype.drawLegendSymbol =
-				Highcharts.seriesTypes.area.prototype.drawLegendSymbol;
+			//Highcharts.seriesTypes.line.prototype.drawLegendSymbol =
+			//	Highcharts.seriesTypes.area.prototype.drawLegendSymbol;
 
 			switch (typeof ref_infos[j].data) {
 				case 'string':    //Référence ETF
