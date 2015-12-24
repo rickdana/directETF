@@ -103,8 +103,11 @@ body.overlay:before {
 }
 
 #footer {
-    color: #000000;
     background-color: #e9e4ea;
+}
+
+#footer, #footer h2 {
+    color: #000000;
 }
 
 section {
