@@ -137,7 +137,7 @@ app.get('/dashboard', function(req, res){
     res.sendFile(path.join(APP_DIR, '/protected/pages/dashboard/index.html'));
 });
 
-app.use(serveStatic(APP_DIR, {index: ['public/pages/index/index.html']}));
+app.use(serveStatic(APP_DIR));
 app.use(serveStatic(path.join(APP_DIR, 'public/pages')));
 app.use(serveStatic(path.join(APP_DIR, '/bower_components')));
 

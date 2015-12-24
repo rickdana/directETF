@@ -1,18 +1,12 @@
 <div class="login">
-    <!-- BEGIN LOGO -->
-    <div class="logo">
-        <a href="/">
-            <img src="{{settings.globalPath}}/img/logo.png" alt=""/> </a>
-    </div>
-
-    <!-- BEGIN LOGIN -->
     <div class="content" ng-controller="AccountController">
-        <!-- BEGIN LOGIN FORM -->
         <h3 class="form-title">{{account.page.title}}</h3>
         <div ng-show="alert.message.length > 0" class="alert" ng-class="alert.class()">
             <button class="close" data-close="alert"></button>
             <span> {{alert.message}} </span>
         </div>
+
+        <!-- BEGIN LOGIN FORM -->
         <form class="login-form" action="#" method="post" ng-show="account.page.current == 'login'" ng-controller="LoginController">
             <div ng-show="account.status == 0">
                 <div class="form-group">
@@ -419,6 +413,7 @@
                 </button>
             </div>
         </form>
-        <!-- END REGISTRATION FORM -->
     </div>
 </div>
+
+<div ng-include="'footer.html'"></div>

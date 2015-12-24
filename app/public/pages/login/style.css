@@ -4,7 +4,8 @@ Login page
 ***/
 /* logo page */
 .login {
-    background-color: #a0b4c9 !important; }
+    position:relative;
+}
 
 .login .logo {
     margin: 60px auto 20px auto;

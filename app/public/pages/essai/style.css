@@ -1,0 +1,147 @@
+#page-essai .bar {
+    height: 0.7em;
+    width: 80%;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.71);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0);
+    margin: 5em auto 0 10%;
+    position: absolute;
+}
+
+#page-essai .bar .percentage {
+    position: relative;
+    font-size: 0.7em;
+    background: #47a2aa;
+    height: 1em;
+    border-radius: 10px;
+    transition: width .8s;
+}
+
+#page-essai .box {
+    background: rgba(255, 255, 255, 0.92);
+    padding: 4em 2em;
+    border-radius: 5px;
+}
+
+#page-essai .steps {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    transition: height .8s;
+}
+
+#page-essai .steps .step {
+    position:absolute;
+    top: 0;
+}
+
+#page-essai .steps > a {
+    position: absolute;
+    top: 30%;
+}
+
+#page-essai .steps > a i {
+    color: #ccc;
+    transition: color .8s;
+}
+
+#page-essai .steps > a:hover i,
+#page-essai .steps > a:focus i {
+    color: #47a2aa;
+}
+
+#page-essai .steps > a.disabled {
+    cursor: default;
+}
+
+#page-essai .steps > a.disabled i {
+    color: rgba(204, 204, 204, 0.17);
+}
+
+#page-essai .steps a.prev {
+    left: 3em;
+}
+
+#page-essai .steps a.next {
+    right: 3em;
+}
+
+@media (min-width: 768px) {
+    #page-essai header .header-content .header-content-inner {
+        max-width: 700px;
+    }
+}
+
+#page-essai header .header-content .header-content-inner h1 {
+    font-size: 1.6em;
+    font-weight: 800;
+}
+
+#page-essai header .header-content .header-content-inner p {
+    font-size: 1.35em;
+}
+
+#page-essai header .header-content .header-content-inner hr {
+    width: 60px;
+    border-color: #000;
+}
+
+#page-essai h2 {
+    font-size: 1.6em;
+    font-weight: 800;
+}
+
+#page-essai .radio-list {
+    /* width: 300px; */
+    padding: 0 92px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+#page-essai .box input[type=radio], .box input[type=checkbox] {
+    position: absolute;
+    left: -111px;
+    visibility: hidden;
+}
+
+#page-essai .box label {
+    display: block;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius:30px
+}
+
+#page-essai .box .radio-choices label {
+    font-size: 16px;
+    color: #3a969c;
+    font-weight: 500;
+}
+
+#page-essai div.multiplechoices label {
+    font-size: 17px;
+}
+
+#page-essai .box input[type=radio] + label + div, .box input[type=checkbox] + label + div {
+    display: none;
+}
+
+#page-essai .box input[type=radio]:checked + label + div, .box input[type=checkbox]:checked + label + div {
+    display: block;
+}
+
+#page-essai .box i {
+    margin-bottom: 30px;
+    color: #32b5b9;
+    content: "\f075";
+    font-size: 60px;
+}
+
+#page-essai .box label:hover,
+#page-essai .box input[type=radio]:checked + label, .box input[type=checkbox]:checked + label {
+    background-color: rgba(50, 181, 185, 0.8);
+    color: rgba(255,255,255,.9);
+}
+
+#page-essai .box input[type=radio]:checked + label, .box input[type=checkbox]:checked + label {
+    background-color: rgb(19, 135, 141);
+}

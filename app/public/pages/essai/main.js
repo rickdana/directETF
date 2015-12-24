@@ -1,28 +1,110 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
-angular.module('myApp', ['ngRoute']).
-config(['$routeProvider', function($routeProvider) {
-  //$routeProvider.otherwise({redirectTo: '/view1'});
-}]);
+angular.module('DirectETF', [])
+    .controller('EssaiController', function($scope, $element) {
+        $('body').addClass('overlay');
 
-angular.module('myApp')
-    .controller('SlideController', function($scope, $element) {
-        $scope.step = 1;
-        $scope.next = function() {
-            $('#slide' + $scope.step).addClass('fadeOutLeftBig');
+        var container = $($element[0]),
+            steps = container.find('.steps'),
+            prev  = container.find('.prev'),
+            next  = container.find('.next');
 
-            $scope.step = $scope.step + 1;
+        var width = container.find('.box').width(),
+            limit = container.find('.step').length;
 
-            //setTimeout(function () {
-            //    $scope.step = $scope.step + 1;
-            //
-            //    $('#slide' + $scope.step).hide();
-            //    $('#slide' + $scope.step).show();
-            //    $('#slide' + $scope.step).addClass('fadeOutLeftBig');
-            //}, 1000)
+        container.find('.step').each(function(i) {
+            $(this)
+                .attr('data-step', i + 1)
+                .addClass('animated')
+                .css({
+                    left: width + 'px',
+                    right: '-' + width + 'px',
+                });
+        });
+
+        container.find('label').each(function(i) {
+            $(this).click(function() {
+                var height = $('[data-step=' + $scope.step + ']').height()
+                                + $(this).find('+ .radio-choices').outerHeight();
+
+                steps.css('height', height + 'px');
+            });
+        });
+
+        $scope.$watch(function() {
+            return $scope.step;
+        }, function(step, previous) {
+            var last = $('[data-step=' + previous + ']'),
+                current = $('[data-step=' + step + ']');
+
+            steps.css('height', current.height() + 'px');
+
+            if (step > previous) { // Next
+                last
+                    .addClass('bounceOutLeft')
+                    .removeClass('bounceInRight');
+                current
+                    .addClass('bounceInRight')
+                    .removeClass('bounceOutRight')
+                    .css({
+                        left: '0px',
+                        right: '0px',
+                    });
+            } else if (step == previous) {
+                // Init
+                last
+                    .addClass('bounceInRight')
+                    .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+                        $(this).removeClass('bounceInRight');
+                    })
+                    .css({
+                        left: '0px',
+                        right: '0px',
+                    });
+            } else { // Previous
+                last
+                    .addClass('bounceOutRight')
+                    .removeClass('bounceInRight');
+                current
+                    .addClass('bounceInLeft')
+                    .removeClass('bounceOutLeft')
+                    .css({
+                        left: '0px',
+                        right: '0px',
+                    });
+            }
+        });
+
+        $scope.bar = {
+            step: 100 / container.find('.step').length,
+            value: 100 / container.find('.step').length
         };
 
-        $('.box').hide();
-        $('#slide1').show();
+        $scope.step = 1;
+
+        $scope.prev = function() {
+            if ($scope.step > 1) {
+                $scope.step--;
+                $scope.bar.value -= $scope.bar.step;
+                prev.removeClass('disabled');
+                next.removeClass('disabled');
+
+                if ($scope.step == 1) {
+                    prev.addClass('disabled');
+                }
+            }
+        };
+
+        $scope.next = function() {
+            if ($scope.step < limit) {
+                $scope.step++;
+                $scope.bar.value += $scope.bar.step;
+                next.removeClass('disabled');
+                prev.removeClass('disabled');
+
+                if ($scope.step == limit) {
+                    next.addClass('disabled');
+                }
+            }
+        };
     });

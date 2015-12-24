@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="fr" ng-app="DirectETF" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="fr" ng-app="DirectETF" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="fr" ng-app="DirectETF" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="fr" ng-app="DirectETF" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--<title>Direct ETF</title>-->
+    <title data-ng-bind="$page.title"></title>
+
+    <link rel="stylesheet" href="/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="/html5-boilerplate/dist/css/main.css">
+
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One|Josefin+Sans" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css">
+
+    <link rel="stylesheet" href="/animate.css/animate.min.css" type="text/css">
+    <link rel="stylesheet" href="main.css" type="text/css">
+
+    <script src="/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+
+<body id="page-top">
+<div ng-include="'header.html'"></div>
+<div ng-view></div>
+
+<aside class="bg-dark">
+    <div class="container text-center">
+        <div class="call-to-action">
+
+        </div>
+    </div>
+</aside>
+
+<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+-->
+<script src="/angular/angular.js"></script>
+<script src="/angular-route/angular-route.js"></script>
+<script src="/oclazyload/dist/ocLazyLoad.min.js"></script>
+
+<script src="/jquery/dist/jquery.min.js"></script>
+
+<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script src="/jquery.easing/js/jquery.easing.min.js"></script>
+<script src="/jquery-appear/build/jquery.appear.min.js"></script>
+
+<script src="/public/pages/main.js"></script>
+</body>
+</html>
