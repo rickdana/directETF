@@ -146,26 +146,50 @@ angular.module('MetronicApp')
                 // Portefeuille
                 {      //the value of wallet
                     name: 'Portefeuille',
-                    type: 'area',
+                    type: 'spline',
                     data: data_valo,
-                    color: 'rgb(50, 197, 210)',
-                    fillOpacity: 0.2
+                    color: 'rgb(255, 255, 255)',
                 },
                 // Investissement
                 {        //trades of client
                     name: 'Investissement',
                     data: data_trades,
-                    type: 'area',
-                    color: 'rgb(111, 111, 119)',
-                    fillOpacity: 0.15,
+                    type: 'spline',
+                    color: 'rgb(255, 255, 255)',
+                    dashStyle: 'ShortDot'
                 }
             ];
 
             LoadStockChart(series, $('#portefeuille-historique-stockchart'), true);
 
             var chart =  $('#portefeuille-historique-stockchart').highcharts();
-            chart.rangeSelector.buttons[4].setState(2);
-            chart.rangeSelector.clickButton(4,4,true);
+            chart.rangeSelector.buttons[0].setState(2);
+            chart.rangeSelector.clickButton(0,0,true);
+
+            console.log(chart)
+            chart.xAxis[0].update({
+                tickColor:'transparent',
+                lineColor: 'transparent',
+                lineWidth: 0,
+                labels: {
+                    style: {
+                        color: 'rgb(255, 255, 255)',
+                    },
+                }
+            });
+
+            chart.yAxis[0].update({
+                lineColor: 'transparent',
+                labels: {
+                    style: {
+                        color: 'rgb(255, 255, 255)',
+                    }
+                }
+            });
+
+            for(var i in chart.legend.allItems) {
+                chart.legend.allItems[i].legendItem.css({color: 'rgb(255, 255, 255)'})
+            }
 
         }
 

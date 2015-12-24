@@ -111,3 +111,66 @@ table .selected {
 	width: initial;
 	float: right;
 }
+
+#sector .portlet-title {
+	margin-bottom: 0;
+}
+
+.portlet-title .caption-subject{
+	padding-left: 22px;
+}
+
+.infos-principales {
+	font-size: 25px;
+	text-align: center;
+}
+.infos-principales span {
+	color: #32c5d2;
+}
+
+.infos-principales .number {
+	font-size: 47px;
+	margin-top: -13px;
+}
+
+
+.infos-supplements {
+	text-align: center;
+	margin-top: 33px;
+	font-size: 17px;
+}
+
+.infos-supplements table{
+	margin: auto;
+	text-align: left;
+}
+
+.infos-supplements td {
+	padding-right: 40px;
+}
+
+.infos-supplements table .type {
+	color: #38cf63;
+}
+
+.infos-supplements table .percent {
+	color: #32c5d2;
+}
+
+.infos-supplements table .percent .fa{
+	color: #38cf63;
+}
+
+#graph-synthese .portlet{
+	background-color: #36c6d3 !important;
+}
+
+#portfolio .portlet {
+	margin-bottom: 0px;
+	height: 336px;
+}
+
+#portfolio .portlet-title {
+	min-height: 30px;
+	margin-bottom: 0;
+}

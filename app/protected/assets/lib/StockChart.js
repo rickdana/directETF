@@ -36,15 +36,10 @@ function LoadStockChart(series, container, clear, cb, options) {
 
             yAxis: {
                 opposite: false,
-                gridLineColor: 'white',
+                gridLineColor: 'transparent',
                 lineColor: 'rgb(0, 0, 0)',
                 lineWidth: 0.5,
                 labels: {
-                    //style: {
-                    //    color: 'rgb(243, 156, 18)',
-                    //    fontWeight: 'bold',
-                    //    fontSize: '11px'
-                    //},
                     useHTML: true,
                     format: '{value} &euro;',
                 },
@@ -73,11 +68,12 @@ function LoadStockChart(series, container, clear, cb, options) {
                 enabled: true,
                 align: 'left',
                 verticalAlign: 'top',
-                y: -10,
+                y: -11,
+                x: 8,
                 backgroundColor: 'transparent',
-                //itemStyle: {
-                //    color: 'rgb(69, 114, 167)',
-                //},
+                itemStyle: {
+                    fontSize:'14px',
+                },
                 symbolHeight: 12,
                 symbolWidth: 12,
                 symbolRadius: 6,
@@ -141,4 +137,5 @@ function LoadStockChart(series, container, clear, cb, options) {
     if (series !== null) {
         chart.addSeries(series, true, true);
     }
+
 }

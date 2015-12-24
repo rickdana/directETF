@@ -5,7 +5,7 @@ angular.module('MetronicApp')
 
             $element.highcharts('Map', {
                 exporting: {
-                    enabled: false
+                    enabled: false,
                 },
 
                 legend: {
@@ -36,6 +36,8 @@ angular.module('MetronicApp')
                     height: $attrs.height || null
                 },
 
+
+
                 mapNavigation: {
                     enabled: true,
                     buttonOptions: {
@@ -64,15 +66,20 @@ angular.module('MetronicApp')
                     mapData: mapData,
                     joinBy: ['iso-a2', 'country'],
                     data: parse(etfs),
-                    minSize: 4,
-                    maxSize: '12%',
+                    //minSize: 4,
+                    //maxSize: '12%',
                 }]
             });
+
+            //$element.highcharts().mapZoom(0.5, null, null, null, $element.highcharts().yAxis[0].height);
+
         }
+
 
         if (!$attrs.lazy || $attrs.filter) {
             $EtfsFactory.load($attrs.filter, $element.render);
         }
+
 
         function parse(etfs) {
             var sum = {}

@@ -33,43 +33,49 @@ angular.module('MetronicApp')
                         'font-family': 'Poiret one',
                         'font-size': '20px'
                     },
-                    options3d: {
-                        enabled: true,
-                        alpha: 45,
-                        beta: 0
-                    }
+                    //options3d: {
+                    //    enabled: true,
+                    //    alpha: 45,
+                    //    beta: 0
+                    //}
                 },
                 tooltip: {
                     pointFormat: ' <b>{point.percentage:.2f}%</b>'
                 },
+
+                //plotOptions: {
+                //    pie: {
+                //        ignoreHiddenPoint: false,
+                //        allowPointSelect: true,
+                //        cursor: 'pointer',
+                //        depth: 35,
+                //        dataLabels: {
+                //            enabled: $attrs.enableDataLabels === 'true' || false,
+                //            format: '{point.name}'
+                //        },
+                //        showInLegend: $attrs.showInLegend === 'true' || false,
+                //    },
+                //    series: {
+                //        shadow: true
+                //    },
+                //},
+
 
                 plotOptions: {
                     pie: {
                         ignoreHiddenPoint: false,
                         allowPointSelect: true,
                         cursor: 'pointer',
-                        depth: 35,
-                        dataLabels: {
-                            enabled: $attrs.enableDataLabels === 'true' || false,
-                            format: '{point.name}'
-                        },
-                        showInLegend: $attrs.showInLegend === 'true' || false,
-                    },
-                    series: {
-                        shadow: true
-                    },
-                },
-
-
-                plotOptions: {
-                    pie: {
+                        size:'111%',
                         innerSize: 100,
-                        depth: 45,
+                        //depth: 45,
                         dataLabels: {
                             enabled: false
                         },
                         showInLegend: true,
                         cursor: 'pointer',
+                        borderWidth: 3,
+
                     },
                 },
 
@@ -85,11 +91,11 @@ angular.module('MetronicApp')
                             },
                         }
                     },
-                    options3d: {
-                        enabled: true,
-                        alpha: 45,
-                        beta: 0
-                    },
+                    //options3d: {
+                    //    enabled: true,
+                    //    alpha: 45,
+                    //    beta: 0
+                    //},
                     events: {
                         click: function (e) {
                             current_pie = e;
@@ -128,18 +134,12 @@ angular.module('MetronicApp')
                     align: 'left',
                     verticalAlign: 'top',
                     layout: 'vertical',
+                    x: 8,
+                    y: -8,
                     itemMarginTop: 3,
                     itemMarginBottom: 3,
-                    navigation: {
-                        activeColor: '#3E576F',
-                        animation: true,
-                        arrowSize: 9,
-                        inactiveColor: '#CCC',
-                        style: {
-                            fontWeight: 'bold',
-                            color: '#333',
-                            fontSize: '13px',
-                        },
+                    itemStyle:{
+                        fontSize:'14px'
                     },
                     symbolHeight: 12,
                     symbolWidth: 12,

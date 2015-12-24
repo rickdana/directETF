@@ -1,43 +1,52 @@
 <div ng-controller="PortefeuilleSyntheseController">
     <div class="row">
-        <!-- Repartition des secteurs -->
-        <div class="col-lg-4">
-            <div id="portefeuille-valeur" class="dashboard-stat">
-                <div class="visual">
-                    <i class="fa fa-euro"></i>
-                </div>
-                <div class="details">
-                    <div class="number"> {{format(client.portfolio.value)}} {{client.portfolio.currencySymb}}</div>
-                    <div class="desc"> dans le portefeuille</div>
+        <div class="col-lg-5">
+            <!-- Information du portefeuille -->
+            <div id="portfolio">
+                <div class="portlet">
+                    <div class="portlet-title">
+                        <div class="caption caption-md">
+                            <span class="caption-subject font-green"></span>
+                        </div>
+                    </div>
+
+                    <div class="portlet-body">
+                        <div id="portefeuille-valeur" class="infos-principales">
+                            <span>PORTEFEUILLE</span>
+                            <div class="number"> {{format(client.portfolio.value)}} {{client.portfolio.currencySymb}}</div>
+                        </div>
+                        <div class="infos-supplements">
+                            <table>
+                                <tr id="portefeuille-gains">
+                                    <td class="type">DIVIDENDES</td>
+                                    <td id="gains-wallet" class="number">{{format(client.portfolio.gains)}}
+                                        {{client.portfolio.currencySymb}}</td>
+                                    <td class="percent">(+10%) <i class="fa fa-line-chart"></i></td>
+                                </tr>
+
+                                <tr id="portefeuille-benefice">
+                                    <td class="type">GAINS TOTALS</td>
+                                    <td class="number">{{format(client.portfolio.dividends)}} {{client.portfolio.currencySymb}}</td>
+                                    <td class="percent">(+10%) <i class="fa fa-line-chart"></i></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-
-            <div id="portefeuille-gains" class="dashboard-stat">
-                <div class="visual">
-                    <i class="fa fa-line-chart"></i>
-                </div>
-                <div class="details">
-                    <div id="gains-wallet" class="number">{{format(client.portfolio.gains)}}
-                        {{client.portfolio.currencySymb}}
+            <!-- Historique du portefeuille -->
+            <div id="graph-synthese">
+                <div class="portlet" ng-controller="PortefeuilleHistoriqueController">
+                    <div class="portlet-body text-right">
+                        <div id="portefeuille-historique-stockchart" style="height: 350px"></div>
                     </div>
-                    <div class="desc"> gains totals</div>
-                </div>
-            </div>
-
-            <div id="portefeuille-benefice" class="dashboard-stat">
-                <div class="visual">
-                    <i class="fa fa-line-chart"></i>
-                </div>
-                <div class="details">
-                    <div class="number"> {{format(client.portfolio.dividends)}} {{client.portfolio.currencySymb}}
-                    </div>
-                    <div class="desc"> dividente prévisionnelle</div>
                 </div>
             </div>
         </div>
 
-        <!-- Maps de mes ETFs-->
-        <div class="col-lg-8">
+        <div class="col-lg-7">
+            <!-- Repartition des secteurs -->
             <div id="sector" class="portlet">
                 <div class="portlet-title">
                     <div class="caption caption-md">
@@ -45,17 +54,12 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <div id="sectors-overview" data-height="234" data-lazy="true"
+                    <div id="sectors-overview" data-height="260" data-lazy="true"
                          data-filter="{{client.portfolio.etfs}}"
                          data-show-in-legend="true" ng-etf-sectors-chart></div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <!-- Repartition des secteurs -->
-        <div class="col-lg-12">
+            <!-- Maps de mes ETFs-->
             <div id="maps">
                 <div class="portlet blueX">
                     <div class="portlet-title">
@@ -75,6 +79,11 @@
                 </div>
             </div>
         </div>
+
+    </div>
+
+    <div class="row">
+
     </div>
 
     <div class="row hide">
@@ -97,22 +106,3 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="portlet" ng-controller="PortefeuilleHistoriqueController">
-            <div class="portlet-title">
-                <div class="caption caption-md">
-                    <span class="caption-subject font-green">Historique du portefeuille</span>
-                </div>
-            </div>
-            <div class="portlet-body text-right">
-                <div class="form-group form-md-line-input">
-                    <select class="form-control" id="choix-period-historique-synthese" name="" ng-model="periodeSelect" data-id-container="portefeuille-historique-stockchart" link-to-stcokchart>
-                        <option ng-repeat="option in periodeData">{{option}}</option>
-                    </select>
-                </div>
-                <div id="portefeuille-historique-stockchart"></div>
-            </div>
-        </div>
-    </div>
-</div>

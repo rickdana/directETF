@@ -138,3 +138,10 @@ table .selected {
 	width: initial;
 	float: right;
 }
+
+.portlet-body .form-group {
+	padding-top: 0px !important;
+	position: absolute !important;
+	right: 30px;
+	z-index: 100;
+}

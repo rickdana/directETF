@@ -584,6 +584,12 @@ angular.module('MetronicApp')
             }
         };
 
+
+
+        $('#tab-simulation a[href="/investir/#tab_1"]').on('shown.bs.tab', function() {
+            $(window).resize();
+        })
+
         //regroup the invests
         function join_simulation(simulation, simulation_total) {
             for (var i in simulation) {
@@ -885,26 +891,25 @@ angular.module('MetronicApp')
                 });
 
 
-
                 function simulation_cb(invest_simu_past) {
                     var series = [{      //the value of portfolio
                         name: 'Portefeuille',
-                        type: 'area',
+                        type: 'spline',
                         data: data_valo,
                         color: 'rgb(50, 197, 210)',
                         fillOpacity: 0.2
                     }, {        //trades of client
                         name: 'Investissement',
                         data: data_trades,
-                        type: 'area',
+                        type: 'spline',
                         color: 'rgb(111, 111, 119)',
                         fillOpacity: 0.15,
                         //yAxis: 1,
-                        dashStyle: 'longdash'
+                        dashStyle: 'ShortDot'
                     }, {
                         name: 'Nouveaux investissements',
                         data: invest_simu_past,
-                        type: 'area',
+                        type: 'spline',
                         color: '#5cc586',
                         fillOpacity: 0.15,
                     }];
@@ -912,6 +917,7 @@ angular.module('MetronicApp')
 
                     //simulation-graph of the past
                     LoadStockChart(series, $('#simulation-past'), true);
+
 
                     var chart =  $('#simulation-past').highcharts();
                     chart.rangeSelector.buttons[4].setState(2);
