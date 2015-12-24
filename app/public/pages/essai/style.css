@@ -21,6 +21,7 @@
     background: rgba(255, 255, 255, 0.92);
     padding: 4em 2em;
     border-radius: 5px;
+    margin-bottom: 1em;
 }
 
 #page-essai .steps {
@@ -130,10 +131,31 @@
 }
 
 #page-essai .box i {
-    margin-bottom: 30px;
+    margin-bottom: .5em;
     color: #32b5b9;
-    content: "\f075";
-    font-size: 60px;
+    font-size: 3em;
+}
+
+@media (max-width:767px) {
+    #page-essai .box i {
+        margin-bottom: .1em;
+        color: #32b5b9;
+        font-size: 1.5em;
+    }
+
+    #page-essai header .header-content .header-content-inner hr {
+        margin:-.5em auto;
+    }
+
+    #page-essai .steps {
+        overflow-y:auto;
+    }
+
+    #page-essai .radio-list {
+        width: 100%;
+        margin-top:1em;
+        padding:0;
+    }
 }
 
 #page-essai .box label:hover,
