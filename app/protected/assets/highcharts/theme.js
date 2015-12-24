@@ -34,14 +34,6 @@ Highcharts.theme = {
      }
   },
 
-   plotOptions: {
-      series: {
-         nullColor: 'rgba(255,255,255, 0.99)',
-         borderColor: 'rgba(255,255,255,.3)',
-         color: 'rgba(243, 156, 18, .8)',
-      }
-   },
-
 //   colorAxis: {
 //       min: 1,
 //       max: 1000,
