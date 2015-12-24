@@ -64,6 +64,40 @@ DirectETF
                     }]
                 }
             })
+            .when('/signin', {
+                page: {
+                    title: "Créer un compte",
+                    description: ""
+                },
+                templateUrl: 'signin/main.html',
+                resolve: {
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            files: [
+                                'signin/main.js',
+                                'signin/style.css',
+                            ]
+                        });
+                    }]
+                }
+            })
+            .when('/forget', {
+                page: {
+                    title: "Retrouver son mot de passe",
+                    description: ""
+                },
+                templateUrl: 'forget/main.html',
+                resolve: {
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            files: [
+                                'forget/main.js',
+                                'forget/style.css',
+                            ]
+                        });
+                    }]
+                }
+            })
             .otherwise({redirectTo: '/accueil'})
     }])
     .directive('scrollTo', function () {
@@ -85,7 +119,12 @@ DirectETF
     .run(function($rootScope) {
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             $rootScope.$page = current.$$route.page;
+
             $('body').removeClass('overlay');
+
+            $('html,body').animate({
+                scrollTop: 0
+            }, 700);
         });
     })
 ;

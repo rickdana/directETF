@@ -1,5 +1,5 @@
 angular.module("DirectETF")
-    .controller('LoginController', function($scope, $element, $http, $window) {
+    .controller('RegisterController', function($scope, $element, $http, $window) {
         $scope.alert = {
             type: "",
             message: "",
@@ -23,8 +23,12 @@ angular.module("DirectETF")
         $scope.account = {
             status: -1,
             user: {
-                username: "demo@directetf.com",
-                password: "demo"
+                username: "",
+                password: "",
+                firstName: "",
+                secondName: "",
+                city: "",
+                address: "",
             },
             ping: function() {
                 $scope.alert.info("Connexion au serveur...");
@@ -50,25 +54,32 @@ angular.module("DirectETF")
                         }
                     });
             },
-            connect: function() {
-                $scope.alert.info("Authentification...");
+            register: function() {
+                $scope.alert.info("Création du compte en cours...");
                 this.status = 1;
 
-                $http.post('/login', {email: this.user.username, password: this.user.password})
+                $http.post('/signup', this.user)
                     .success(function(data, status) {
                         $scope.account.status = 2;
 
-                        $scope.alert.info("Authentification réussite...");
-                        $window.location.href = '/dashboard';
+                        $scope.alert.info("Compte créé...");
+
+                        setTimeout(function() {
+                            $scope.alert.info("Initialisation de votre session...");
+
+                            setTimeout(function() {
+                                $window.location.href = '/dashboard';
+                            }, 2000);
+                        }, 1000);
                     })
                     .error(function(data, status) {
                         $scope.account.status = 0;
-                        $scope.account.user.password = "";
+                        $scope.account.password = "";
 
                         switch (status) {
-                            case 401:
+                            case 400:
                                 $scope.account.status = 0;
-                                $scope.alert.error("Identifiant ou mot de passe incorrect");
+                                $scope.alert.error("Veuillez remplir correctement le formulaire");
                                 break;
 
                             default:

@@ -1,0 +1,36 @@
+<header class="header-content animated bounceInUp">
+    <div class="login">
+        <div class="content" ng-controller="ForgetPasswordController">
+            <h1 class="form-title">Mot de passe perdu</h1>
+            <div ng-show="alert.message.length > 0" class="alert">
+                <button class="close" data-close="alert"></button>
+                <span> {{alert.message}} </span>
+            </div>
+
+            <!-- BEGIN LOGIN FORM -->
+            <form class="login-form" method="post">
+                <div ng-show="account.status == 0">
+                    <p> Enter your e-mail address below to reset your password. </p>
+                    <br>
+
+                    <div class="form-actions">
+                        <div class="form-group">
+                            <div class="input-icon">
+                                <input class="form-control placeholder-no-fix" type="text" autocomplete="off"
+                                       placeholder="Email"
+                                       name="email" ng-model="account.username"/></div>
+                        </div>
+                        <button type="button" class="btn btn-primary" ng-click="account.reset()">Récupérer mon mot de
+                            passe
+                        </button>
+                    </div>
+
+                    <a class="btn" href="#/login">Connexion</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</header>
+
+<div ng-include="'footer.html'"></div>

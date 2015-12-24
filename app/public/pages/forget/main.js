@@ -1,5 +1,5 @@
 angular.module("DirectETF")
-    .controller('LoginController', function($scope, $element, $http, $window) {
+    .controller('ForgetPasswordController', function($scope, $element, $http, $window) {
         $scope.alert = {
             type: "",
             message: "",
@@ -47,33 +47,6 @@ angular.module("DirectETF")
                             $scope.alert.error("Impossible de contacter le serveur. Veuillez reéssayer plus tard.");
                         } else {
                             $scope.alert.clear();
-                        }
-                    });
-            },
-            connect: function() {
-                $scope.alert.info("Authentification...");
-                this.status = 1;
-
-                $http.post('/login', {email: this.user.username, password: this.user.password})
-                    .success(function(data, status) {
-                        $scope.account.status = 2;
-
-                        $scope.alert.info("Authentification réussite...");
-                        $window.location.href = '/dashboard';
-                    })
-                    .error(function(data, status) {
-                        $scope.account.status = 0;
-                        $scope.account.user.password = "";
-
-                        switch (status) {
-                            case 401:
-                                $scope.account.status = 0;
-                                $scope.alert.error("Identifiant ou mot de passe incorrect");
-                                break;
-
-                            default:
-                                $scope.alert.error("Une erreur inattendue s'est produite pendant la connexion. Veuillez reéssayer plus tard.");
-                                break;
                         }
                     });
             }
