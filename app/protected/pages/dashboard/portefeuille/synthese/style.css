@@ -174,3 +174,11 @@ table .selected {
 	min-height: 30px;
 	margin-bottom: 0;
 }
+
+.infos-principales .result-up {
+	color:  #38cf63;
+}
+
+.infos-principales .result-down {
+	color:  red;
+}

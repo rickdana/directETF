@@ -62,3 +62,9 @@ input.aCheck[type=checkbox]:checked + label:before {
     z-index: 1;
     left: -9px;
 }
+
+.tooltip.todoTooltip .tooltip-inner {
+    background-color: #ffff66;
+    color: #880000;
+    font-size: 2em;
+}

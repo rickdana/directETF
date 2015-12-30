@@ -1,5 +1,0 @@
-﻿FILE QUARANTINED
-
-Le fichier hackathon.png->index.js a été filtré et supprimé car ce type de pièce jointe est interdit
-----------------------------------------------------------------------------------------------
-The file hackathon.png->index.js has been filtered and deleted because this type of attachment is prohibited

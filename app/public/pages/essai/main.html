@@ -10,40 +10,45 @@
                     <i class="fa fa-comment-o"></i>
                     <h1>COMMENÇONS PAR PARLER UN PEU DE VOUS</h1>
 
-                    <p>Afin de générer un portefeuille adapté à votre profil,<br>
-                        nous avons besoin de quelques informations</p>
+                    <p>Afin de générer une stratégie de placement adaptée à vos idées,<br>
+                        donnez nous quelques informations sur vous et vos projets.</p>
                     <hr class="middle">
 
+
                     <div class="steps">
+
                         <div class="step">
-                            <h2>Savez-vous déjà où placer votre argent ?</h2>
+                            <h2>Quelle est la raison principale de vos investissements ?</h2>
+
+                            <div class="form-group">
+                                <div class="radio-list">
+                                    <input type="radio" name="optionsRadios" value="option1" id="choice3"><label
+                                        ng-click="next()" for="choice3"> Créer une nouvelle source de revenus
+                                </label>
+                                    <input type="radio" name="optionsRadios" value="option2" id="choice4"><label
+                                        ng-click="next()" for="choice4"> Constituer un capital </label>
+                                    <input type="radio" name="optionsRadios" value="option2" id="choice4"><label
+                                        ng-click="next()" for="choice4"> Réduire mes impôts </label>
+                                    <input type="radio" name="optionsRadios" value="option2" id="choice4"><label
+                                        ng-click="next()" for="choice4"> Autre / Je n'ai pas encore décidé</label>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <h2>Quel type de placement souhaitez vous privilégier en général?</h2>
 
                             <div class="form-group">
                                 <div class="radio-list">
                                     <input type="radio" name="optionsRadios" value="option1" id="choice1">
-                                    <label for="choice1">Dans une entreprise</label>
-                                    <div class="radio-choices">
-                                        <input type="radio" name="optionsRadios1" value="option1" id="choice1a">
-                                        <label ng-click="next()" for="choice1a">en fonction d’une valeur (écologie,
-                                            profit, éthique)</label>
-
-                                        <input type="radio" name="optionsRadios1" value="option1" id="choice1b">
-                                        <label ng-click="next()" for="choice1b">Par pays</label>
-
-                                        <input type="radio" name="optionsRadios1" value="option1" id="choice1c">
-                                        <label ng-click="next()" for="choice1c">Par secteur</label>
-
-                                        <input type="radio" name="optionsRadios1" value="option1" id="choice1d">
-                                        <label ng-click="next()" for="choice1d">en fonction des sujets d’actualité du
-                                            moment (ex Grèce, Allemagne, Chine)</label>
-
-                                    </div>
-
-                                    <input type="radio" name="optionsRadios" value="option 7" id="choice2">
-                                    <label ng-click="next()" for="choice2">Dans un sujet d'actualité du moment</label>
+                                    <label for="choice1">Investir les entreprises et l'économie</label>
 
                                     <input type="radio" name="optionsRadios" value="option1" id="choice1e">
-                                    <label ng-click="next()" for="choice1e">Par région</label>
+                                    <label ng-click="next()" for="choice1e">Financer un pays</label>
+
+                                    <input type="radio" name="optionsRadios" value="option 7" id="choice2">
+                                    <label ng-click="next()" for="choice2">Je préfère être opportuniste, cela dépend de l'actualité</label>
 
                                     <input type="radio" name="optionsRadios" value="option 7" id="choice3f">
                                     <label ng-click="next()" for="choice3f">Je ne sais pas encore dans quoi
@@ -53,41 +58,20 @@
                         </div>
 
                         <div class="step">
-                            <h2>Quelle est la raison principale de vos investissements ?</h2>
+                            <h2>Quel est votre revenu annuel approximatif?</h2>
 
                             <div class="form-group">
-                                <div class="radio-list">
-                                    <input type="radio" name="optionsRadios" value="option1" id="choice3"><label
-                                        ng-click="next()" for="choice3"> Achat important
-                                </label>
-                                    <input type="radio" name="optionsRadios" value="option2" id="choice4"><label
-                                        ng-click="next()" for="choice4"> Projet personnel </label>
-                                    <input type="radio" name="optionsRadios" value="option3" id="choice5"><label
-                                        ng-click="next()" for="choice5"> Don </label>
-                                    <input type="radio" name="optionsRadios" value="option3" id="choice6"><label
-                                        ng-click="next()" for="choice6"> Retraite</label>
-                                    <input type="radio" name="optionsRadios" value="option3" id="choice7"><label
-                                        ng-click="next()" for="choice7"> Autre (précisez)</label>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="step">
-                            <h2>Quel est votre revenu annuel ?</h2>
-
-                            <div class="form-group">
                                 <div class="radio-list">
                                     <input type="radio" name="optionsRadios" value="option1" id="choice8"><label
                                         ng-click="next()" for="choice8"> Moins de
-                                    25,000€</label>
+                                    20,000€</label>
                                     <input type="radio" name="optionsRadios" value="option2" id="choice9"><label
-                                        ng-click="next()" for="choice9"> 25,000 - 50,000€</label>
-                                    <input type="radio" name="optionsRadios" value="option3" id="choice10"><label
-                                        ng-click="next()" for="choice10"> 50,000 - 100,000€</label>
+                                        ng-click="next()" for="choice9"> 20,000 -  100,000€</label>
                                     <input type="radio" name="optionsRadios" value="option4" id="choice11"><label
-                                        ng-click="next()" for="choice11"> 100,000 - 250,000€</label>
+                                        ng-click="next()" for="choice11"> 100,000 - 500,000€</label>
                                     <input type="radio" name="optionsRadios" value="option5" id="choice12"><label
-                                        ng-click="next()" for="choice12"> Plus de 250,000€</label>
+                                        ng-click="next()" for="choice12"> Plus de 500,000€</label>
                                 </div>
                             </div>
                         </div>
@@ -141,15 +125,31 @@
                             <div class="form-group">
                                 <div class="radio-list">
                                     <input type="radio" name="optionsRadios" value="option1" id="choice23"><label
-                                        ng-click="next()" for="choice23">Très faible</label>
+                                        ng-click="next()" for="choice23">Aucun. Je ne veux aucun risaue de perte en capital.</label>
                                     <input type="radio" name="optionsRadios" value="option2" id="choice24"><label
-                                        ng-click="next()" for="choice24">Faible</label>
+                                        ng-click="next()" for="choice24">Faible, je suis prêt à accepter un revenu réduit pour protéger mon capital.</label>
                                     <input type="radio" name="optionsRadios" value="option3" id="choice25"><label
-                                        ng-click="next()" for="choice25">Modéré</label>
-                                    <input type="radio" name="optionsRadios" value="option4" id="choice26"><label
-                                        ng-click="next()" for="choice26">Élevé</label>
+                                        ng-click="next()" for="choice25">Modéré. je suis prêt à accepter un certain risque pour augmenter les gains.</label>
                                     <input type="radio" name="optionsRadios" value="option4" id="choice27"><label
-                                        ng-click="next()" for="choice27">Très élevé</label>
+                                        ng-click="next()" for="choice27">Elevé. Je suis prêt à accepter une pertie importante dans l'espoir de gains importants.</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="step">
+                            <h2>A quelle fréquence souhaitez vous suivre</h2>
+
+                            <div class="form-group">
+                                <div class="radio-list">
+                                    <input type="radio" name="optionsRadios" value="option1" id="choice23"><label
+                                        ng-click="next()" for="choice23">Aucune</label>
+                                    <input type="radio" name="optionsRadios" value="option2" id="choice24"><label
+                                        ng-click="next()" for="choice24">Envoyez moi un récapitulatif par trimestre</label>
+                                    <input type="radio" name="optionsRadios" value="option3" id="choice25"><label
+                                        ng-click="next()" for="choice25">par mois</label>
+                                    <input type="radio" name="optionsRadios" value="option4" id="choice27"><label
+                                        ng-click="next()" for="choice27">par semaine</label>
                                 </div>
                             </div>
                         </div>
@@ -159,6 +159,10 @@
                             <!--<h1>Voici notre suggestion de portefeuille</h1>-->
 
                             <h2>Découvrez notre suggestion de portefeuille</h2>
+
+                            <p>Attention, votre choix d'un niveau derisque élevé peu contredire votre objectif de crer un revenu régulier. Souhaitez vous revenir en arrière?
+                           </p><a href="#/essai" class="btn btn-primary btn-xl">revoir</a>
+                            <a href="#/essai" class="btn btn-primary btn-xl">valider et explorer les stratégies</a>
                         </div>
 
                         <a class="prev disabled" href="javascript:void(0)" ng-click="prev()"><i

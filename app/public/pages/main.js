@@ -47,6 +47,57 @@ DirectETF
                     }]
                 }
             })
+            .when('/prix', {
+                page: {
+                    title: "Des frais réduits",
+                    description: ""
+                },
+                templateUrl: 'info/prix.html',
+                resolve: {
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            files: [
+                                'info/main.js',
+                                'info/style.css',
+                            ]
+                        });
+                    }]
+                }
+            })
+            .when('/details', {
+                page: {
+                    title: "Details",
+                    description: ""
+                },
+                templateUrl: 'info/details.html',
+                resolve: {
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            files: [
+                                'info/main.js',
+                                'info/style.css',
+                            ]
+                        });
+                    }]
+                }
+            })
+            .when('/securite', {
+                page: {
+                    title: "Securite",
+                    description: ""
+                },
+                templateUrl: 'info/securite.html',
+                resolve: {
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            files: [
+                                'info/main.js',
+                                'info/style.css',
+                            ]
+                        });
+                    }]
+                }
+            })
             .when('/login', {
                 page: {
                     title: "Se connecter",

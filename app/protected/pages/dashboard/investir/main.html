@@ -11,7 +11,7 @@
     </div>
     <div class="margiv-top-10">
         <a ng-show="wizard.step == 1" href="javascript:void(0)" class="btn default pull-left"
-           ng-click="wizard.prev()"> Etape précédent </a>
+           ng-click="wizard.prev()"> Etape précédente </a>
         <a href="javascript:void(0)" class="btn green-haze pull-right"
            ng-click="wizard.next()"> {{wizard.nextButtonLabel[wizard.step]}} </a>
         <span class="clearfix"></span>
@@ -20,15 +20,7 @@
 
 <div ng-controller="WizardController">
     <div class="page-bar content-header">
-        <ul class="page-breadcrumb">
-            <li>
-                <a href="/">Direct ETF</a>
-                <i class="fa fa-circle"></i>
-            </li>
-            <li>
-                <a href="#">Investir</a>
-            </li>
-        </ul>
+
 
         <div id="wizard-state">
             <a ng-class="{valid: wizard.step <= 1, current: wizard.step == 1}">Sélection</a>
@@ -38,8 +30,41 @@
         </div>
     </div>
 
+
     <!--Step 1-->
     <div class="wizard-panel" data-step="1" ng-controller="InvestirController" ng-show="wizard.step == 1">
+        <div>
+            Revoir la liste des questions
+            <ul>
+                <li>
+                    je pense qu'un investissement doit ...
+                    <ul>
+                        <li>suivre l'actualité (débranche sur questionnaire spécifique du moment - où on arrive aussi via notif</li>
+                        <li>Privilégier le rendement
+                        <ul>
+                            <li>Définir un niveau de risque</li>
+                        </ul>
+                        </li>
+                        <li>répondre à un projet précis
+                            <ul>
+                                <li>Je préfère investir dans le privé, financer l'économie
+                                <ul>
+                                    <li>par projet</li>
+                                    <li>par secteur</li>
+                                    <li>par pays...</li>
+                                </ul>
+                                </li>
+                                <li>Je préfère investir dans le public, financer un état
+                                    <ul>
+                                        <li>par région ou pays</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
         <div id="filters-container">
             <div id="filters-list">
                 <div ng-repeat="filter in filters.entries">

@@ -191,7 +191,53 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                 }]
             }
         })
+        // Investir - premier etape
+        .state('investirMenu', {
+            url: "/investirMain",
+            templateUrl: "/protected/pages/dashboard/investir/investir.html",
+            data: {pageTitle: 'Investir'},
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        files: [
+                            '/protected/pages/dashboard/investir/style.css',
+                            '/bootstrap-tagsinput/src/bootstrap-tagsinput.css',
 
+                            '/datatables/media/js/jquery.dataTables.min.js',
+                            '/datatables/media/js/dataTables.bootstrap.min.js',
+                            '/bootstrap-tagsinput/src/bootstrap-tagsinput.js',
+
+                            '/protected/pages/dashboard/investir/main.js',
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('investirExplorer', {
+            url: "/explorer",
+            templateUrl: "/protected/pages/dashboard/investir/explorateur.html",
+            data: {pageTitle: 'Investir'},
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        files: [
+                            '/protected/pages/dashboard/investir/style.css',
+                            '/bootstrap-tagsinput/src/bootstrap-tagsinput.css',
+
+                            '/datatables/media/js/jquery.dataTables.min.js',
+                            '/datatables/media/js/dataTables.bootstrap.min.js',
+                            '/bootstrap-tagsinput/src/bootstrap-tagsinput.js',
+
+                            '/protected/pages/dashboard/investir/explorateur.js',
+                        ]
+                    });
+                }]
+            }
+        })
         // Investir
         .state('investir', {
             url: "/investir",

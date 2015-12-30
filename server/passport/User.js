@@ -16,22 +16,22 @@ var db = {
     },
     'user1@directetf.com': {
         firstName: 'Gérard',
-        secondName: 'Depardieu',
+        secondName: 'D.',
         password: generateHash('user1')
     },
     'user2@directetf.com': {
         firstName: 'Julia',
-        secondName: 'Roberts',
+        secondName: 'R.',
         password: generateHash('user2')
     },
     'user3@directetf.com': {
         firstName: 'Sandra',
-        secondName: 'Bullock',
+        secondName: 'B.',
         password: generateHash('user3')
     },
     'user4@directetf.com': {
         firstName: 'Brad',
-        secondName: 'Pitt',
+        secondName: 'P.',
         password: generateHash('user4')
     }
 };

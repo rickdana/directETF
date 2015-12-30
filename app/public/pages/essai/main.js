@@ -4,6 +4,8 @@ angular.module('DirectETF', [])
     .controller('EssaiController', function($scope, $element) {
         $('body').addClass('overlay');
 
+
+
         var container = $($element[0]),
             steps = container.find('.steps'),
             prev  = container.find('.prev'),
