@@ -661,7 +661,12 @@ angular.module('MetronicApp')
                                     resume: "Investir dans l'industrie",
                                     goto: "end"
                                 },
-
+                                {
+                                    id: "industry",
+                                    text: "strategiers populaires du moment",
+                                    resume: "Investir dans l'industrie",
+                                    goto: "end"
+                                },
 
                             ]
 
