@@ -1,5 +1,12 @@
 angular.module('MetronicApp')
-    .controller('PortefeuilleSyntheseController', function($ClientFactory, $rootScope, $scope, $element) {
+    .controller('PortefeuilleSyntheseController', function($ClientFactory, $rootScope, $scope, $element, $ocLazyLoad) {
+        $ocLazyLoad.load({
+            insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+            files: [
+                '/protected/pages/dashboard/portefeuille/synthese/style.css',
+            ]
+        });
+
         $scope.$on('$viewContentLoaded', function() {
             // initialize core components
             App.initAjax();
@@ -166,7 +173,7 @@ angular.module('MetronicApp')
             chart.rangeSelector.buttons[0].setState(2);
             chart.rangeSelector.clickButton(0,0,true);
 
-            console.log(chart)
+
             chart.xAxis[0].update({
                 tickColor:'transparent',
                 lineColor: 'transparent',
@@ -187,9 +194,6 @@ angular.module('MetronicApp')
                 }
             });
 
-            for(var i in chart.legend.allItems) {
-                chart.legend.allItems[i].legendItem.css({color: 'rgb(255, 255, 255)'})
-            }
 
         }
 
