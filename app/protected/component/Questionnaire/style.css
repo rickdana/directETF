@@ -1,0 +1,177 @@
+#maps-container {
+    padding:20px;
+    background-color:#3C8DBC;
+}
+
+.questionnaire-component {
+    margin-top: 42px;
+    overflow: hidden;
+
+    background-color:#364150;
+    color: rgb(180, 188, 200);
+}
+
+.questionnaire-component input.filter-checkbox {
+    position: absolute;
+    left: -111px;
+    visibility: hidden;
+}
+
+.questionnaire-component label {
+    display:inline-block;
+    padding: 7px 12px;
+    width:100%;
+    margin:0;
+    position: relative;
+}
+
+.questionnaire-component input.filter-checkbox.filter-group + label {
+    border-bottom: 1px solid #3d4957;
+}
+
+.questionnaire-component input.filter-checkbox.filter-group:focus + label,
+.questionnaire-component input.filter-checkbox.filter-group + label:hover {
+    background-color: rgba(0,0,0,.2);
+}
+
+.questionnaire-component input.filter-checkbox + label span + i {
+    position: absolute;
+    right: 15px;
+    margin-top: 2px;
+}
+
+.questionnaire-component input.filter-checkbox.filter-group + label + div {
+    height: 0;
+    overflow: auto;
+    transition: height .3s;
+}
+
+.questionnaire-component .filter-question span {
+    margin-left: 5px;
+}
+
+.questionnaire-component input.filter-checkbox.filter-group:checked + label + div {
+    display: block;
+    height: initial;
+    visibility: visible;
+    background-color: #fff;
+    color: #0b1014;
+}
+
+.questionnaire-component input.filter-checkbox.filter-group:checked + label + div label {
+    border-top: 1px solid rgba(0,0,0,.03);
+}
+
+.questionnaire-component input.filter-checkbox.filter-group + label span {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.questionnaire-component .filter-history,
+.questionnaire-component input.filter-checkbox:focus + label,
+.questionnaire-component input.filter-checkbox + label:hover,
+.questionnaire-component input.filter-checkbox:checked + label + div input.filter-checkbox:checked + label {
+    color: rgb(255, 255, 255);
+    background-color: rgb(54, 198, 211);
+}
+
+.questionnaire-component .filter-history {
+    border-top: 1px solid rgba(255,255,255,.3) !important;
+}
+
+.questionnaire-component .filter-history:first-child {
+    border-top: none;
+}
+
+.questionnaire-component {
+    overflow:hidden;
+}
+
+.questionnaire-component .filter-history {
+    display: inline-block;
+    position: relative;
+}
+
+.questionnaire-component .filter-history:before,
+.questionnaire-component .filter-history:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+}
+
+.questionnaire-component .filter-history:before {
+    width: 40px;
+    height:10px;
+    right: -5px;
+    bottom:-10px;
+    background-color: #fff;
+    z-index:2;
+}
+
+.questionnaire-component .filter-history:after {
+    transform: rotate(45deg);
+    right: -12px;
+    top: 2px;
+    width: 30px;
+    height: 30px;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    background-color: rgb(54, 198, 211);
+    z-index: 1;
+}
+
+.questionnaire-component .filter-history label {
+  padding: 5px 12px 7px;
+}
+
+.questionnaire-component .filter-history span {
+    display:inline-block;
+    position:relative;
+    z-index:2;
+}
+
+.questionnaire-component input.filter-checkbox:checked + label {
+    background-color: rgba(0,0,0,.1);
+}
+
+.questionnaire-component input.filter-checkbox.aCheck + label i:before {
+    visibility: hidden;
+}
+
+.questionnaire-component input.filter-checkbox.aCheck:checked + label i:before,
+.questionnaire-component input.filter-checkbox.aCheck + label:hover i:before {
+    visibility: visible;
+}
+
+.questionnaire-component .filter-question > label {
+    padding-left: 28px;
+}
+
+.questionnaire-component .filter-question-end {
+    padding-bottom: 20px;
+}
+
+.questionnaire-component .filter-question-answer label {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.questionnaire-component .filter-question-end [ng-etf-list] {
+    max-height: 310px;
+    overflow: auto;
+
+    padding-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 0 !important;
+    margin: 0px 30px 15px;
+}
+
+.questionnaire-component .filter-question-end [ng-etf-list] table {
+    margin: 0;
+}
+
+.questionnaire-component .filter-question-end input.aCheck[type=checkbox]:checked + label:before {
+    left: -11px;
+    top: -7px;
+}
