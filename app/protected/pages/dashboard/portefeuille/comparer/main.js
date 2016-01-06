@@ -1,5 +1,13 @@
 angular.module('MetronicApp')
-    .controller('PortefeuilleComparerController', function($ClientFactory, $rootScope, $scope, $http, $EtfsFactory, $element) {
+    .controller('PortefeuilleComparerController', function($ClientFactory, $rootScope, $scope, $http, $EtfsFactory, $element, $ocLazyLoad) {
+        $ocLazyLoad.load({
+            insertBefore: '#ng_load_plugins_before',
+            files: [
+                '/protected/pages/dashboard/portefeuille/comparer/style.css',
+                '/protected/pages/dashboard/portefeuille/comparer/reference.json'
+            ]
+        });
+
         $scope.$on('$viewContentLoaded', function () {
             // initialize core components
             App.initAjax();

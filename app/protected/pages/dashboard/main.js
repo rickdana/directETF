@@ -138,10 +138,9 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        insertBefore: '#ng_load_plugins_before',
                         files: [
                             '/protected/pages/dashboard/portefeuille/synthese/main.js',
-                            '/protected/pages/dashboard/portefeuille/synthese/style.css',
                         ]
                     });
                 }]
@@ -149,25 +148,24 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         })
 
         // Portefeuille historique
-        .state('/protected/pages/dashboard/portefeuille/historique', {
-            url: "/portefeuille/historique",
-            templateUrl: "/protected/pages/dashboard/portefeuille/historique/main.html",
-            data: {pageTitle: 'Historique du portefeuille'},
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
-                        files: [
-                            '/protected/assets/lib/StockChart.js',
-                            '/protected/pages/dashboard/portefeuille/historique/main.js',
-                            '/protected/pages/dashboard/portefeuille/historique/script.js',
-                            '/protected/pages/dashboard/portefeuille/historique/style.css',
-                        ]
-                    });
-                }]
-            }
-        })
+        //.state('/protected/pages/dashboard/portefeuille/historique', {
+        //    url: "/portefeuille/historique",
+        //    templateUrl: "/protected/pages/dashboard/portefeuille/historique/main.html",
+        //    data: {pageTitle: 'Historique du portefeuille'},
+        //    resolve: {
+        //        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+        //            return $ocLazyLoad.load({
+        //                name: 'MetronicApp',
+        //                insertBefore: '#ng_load_plugins_before',
+        //                files: [
+        //                    '/protected/pages/dashboard/portefeuille/historique/main.js',
+        //                    '/protected/pages/dashboard/portefeuille/historique/script.js',
+        //                    '/protected/pages/dashboard/portefeuille/historique/style.css',
+        //                ]
+        //            });
+        //        }]
+        //    }
+        //})
 
         // Portefeuille comparer
         .state('/protected/pages/dashboard/portefeuille/comparer', {
@@ -177,12 +175,8 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        insertBefore: '#ng_load_plugins_before',  
                         files: [
-                            '/protected/pages/dashboard/portefeuille/comparer/style.css',
-
-                            '/protected/assets/lib/StockChart.js',
-                            '/protected/pages/dashboard/portefeuille/comparer/reference.json',
                             '/protected/pages/dashboard/portefeuille/comparer/main.js',
                             '/protected/pages/dashboard/portefeuille/comparer/script.js'
                         ],
@@ -191,6 +185,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                 }]
             }
         })
+
         // Investir - premier etape
         .state('investirMenu', {
             url: "/investirMain",
@@ -200,21 +195,15 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        insertBefore: '#ng_load_plugins_before',  
                         files: [
-                            '/protected/pages/dashboard/investir/style.css',
-                            '/bootstrap-tagsinput/src/bootstrap-tagsinput.css',
-
-                            '/datatables/media/js/jquery.dataTables.min.js',
-                            '/datatables/media/js/dataTables.bootstrap.min.js',
-                            '/bootstrap-tagsinput/src/bootstrap-tagsinput.js',
-
                             '/protected/pages/dashboard/investir/main.js',
                         ]
                     });
                 }]
             }
         })
+
         .state('investirExplorer', {
             url: "/explorer",
             templateUrl: "/protected/pages/dashboard/investir/explorateur.html",
@@ -223,15 +212,8 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        insertBefore: '#ng_load_plugins_before',  
                         files: [
-                            '/protected/pages/dashboard/investir/style.css',
-                            '/bootstrap-tagsinput/src/bootstrap-tagsinput.css',
-
-                            '/datatables/media/js/jquery.dataTables.min.js',
-                            '/datatables/media/js/dataTables.bootstrap.min.js',
-                            '/bootstrap-tagsinput/src/bootstrap-tagsinput.js',
-
                             '/protected/pages/dashboard/investir/explorateur.js',
                         ]
                     });
@@ -247,15 +229,8 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        insertBefore: '#ng_load_plugins_before',  
                         files: [
-                            '/protected/pages/dashboard/investir/style.css',
-                            '/bootstrap-tagsinput/src/bootstrap-tagsinput.css',
-
-                            '/datatables/media/js/jquery.dataTables.min.js',
-                            '/datatables/media/js/dataTables.bootstrap.min.js',
-                            '/bootstrap-tagsinput/src/bootstrap-tagsinput.js',
-
                             '/protected/pages/dashboard/investir/main.js',
                         ]
                     });
@@ -268,41 +243,32 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             url: "/historique",
             templateUrl: "/protected/pages/dashboard/historique/main.html",
             data: {pageTitle: 'Historique'},
-            controller: "HistoriqueController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        insertBefore: '#ng_load_plugins_before',  
                         files: [
-                            //'/datatables/media/css/dataTables.bootstrap.css',
-                            '/datatables/media/css/jquery.dataTables.css',
-                            '/datatables/media/js/jquery.dataTables.js',
-                            //'/datatables/media/js/dataTables.bootstrap.js',
-                            "/protected/pages/dashboard/historique/style.css",
                             "/protected/pages/dashboard/historique/main.js",
-                            "/protected/pages/dashboard/historique/script.js",
+
                         ]
                     });
                 }]
             }
         })
 
-        // Historique
+        // Actualites
         .state('actualites', {
             url: "/actualites",
             templateUrl: "/protected/pages/dashboard/actualites/main.html",
             data: {pageTitle: 'Actualités'},
-            controller: "ActualitesController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        insertBefore: '#ng_load_plugins_before',  
                         files: [
-                            "/protected/pages/dashboard/actualites/style.css",
                             "/protected/pages/dashboard/actualites/main.js",
-                            "/protected/pages/dashboard/actualites/script.js",
                         ]
                     });
                 }]
@@ -314,15 +280,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             url: "/profile",
             templateUrl: "/protected/pages/dashboard/profile/main.html",
             data: {pageTitle: 'Mon profil'},
-            controller: "UserProfileController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',  
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
-                            '/protected/pages/dashboard/profile/style.css',
-
                             '/protected/pages/dashboard/profile/UserProfileController.js'
                         ]                    
                     });

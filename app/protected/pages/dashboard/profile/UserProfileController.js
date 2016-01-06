@@ -1,4 +1,12 @@
-angular.module('MetronicApp').controller('UserProfileController', function($rootScope, $scope) {
+angular.module('MetronicApp').controller('UserProfileController', function($rootScope, $scope, $ocLazyLoad) {
+    $ocLazyLoad.load({
+        name: 'MetronicApp',
+        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+        files: [
+            '/protected/pages/dashboard/profile/style.css',
+        ]
+    });
+
     $scope.$on('$viewContentLoaded', function() {   
         App.initAjax(); // initialize core components
         Layout.setSidebarMenuActiveLink('set', $('#sidebar_menu_link_profile')); // set profile link active in sidebar menu

@@ -1,8 +1,51 @@
 angular.module('MetronicApp')
-    .controller('PortefeuilleSyntheseController', function($ClientFactory, $rootScope, $scope, $element) {
+    .controller('PortefeuilleSyntheseController', function($ClientFactory, $rootScope, $scope, $element, $ocLazyLoad) {
+        $ocLazyLoad.load({
+            insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+            files: [
+                '/protected/pages/dashboard/portefeuille/synthese/style.css',
+            ]
+        });
+
         $scope.$on('$viewContentLoaded', function() {
             // initialize core components
             App.initAjax();
+        });
+
+        var btn_portfolio = $element.find('#btn-portfolio');
+        var btn_table_historique = $element.find('#btn-table-historique');
+        var table_historique =  $element.find('#table-synthese');
+        var graph_historique =  $element.find('#graph-synthese');
+        var portfolio =  $element.find('#portfolio');
+
+        $(btn_portfolio).on('click', function() {
+            portfolio.hide();
+            graph_historique.hide();
+            table_historique.show();
+        });
+
+        $(btn_table_historique).on('click', function() {
+            portfolio.show();
+            graph_historique.show();
+            table_historique.hide();
+        });
+
+        var btn_liste_etfs = $element.find('#btn-liste-etfs');
+        var btn_pie_etfs = $element.find('#btn-pie-etfs');
+        var sector =  $element.find('#sector');
+        var maps =  $element.find('#maps');
+        var liste_etfs =  $element.find('#list-etfs');
+
+        $(btn_pie_etfs).on('click', function() {
+            sector.hide();
+            maps.hide();
+            liste_etfs.show();
+        });
+
+        $(btn_liste_etfs).on('click', function() {
+            sector.show();
+            maps.show();
+            liste_etfs.hide();
         });
 
         // Fonction de formatage des prices
@@ -34,7 +77,7 @@ angular.module('MetronicApp')
         // Changement des couleurs en fonction des gains
         $scope.cbEtfsListLoaded = function(etfs) {
             $element.find('.etf-column.gains .gain-loss').each(function() {
-                $(this).css('color', parseFloat($(this).text()) >= 0 ? "green" : "red");
+                $(this).css('color', parseFloat($(this).text()) >= 0 ? "#38cf63" : "red");
             });
         };
 
@@ -74,6 +117,25 @@ angular.module('MetronicApp')
             }
 
             $scope.client.portfolio.etfsValue = etfsValue;
+        });
+
+        //Table Historique
+        $ClientFactory.portfolio.trades(function(err, trades) {
+            if (err) {
+                throw err;
+            }
+
+            var table = $('#table-synthese tbody');
+
+            for(var i in trades) {
+                var ligne = "<tr>"
+                    + "<td class='date'> " + trades[i].date + "</td>"
+                    + "<td> " + trades[i].comment + "</td>"
+                    + "<td class='valeur'> " + trades[i].cash + " &euro;" + "</td>" +
+                    "</tr>";
+                table.append(ligne);
+            }
+
         });
 
         // set sidebar closed and body solid layout mode
@@ -166,7 +228,7 @@ angular.module('MetronicApp')
             chart.rangeSelector.buttons[0].setState(2);
             chart.rangeSelector.clickButton(0,0,true);
 
-            console.log(chart)
+
             chart.xAxis[0].update({
                 tickColor:'transparent',
                 lineColor: 'transparent',
@@ -187,9 +249,6 @@ angular.module('MetronicApp')
                 }
             });
 
-            for(var i in chart.legend.allItems) {
-                chart.legend.allItems[i].legendItem.css({color: 'rgb(255, 255, 255)'})
-            }
 
         }
 
