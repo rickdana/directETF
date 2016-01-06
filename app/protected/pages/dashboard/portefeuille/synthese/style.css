@@ -13,17 +13,6 @@
 	bottom: 2px;
 }
 
-#portefeuille-valeur {
-
-}
-
-#portefeuille-gains {
-
-}
-
-#portefeuille-benefice {
-
-}
 
 table .compo-filter {
 	padding : 2px 8px;
@@ -120,8 +109,11 @@ table .selected {
 	padding-left: 22px;
 }
 
+.portlet-body {
+	font-size: 15px;
+}
+
 .infos-principales {
-	font-size: 25px;
 	text-align: center;
 }
 .infos-principales span {
@@ -137,17 +129,18 @@ table .selected {
 .infos-supplements {
 	text-align: center;
 	margin-top: 33px;
-	font-size: 17px;
 }
 
 .infos-supplements table{
+	font-size: 17px;
 	margin: auto;
-	text-align: left;
 }
 
 .infos-supplements td {
 	padding-right: 40px;
+	text-align: left;
 }
+
 
 .infos-supplements table .type {
 	color: #38cf63;
@@ -155,6 +148,7 @@ table .selected {
 
 .infos-supplements table .percent {
 	color: #32c5d2;
+	padding-right: 0;
 }
 
 .infos-supplements table .percent .fa{
@@ -181,4 +175,68 @@ table .selected {
 
 .infos-principales .result-down {
 	color:  red;
+}
+
+.infos-sythese {
+	padding-top: 42px;
+}
+
+.portlet-title{
+	color: #36c6d3;
+	text-align: center;
+	font-size: 23px;
+}
+
+#portfolio .portlet-title .tools, #sector .portlet-title .tools, #table-synthese .portlet-title .tools,
+#list-etfs .portlet-title .tools {
+	padding-top: 4px;
+}
+
+#portfolio .portlet-title .left, #sector .portlet-title .left, #table-synthese .portlet-title .left,
+#list-etfs .portlet-title .left {
+	float: left;
+}
+
+#portfolio .portlet-title .left a i, #sector .portlet-title .left a i, #table-synthese .portlet-title .left a i,
+#list-etfs .portlet-title .left a i {
+	color: rgb(127, 123, 123);
+}
+
+
+#portfolio .portlet-title .right, #sector .portlet-title .right, #table-synthese .portlet-title .right,
+#list-etfs .portlet-title .right {
+	float: right;
+}
+
+#portfolio .portlet-title i, #sector .portlet-title i, #table-synthese .portlet-title i,
+#list-etfs .portlet-title i {
+	font-size: 27px;
+}
+
+#portfolio	.portlet-title .text, #sector .portlet-title .text, #table-synthese .portlet-title .text,
+#list-etfs .portlet-title .text {
+	padding-top: 16px;
+}
+
+#table-synthese, #list-etfs {
+	display: none;
+}
+
+#table-synthese tr th, #list-etfs tr th{
+	color: rgb(127, 123, 123);
+	font-size: 16px;
+	font-weight: 500;
+}
+
+#table-synthese tr td, #list-etfs tr td{
+	font-size: 13px;
+}
+
+#table-synthese .date{
+	color: #38cf63
+}
+
+#table-synthese .valeur {
+	color: #38cf63;
+	text-align: right
 }

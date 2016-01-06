@@ -31,7 +31,7 @@ angular.module('MetronicApp')
         //                    left: '-30px'
                         'margin-bottom': '0px',
                         'font-family': 'Poiret one',
-                        'font-size': '20px'
+                        'font-size': '17px'
                     },
                     //options3d: {
                     //    enabled: true,
@@ -131,7 +131,7 @@ angular.module('MetronicApp')
                 legend: {
                     enabled: true,
                     labelFormat: '{name} ({percentage:.1f}%)',
-                    align: 'left',
+                    align: 'right',
                     verticalAlign: 'top',
                     layout: 'vertical',
                     x: 8,

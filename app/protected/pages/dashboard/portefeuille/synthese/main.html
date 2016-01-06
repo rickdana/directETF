@@ -1,20 +1,27 @@
 <div ng-controller="PortefeuilleSyntheseController">
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-6">
             <!-- Information du portefeuille -->
             <div id="portfolio">
                 <div class="portlet">
                     <div class="portlet-title">
-                        <div class="caption caption-md">
-                            <span class="caption-subject font-green"></span>
+                        <div class="tools left">
+                            <a id="btn-portfolio" href="javascript:;"><i class="fa fa-history"></i></a>
+                        </div>
+                        <div class="tools right">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </div>
+                        <div class="text">
+                            <span>Valeur de mes Stratégies</span>
                         </div>
                     </div>
 
                     <div class="portlet-body">
                         <div id="portefeuille-valeur" class="infos-principales">
-                            <span>Valeur de mes Stratégies</span>
                             <div class="number"> {{format(client.portfolio.value)}} {{client.portfolio.currencySymb}}</div>
-                            Variation du jour <span class="result-down">-.8%<i class="fa fa-chevron-down"></i></span>, de l'année <span class="result-up">+8.3%<i class="fa fa-chevron-up"></i></span>
+                            <div>
+                                Variation du jour <span class="result-down">-.8%<i class="fa fa-chevron-down"></i></span>, de l'année <span class="result-up">+8.3%<i class="fa fa-chevron-up"></i></span>
+                            </div>
                         </div>
 
                         <div class="infos-supplements">
@@ -31,16 +38,17 @@
                                     <td class="number">{{format(client.portfolio.dividends)}} {{client.portfolio.currencySymb}}</td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
-                                <tr id="portefeuille-benefice">
+                                <tr id="">
                                     <td class="type">Niveau de risque</td>
                                     <td class="number"></td>
                                     <td class="percent">important</td>
                                 </tr>
-
                             </table>
-                            Votre taux d'épargne est estimé à 15%. Votre épargne est investie à 40%.
                         </div>
 
+                        <div class="infos-sythese">
+                            Votre taux d'épargne est estimé à 15%. Votre épargne est investie à 40%.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,29 +60,64 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Table d'historique du portefeuille -->
+            <div id="table-synthese">
+                <div class="portlet">
+                    <div class="portlet-title">
+                        <div class="tools left">
+                            <a id="btn-table-historique" href="javascript:;"><i class="fa fa-line-chart"></i></a>
+                        </div>
+                        <div class="tools right">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </div>
+                        <div class="text">
+                            <span>Historique Des Transactions</span>
+                        </div>
+                    </div>
+
+                    <div class="portlet-body">
+                        <table class="table table-hover table-header-fixed">
+                            <thead>
+                            <tr>
+                                <th> Date </th>
+                                <th> Opération </th>
+                                <th style="text-align: right"> Valeur </th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+        </div>
         </div>
 
-        <div class="col-lg-7">
+        <div class="col-lg-6">
             <!-- Repartition des secteurs -->
             <div id="sector" class="portlet">
                 <div class="portlet-title">
-                    <div class="caption caption-md">
-                        <span class="caption-subject font-green">Mes investissements par secteurs</span>
+                    <div class="tools left">
+                        <a id="btn-pie-etfs" href="javascript:;"> <i class="fa fa-bars"></i> </a>
+                    </div>
+                    <div class="tools right">
+                        <i class="fa fa-ellipsis-v"></i>
+                    </div>
+                    <div class="text">
+                        <span>Mes investissements par secteurs</span>
                     </div>
                 </div>
                 <div class="portlet-body">
                     <div id="sectors-overview" data-height="260" data-lazy="true"
                          data-filter="{{client.portfolio.etfs}}"
-                         data-show-in-legend="true" ng-etf-sectors-chart></div>
+                         data-show-in-legend="true" ng-etf-sectors-chart>
+                    </div>
                 </div>
             </div>
             <!-- Maps de mes ETFs-->
             <div id="maps">
                 <div class="portlet blueX">
                     <div class="portlet-title">
-                        <div class="caption caption-md">
-                            <span class="caption-subject font-green">Répartition géographique de mes investissements</span>
-                        </div>
+                        <span class="caption-subject font-green">Répartition géographique de mes investissements</span>
                     </div>
                     <div class="portlet-body">
                         <div id="maps-repartition" height="300"
@@ -87,25 +130,21 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-    </div>
-
-    <div class="row">
-
-
-    </div>
-
-    <div class="row" >
-        <div class="col-lg-12">
-            <div class="portlet light bordered">
+            <!-- Liste de mes ETFs-->
+            <div id="list-etfs" class="portlet">
                 <div class="portlet-title">
-                    <div class="caption caption-md">
-                        <a href="#" ng-model="collapsed" ng-click="collapsed=!collapsed">Cliquez ici pour voir le détail du portefeuille</a>
-
+                    <div class="tools left">
+                        <a id="btn-liste-etfs" href="javascript:;"> <i class="fa fa-pie-chart"></i> </a>
+                    </div>
+                    <div class="tools right">
+                        <i class="fa fa-ellipsis-v"></i>
+                    </div>
+                    <div class="text">
+                        <span>Liste des ETFs</span>
                     </div>
                 </div>
-                <div class="portlet-body" ng-show="collapsed">
+
+                <div class="portlet-body">
                     <div id="investment-list" data-lazy="true" data-filter="{{client.portfolio.etfs}}"
                          data-header-template="/protected/pages/dashboard/portefeuille/synthese/tpl/header.html"
                          data-row-template="/protected/pages/dashboard/portefeuille/synthese/tpl/row.html"
@@ -114,6 +153,8 @@
                 </div>
             </div>
         </div>
+
     </div>
+
 </div>
 
