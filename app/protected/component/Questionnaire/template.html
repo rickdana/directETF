@@ -1,55 +1,21 @@
 <div class="questionnaire-component">
-    <div ng-repeat="filter in filters.entries">
-        <input type="radio" name="filter" id="{{filter.id}}" class="filter-group aCheck filter-checkbox"
-               ng-model="filters.current.category"
-               ng-value="filter.id">
-        <label for="{{filter.id}}">
-            <i class="fa fa-check"></i>
-            <span>{{filter.name}}</span>
-            <i class="fa fa-angle-right"
-               ng-class="{'fa-angle-down': filters.current.category == filter.id}"></i></label>
-
-        <div class="filter-items">
-            <div ng-repeat="item in filter.items">
-                <input type="radio" name="{{filter.id}}-item" id="{{item.id}}" class="aCheck filter-checkbox"
-                       ng-model="filters.current.value"
-                       ng-value="item.id">
-                <label for="{{item.id}}">
-                    <i class="fa fa-check"></i>
-                    <span>{{item.text}}</span></label></div>
-            <div ng-if="filter.questions" ng-init="filter.history = []">
-                <div ng-if="!filters.current.question"
-                     ng-init="filters.current.question = filter.questions[0].id"></div>
-                <div class="filter-question filter-history"
-                     ng-init="q = h[0]; a = h[1]"
-                     ng-repeat="(i, h) in filter.history">
-                    <input type="radio" name="h-{{a.id}}" id="h-{{a.id}}" class="aCheck filter-checkbox"
-                           ng-init="h.checked = true"
-                           ng-model="h.checked">
-                    <label for="h-{{a.id}}"
-                           ng-click="filters.current.question = q.id; filters.current.answer = '';
-                                             filters.history.remove(filter.history, i, filter.history.length)">
-                        <span>{{a.resume}}</span></label></div>
-                <div class="filter-question"
-                     ng-repeat="q in filter.questions"
-                     ng-show="filters.current.question == q.id">
-                    <label class="bold">
-                        <span>{{q.text}}</span></label>
-                    <div class="filter-question-end" ng-if="q.id == 'end'">
-                        <div data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html"
-                             ng-etf-list></div>
-                        <div class="">
-                            <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
-                        </div>
-                    </div>
-                    <div class="filter-question-answer" ng-repeat="a in q.answers">
-                        <input type="radio" name="{{filter.id}}" id="{{a.id}}" class="aCheck filter-checkbox"
-                               ng-model="filters.current.answer"
-                               ng-click="filters.current.question = a.goto; filter.history.push([q, a]); filters.exec(filter.history, q, a)">
-                        <label for="{{a.id}}">
-                            <i class="fa fa-check"></i>
-                            <span>{{a.text}}</span></label></div>
-                </div>
+    <div ng-if="questionnaire.nodes">
+        <div ng-init="root = questionnaire.nodes[0]; questionnaire.current.node = root.id">
+            <div class="filter-question filter-history"
+                 ng-repeat="(index, history) in questionnaire.history.entries"
+                 ng-init="q = history[0]; child = history[1]">
+                <div ng-if="child.resume">
+                    <input type="radio" name="h-{{child.id}}" id="h-{{child.id}}" class="aCheck filter-checkbox"
+                           ng-init="history.checked = true"
+                           ng-model="history.checked">
+                    <label for="h-{{child.id}}"
+                           ng-click="questionnaire.current.node = q.id; questionnaire.current.child = null;
+                                     questionnaire.history.remove(index);
+                                     questionnaire.history.goto(q.id)">
+                        <span>{{child.resume}}</span></label></div>
+            </div>
+            <div class="filter-items">
+                <node data-id="{{root.id}}"></node>
             </div>
         </div>
     </div>

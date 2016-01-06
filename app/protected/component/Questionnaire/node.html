@@ -1,0 +1,22 @@
+<div class="filter-question" ng-show="questionnaire.current.node == node.id">
+    <label><span>{{node.text}}</span></label>
+    <div class="filter-question-end" ng-if="node.id == 'end'">
+        <div data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html"
+             ng-etf-list></div>
+        <div class="">
+            <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
+        </div>
+    </div>
+    <div ng-if="node.children">
+        <div class="filter-question-answer" ng-repeat="child in node.children">
+            <input type="radio" name="{{node.id}}" id="{{child.id}}" class="aCheck filter-checkbox"
+                   ng-click="questionnaire.current.node = child.goto;
+                             questionnaire.history.add(node, child);
+                             questionnaire.history.query();
+                             goto(child.goto)">
+            <label for="{{child.id}}">
+                <i class="fa fa-check"></i>
+                <span>{{child.text}}</span></label>
+        </div>
+    </div>
+</div>
