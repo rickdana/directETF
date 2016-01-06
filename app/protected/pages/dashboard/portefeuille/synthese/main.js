@@ -12,6 +12,7 @@ angular.module('MetronicApp')
             App.initAjax();
         });
 
+        // Affichage/cahe les tableaux de liste de etfs, historique
         var btn_portfolio = $element.find('#btn-portfolio');
         var btn_table_historique = $element.find('#btn-table-historique');
         var table_historique =  $element.find('#table-synthese');
@@ -53,14 +54,6 @@ angular.module('MetronicApp')
             return parseFloat(number).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
         };
 
-        // Exposition initiale
-        $scope.client = {
-            portfolio: {
-                value: 0,
-                gains: 0,
-                totalEtfs: 0,
-            }
-        };
 
         // Chargement des gains de chaque ETF avant l'affichage du tableau des titres
         $scope.cbEtfsListBeforeRendering = function(etfs, done) {
@@ -81,16 +74,6 @@ angular.module('MetronicApp')
             });
         };
 
-        // Description du portefeuille (dividentes)
-        $ClientFactory.portfolio.infos(function(err, infos) {
-            if (err) {
-                return console.error(err);
-            }
-
-            for (var property in infos) {
-                $scope.client.portfolio[property] = infos[property];
-            }
-        });
 
         // Valeur du portefeuille
         $ClientFactory.portfolio.value(function(err, value) {
@@ -119,22 +102,13 @@ angular.module('MetronicApp')
             $scope.client.portfolio.etfsValue = etfsValue;
         });
 
-        //Table Historique
+        //Historique des transactions
         $ClientFactory.portfolio.trades(function(err, trades) {
             if (err) {
                 throw err;
             }
 
-            var table = $('#table-synthese tbody');
-
-            for(var i in trades) {
-                var ligne = "<tr>"
-                    + "<td class='date'> " + trades[i].date + "</td>"
-                    + "<td> " + trades[i].comment + "</td>"
-                    + "<td class='valeur'> " + trades[i].cash + " &euro;" + "</td>" +
-                    "</tr>";
-                table.append(ligne);
-            }
+            $scope.client.portfolio.trades = trades;
 
         });
 

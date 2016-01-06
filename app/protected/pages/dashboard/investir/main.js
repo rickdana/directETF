@@ -220,20 +220,6 @@ angular.module('MetronicApp')
             }
         };
 
-        $rootScope.client = {
-            portfolio: {
-                infos: {cash: 0}
-            }
-        };
-
-        $ClientFactory.portfolio.infos(function(err, infos) {
-            if (err) {
-                throw err;
-            }
-
-            $rootScope.client.portfolio.infos = infos;
-        });
-
     })
     .controller('InvestirController', function($OrdersFactory, $rootScope, $scope) {
         $scope.$OrdersFactory = $OrdersFactory;

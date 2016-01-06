@@ -19,7 +19,13 @@
                                 <th style="text-align: right"> Valeur </th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                        <tr ng-repeat="trade in client.portfolio.trades">
+                            <td class='date'>{{trade.date}}</td>
+                            <td>{{trade.comment}}</td>
+                            <td class='valeur'>{{trade.cash}} &euro;</td>
+                        </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>

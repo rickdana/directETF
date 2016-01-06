@@ -89,10 +89,37 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
+MetronicApp.controller('AppController', ['$scope', '$rootScope', '$ClientFactory', function($scope, $rootScope, $ClientFactory) {
     $scope.$on('$viewContentLoaded', function() {
         //App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
+    });
+
+    // Exposition initiale
+    $scope.client = {
+        portfolio: {
+            infos: {}
+        }
+    };
+
+    // Description du portefeuille (dividentes)
+    $ClientFactory.portfolio.infos(function(err, infos) {
+        if (err) {
+            return console.error(err);
+        }
+
+        for (var property in infos) {
+            $scope.client.portfolio[property] = infos[property];
+        }
+    });
+
+    // Profile de client
+    $ClientFactory.profile(function(err, profile) {
+        if (err) {
+            return console.error(err);
+        }
+
+        $scope.client.profile = profile;
     });
 }]);
 

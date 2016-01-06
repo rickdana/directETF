@@ -12,33 +12,17 @@ angular.module('MetronicApp').controller('HistoriqueController', function( $Clie
     $scope.$on('$viewContentLoaded', function() {
 
         // initialize core components
-
         App.initAjax();
-
-
     });
 
-
+    //Historique des transactions
     $ClientFactory.portfolio.trades(function(err, trades) {
         if (err) {
             throw err;
         }
 
-        var table = $('#trades-history tbody');
+        $scope.client.portfolio.trades = trades;
 
-        for(var i in trades) {
-            var ligne = "<tr>"
-                + "<td> " + trades[i].date + "</td>"
-                + "<td> " + trades[i].comment + "</td>"
-                + "<td style='text-align: right'> " + trades[i].cash + " &euro;" + "</td>" +
-                "</tr>";
-            table.append(ligne);
-        }
-
-/*        $('#trades-history').DataTable( {
-            "searching": false,
-
-        });*/
     });
 
     // set sidebar closed and body solid layout mode
