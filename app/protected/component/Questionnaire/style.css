@@ -6,9 +6,6 @@
 .questionnaire-component {
     margin-top: 42px;
     overflow: hidden;
-
-    background-color:#364150;
-    color: rgb(180, 188, 200);
 }
 
 .questionnaire-component input.filter-checkbox {
@@ -27,6 +24,10 @@
 
 .questionnaire-component input.filter-checkbox.filter-group + label {
     border-bottom: 1px solid #3d4957;
+}
+.questionnaire-component .filter-question > label {
+    background-color:#364150;
+    color: rgb(180, 188, 200);
 }
 
 .questionnaire-component input.filter-checkbox.filter-group:focus + label,
@@ -101,6 +102,7 @@
 }
 
 .questionnaire-component .filter-history:before {
+    display: none;
     width: 40px;
     height:10px;
     right: -5px;
@@ -114,7 +116,7 @@
     right: -12px;
     top: 2px;
     width: 30px;
-    height: 30px;
+    height: 23px;
     border-top: 2px solid #fff;
     border-right: 2px solid #fff;
     background-color: rgb(54, 198, 211);
@@ -122,7 +124,7 @@
 }
 
 .questionnaire-component .filter-history label {
-  padding: 5px 12px 7px;
+  padding: 5px 12px 7px 25px;
 }
 
 .questionnaire-component .filter-history span {
@@ -144,6 +146,9 @@
     visibility: visible;
 }
 
+.questionnaire-component .filter-items .filter-question {
+    background-color: #fff;
+}
 .questionnaire-component .filter-question > label {
     padding-left: 28px;
 }
