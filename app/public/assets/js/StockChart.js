@@ -27,7 +27,8 @@ function LoadStockChart(series, container, clear, cb, options) {
                 },
                 style: {
                     fontFamily: 'Josefin Sans'
-                }
+                },
+                backgroundColor:'rgba(255, 255, 255, 0.01)'
             },
 
             xAxis: {
