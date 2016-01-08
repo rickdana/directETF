@@ -116,7 +116,6 @@ angular.module('DirectETF', [])
 
         $scope.model = {
             risque: null,
-            frequence: null,
         };
 
         $scope.synthese = function() {
@@ -238,34 +237,23 @@ angular.module('DirectETF', [])
                 var taux_rentabilite = ref_etfs[i][3];
                 var value_etf = ref_etfs[i][1] * ref_etfs[i][2];
                 var month = firstDay;
-                var left_volatilite = ref_etfs[i][4] * left_vol * ref_etfs[i][1];
-                var right_volatilite = ref_etfs[i][4] * right_vol * ref_etfs[i][1];
+                var left_volatilite = ref_etfs[i][4] * left_vol ;
+                var right_volatilite = ref_etfs[i][4] * right_vol;
 
-                simulation_future_etfs[month] = value_etf;
-                if(typeof simulation_future_etfs_moins_vola[month] == 'undefined') {
-                    simulation_future_etfs_moins_vola[month] = simulation_future_etfs[month];
-                    simulation_future_etfs_ajoute_vola[month] = simulation_future_etfs[month];
-                } else {
-                    simulation_future_etfs_moins_vola[month] += simulation_future_etfs[month];
-                    simulation_future_etfs_ajoute_vola[month] += simulation_future_etfs[month];
-                }
-
-                for (var i = 0; i < time_frame; i++) {
-                    for (var j = 1; j <= 12; j++) {
-                        month = next_month(month);
-                        simulation_future_etfs[month] = value_etf * (taux_rentabilite / 12 * j + 1);
+                    for (var j = 1; j <= 12 * time_frame; j++) {
+                        //simulation_future_etfs[month] = Math.pow(value_etf , ((taux_rentabilite / 12) * j)) + value_etf;
                         if(typeof simulation_future_etfs_moins_vola[month] == 'undefined') {
-                            simulation_future_etfs_moins_vola[month] = simulation_future_etfs[month] + left_volatilite;
-                            simulation_future_etfs_ajoute_vola[month] = simulation_future_etfs[month] + right_volatilite;
+                            simulation_future_etfs_moins_vola[month] =  Math.pow(value_etf , (((taux_rentabilite + left_volatilite) / 12) * j)) + value_etf;
+                            simulation_future_etfs_ajoute_vola[month] = Math.pow(value_etf , (((taux_rentabilite + right_volatilite) / 12) * j)) + value_etf;
                         } else {
-                            simulation_future_etfs_moins_vola[month] += simulation_future_etfs[month] + left_volatilite;
-                            simulation_future_etfs_ajoute_vola[month] += simulation_future_etfs[month] + right_volatilite;
+                            simulation_future_etfs_moins_vola[month] += Math.pow(value_etf , (((taux_rentabilite + left_volatilite) / 12) * j)) + value_etf;
+                            simulation_future_etfs_ajoute_vola[month] += Math.pow(value_etf , (((taux_rentabilite + right_volatilite) / 12) * j)) + value_etf;
                         }
+                        month = next_month(month);
                     }
-                    value_etf *= (1 + taux_rentabilite);
                 }
-            }
-            for (var date in simulation_future_etfs) {
+
+            for (var date in simulation_future_etfs_moins_vola) {
                 var low = parseFloat(simulation_future_etfs_moins_vola[date].toFixed(2));
                 var high = parseFloat(simulation_future_etfs_ajoute_vola[date].toFixed(2));
                 data_simu_future.push([new Date(date).getTime(), low, high]);
@@ -285,7 +273,7 @@ angular.module('DirectETF', [])
             var data_valo_today = new Date().getTime();
 
             var data_invest_future_attendu = simulation_future(ref_etfs_new_invests, 10, data_valo_today, -1, 1);
-            var data_invest_future_favorable = simulation_future(ref_etfs_new_invests, 10, data_valo_today, 1, 2);
+            var data_invest_future_favorable = simulation_future(ref_etfs_new_invests, 10, data_valo_today, 1, 1.5);
             var data_invest_future_defavorable = simulation_future(ref_etfs_new_invests, 10, data_valo_today, -2, -1);
 
 

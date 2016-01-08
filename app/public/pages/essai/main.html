@@ -36,6 +36,33 @@
 
                         </div>
 
+                        <!--<div class="step">-->
+                            <!--<i class="fa fa-comment-o"></i>-->
+                            <!--<h1>COMMENÇONS PAR PARLER UN PEU DE VOUS</h1>-->
+
+                            <!--<p>Afin de générer une stratégie de placement adaptée à vos idées,<br>-->
+                                <!--donnez nous quelques informations sur vous et vos projets.</p>-->
+                            <!--<hr class="middle">-->
+
+                            <!--<h2>Quel montant cible souhaitez vous définir?</h2>-->
+
+                            <!--<div class="form-group">-->
+                                <!--<div class="radio-list">-->
+                                    <!--<input type="radio" name="optionsRadios" value="option1" id="choice5">-->
+                                    <!--<label for="choice5">Moins de 10,000€</label>-->
+
+                                    <!--<input type="radio" name="optionsRadios" value="option2" id="choice6">-->
+                                    <!--<label ng-click="next()" for="choice6">10,000 - 100,000€</label>-->
+
+                                    <!--<input type="radio" name="optionsRadios" value="option 3" id="choice7">-->
+                                    <!--<label ng-click="next()" for="choice7">100,000-500,000€</label>-->
+
+                                    <!--<input type="radio" name="optionsRadios" value="option 4" id="choice8">-->
+                                    <!--<label ng-click="next()" for="choice8">Plus de 500,000€</label>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
                         <div class="step">
                             <i class="fa fa-comment-o"></i>
                             <h1>COMMENÇONS PAR PARLER UN PEU DE VOUS</h1>
@@ -44,25 +71,23 @@
                                 donnez nous quelques informations sur vous et vos projets.</p>
                             <hr class="middle">
 
-                            <h2>Quel type de placement souhaitez vous privilégier en général?</h2>
+                            <h2>Quelle est votre capacité d'épargne mensuelle ?</h2>
 
                             <div class="form-group">
                                 <div class="radio-list">
-                                    <input type="radio" name="optionsRadios" value="option1" id="choice5">
-                                    <label for="choice5">Investir les entreprises et l'économie</label>
-
-                                    <input type="radio" name="optionsRadios" value="option2" id="choice6">
-                                    <label ng-click="next()" for="choice6">Financer un pays</label>
-
-                                    <input type="radio" name="optionsRadios" value="option 3" id="choice7">
-                                    <label ng-click="next()" for="choice7">Je préfère être opportuniste, cela dépend de l'actualité</label>
-
-                                    <input type="radio" name="optionsRadios" value="option 4" id="choice8">
-                                    <label ng-click="next()" for="choice8">Je ne sais pas encore dans quoi
-                                        investir</label>
+                                    <input type="radio" name="optionsRadios" value="5000" id="choice13" ng-model="montant"><label
+                                        ng-click="next()" for="choice13"> Moins de 100€ </label>
+                                    <input type="radio" name="optionsRadios" value="5001" id="choice14" ng-model="montant"><label
+                                        ng-click="next()" for="choice14"> De 100 à 500€</label>
+                                    <input type="radio" name="optionsRadios" value="5002" id="choice15" ng-model="montant"><label
+                                        ng-click="next()" for="choice15"> De 500 à 1000€</label>
+                                    <input type="radio" name="optionsRadios" value="5003" id="choice16" ng-model="montant"><label
+                                        ng-click="next()" for="choice16"> Plus de 1000€</label>
                                 </div>
                             </div>
                         </div>
+
+
 
                         <div class="step">
                             <i class="fa fa-comment-o"></i>
@@ -90,29 +115,6 @@
                             </div>
                         </div>
 
-                        <div class="step">
-                            <i class="fa fa-comment-o"></i>
-                            <h1>COMMENÇONS PAR PARLER UN PEU DE VOUS</h1>
-
-                            <p>Afin de générer une stratégie de placement adaptée à vos idées,<br>
-                                donnez nous quelques informations sur vous et vos projets.</p>
-                            <hr class="middle">
-
-                            <h2>Quelle est votre capacité d'épargne mensuelle ?</h2>
-
-                            <div class="form-group">
-                                <div class="radio-list">
-                                    <input type="radio" name="optionsRadios" value="5000" id="choice13" ng-model="montant"><label
-                                        ng-click="next()" for="choice13"> Moins de 100€ </label>
-                                    <input type="radio" name="optionsRadios" value="5001" id="choice14" ng-model="montant"><label
-                                        ng-click="next()" for="choice14"> De 100 à 500€</label>
-                                    <input type="radio" name="optionsRadios" value="5002" id="choice15" ng-model="montant"><label
-                                        ng-click="next()" for="choice15"> De 500 à 1000€</label>
-                                    <input type="radio" name="optionsRadios" value="5003" id="choice16" ng-model="montant"><label
-                                        ng-click="next()" for="choice16"> Plus de 1000€</label>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="step">
                             <i class="fa fa-comment-o"></i>
@@ -154,22 +156,23 @@
                                 donnez nous quelques informations sur vous et vos projets.</p>
                             <hr class="middle">
 
-                            <h2>Quel niveau de risque êtes-vous prêt à prendre ? </h2>
+                            <h2> Quel est votre patrimoine total approximatif? </h2>
 
                             <div class="form-group">
                                 <div class="radio-list">
-                                    <input type="radio" name="optionsRadios" value="25" id="choice23" ng-model="model.riskLevel"><label
-                                        ng-click="next()" for="choice23">Aucun. Je ne veux aucun risaue de perte en capital.</label>
-                                    <input type="radio" name="optionsRadios" value="45" id="choice24" ng-model="model.riskLevel"><label
-                                        ng-click="next()" for="choice24">Faible, je suis prêt à accepter un revenu réduit pour protéger mon capital.</label>
-                                    <input type="radio" name="optionsRadios" value="60" id="choice25" ng-model="model.riskLevel"><label
-                                        ng-click="next()" for="choice25">Modéré. je suis prêt à accepter un certain risque pour augmenter les gains.</label>
-                                    <input type="radio" name="optionsRadios" value="90" id="choice27" ng-model="model.riskLevel"><label
-                                        ng-click="next()" for="choice27">Elevé. Je suis prêt à accepter une pertie importante dans l'espoir de gains importants.</label>
+                                    <input type="radio" name="optionsRadios" value="option1" id="choice28"><label
+                                        ng-click="next()" for="choice28"> Moins de 10,000€ </label>
+                                    <input type="radio" name="optionsRadios" value="option2" id="choice29"><label
+                                        ng-click="next()" for="choice29"> 10,000 - 100,000€ </label>
+                                    <input type="radio" name="optionsRadios" value="option3" id="choice30"><label
+                                        ng-click="next()" for="choice30"> 100,000 - 500,000€ </label>
+                                    <input type="radio" name="optionsRadios" value="option4" id="choice31"><label
+                                        ng-click="next()" for="choice31"> 500,000 - 1,000,000€ </label>
+                                    <input type="radio" name="optionsRadios" value="option5" id="choice32"><label
+                                        ng-click="next()" for="choice32"> Plus de 1,000,000€ </label>
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="step">
                             <i class="fa fa-comment-o"></i>
@@ -179,21 +182,23 @@
                                 donnez nous quelques informations sur vous et vos projets.</p>
                             <hr class="middle">
 
-                            <h2>A quelle fréquence souhaitez vous suivre</h2>
+                            <h2>Quel niveau de risque êtes-vous prêt à prendre ? </h2>
 
                             <div class="form-group">
                                 <div class="radio-list">
-                                    <input type="radio" name="optionsRadios" value="option1" id="choice28" ng-model="model.frequence" ng-change="synthese()"><label
-                                       ng-click="next()" for="choice28">Aucune</label>
-                                    <input type="radio" name="optionsRadios" value="option2" id="choice29" ng-model="model.frequence" ng-change="synthese()"><label
-                                       ng-click="next()" for="choice29">Envoyez moi un récapitulatif par trimestre</label>
-                                    <input type="radio" name="optionsRadios" value="option3" id="choice30" ng-model="model.frequence" ng-change="synthese()"><label
-                                       ng-click="next()" for="choice30">par mois</label>
-                                    <input type="radio" name="optionsRadios" value="option4" id="choice31" ng-model="model.frequence" ng-change="synthese()"><label
-                                        ng-click="next()" for="choice31">par semaine</label>
-                            </div>
+                                    <input type="radio" name="optionsRadios" value="25" id="choice23" ng-model="model.riskLevel" ng-change="synthese()"><label
+                                        ng-click="next()" for="choice23">Aucun. Je ne veux aucun risaue de perte en capital.</label>
+                                    <input type="radio" name="optionsRadios" value="45" id="choice24" ng-model="model.riskLevel" ng-change="synthese()"><label
+                                        ng-click="next()" for="choice24">Faible, je suis prêt à accepter un revenu réduit pour protéger mon capital.</label>
+                                    <input type="radio" name="optionsRadios" value="60" id="choice25" ng-model="model.riskLevel" ng-change="synthese()"><label
+                                        ng-click="next()" for="choice25">Modéré. je suis prêt à accepter un certain risque pour augmenter les gains.</label>
+                                    <input type="radio" name="optionsRadios" value="90" id="choice27" ng-model="model.riskLevel" ng-change="synthese()"><label
+                                        ng-click="next()" for="choice27">Elevé. Je suis prêt à accepter une pertie importante dans l'espoir de gains importants.</label>
+                                </div>
                             </div>
                         </div>
+
+
 
                         <div class="step" id="synthese">
                             <i class="fa fa-child"></i>
