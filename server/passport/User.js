@@ -10,31 +10,26 @@ function generateHash(password) {
 
 var db = {
     'demo@directetf.com': {
-        firstName: 'Demo',
-        secondName: 'User',
+        "id": 1,
+        "secondName": "Depardieu",
+        "firstName": "Gérard",
         password: generateHash('demo')
     },
     'user1@directetf.com': {
-        firstName: 'Gérard',
-        secondName: 'D.',
+        "id": 2,
+        "secondName": "Roberts",
+        "firstName": "Julia",
         password: generateHash('user1')
     },
     'user2@directetf.com': {
-        firstName: 'Julia',
-        secondName: 'R.',
+        "id": 3,
+        "secondName": "Bullock",
+        "firstName": "Sandra",
         password: generateHash('user2')
-    },
-    'user3@directetf.com': {
-        firstName: 'Sandra',
-        secondName: 'B.',
-        password: generateHash('user3')
-    },
-    'user4@directetf.com': {
-        firstName: 'Brad',
-        secondName: 'P.',
-        password: generateHash('user4')
     }
 };
+
+var id = 3;
 
 var User = {
     setPassword: function (password) {
@@ -88,6 +83,7 @@ function instance(email) {
         db[email][p] = User[p];
     }
 
+    db[email].id = ++id;
     db[email].email = email;
 
     return db[email];
