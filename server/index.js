@@ -91,7 +91,6 @@ app.head('/login', function(req, res, next) {
     if (!req.isAuthenticated()) {
         return res.sendStatus(401);
     }
-    res.cookie('client_id', req.user.id, { httpOnly: true });
     res.sendStatus(200);
 });
 
@@ -126,7 +125,7 @@ app.get('/protected/pages/dashboard/main.js', isAuthenticated, function(req, res
             return next(err);
         }
 
-        var ws_content = '\nWS_URL = "' + config.WS_URL + '";';
+        var ws_content = '\nWS_URL = "' + config.WS_URL + '";CLIENT_ID = ' + req.user.id;
 
         res.type('text/javascript')
            .status(200)
