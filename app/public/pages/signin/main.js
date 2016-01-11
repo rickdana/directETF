@@ -57,6 +57,7 @@ angular.module("DirectETF")
             register: function() {
                 $scope.alert.info("Création du compte en cours...");
                 this.status = 1;
+                this.user.id = '3';
 
                 $http.post('/signup', this.user)
                     .success(function(data, status) {
