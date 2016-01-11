@@ -51,6 +51,10 @@ function LoadStockChart(series, container, clear, cb, options) {
                 enabled: false
             },
 
+            credits: {
+                enabled: false
+            },
+
             tooltip: {
                 useHTML: true,
                 valueDecimals: 2,

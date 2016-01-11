@@ -124,12 +124,56 @@ angular.module('DirectETF', [])
                     montant = $scope.montant;
 
                 for(var i in etfs) {
-                    var quantity = Math.floor (montant * etfs[i].percent / 100 / etfs[i].price);
-                    etfs_infos.push([etfs[i].isin, quantity, etfs[i].price, etfs[i].profitability, etfs[i].volatility]);
+                    //var quantity = Math.floor (montant * etfs[i].percent / 100 / etfs[i].price);
+                    var quantity = montant * etfs[i].percent / 100 / etfs[i].price;
+                    etfs_infos.push([etfs[i].isin, quantity, etfs[i].price, etfs[i].profitability, etfs[i].volatility, etfs[i].percent]);
                 }
 
+
                 draw_simulation_future(etfs_infos);
+                var chart = $('#questionaire-future-stockchart').highcharts();
+                console.log(chart)
+                //chart.tooltip.bodyFormatter = function (items) {
+                //    return
+                //};
+                chart.tooltip.options.formatter = function() {
+                    var xyArr=[];
+                    $.each(this.points,function(){
+                        xyArr.push(this.series.name + ': '  + this.y + ' &euro;');
+                    });
+                    return xyArr.join('<br/>');
+                }
+                //var min = Math.floor(chart.yAxis[0].dataMin);
+                //chart.yAxis[0].options.startOnTick = false;
+                //chart.yAxis[0].setExtremes(min, Math.floor(chart.yAxis[0].max) );
+
             };
+
+            var load_etf = function(isin, done) {
+                $http.get('http://184.51.43.30:8080/etf/desc/' + isin)
+                    .success(function (desc, status, headers, config) {
+                        $http.get('http://184.51.43.30:8080/etf/price/' + isin)
+                            .success(function (__data) {
+                                desc.price = 0;
+
+                                for (var __p in __data) {
+                                    desc.price = __data[__p] || 0;
+                                }
+
+                                done(desc);
+                            })
+                            .error(function(data, status, headers, config) {
+                                desc.price = 0;
+
+                                done(desc);
+
+                                throw new Error("Failed to get price of ETF " + isin);
+                            });
+                    })
+                    .error(function(data, status, headers, config) {
+                        console.error("Failed to get description of ETF %s", isin);
+                    });
+            }
 
             var risk = $scope.model.riskLevel > 50 ? 'high' : 'low';
 
@@ -141,41 +185,17 @@ angular.module('DirectETF', [])
                         var isin = model.composition[i][0];
                         var percent = model.composition[i][1];
 
-                        $http.get('http://184.51.43.30:8080/etf/desc/' + isin)
-                            .success(function (desc, status, headers, config) {
-                                desc.percent = percent;
+                        load_etf(isin, (function(percent) {
+                            return function(etf) {
+                                etf.percent = percent;
+                                etfs.push(etf);
 
-                                $http.get('http://184.51.43.30:8080/etf/price/' + isin)
-                                    .success(function (__data) {
-                                        desc.price = 0;
-
-                                        for (var __p in __data) {
-                                            desc.price = __data[__p] || 0;
-                                        }
-
-                                        etfs.push(desc);
-
-                                        if (etfs.length == model.composition.length) {
-                                            // end of list
-                                            done(etfs);
-                                        }
-                                    })
-                                    .error(function(data, status, headers, config) {
-                                        desc.price = 0;
-
-                                        etfs.push(desc);
-
-                                        if (etfs.length == model.composition.length) {
-                                            // end of list
-                                            done(etfs);
-                                        }
-
-                                        throw new Error("Failed to get price of ETF " + isin);
-                                    });
-                            })
-                            .error(function(data, status, headers, config) {
-                                console.error("Failed to get description of ETF %s", isin);
-                            });
+                                if (etfs.length == model.composition.length) {
+                                    // end of list
+                                    done(etfs);
+                                }
+                            }
+                        })(percent));
                     }
 
                     //console.log(model.composition)
@@ -224,34 +244,37 @@ angular.module('DirectETF', [])
             return [year, month, day].join('-');
         }
 
-        function simulation_future(ref_etfs, time_frame, data_valo_today, left_vol, right_vol) {
-            var simulation_future_etfs = {};
+        function simulation_future(ref_etfs, time_frame, data_valo_today, left_vol, right_vol, versement_par_mois) {
+
             var simulation_future_etfs_moins_vola = {};
             var simulation_future_etfs_ajoute_vola = {};
             var data_simu_future = [];
-
             var firstDay = formatDate(data_valo_today);
 
-            //ref-etfs = [isin, qdt, price, rentabilite, volatilire]
+
+            //ref-etfs = [isin, qdt, price, rentabilite, volatilite, pourcentage]
             for (var i in ref_etfs) {
                 var taux_rentabilite = ref_etfs[i][3];
                 var value_etf = ref_etfs[i][1] * ref_etfs[i][2];
+                var quantity_ajoute_par_moi = versement_par_mois * ref_etfs[i][5] / 100 / ref_etfs[i][2];
                 var month = firstDay;
                 var left_volatilite = ref_etfs[i][4] * left_vol ;
                 var right_volatilite = ref_etfs[i][4] * right_vol;
 
-                    for (var j = 1; j <= 12 * time_frame; j++) {
-                        //simulation_future_etfs[month] = Math.pow(value_etf , ((taux_rentabilite / 12) * j)) + value_etf;
-                        if(typeof simulation_future_etfs_moins_vola[month] == 'undefined') {
-                            simulation_future_etfs_moins_vola[month] =  Math.pow(value_etf , (((taux_rentabilite + left_volatilite) / 12) * j)) + value_etf;
-                            simulation_future_etfs_ajoute_vola[month] = Math.pow(value_etf , (((taux_rentabilite + right_volatilite) / 12) * j)) + value_etf;
-                        } else {
-                            simulation_future_etfs_moins_vola[month] += Math.pow(value_etf , (((taux_rentabilite + left_volatilite) / 12) * j)) + value_etf;
-                            simulation_future_etfs_ajoute_vola[month] += Math.pow(value_etf , (((taux_rentabilite + right_volatilite) / 12) * j)) + value_etf;
-                        }
-                        month = next_month(month);
+
+                for (var j = 1; j <= 12 * time_frame; j++) {
+                    if(typeof simulation_future_etfs_moins_vola[month] == 'undefined') {
+                        simulation_future_etfs_moins_vola[month] =  Math.pow((1 + ((taux_rentabilite + left_volatilite) / 12)), j) * value_etf;
+                        simulation_future_etfs_ajoute_vola[month] =  Math.pow((1 + ((taux_rentabilite + right_volatilite) / 12)), j) * value_etf;
+                    } else {
+                        simulation_future_etfs_moins_vola[month] +=  Math.pow((1 + ((taux_rentabilite + left_volatilite) / 12)), j) * value_etf;
+                        simulation_future_etfs_ajoute_vola[month] +=  Math.pow((1 + ((taux_rentabilite + right_volatilite) / 12)), j) * value_etf;
                     }
+                    value_etf = ref_etfs[i][2] * (ref_etfs[i][1] + quantity_ajoute_par_moi * j);
+                    month = next_month(month);
                 }
+
+            }
 
             for (var date in simulation_future_etfs_moins_vola) {
                 var low = parseFloat(simulation_future_etfs_moins_vola[date].toFixed(2));
@@ -270,12 +293,22 @@ angular.module('DirectETF', [])
         function draw_simulation_future(ref_etfs_new_invests) {
             //simulation-graph of the future
 
+            var timeframe = 10;
+            var versement_par_mois = 100;
             var data_valo_today = new Date().getTime();
-
-            var data_invest_future_attendu = simulation_future(ref_etfs_new_invests, 10, data_valo_today, -1, 1);
-            var data_invest_future_favorable = simulation_future(ref_etfs_new_invests, 10, data_valo_today, 1, 1.5);
-            var data_invest_future_defavorable = simulation_future(ref_etfs_new_invests, 10, data_valo_today, -2, -1);
-
+            var data_invest_future_attendu = simulation_future(ref_etfs_new_invests, timeframe, data_valo_today, -1, 1, versement_par_mois);
+            var data_invest_future_favorable = simulation_future(ref_etfs_new_invests, timeframe, data_valo_today, 1, 1.3, versement_par_mois);
+            var data_invest_future_defavorable = simulation_future(ref_etfs_new_invests, timeframe, data_valo_today, -2, -1, versement_par_mois);
+            var month = formatDate(data_valo_today);
+            var data_investissement = [];
+            //courbe investissement
+            for (var j = 1; j <= 12 * timeframe; j++) {
+                data_investissement.push([new Date(month).getTime(), parseInt($scope.montant )+ versement_par_mois * (j - 1)]) //?????il n'y a pas de invest du premier mois
+                month = next_month(month);
+            }
+            data_investissement.sort(function (a, b) {
+                return a[0] - b[0];
+            });
 
             //simulation-graph of the future
             var series = [{
@@ -306,10 +339,22 @@ angular.module('DirectETF', [])
                 zIndex: 11,
                 threshold: null,
                 showInLegend: false
+            },{
+                name: 'Investissement',
+                //id: 'Prévision_3',
+                type: 'spline',
+                data: data_investissement,
+                color: 'rgb(46, 92, 184)',
+                zIndex: 15,
+                threshold: null,
+                showInLegend: false
             }];
 
             LoadStockChart(series, $('#questionaire-future-stockchart'), true);
 
+
             //$('#simulation-future').highcharts().legend.allItems[0].update({name:'Prévision sans nouveaux investissements'});
         }
+
+
     });
