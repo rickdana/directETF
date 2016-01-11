@@ -55,10 +55,10 @@ p {
     background-color: rgba(0,0,0,.8);
 }
 
-body {
+html, body {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: auto;
     text-align: center;
 }
 
@@ -69,12 +69,15 @@ body:before {
     bottom: -15px;
     left: -15px;
     right: -15px;
+display: block;
 
     background-color: #a4c6ff;
     background-image: url(/public/assets/img/fondecrann.jpg);
-    background-position: 0 70%;
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center -8%;
+    background-size: 100% auto;
     background-attachment: fixed;
 
     transition: all .5s ease;
@@ -277,7 +280,7 @@ section {
     border: 0;
     border-radius: 300px;
     text-transform: uppercase;
-    font-family: 'Poiret One', cursive;
+    font-family: 'Poiret One', Arial, cursive;
     font-weight: 700;
     font-size: medium;
     background-color: #ddd;
@@ -466,7 +469,7 @@ header .header-content {
 }
 
 h1 {
-    font-family: 'Poiret One', cursive;
+    font-family: 'Poiret One', Arial, cursive;
     font-size: 4.5em;
     /*margin-top: -50px;*/
     /*margin-bottom: 30px;*/
