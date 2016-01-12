@@ -406,7 +406,7 @@ angular.module('DirectETF', [])
             return $scope.model.amountInitial;
         }, function(montant) {
             if(montant < 1000 || montant == null) {
-                return;
+                $scope.model.amountInitial = 1000;
             } else {
                 for (var i in _etfs_infos) {
                     var quantity = montant * _etfs_infos[i][5] / 100 / _etfs_infos[i][2];
@@ -421,7 +421,7 @@ angular.module('DirectETF', [])
             return $scope.model.timeframe;
         }, function(value) {
             if(value < 3 || value == null) {
-                return;
+                $scope.model.timeframe = 3;
             } else {
                 draw_simulation_future(_etfs_infos);
             }
@@ -431,7 +431,7 @@ angular.module('DirectETF', [])
             return $scope.model.amountMonthly;
         }, function(value) {
             if(value < 50 || value == null) {
-                return;
+                $scope.model.amountMonthly = 50;
             } else {
                 draw_simulation_future(_etfs_infos);
             }
