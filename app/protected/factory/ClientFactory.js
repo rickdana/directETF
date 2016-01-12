@@ -1,7 +1,7 @@
 angular.module('MetronicApp')
     .factory('$ClientFactory', function($http, $EtfsFactory) {
         var client = {
-            id: $.cookie('client_id') || '1',
+            id: CLIENT_ID,
             profile: null,
             portfolio: {
                 infos: null,
