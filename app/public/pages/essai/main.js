@@ -5,7 +5,7 @@ angular.module('DirectETF', [])
     .controller('EssaiController', function($scope, $element, $http) {
         $('body').addClass('overlay');
 
-
+        var _etfs_infos = null;
 
         var container = $($element[0]),
             steps = container.find('.steps'),
@@ -112,16 +112,60 @@ angular.module('DirectETF', [])
             }
         };
 
-        $scope.montant = 0;
 
         $scope.model = {
-            risque: null,
+            goal: null,
+            amountMonthly: 0,
+            revenueYearly: 0,
+            age: 0,
+            amountHeritage: 0,
+            riskLevel: 0,
+            amountInitial: 10000,
+            timeframe: 20,
+
+            // Slider ammount
+           //sliderAmount : {
+           // options: {
+           //     floor: 0,
+           //     ceil: 100000,
+           //     showSelectionBar: true,
+           //     hideLimitLabels: true,
+           //     translate: function(value) {
+           //         return '';
+           //     },
+           //     onEnd: function () {
+           //         var montant = $scope.model.amountInitial;
+           //         for(var i in _etfs_infos) {
+           //             var quantity = montant * _etfs_infos[i][5] / 100 / _etfs_infos[i][2];
+           //             _etfs_infos[i][1] = quantity;
+           //         }
+           //
+           //         draw_simulation_future(_etfs_infos);
+           //     },
+           // }
+           //},
+
+            // Slider durée
+            //sliderTime : {
+            //    options: {
+            //        floor: 3,
+            //        ceil: 50,
+            //        showSelectionBar: true,
+            //        hideLimitLabels: true,
+            //        translate: function(value) {
+            //            return '' ;
+            //        },
+            //        onEnd: function () {
+            //            draw_simulation_future(_etfs_infos);
+            //        },
+            //    }
+            //}
         };
 
         $scope.synthese = function() {
             var done = function (etfs) {
                 var etfs_infos = [],
-                    montant = $scope.montant;
+                    montant = $scope.model.amountInitial;
 
                 for(var i in etfs) {
                     //var quantity = Math.floor (montant * etfs[i].percent / 100 / etfs[i].price);
@@ -131,21 +175,8 @@ angular.module('DirectETF', [])
 
 
                 draw_simulation_future(etfs_infos);
-                var chart = $('#questionaire-future-stockchart').highcharts();
-                console.log(chart)
-                //chart.tooltip.bodyFormatter = function (items) {
-                //    return
-                //};
-                chart.tooltip.options.formatter = function() {
-                    var xyArr=[];
-                    $.each(this.points,function(){
-                        xyArr.push(this.series.name + ': '  + this.y + ' &euro;');
-                    });
-                    return xyArr.join('<br/>');
-                }
-                //var min = Math.floor(chart.yAxis[0].dataMin);
-                //chart.yAxis[0].options.startOnTick = false;
-                //chart.yAxis[0].setExtremes(min, Math.floor(chart.yAxis[0].max) );
+                _etfs_infos = etfs_infos;
+
 
             };
 
@@ -293,17 +324,17 @@ angular.module('DirectETF', [])
         function draw_simulation_future(ref_etfs_new_invests) {
             //simulation-graph of the future
 
-            var timeframe = 10;
-            var versement_par_mois = 100;
+            var timeframe = $scope.model.timeframe;
+            var versement_par_mois = $scope.model.amountMonthly;
             var data_valo_today = new Date().getTime();
             var data_invest_future_attendu = simulation_future(ref_etfs_new_invests, timeframe, data_valo_today, -1, 1, versement_par_mois);
-            var data_invest_future_favorable = simulation_future(ref_etfs_new_invests, timeframe, data_valo_today, 1, 1.3, versement_par_mois);
-            var data_invest_future_defavorable = simulation_future(ref_etfs_new_invests, timeframe, data_valo_today, -2, -1, versement_par_mois);
+            var data_invest_future_favorable = simulation_future(ref_etfs_new_invests, timeframe, data_valo_today, 1, 1.35, versement_par_mois);
+            var data_invest_future_defavorable = simulation_future(ref_etfs_new_invests, timeframe, data_valo_today, -2.5, -1, versement_par_mois);
             var month = formatDate(data_valo_today);
             var data_investissement = [];
             //courbe investissement
             for (var j = 1; j <= 12 * timeframe; j++) {
-                data_investissement.push([new Date(month).getTime(), parseInt($scope.montant )+ versement_par_mois * (j - 1)]) //?????il n'y a pas de invest du premier mois
+                data_investissement.push([new Date(month).getTime(), parseInt($scope.model.amountInitial )+ versement_par_mois * (j - 1)]) //?????il n'y a pas de invest du premier mois
                 month = next_month(month);
             }
             data_investissement.sort(function (a, b) {
@@ -352,9 +383,57 @@ angular.module('DirectETF', [])
 
             LoadStockChart(series, $('#questionaire-future-stockchart'), true);
 
+            var chart = $('#questionaire-future-stockchart').highcharts();
+            //chart.tooltip.bodyFormatter = function (items) {
+            //    return
+            //};
+            chart.tooltip.options.formatter = function() {
+                var xyArr=[];
+                $.each(this.points,function(){
+                    xyArr.push(this.series.name + ': '  + this.y + ' &euro;');
+                });
+                return xyArr.join('<br/>');
+            }
+            //var min = Math.floor(chart.yAxis[0].dataMin);
+            //chart.yAxis[0].options.startOnTick = false;
+            //chart.yAxis[0].setExtremes(min, Math.floor(chart.yAxis[0].max) );
+
 
             //$('#simulation-future').highcharts().legend.allItems[0].update({name:'Prévision sans nouveaux investissements'});
         }
 
+        $scope.$watch(function() {
+            return $scope.model.amountInitial;
+        }, function(montant) {
+            if(montant < 1000 || montant == null) {
+                return;
+            } else {
+                for (var i in _etfs_infos) {
+                    var quantity = montant * _etfs_infos[i][5] / 100 / _etfs_infos[i][2];
+                    _etfs_infos[i][1] = quantity;
+                }
 
+                draw_simulation_future(_etfs_infos);
+            }
+        });
+
+        $scope.$watch(function() {
+            return $scope.model.timeframe;
+        }, function(value) {
+            if(value < 3 || value == null) {
+                return;
+            } else {
+                draw_simulation_future(_etfs_infos);
+            }
+        });
+
+        $scope.$watch(function() {
+            return $scope.model.amountMonthly;
+        }, function(value) {
+            if(value < 50 || value == null) {
+                return;
+            } else {
+                draw_simulation_future(_etfs_infos);
+            }
+        });
     });

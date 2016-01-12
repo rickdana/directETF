@@ -167,3 +167,16 @@
 #page-essai .box input[type=radio]:checked + label, .box input[type=checkbox]:checked + label {
     background-color: rgb(19, 135, 141);
 }
+
+#resume input {
+    display: inline-block;
+    width: 90px !important;
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    border-bottom: 1px dotted #8C8B8B;
+}
+
+#resume span {
+    font-size: 18px;
+}
