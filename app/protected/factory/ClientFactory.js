@@ -56,6 +56,8 @@ angular.module('MetronicApp')
 
                 $http.get(WS_URL + '/client/desc/' + client.id)
                     .success(function(profile) {
+                        profile.firstName = profile.firstName || CLIENT_FIRST_NAME; // just for demo
+
                         done(false, client.profile = profile)
                     })
                     .error(function(data, status, headers, config) {
