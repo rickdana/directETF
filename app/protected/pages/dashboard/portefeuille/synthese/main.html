@@ -1,12 +1,12 @@
 <div ng-controller="PortefeuilleSyntheseController">
-    <div class="row" ng-if="cilent.profile.alreadyInvest">
+    <div class="row" ng-if="client.profile.alreadyInvest">
         <div class="col-lg-6">
             <!-- Information du portefeuille -->
             <div id="portfolio">
                 <div class="portlet">
                     <div class="portlet-title">
                         <div class="tools left">
-                            <a id="btn-portfolio" href="javascript:;"><i class="fa fa-history"></i></a>
+                            <a id="btn-portfolio" ng-click="affTableHistorique()"><i class="fa fa-history"></i></a>
                         </div>
                         <div class="tools right">
                             <i class="fa fa-ellipsis-v"></i>
@@ -65,7 +65,7 @@
                 <div class="portlet">
                     <div class="portlet-title">
                         <div class="tools left">
-                            <a id="btn-table-historique" href="javascript:;"><i class="fa fa-line-chart"></i></a>
+                            <a id="btn-table-historique" ng-click="cacheTableHistorique()"><i class="fa fa-line-chart"></i></a>
                         </div>
                         <div class="tools right">
                             <i class="fa fa-ellipsis-v"></i>
@@ -102,7 +102,7 @@
             <div id="sector" class="portlet">
                 <div class="portlet-title">
                     <div class="tools left">
-                        <a id="btn-pie-etfs" href="javascript:;"> <i class="fa fa-bars"></i> </a>
+                        <a id="btn-pie-etfs" ng-click="affListeETFs()"> <i class="fa fa-bars"></i> </a>
                     </div>
                     <div class="tools right">
                         <i class="fa fa-ellipsis-v"></i>
@@ -139,7 +139,7 @@
             <div id="list-etfs" class="portlet">
                 <div class="portlet-title">
                     <div class="tools left">
-                        <a id="btn-liste-etfs" href="javascript:;"> <i class="fa fa-pie-chart"></i> </a>
+                        <a id="btn-liste-etfs" ng-click="cacheListeETFs()"> <i class="fa fa-pie-chart"></i> </a>
                     </div>
                     <div class="tools right">
                         <i class="fa fa-ellipsis-v"></i>
@@ -160,7 +160,7 @@
         </div>
     </div>
 
-    <div class="row" ng-if="!cilent.profile.alreadyInvest">
+    <div class="row" ng-if="!client.profile.alreadyInvest">
         <div class="col-lg-6">
             <!-- Information du portefeuille -->
             <div id="portfolio">

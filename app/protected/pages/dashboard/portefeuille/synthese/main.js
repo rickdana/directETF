@@ -12,10 +12,32 @@ angular.module('MetronicApp')
             App.initAjax();
         });
 
+        // Affichage/cahe les tableaux de liste de etfs, historique
+        $scope.affTableHistorique = function() {
+            $element.find('#portfolio').hide();
+            $element.find('#graph-synthese').hide();
+            $element.find('#table-synthese').show();
+        };
+
+        $scope.cacheTableHistorique = function() {
+            $element.find('#portfolio').show();
+            $element.find('#graph-synthese').show();
+            $element.find('#table-synthese').hide();
+        };
+
+        $scope.affListeETFs = function() {
+            $element.find('#sector').hide();
+            $element.find('#maps').hide();
+            $element.find('#list-etfs').show();
+        };
+
+        $scope.cacheListeETFs = function() {
+            $element.find('#sector').show();
+            $element.find('#maps').show();
+            $element.find('#list-etfs').hide();
+        };
+
         var btn_portfolio = $element.find('#btn-portfolio'),
-            btn_table_historique = $element.find('#btn-table-historique'),
-            table_historique =  $element.find('#table-synthese'),
-            graph_historique =  $element.find('#graph-synthese'),
             portfolio =  $element.find('#portfolio'),
             btn_liste_etfs = $element.find('#btn-liste-etfs'),
             btn_pie_etfs = $element.find('#btn-pie-etfs'),
@@ -25,30 +47,6 @@ angular.module('MetronicApp')
 
 
 
-        // Affichage/cahe les tableaux de liste de etfs, historique
-        $(btn_portfolio).on('click', function() {
-            portfolio.hide();
-            graph_historique.hide();
-            table_historique.show();
-        });
-
-        $(btn_table_historique).on('click', function() {
-            portfolio.show();
-            graph_historique.show();
-            table_historique.hide();
-        });
-
-        $(btn_pie_etfs).on('click', function() {
-            sector.hide();
-            maps.hide();
-            liste_etfs.show();
-        });
-
-        $(btn_liste_etfs).on('click', function() {
-            sector.show();
-            maps.show();
-            liste_etfs.hide();
-        });
 
 
         // Fonction de formatage des prices
