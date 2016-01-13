@@ -181,3 +181,24 @@
 #resume span {
     font-size: 18px;
 }
+
+rzslider .rz-bar.rz-selection,
+rzslider .rz-pointer{
+    background-color: #32b5b9;
+}
+
+rzslider .rz-pointer.rz-active:after {
+    background-color:  #308B8E !important;
+}
+
+#mensual-amount, #total-amount {
+    width: 40%;
+    position: relative;
+    left: 203px;
+    margin-top: 23px;
+}
+
+.step a {
+    margin-top: 15px;
+}
+

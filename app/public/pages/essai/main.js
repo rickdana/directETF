@@ -115,52 +115,45 @@ angular.module('DirectETF', [])
 
         $scope.model = {
             goal: null,
-            amountMonthly: 0,
+            amountMonthly: 100,
             revenueYearly: 0,
             age: 0,
-            amountHeritage: 0,
+            amountInitial: 1000,
             riskLevel: 0,
-            amountInitial: 10000,
             timeframe: 20,
 
             // Slider ammount
-           //sliderAmount : {
-           // options: {
-           //     floor: 0,
-           //     ceil: 100000,
-           //     showSelectionBar: true,
-           //     hideLimitLabels: true,
-           //     translate: function(value) {
-           //         return '';
-           //     },
-           //     onEnd: function () {
-           //         var montant = $scope.model.amountInitial;
-           //         for(var i in _etfs_infos) {
-           //             var quantity = montant * _etfs_infos[i][5] / 100 / _etfs_infos[i][2];
-           //             _etfs_infos[i][1] = quantity;
-           //         }
-           //
-           //         draw_simulation_future(_etfs_infos);
-           //     },
-           // }
-           //},
+           sliderAmount : {
+            options: {
+                floor: 1000,
+                ceil: 100000,
+                showSelectionBar: true,
+                hideLimitLabels: true,
+                translate: function(value) {
+                    return value ;
+                }
+            }
+           },
 
-            // Slider durée
-            //sliderTime : {
-            //    options: {
-            //        floor: 3,
-            //        ceil: 50,
-            //        showSelectionBar: true,
-            //        hideLimitLabels: true,
-            //        translate: function(value) {
-            //            return '' ;
-            //        },
-            //        onEnd: function () {
-            //            draw_simulation_future(_etfs_infos);
-            //        },
-            //    }
-            //}
+            sliderAmountMonthly : {
+                options: {
+                    floor: 100,
+                    ceil: 10000,
+                    showSelectionBar: true,
+                    hideLimitLabels: true,
+                    translate: function(value) {
+                        return value ;
+                    }
+                }
+            },
+
         };
+
+        $scope.$watch(function() {
+            return  $scope.model.riskLevel;
+        }, function() {
+            $scope.synthese();
+        });
 
         $scope.synthese = function() {
             var done = function (etfs) {
@@ -394,8 +387,8 @@ angular.module('DirectETF', [])
                 });
                 return xyArr.join('<br/>');
             }
-            //var min = Math.floor(chart.yAxis[0].dataMin);
-            //chart.yAxis[0].options.startOnTick = false;
+            var min = Math.floor(chart.yAxis[0].dataMin);
+            chart.yAxis[0].options.startOnTick = false;
             //chart.yAxis[0].setExtremes(min, Math.floor(chart.yAxis[0].max) );
 
 

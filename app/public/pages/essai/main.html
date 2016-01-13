@@ -36,33 +36,6 @@
 
                         </div>
 
-                        <!--<div class="step">-->
-                            <!--<i class="fa fa-comment-o"></i>-->
-                            <!--<h1>COMMENÇONS PAR PARLER UN PEU DE VOUS</h1>-->
-
-                            <!--<p>Afin de générer une stratégie de placement adaptée à vos idées,<br>-->
-                                <!--donnez nous quelques informations sur vous et vos projets.</p>-->
-                            <!--<hr class="middle">-->
-
-                            <!--<h2>Quel montant cible souhaitez vous définir?</h2>-->
-
-                            <!--<div class="form-group">-->
-                                <!--<div class="radio-list">-->
-                                    <!--<input type="radio" name="optionsRadios" value="option1" id="choice5">-->
-                                    <!--<label for="choice5">Moins de 10,000€</label>-->
-
-                                    <!--<input type="radio" name="optionsRadios" value="option2" id="choice6">-->
-                                    <!--<label ng-click="next()" for="choice6">10,000 - 100,000€</label>-->
-
-                                    <!--<input type="radio" name="optionsRadios" value="option 3" id="choice7">-->
-                                    <!--<label ng-click="next()" for="choice7">100,000-500,000€</label>-->
-
-                                    <!--<input type="radio" name="optionsRadios" value="option 4" id="choice8">-->
-                                    <!--<label ng-click="next()" for="choice8">Plus de 500,000€</label>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-
                         <div class="step">
                             <i class="fa fa-comment-o"></i>
                             <h1>COMMENÇONS PAR PARLER UN PEU DE VOUS</h1>
@@ -73,17 +46,12 @@
 
                             <h2>Quelle est votre capacité d'épargne mensuelle ?</h2>
 
-                            <div class="form-group">
-                                <div class="radio-list">
-                                    <input type="radio" name="optionsRadios" value="50" id="choice13" ng-model="model.amountMonthly"><label
-                                        ng-click="next()" for="choice13"> Moins de 100€ </label>
-                                    <input type="radio" name="optionsRadios" value="250" id="choice14" ng-model="model.amountMonthly"><label
-                                        ng-click="next()" for="choice14"> De 100 à 500€</label>
-                                    <input type="radio" name="optionsRadios" value="750" id="choice15" ng-model="model.amountMonthly"><label
-                                        ng-click="next()" for="choice15"> De 500 à 1000€</label>
-                                    <input type="radio" name="optionsRadios" value="1200" id="choice16" ng-model="model.amountMonthly"><label
-                                        ng-click="next()" for="choice16"> Plus de 1000€</label>
+                            <div id="mensual-amount">
+                                <div class="slider">
+                                    <rzslider rz-slider-model="model.amountMonthly"
+                                              rz-slider-options="model.sliderAmountMonthly.options"></rzslider>
                                 </div>
+                                <a class="btn btn-primary btn-xl" ng-click="next()">suivant</a>
                             </div>
                         </div>
 
@@ -100,7 +68,6 @@
                             <h2>Quel est votre revenu annuel approximatif?</h2>
 
                             <div class="form-group">
-
                                 <div class="radio-list">
                                     <input type="radio" name="optionsRadios" value="option1" id="choice9" ng-model="model.revenueYearly"><label
                                         ng-click="next()" for="choice9"> Moins de
@@ -156,21 +123,14 @@
                                 donnez nous quelques informations sur vous et vos projets.</p>
                             <hr class="middle">
 
-                            <h2> Quel est votre patrimoine total approximatif? </h2>
+                            <h2> A combien estimez-vous votre patrimoine financier ? </h2>
 
-                            <div class="form-group">
-                                <div class="radio-list">
-                                    <input type="radio" name="optionsRadios" value="option1" id="choice28" ng-model="model.amountHeritage"><label
-                                        ng-click="next()" for="choice28"> Moins de 10,000€ </label>
-                                    <input type="radio" name="optionsRadios" value="option2" id="choice29" ng-model="model.amountHeritage"><label
-                                        ng-click="next()" for="choice29"> 10,000 - 100,000€ </label>
-                                    <input type="radio" name="optionsRadios" value="option3" id="choice30" ng-model="model.amountHeritage"><label
-                                        ng-click="next()" for="choice30"> 100,000 - 500,000€ </label>
-                                    <input type="radio" name="optionsRadios" value="option4" id="choice31" ng-model="model.amountHeritage"><label
-                                        ng-click="next()" for="choice31"> 500,000 - 1,000,000€ </label>
-                                    <input type="radio" name="optionsRadios" value="option5" id="choice32" ng-model="model.amountHeritage"><label
-                                        ng-click="next()" for="choice32"> Plus de 1,000,000€ </label>
+                            <div id="total-amount" class="col-lg-6">
+                                <div class="slider">
+                                    <rzslider rz-slider-model="model.amountInitial"
+                                              rz-slider-options="model.sliderAmount.options"></rzslider>
                                 </div>
+                                <a class="btn btn-primary btn-xl" ng-click="next()">suivant</a>
                             </div>
                         </div>
 
@@ -211,8 +171,8 @@
                                 <div class="portlet-title">
                                     <div id="resume" class="caption caption-md">
                                         <span>Si vous investissez  <input type="number" string-to-number placeholder="20" class="form-control" ng-model="model.amountMonthly"  required>
-                                         avec un fond initial de  <input type="number" string-to-number placeholder="1000" class="form-control" ng-model="model.amountInitial"  required>
-                                        pendant les <input type="number" string-to-number placeholder="3" class="form-control" ng-model="model.timeframe"  required> prochaines années, vous
+                                         euros par mois avec un patrimoine initial de  <input type="number" string-to-number placeholder="1000" class="form-control" ng-model="model.amountInitial"  required>
+                                        euros pendant les <input type="number" string-to-number placeholder="3" class="form-control" ng-model="model.timeframe"  required> prochaines années, vous
                                         obtiendrez .....</span>
                                     </div>
                                 </div>

@@ -126,6 +126,7 @@ app.get('/protected/pages/dashboard/main.js', isAuthenticated, function(req, res
         }
 
         var ws_content = '\nWS_URL = "' + config.WS_URL + '";CLIENT_ID = ' + req.user.id;
+        ws_content += ';CLIENT_FIRST_NAME="' + req.user.firstName + '"';
 
         res.type('text/javascript')
            .status(200)
