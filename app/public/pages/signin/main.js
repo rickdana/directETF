@@ -1,5 +1,5 @@
 angular.module("DirectETF")
-    .controller('RegisterController', function($scope, $element, $http, $window) {
+    .controller('RegisterController', function($scope, $element, $http, $window, $routeParams) {
         $scope.alert = {
             type: "",
             message: "",
@@ -57,7 +57,9 @@ angular.module("DirectETF")
             register: function() {
                 $scope.alert.info("Création du compte en cours...");
                 this.status = 1;
-                this.user.id = '3';
+                var riskLevel = parseFloat(/riskLevel=(\d+)/.exec(location.href)[1]) > 50 ? 'High' : 'Low';
+                this.user.id = 'clientModel' + riskLevel;
+
 
                 $http.post('/signup', this.user)
                     .success(function(data, status) {

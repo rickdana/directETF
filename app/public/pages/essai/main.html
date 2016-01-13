@@ -183,7 +183,7 @@
 
                             <p>Attention, votre choix d'un niveau derisque élevé peu contredire votre objectif de crer un revenu régulier. Souhaitez vous revenir en arrière?
                            </p><a class="btn btn-primary btn-xl" ng-click="prev()">revoir</a>
-                            <a href="/#/signin" class="btn btn-primary btn-xl">créer un compte</a>
+                            <a href="#/signin?riskLevel={{model.riskLevel}}" class="btn btn-primary btn-xl">créer un compte</a>
                         </div>
 
                         <a class="prev disabled" href="javascript:void(0)" ng-click="prev()" ng-hide="step == limit"><i

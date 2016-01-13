@@ -114,7 +114,6 @@ function LoadStockChart(series, container, clear, cb, options) {
             series: []
         };
 
-        console.log(container)
         if (options) {
             for (var o in options) {
                 default_options[o] = options[o];
@@ -124,6 +123,7 @@ function LoadStockChart(series, container, clear, cb, options) {
         container.highcharts('StockChart', default_options);
 
         chart = container.highcharts();
+        console.log(chart)
         chart.rangeSelector.zoomText.hide();
         $.each(chart.rangeSelector.buttons,function(i,b){
             b.hide();

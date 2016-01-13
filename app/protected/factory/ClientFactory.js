@@ -56,6 +56,7 @@ angular.module('MetronicApp')
 
                 $http.get(WS_URL + '/client/desc/' + client.id)
                     .success(function(profile) {
+                        profile.alreadyInvest = profile.firstName.length > 0; // just for demo
                         profile.firstName = profile.firstName || CLIENT_FIRST_NAME; // just for demo
 
                         done(false, client.profile = profile)
@@ -150,7 +151,9 @@ angular.module('MetronicApp')
                             return done(err, null);
                         }
 
-                        client.portfolio.value = data_valo[data_valo.length - 1][1];
+                        client.portfolio.value = data_valo.length
+                                               ? data_valo[data_valo.length - 1][1]
+                                               : 0;
 
                         done(false, client.portfolio.value);
                     });

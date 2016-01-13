@@ -12,13 +12,20 @@ angular.module('MetronicApp')
             App.initAjax();
         });
 
-        // Affichage/cahe les tableaux de liste de etfs, historique
-        var btn_portfolio = $element.find('#btn-portfolio');
-        var btn_table_historique = $element.find('#btn-table-historique');
-        var table_historique =  $element.find('#table-synthese');
-        var graph_historique =  $element.find('#graph-synthese');
-        var portfolio =  $element.find('#portfolio');
+        var btn_portfolio = $element.find('#btn-portfolio'),
+            btn_table_historique = $element.find('#btn-table-historique'),
+            table_historique =  $element.find('#table-synthese'),
+            graph_historique =  $element.find('#graph-synthese'),
+            portfolio =  $element.find('#portfolio'),
+            btn_liste_etfs = $element.find('#btn-liste-etfs'),
+            btn_pie_etfs = $element.find('#btn-pie-etfs'),
+            sector =  $element.find('#sector'),
+            maps =  $element.find('#maps'),
+            liste_etfs =  $element.find('#list-etfs');
 
+
+
+        // Affichage/cahe les tableaux de liste de etfs, historique
         $(btn_portfolio).on('click', function() {
             portfolio.hide();
             graph_historique.hide();
@@ -30,12 +37,6 @@ angular.module('MetronicApp')
             graph_historique.show();
             table_historique.hide();
         });
-
-        var btn_liste_etfs = $element.find('#btn-liste-etfs');
-        var btn_pie_etfs = $element.find('#btn-pie-etfs');
-        var sector =  $element.find('#sector');
-        var maps =  $element.find('#maps');
-        var liste_etfs =  $element.find('#list-etfs');
 
         $(btn_pie_etfs).on('click', function() {
             sector.hide();
@@ -49,11 +50,11 @@ angular.module('MetronicApp')
             liste_etfs.hide();
         });
 
+
         // Fonction de formatage des prices
         $scope.format = function(number) {
             return parseFloat(number).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
         };
-
 
         // Chargement des gains de chaque ETF avant l'affichage du tableau des titres
         $scope.cbEtfsListBeforeRendering = function(etfs, done) {
