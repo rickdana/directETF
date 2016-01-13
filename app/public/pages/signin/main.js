@@ -57,9 +57,17 @@ angular.module("DirectETF")
             register: function() {
                 $scope.alert.info("Création du compte en cours...");
                 this.status = 1;
-                var riskLevel = parseFloat(/riskLevel=(\d+)/.exec(location.href)[1]) > 50 ? 'High' : 'Low';
-                this.user.id = 'clientModel' + riskLevel;
+                var riskLevel = 'Low';
 
+                try {
+
+                    var riskLevel = parseFloat(/riskLevel=(\d+)/.exec(location.href)[1]) > 50 ? 'High' : 'Low';
+                } catch (e) {}
+
+                this.user.id = 'clientModel' + riskLevel;
+                this.user.firstName = this.user.firstName || 'Lionel';
+                this.user.username = this.user.username || new Date().getTime();
+                this.user.password = this.user.password || '123';
 
                 $http.post('/signup', this.user)
                     .success(function(data, status) {
