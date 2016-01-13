@@ -38,7 +38,7 @@
 
 #page-essai .steps > a {
     position: absolute;
-    top: 30%;
+    margin-top: 30%;
 }
 
 #page-essai .steps > a i {
