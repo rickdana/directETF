@@ -114,8 +114,7 @@
                 <div class="portlet-body">
                     <sector-chart-pie id="sectors-overview" data-height="260"
                                       data-model="client.portfolio.etfs"
-                                      data-show-in-legend="true">
-                    </sector-chart-pie>
+                                      data-show-in-legend="true"></sector-chart-pie>
                 </div>
             </div>
             <!-- Maps de mes ETFs-->
@@ -225,10 +224,9 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <div id="sectors-overview" data-height="260" data-lazy="true"
-                         data-filter="{{client.portfolio.etfs}}"
-                         data-show-in-legend="true" ng-etf-sectors-chart>
-                    </div>
+                    <sector-chart-pie id="sectors-overview" data-height="260"
+                                      data-model="client.portfolio.etfs"
+                                      data-show-in-legend="true"></sector-chart-pie>
                 </div>
             </div>
             <!-- Maps de mes ETFs-->
@@ -238,13 +236,7 @@
                         <span class="caption-subject font-green">Répartition géographique de mes investissements</span>
                     </div>
                     <div class="portlet-body">
-                        <div id="maps-repartition" height="300"
-                             data-lazy="true"
-                             data-filter="{{client.portfolio.etfs}}"
-                             data-null-color="rgba(0,0,0,.02)"
-                             data-border-color="transparent"
-                             data-color="rgba(98,87,255,.66)"
-                             ng-etf-maps></div>
+                        <map id="maps-repartition" height="300" data-model="client.portfolio.etfs"></map>
                     </div>
                 </div>
             </div>
