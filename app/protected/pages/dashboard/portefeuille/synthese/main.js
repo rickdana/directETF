@@ -217,6 +217,14 @@ angular.module('MetronicApp')
             });
 
 
+            chart.legend.allItems[0].legendGroup.attr({
+                translateY: 22
+            });
+            chart.legend.allItems[1].legendGroup.attr({
+                translateY: 22
+            });
+
+
 
         }
 
