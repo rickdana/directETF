@@ -42,7 +42,9 @@ function LoadStockChart(series, container, clear, cb, options) {
                 lineWidth: 0.5,
                 labels: {
                     useHTML: true,
-                    format: '{value} &euro;',
+                    formatter: function () {
+                        return '&euro; ' + this.axis.defaultLabelFormatter.call(this);
+                    }
                 },
 
             },
@@ -114,6 +116,7 @@ function LoadStockChart(series, container, clear, cb, options) {
             series: []
         };
 
+        console.log(container)
         if (options) {
             for (var o in options) {
                 default_options[o] = options[o];

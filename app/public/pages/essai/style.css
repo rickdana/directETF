@@ -202,3 +202,66 @@ rzslider .rz-pointer.rz-active:after {
     margin-top: 15px;
 }
 
+/*input[type=number]::-webkit-inner-spin-button,*/
+ /*input[type=number]::-webkit-outer-spin-button {*/
+     /*-webkit-appearance: none;*/
+     /*margin: 0;*/
+ /*}*/
+
+input[type="number"]:valid + span {
+    display: none;
+}
+
+input[type="number"]:invalid + span {
+    display: inline;
+    background-color: rgba(226, 226, 226, 0.6);
+    position: relative;
+    padding: 2px 7px 3px;
+    border-radius: 5px;
+    color: rgb(220, 20, 60);
+    font-size: 15px !important;
+}
+
+table#read_chart {
+    display: inline;
+    border-radius: 4px !important;
+    border: 1px solid #cccccc;
+    border-collapse: collapse;
+    background: #fff;
+    position: absolute;
+    left: 33px;
+    top: 234px;
+    font-size: 11px;
+    overflow: hidden;
+    height: auto;
+    width: 165px;
+    text-align: left;
+    font-weight: 700;
+    font-style: normal;
+}
+
+table#read_chart tr.hi {
+    background: #579969;
+}
+
+table#read_chart tr.med {
+    background: #5FB778;
+}
+
+table#read_chart tr.lo {
+    background: #FED3C5;
+}
+
+table#read_chart td {
+    padding: 1px 5px;
+}
+
+table#read_chart tr.contr {
+    background: #fff;
+}
+
+table#read_chart tr.contr td {
+    border-top: 1px solid #cccccc;
+    text-shadow: none;
+    width: 135px;
+}
