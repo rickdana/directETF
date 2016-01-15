@@ -282,6 +282,18 @@ table#fund_read_chart td {
     padding: 1px 5px;
 }
 
+table#fund_read_chart tr.contr {
+    background: #fff;
+}
+
+table#read_chart tr.contr td {
+    color: #044677;
+    border-top: 1px solid #cccccc;
+    text-shadow: none;
+    text-align: right;
+    width: 135px;
+}
+
 #tab_1 .portlet-body .form-group {
     padding-top: 0px !important;
     position: absolute;

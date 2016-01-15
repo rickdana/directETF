@@ -196,7 +196,6 @@ angular.module('MetronicApp')
             chart.rangeSelector.buttons[0].setState(2);
             chart.rangeSelector.clickButton(0,0,true);
 
-
             chart.xAxis[0].update({
                 tickColor:'transparent',
                 lineColor: 'transparent',
@@ -216,6 +215,7 @@ angular.module('MetronicApp')
                     }
                 }
             });
+
 
 
         }

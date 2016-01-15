@@ -48,7 +48,7 @@
 
                             <div id="mensual-amount">
                                 <div class="slider">
-                                    <rzslider rz-slider-model="model.amountMonthly"
+                                    <rzslider rz-slider-model="model.amountMonthlySlider"
                                               rz-slider-options="model.sliderAmountMonthly.options"></rzslider>
                                 </div>
                                 <a class="btn btn-primary btn-xl" ng-click="next()">suivant</a>
@@ -123,11 +123,11 @@
                                 donnez nous quelques informations sur vous et vos projets.</p>
                             <hr class="middle">
 
-                            <h2> A combien estimez-vous votre patrimoine financier ? </h2>
+                            <h2> A combien estimez-vous votre versement initial ? </h2>
 
                             <div id="total-amount" class="col-lg-6">
                                 <div class="slider">
-                                    <rzslider rz-slider-model="model.amountInitial"
+                                    <rzslider rz-slider-model="model.amountInitialSlider"
                                               rz-slider-options="model.sliderAmount.options"></rzslider>
                                 </div>
                                 <a class="btn btn-primary btn-xl" ng-click="next()">suivant</a>
@@ -162,7 +162,6 @@
 
                         <div class="step" id="synthese">
                             <i class="fa fa-child"></i>
-                            <!--<h1>Voici notre suggestion de portefeuille</h1>-->
 
                             <h2>Découvrez notre suggestion de portefeuille</h2>
 
@@ -170,13 +169,48 @@
                             <div class="portlet">
                                 <div class="portlet-title">
                                     <div id="resume" class="caption caption-md">
-                                        <span>Si vous investissez  <input type="number" string-to-number placeholder="20" class="form-control" ng-model="model.amountMonthly"  required>
-                                         euros par mois avec un patrimoine initial de  <input type="number" string-to-number placeholder="1000" class="form-control" ng-model="model.amountInitial"  required>
-                                        euros pendant les <input type="number" string-to-number placeholder="3" class="form-control" ng-model="model.timeframe"  required> prochaines années, vous
-                                        obtiendrez .....</span>
+                                        <span>Si vous investissez
+                                            <div style="display: inline">
+                                                <input type="number" placeholder="20" title="ezaeazezae" class="form-control" ng-model="model.amountMonthlyInput"  min="{{model.amountMonthlyMin}}" max="{{model.amountMonthlyMax}}" step="100" required>
+                                                <span>entre 100 - 1000 euros</span>
+                                            </div>
+                                            euros par mois avec un patrimoine initial de
+                                            <div style="display: inline">
+                                                <input type="number" placeholder="1000" class="form-control" ng-model="model.amountInitialInput" min="{{model.amountInitialMin}}" max="{{model.amountInitialMax}}" step="500" required>
+                                                <span>entre 1000 - 100000 euros</span>
+                                            </div>
+                                            euros pendant les
+                                            <div style="display: inline">
+                                                <input type="number" placeholder="3" class="form-control" ng-model="model.timeframe"  min="{{model.timeframeMin}}" max="{{model.timeframeMax}}" required>
+                                                <span>entre 3 - 50 ans</span>
+                                            </div>
+                                            prochaines années, vous obtiendrez .....</span>
                                     </div>
                                 </div>
                                 <div class="portlet-body text-right">
+                                    <table id="read_chart" style="display: table;">
+                                        <tbody>
+                                        <tr class="hi" style="display: table-row;">
+                                            <td>Favorable</td>
+                                            <td>13% chance</td>
+                                        </tr>
+
+                                        <tr class="med" style="display: table-row;">
+                                            <td>Attendu</td>
+                                            <td>68% chance</td>
+                                        </tr>
+
+                                        <tr class="lo" style="display: table-row;">
+                                            <td>Défavorable</td>
+                                            <td>13% chance</td>
+                                        </tr>
+
+                                        <tr class="contr" style="display: table-row;">
+                                            <td>&mdash;</td>
+                                            <td>Investissement</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                     <div id="questionaire-future-stockchart" style="height: 350px"></div>
                                 </div>
                             </div>
