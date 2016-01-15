@@ -15,7 +15,7 @@
 html,
 body {
     width: 100%;
-    height: 100%;
+    height: 100% !important;
 }
 
 body {
@@ -60,16 +60,6 @@ html, body {
     width: 100%;
     height: auto;
     text-align: center;
-}
-
-body.overlay:before {
-    filter: blur(5px);
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-    filter: url("data:image/svg+xml;utf9,<svg%20version='1.1'%20xmlns='http://www.w3.org/2000/svg'><filter%20id='blur'><feGaussianBlur%20stdDeviation='5'%20/></filter></svg>#blur");
-    filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='5');
 }
 
 .gradient {
@@ -449,10 +439,10 @@ body .btn-primary:hover, body .btn-primary:focus {
     background-image: linear-gradient(to bottom, #37c4c7 0, #47a2aa 100%);
 }
 
-header .header-content {
+header {
     position: relative;
     width: 100%;
-    padding: 12em 2em;
+    padding: 12em 2em 2em;
     text-align: center;
 
     background-image: url(/public/assets/img/fondecrann.jpg);
@@ -460,8 +450,26 @@ header .header-content {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center 0;
-    background-size: 100% auto;
+    /*background-size: 100% auto;*/
     background-attachment: fixed;
+}
+
+header.overlay:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index:2;
+
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: url("data:image/svg+xml;utf9,<svg%20version='1.1'%20xmlns='http://www.w3.org/2000/svg'><filter%20id='blur'><feGaussianBlur%20stdDeviation='5'%20/></filter></svg>#blur");
+    filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='5');
 }
 
 h1 {

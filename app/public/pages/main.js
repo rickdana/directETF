@@ -171,7 +171,7 @@ DirectETF
         $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             $rootScope.$page = current.$$route.page;
 
-            $('body').removeClass('overlay');
+            $('header').removeClass('overlay');
 
             $('html,body').animate({
                 scrollTop: 0

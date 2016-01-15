@@ -26,7 +26,7 @@ angular.module('DirectETF', [])
         });
 
         $($element[0]).find('#try-button').on('click', function() {
-            $('body').addClass('overlay');
+            $('header').addClass('overlay');
 
             //return false;
         })
