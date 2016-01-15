@@ -143,7 +143,7 @@ angular.module('MetronicApp')
 
                     switch (step) {
                         case 1:
-                            $PortfolioFactory.model($rootScope.client.portfolio.infos.goal, $rootScope.client.portfolio.infos.amountMonthly, $rootScope.client.portfolio.infos.risk, function(err, portfolio) {
+                            $PortfolioFactory.model($rootScope.client.portfolio.goal, $rootScope.client.portfolio.amountMonthly, $rootScope.client.portfolio.risk, function(err, portfolio) {
                                 var etfs = [];
 
                                 for (var i in portfolio) {
@@ -680,13 +680,13 @@ angular.module('MetronicApp')
             value: 0,
             options: {
                 floor: 0,
-                ceil: $scope.client.portfolio.infos.cash,
+                ceil: $scope.client.portfolio.cash,
                 step: 0.1,
                 precision: 2,
                 showSelectionBar: true,
                 hideLimitLabels: true,
                 translate: function(value) {
-                    return value + ' ' + $scope.client.portfolio.infos.currencySymb;
+                    return value + ' ' + $scope.client.portfolio.currencySymb;
                 }
             }
         };
@@ -704,7 +704,7 @@ angular.module('MetronicApp')
         };
 
         $scope.$watch(function() {
-            return $scope.client.portfolio.infos.cash;
+            return $scope.client.portfolio.cash;
         }, function(cash) {
             $scope.sliderInvestLimit.options.ceil = cash;
         });

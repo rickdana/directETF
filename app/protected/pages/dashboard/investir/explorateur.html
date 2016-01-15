@@ -111,22 +111,22 @@
                         <tbody>
                         <tr>
                             <td>Liquidités disponibles</td>
-                            <td class="text-right">{{client.portfolio.infos.cash | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
+                            <td class="text-right">{{client.portfolio.cash | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
                         </tr>
                         <tr>
                             <td>Liquidités sortantes</td>
-                            <td class="text-right">{{$OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
+                            <td class="text-right">{{$OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
                         </tr>
                         <tr>
                             <td>Liquidités entrantes estimées</td>
-                            <td class="text-right">{{profit | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
+                            <td class="text-right">{{profit | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
                         </tr>
                         </tbody>
 
                         <tfoot>
                         <tr>
                             <td class="text-left">Liquidités restantes estimées après transaction</td>
-                            <td class="text-right">{{client.portfolio.infos.cash - $OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
+                            <td class="text-right">{{client.portfolio.cash - $OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
                         </tr>
                         </tfoot>
 

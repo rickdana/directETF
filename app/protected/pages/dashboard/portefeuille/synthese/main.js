@@ -45,10 +45,6 @@ angular.module('MetronicApp')
             maps =  $element.find('#maps'),
             liste_etfs =  $element.find('#list-etfs');
 
-
-
-
-
         // Fonction de formatage des prices
         $scope.format = function(number) {
             return parseFloat(number).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
@@ -60,7 +56,6 @@ angular.module('MetronicApp')
                 if (err) {
                     return console.error(err);
                 }
-
 
                 done(etfs_with_gains);
             });
@@ -201,7 +196,6 @@ angular.module('MetronicApp')
             chart.rangeSelector.buttons[0].setState(2);
             chart.rangeSelector.clickButton(0,0,true);
 
-
             chart.xAxis[0].update({
                 tickColor:'transparent',
                 lineColor: 'transparent',
@@ -221,6 +215,15 @@ angular.module('MetronicApp')
                     }
                 }
             });
+
+
+            chart.legend.allItems[0].legendGroup.attr({
+                translateY: 22
+            });
+            chart.legend.allItems[1].legendGroup.attr({
+                translateY: 22
+            });
+
 
 
         }

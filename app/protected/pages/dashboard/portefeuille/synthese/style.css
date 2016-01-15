@@ -157,11 +157,12 @@ table .selected {
 
 #graph-synthese .portlet{
 	background-color: #36c6d3 !important;
+	height: 386px;
 }
 
 #portfolio .portlet {
 	margin-bottom: 0px;
-	height: 336px;
+	height: 328px;
 }
 
 #portfolio .portlet-title {

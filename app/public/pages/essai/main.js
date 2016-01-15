@@ -1,7 +1,4 @@
-'use strict';
-
 angular.module('DirectETF', [])
-
     .controller('EssaiController', function($scope, $element, $http) {
         $('body').addClass('overlay');
 
@@ -115,22 +112,31 @@ angular.module('DirectETF', [])
 
         $scope.model = {
             goal: null,
-            amountMonthly: 100,
+            amountMonthlySlider: 100,
+            amountMonthlyInput: 100,
+            amountMonthlyMin: 100,
+            amountMonthlyMax: 2000,
             revenueYearly: 0,
             age: 0,
-            amountInitial: 1000,
+            amountInitialSlider: 1000,
+            amountInitialInput: 1000,
+            amountInitialMin: 1000,
+            amountInitialMax: 100000,
             riskLevel: 0,
             timeframe: 20,
+            timeframeMin: 3,
+            timeframeMax: 50,
 
             // Slider ammount
            sliderAmount : {
             options: {
                 floor: 1000,
                 ceil: 100000,
+                step: 500,
                 showSelectionBar: true,
                 hideLimitLabels: true,
                 translate: function(value) {
-                    return value ;
+                    return value + ' €' ;
                 }
             }
            },
@@ -138,11 +144,12 @@ angular.module('DirectETF', [])
             sliderAmountMonthly : {
                 options: {
                     floor: 100,
-                    ceil: 10000,
+                    ceil: 2000,
+                    step: 100,
                     showSelectionBar: true,
                     hideLimitLabels: true,
                     translate: function(value) {
-                        return value ;
+                        return value + ' €';
                     }
                 }
             },
@@ -158,7 +165,7 @@ angular.module('DirectETF', [])
         $scope.synthese = function() {
             var done = function (etfs) {
                 var etfs_infos = [],
-                    montant = $scope.model.amountInitial;
+                    montant = $scope.model.amountInitialInput;
 
                 for(var i in etfs) {
                     //var quantity = Math.floor (montant * etfs[i].percent / 100 / etfs[i].price);
@@ -174,9 +181,9 @@ angular.module('DirectETF', [])
             };
 
             var load_etf = function(isin, done) {
-                $http.get('http://184.51.43.30:8080/etf/desc/' + isin)
+                $http.get(WS_URL + '/etf/desc/' + isin)
                     .success(function (desc, status, headers, config) {
-                        $http.get('http://184.51.43.30:8080/etf/price/' + isin)
+                        $http.get(WS_URL + '/etf/price/' + isin)
                             .success(function (__data) {
                                 desc.price = 0;
 
@@ -201,7 +208,7 @@ angular.module('DirectETF', [])
 
             var risk = $scope.model.riskLevel > 50 ? 'high' : 'low';
 
-            $http.get('http://184.51.43.30:8080/portfolio/model/home/500/' + risk)
+            $http.get(WS_URL + '/portfolio/model/home/500/' + risk)
                 .success(function (model, status, headers, config) {
                     var etfs = [];
 
@@ -318,16 +325,17 @@ angular.module('DirectETF', [])
             //simulation-graph of the future
 
             var timeframe = $scope.model.timeframe;
-            var versement_par_mois = $scope.model.amountMonthly;
+            var versement_par_mois = $scope.model.amountMonthlyInput;
+            var montant_initial = $scope.model.amountInitialInput;
             var data_valo_today = new Date().getTime();
             var data_invest_future_attendu = simulation_future(ref_etfs_new_invests, timeframe, data_valo_today, -1, 1, versement_par_mois);
             var data_invest_future_favorable = simulation_future(ref_etfs_new_invests, timeframe, data_valo_today, 1, 1.35, versement_par_mois);
-            var data_invest_future_defavorable = simulation_future(ref_etfs_new_invests, timeframe, data_valo_today, -2.5, -1, versement_par_mois);
+            var data_invest_future_defavorable = simulation_future(ref_etfs_new_invests, timeframe, data_valo_today, -3, -1, versement_par_mois);
             var month = formatDate(data_valo_today);
             var data_investissement = [];
             //courbe investissement
             for (var j = 1; j <= 12 * timeframe; j++) {
-                data_investissement.push([new Date(month).getTime(), parseInt($scope.model.amountInitial )+ versement_par_mois * (j - 1)]) //?????il n'y a pas de invest du premier mois
+                data_investissement.push([new Date(month).getTime(), parseInt(montant_initial)+ versement_par_mois * (j - 1)]) //?????il n'y a pas de invest du premier mois
                 month = next_month(month);
             }
             data_investissement.sort(function (a, b) {
@@ -368,7 +376,7 @@ angular.module('DirectETF', [])
                 //id: 'Prévision_3',
                 type: 'spline',
                 data: data_investissement,
-                color: 'rgb(46, 92, 184)',
+                color: '#044677',
                 zIndex: 15,
                 threshold: null,
                 showInLegend: false
@@ -377,35 +385,54 @@ angular.module('DirectETF', [])
             LoadStockChart(series, $('#questionaire-future-stockchart'), true);
 
             var chart = $('#questionaire-future-stockchart').highcharts();
-            //chart.tooltip.bodyFormatter = function (items) {
-            //    return
-            //};
+
+
+
+            chart.yAxis[0].update({
+                opposite: true,
+                labels: {
+                    align: 'left'
+                }
+            });
+
             chart.tooltip.options.formatter = function() {
-                var xyArr=[];
-                $.each(this.points,function(){
-                    xyArr.push(this.series.name + ': '  + this.y + ' &euro;');
-                });
-                return xyArr.join('<br/>');
+                //var xyArr=[];
+                //$.each(this.points,function(){
+                //    console.log(this.series)
+                //    xyArr.push(this.series.name);
+                //});
+                //return xyArr.join('<br/>');
+                return false;
             }
+
             var min = Math.floor(chart.yAxis[0].dataMin);
             chart.yAxis[0].options.startOnTick = false;
-            //chart.yAxis[0].setExtremes(min, Math.floor(chart.yAxis[0].max) );
+            chart.yAxis[0].setExtremes(min, Math.floor(chart.yAxis[0].dataMax) * 2 );
 
 
             //$('#simulation-future').highcharts().legend.allItems[0].update({name:'Prévision sans nouveaux investissements'});
         }
 
         $scope.$watch(function() {
-            return $scope.model.amountInitial;
+            return $scope.model.amountInitialSlider;
+        }, function(value) {
+            $scope.model.amountInitialInput = value;
+        });
+
+        $scope.$watch(function() {
+            return $scope.model.amountMonthlySlider;
+        }, function(value) {
+            $scope.model.amountMonthlyInput = value;
+        });
+
+        $scope.$watch(function() {
+            return $scope.model.amountInitialInput;
         }, function(montant) {
-            if(montant < 1000 || montant == null) {
-                $scope.model.amountInitial = 1000;
-            } else {
+            if ($scope.step == limit) {
                 for (var i in _etfs_infos) {
                     var quantity = montant * _etfs_infos[i][5] / 100 / _etfs_infos[i][2];
                     _etfs_infos[i][1] = quantity;
                 }
-
                 draw_simulation_future(_etfs_infos);
             }
         });
@@ -413,19 +440,13 @@ angular.module('DirectETF', [])
         $scope.$watch(function() {
             return $scope.model.timeframe;
         }, function(value) {
-            if(value < 3 || value == null) {
-                $scope.model.timeframe = 3;
-            } else {
-                draw_simulation_future(_etfs_infos);
-            }
+            draw_simulation_future(_etfs_infos);
         });
 
         $scope.$watch(function() {
-            return $scope.model.amountMonthly;
+            return $scope.model.amountMonthlyInput;
         }, function(value) {
-            if(value < 50 || value == null) {
-                $scope.model.amountMonthly = 50;
-            } else {
+            if ($scope.step == limit) {
                 draw_simulation_future(_etfs_infos);
             }
         });

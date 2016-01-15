@@ -31,7 +31,7 @@ angular.module('MetronicApp')
                     },
                     reset: function () {
                         angular.copy($scope.client.portfolioDefault, $scope.client.portfolio);
-                        $scope.sliderRisks.value = $scope.sliderRisks.options.stepsArray.indexOf(risks_o[$scope.client.portfolio.infos.risk]);
+                        $scope.sliderRisks.value = $scope.sliderRisks.options.stepsArray.indexOf(risks_o[$scope.client.portfolio.risk]);
                     }
                 }
             }
@@ -72,7 +72,7 @@ angular.module('MetronicApp')
                     showSelectionBar: true,
                     hideLimitLabels: true,
                     translate: function(value) {
-                        return value + ' ' + $scope.client.portfolio.infos.currencySymb;
+                        return value + ' ' + $scope.client.portfolio.currencySymb;
                     }
                 }
             };
@@ -92,7 +92,7 @@ angular.module('MetronicApp')
             for (var i = 0; i < risks.length; i++) {
                 $scope.sliderRisks.options.stepsArray.push(risks[i].label);
 
-                if (risks[i].level == $scope.client.portfolio.infos.risk) {
+                if (risks[i].level == $scope.client.portfolio.risk) {
                     $scope.sliderRisks.value = i;
                 }
 
@@ -103,7 +103,7 @@ angular.module('MetronicApp')
                 return $scope.sliderRisks.value;
             }, function(value) {
                 if (risks[value]) {
-                    $scope.client.portfolio.infos.risk = risks[value].level;
+                    $scope.client.portfolio.risk = risks[value].level;
                     $element.find('.portfolio-risks').attr('data-risk', risks[value].level);
                 }
             });

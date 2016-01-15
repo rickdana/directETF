@@ -1,5 +1,5 @@
 angular.module('MetronicApp')
-    .controller('QuestionnaireController', function($ocLazyLoad, $rootScope, $scope, $http, $element, $attrs, $compile) {
+    .controller('QuestionnaireController', function($ocLazyLoad, $scope, $http, $element, $attrs, $q, $compile, $templateCache) {
         if ($attrs.json) {
             $ocLazyLoad.load({
                 insertBefore: '#ng_load_plugins_before',
@@ -8,7 +8,15 @@ angular.module('MetronicApp')
                 ]
             });
 
-            $rootScope.questionnaire = {
+            var templateUrl = '/protected/component/Questionnaire/node.html';
+
+            $q.all([
+                $http.get(templateUrl, { cache : $templateCache })
+            ]).then(function(resp) {
+                $scope.templateNode = resp;
+            });
+
+            $scope.questionnaire = {
                 current: {
                     node: null,
                     child: null
@@ -24,9 +32,29 @@ angular.module('MetronicApp')
                 history: {
                     entries: [],
                     add: function(node, child) {
-                        if (child.resume) {
-                            this.entries.push([node, child]);
+                        if (child.strategy) {
+                            var exists = false;
+
+                            for (var i = 0; i < this.entries.length; i++) {
+                                if (this.entries[i][1].id == child.id) {
+                                    exists = true;
+                                    this.entries = this.entries.slice(0, i).concat(this.entries.slice(i + 1));
+                                    break;
+                                }
+                            }
+
+                            if (!exists) {
+                                this.entries.push([node, child]);
+                            }
                         }
+                    },
+                    exists: function(child) {
+                        for (var i = 0; i < this.entries.length; i++) {
+                            if (this.entries[i][1].id == child.id) {
+                                return true;
+                            }
+                        }
+                        return false;
                     },
                     remove: function(index) {
                         var rest = this.entries.slice((this.entries.length || index) + 1 || this.entries.length);
@@ -37,59 +65,61 @@ angular.module('MetronicApp')
                         console.log('questionnaire.current.node = ', $scope.questionnaire.current.node)
                     },
                     query: function() {
-                        var query = [];
+                        $scope.$strategy.keyword.clear();
 
                         for(var i in this.entries) {
-                            query.push(this.entries[i][1].id);
-                        }
+                            if (this.entries[i][1].strategy) {
+                                for (var keyword in this.entries[i][1].strategy) {
+                                    var weight = this.entries[i][1].strategy[keyword];
 
-                        console.log(query.join('-'));
-                        // TODO Add the filter code here
-                    },
-                    goto: function(id) {
-                        $scope.node = $rootScope.questionnaire.node(id);
-                        $element.find('.filter-items').html($compile('<node data-id="' + id + '"></node>')($scope));
+                                    $scope.$strategy.keyword.add(keyword, weight, this.entries[i][0].operator);
+                                }
+                            }
+                        }
                     }
                 },
-            }
+                children: function(id) {
+                    $scope.node = $scope.questionnaire.node(id);
+                    $element.find('.filter-items.children').html($compile($templateCache.get(templateUrl)[1])($scope));
+                }
+            };
 
             $http.get($attrs.json)
                 .then(function(questionnaireFile) {
-                    $rootScope.questionnaire.nodes = questionnaireFile.data.nodes;
+                    $scope.questionnaire.nodes = questionnaireFile.data.nodes;
+
+                    var node = $scope.questionnaire.nodes[0];
+                    var child = node.children[0];
+
+                    setTimeout(function() {
+                        $scope.questionnaire.current.node = child.goto;
+                        $scope.questionnaire.children(child.goto);
+                    }, 5);
                 });
         }
     })
-    .controller('NodeController', function($rootScope, $scope, $http, $element, $attrs, $q, $compile, $templateCache) {
+    .controller('RootController', function($scope, $http, $element, $attrs) {
         if ($attrs.id) {
             $scope.$watch(function() {
-                return $rootScope.questionnaire;
-            },function() {
-                $scope.node = $rootScope.questionnaire.node($attrs.id);
-            })
-
-            var templateUrl = '/protected/component/Questionnaire/node.html';
-
-            $q.all([
-                $http.get(templateUrl, { cache : $templateCache })
-            ]).then(function(resp) {
-                $rootScope.templateNode = resp;
+                return $scope.questionnaire;
+            }, function(questionnaire) {
+                $scope.node = questionnaire.node($attrs.id);
             });
-
-            $scope.goto = function(id) {
-                $scope.node = $rootScope.questionnaire.node(id);
-                $element.after($compile($templateCache.get(templateUrl)[1])($scope));
-            };
         }
     })
     .directive('questionnaire', function() {
         return {
             controller: "QuestionnaireController",
+            restrict: 'E',
+            scope: {
+                $strategy: '=strategy'
+            },
             templateUrl: "/protected/component/Questionnaire/template.html"
         };
     })
-    .directive('node', function() {
+    .directive('root', function() {
         return {
-            controller: "NodeController",
-            templateUrl: "/protected/component/Questionnaire/node.html"
+            controller: "RootController",
+            templateUrl: "/protected/component/Questionnaire/root.html"
         };
-    });
+    })

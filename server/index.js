@@ -118,7 +118,22 @@ app.post('/signup', passport.authenticate('signup'), function(req, res, next) {
 });
 
 // Serve common static files
-app.get('/protected/pages/dashboard/main.js', isAuthenticated, function(req, res) {
+app.get('/essai/main.js', function(req, res, next) {
+    // Append WS_HOST config to the file content
+    fs.readFile(path.join(APP_DIR, '/public/pages/essai/main.js'), 'utf8', function (err, main_content) {
+        if (err) {
+            return next(err);
+        }
+
+        var ws_content = 'WS_URL = "' + config.WS_URL + '";';
+
+        res.type('text/javascript')
+           .status(200)
+           .end(ws_content + main_content);
+    });
+});
+
+app.get('/protected/pages/dashboard/main.js', isAuthenticated, function(req, res, next) {
     // Append WS_HOST config to the file content
     fs.readFile(path.join(protected_dir, '/pages/dashboard/main.js'), 'utf8', function (err, main_content) {
         if (err) {
@@ -127,11 +142,10 @@ app.get('/protected/pages/dashboard/main.js', isAuthenticated, function(req, res
 
         var ws_content = '\nWS_URL = "' + config.WS_URL + '";CLIENT_ID = "' + req.user.id;
         ws_content += '";CLIENT_FIRST_NAME="' + req.user.firstName + '"';
-        console.log(req.user.firstName)
 
         res.type('text/javascript')
-           .status(200)
-           .end(main_content + ws_content);
+            .status(200)
+            .end(main_content + ws_content);
     });
 });
 
