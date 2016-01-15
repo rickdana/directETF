@@ -62,27 +62,6 @@ html, body {
     text-align: center;
 }
 
-body:before {
-    content: "";
-    position: fixed;
-    top: -15px;
-    bottom: -15px;
-    left: -15px;
-    right: -15px;
-display: block;
-
-    background-color: #a4c6ff;
-    background-image: url(/public/assets/img/fondecrann.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center -8%;
-    background-size: 100% auto;
-    background-attachment: fixed;
-
-    transition: all .5s ease;
-}
-
 body.overlay:before {
     filter: blur(5px);
     -webkit-filter: blur(5px);
@@ -91,6 +70,19 @@ body.overlay:before {
     -ms-filter: blur(5px);
     filter: url("data:image/svg+xml;utf9,<svg%20version='1.1'%20xmlns='http://www.w3.org/2000/svg'><filter%20id='blur'><feGaussianBlur%20stdDeviation='5'%20/></filter></svg>#blur");
     filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='5');
+}
+
+.gradient {
+    background: rgba(95, 197, 206, 1);
+    background: rgba(66,212,192,1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(66,212,192,1)), color-stop(47%, rgba(69,190,199,1)), color-stop(81%, rgba(30,168,168,1)), color-stop(100%, rgba(30,170,152,1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
+    background: radial-gradient(ellipse at center, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#42d4c0', endColorstr='#1eaa98', GradientType=1 );
+    background-color: #222;
 }
 
 .browsehappy {
@@ -457,15 +449,19 @@ body .btn-primary:hover, body .btn-primary:focus {
     background-image: linear-gradient(to bottom, #37c4c7 0, #47a2aa 100%);
 }
 
-header {
-    background-color: transparent;
-}
-
 header .header-content {
     position: relative;
     width: 100%;
-    padding: 8em 2em;
+    padding: 12em 2em;
     text-align: center;
+
+    background-image: url(/public/assets/img/fondecrann.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center 0;
+    background-size: 100% auto;
+    background-attachment: fixed;
 }
 
 h1 {
