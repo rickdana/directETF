@@ -1,7 +1,4 @@
-'use strict';
-
 angular.module('DirectETF', [])
-
     .controller('EssaiController', function($scope, $element, $http) {
         $('body').addClass('overlay');
 
@@ -184,9 +181,9 @@ angular.module('DirectETF', [])
             };
 
             var load_etf = function(isin, done) {
-                $http.get('http://184.51.43.30:8080/etf/desc/' + isin)
+                $http.get(WS_URL + '/etf/desc/' + isin)
                     .success(function (desc, status, headers, config) {
-                        $http.get('http://184.51.43.30:8080/etf/price/' + isin)
+                        $http.get(WS_URL + '/etf/price/' + isin)
                             .success(function (__data) {
                                 desc.price = 0;
 
@@ -211,7 +208,7 @@ angular.module('DirectETF', [])
 
             var risk = $scope.model.riskLevel > 50 ? 'high' : 'low';
 
-            $http.get('http://184.51.43.30:8080/portfolio/model/home/500/' + risk)
+            $http.get(WS_URL + '/portfolio/model/home/500/' + risk)
                 .success(function (model, status, headers, config) {
                     var etfs = [];
 
@@ -421,8 +418,6 @@ angular.module('DirectETF', [])
         }, function(value) {
             $scope.model.amountInitialInput = value;
         });
-
-
 
         $scope.$watch(function() {
             return $scope.model.amountMonthlySlider;
