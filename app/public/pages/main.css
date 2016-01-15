@@ -442,7 +442,7 @@ body .btn-primary:hover, body .btn-primary:focus {
 header {
     position: relative;
     width: 100%;
-    padding: 12em 2em 2em;
+    padding: 12em 2em 0;
     text-align: center;
 
     background-image: url(/public/assets/img/fondecrann.jpg);
