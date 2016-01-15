@@ -15,8 +15,8 @@ angular.module('MetronicApp')
                 plotOptions: {
                     series: {
                         nullColor: $attrs.nullColor || 'rgba(107, 120, 139, 0.1)',
-                        borderColor: $attrs.borderColor || 'rgba(107, 120, 139, 0.01)',
-                        color: $attrs.color || 'rgba(255, 174, 0, 0.96)',
+                        borderColor: $attrs.borderColor || 'transparent',
+                        color: $attrs.color || 'rgba(98, 87, 255, 0.66)',
                     }
                 },
                 chart: {
@@ -70,18 +70,9 @@ angular.module('MetronicApp')
                     //maxSize: '12%',
                 }]
             });
-
-            //$element.highcharts().mapZoom(0.5, null, null, null, $element.highcharts().yAxis[0].height);
-
         }
 
-
-        if (!$attrs.lazy || $attrs.filter) {
-            $EtfsFactory.load($attrs.filter, $element.render);
-        }
-
-
-        function parse(etfs) {
+        var parse = function(etfs) {
             var sum = {}
               , percents = {}
               , series = [];
@@ -116,18 +107,18 @@ angular.module('MetronicApp')
             return series;
         }
 
+        $scope.$watch(function() {
+            return $scope.model;
+        }, function(filter) {
+            $EtfsFactory.load(filter, $element.render);
+        });
     }])
-    .directive("ngEtfMaps", function($EtfsFactory) {
+    .directive("map", function($EtfsFactory) {
         return {
-            controller: "EtfMapsController",
-            link: function($scope, $element, $attrs) {
-                $scope.$watch(function() {
-                    return $element.attr('data-filter');
-                }, function(filter) {
-                    if (filter) {
-                        $EtfsFactory.load(filter, $element.render);
-                    }
-                });
-            }
+            restrict: 'E',
+            scope: {
+                model: '=model'
+            },
+            controller: "EtfMapsController"
         };
     });

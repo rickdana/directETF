@@ -1,0 +1,12 @@
+<table class="table table-hover table-header-fixed">
+    <thead>
+    <tr>
+        <th class="etf-column name">Intitulé du titre</th>
+    </tr>
+    </thead>
+    <tbody data-list-items>
+    <tr ng-repeat="etf in etfs" id="etf-{{etf.isin}}" data-isin="{{etf.isin}}">
+        <td class="etf-column name" data-etf-attr-name="name">{{etf.name}}</td>
+    </tr>
+    </tbody>
+</table>

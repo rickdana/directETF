@@ -45,10 +45,6 @@ angular.module('MetronicApp')
             maps =  $element.find('#maps'),
             liste_etfs =  $element.find('#list-etfs');
 
-
-
-
-
         // Fonction de formatage des prices
         $scope.format = function(number) {
             return parseFloat(number).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
@@ -60,7 +56,6 @@ angular.module('MetronicApp')
                 if (err) {
                     return console.error(err);
                 }
-
 
                 done(etfs_with_gains);
             });
