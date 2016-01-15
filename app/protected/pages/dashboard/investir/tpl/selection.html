@@ -1,0 +1,44 @@
+<table class="table table-hover table-header-fixed">
+    <thead>
+    <tr>
+        <th class="etf-column option"></th>
+        <th class="etf-column name">Intitulé du titre</th>
+        <th class="etf-column quantity text-center">Quantité</th>
+        <th class="etf-column price cash">Coût</th>
+    </tr>
+    </thead>
+    <tbody data-list-items>
+    <tr ng-repeat="etf in etfs" data-isin="{{etf.isin}}" ng-class="{'strike-line': !etf.enabled}">
+        <td class="etf-column option">
+            <input id="{{etf.isin}}-checkbox" type="checkbox" class="aCheck"
+                   ng-init="etf.enabled = true"
+                   ng-model="etf.enabled"
+                   ng-change="$OrdersFactory.unlock();
+                          $OrdersFactory.set(etf.isin, etf.enabled ? etf.quantity : 0);
+                          $OrdersFactory.lock()">
+            <label for="{{etf.isin}}-checkbox" class="fa fa-check"></label></td>
+        <td class="etf-column name" data-etf-attr-name="name">{{etf.name}}</td>
+        <td class="etf-column name text-center" data-etf-attr-name="quantity">
+            <!--<input type="number" min="0" max="999" ng-model="etf.quantity"-->
+            <!--ng-change="$OrdersFactory.unlock();-->
+            <!--$OrdersFactory.set(etf, etf.quantity);-->
+            <!--$OrdersFactory.lock()"-->
+            <!--ng-disabled="!etf.enabled">-->
+            {{etf.quantity}}
+        </td>
+        <td class="etf-column price cash">
+        <span class="value"
+              data-ng-bind="etf.quantity * etf.price * etf.enabled | number: 2"></span>
+            &nbsp;{{client.portfolio.currencySymb}}
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3" class="etf-column total">Total des lignes :</td>
+        <td class="etf-column price cash">
+            {{$OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.currencySymb}}
+        </td>
+    </tr>
+    </tfoot>
+</table>

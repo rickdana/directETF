@@ -122,7 +122,61 @@ angular.module('MetronicApp')
             }
         };
     })
-    .controller('WizardController', function($ClientFactory, $PortfolioFactory, $OrdersFactory, $rootScope, $scope, $element, $ocLazyLoad) {
+    .controller('WizardPortfolioInitController', function($PortfolioFactory, $scope, ngDialog) {
+        if (!!$.cookie('client_portfolio_initialized')) {
+            $scope.showPortfolioSettings = true;
+
+            ngDialog.open({
+                template: 'template-client-portfolio-settings',
+                closeByEscape: false,
+                closeByDocument: false
+            });
+
+            $scope['active0'] = 'active';
+
+            $scope.wizard = {
+                step: 0,
+                nextButtonLabel: ["Générer un portefeuille", "Ajuster ce portefeuille", "Chargement en cours"],
+                goto: function (step) {
+                    $rootScope['active' + this.step] = '';
+                    $rootScope['active' + (step)] = 'active';
+
+                    switch (step) {
+                        case 1:
+                            $PortfolioFactory.model($rootScope.client.portfolio.goal, $rootScope.client.portfolio.amountMonthly, $rootScope.client.portfolio.risk, function(err, portfolio) {
+                                var etfs = [];
+
+                                for (var i in portfolio) {
+                                    var etf = {};
+
+                                    etf[portfolio[0]] = portfolio[1];
+
+                                    etfs.push(etf);
+                                }
+
+                                $('#wizard-portfolio-model').attr('filter', JSON.stringify(etfs))
+                            });
+                            break;
+
+                        case 2:
+                            console.log('Ajustement');
+                            break;
+                    }
+
+                    this.step = step;
+                },
+                next: function () {
+                    this.goto(this.step + 1);
+                },
+                prev: function () {
+                    this.goto(this.step - 1);
+                }
+            };
+
+            //client.settings.portfolio.save()
+        }
+    })
+    .controller('WizardController', function($ClientFactory, $OrdersFactory, $rootScope, $scope, $element, $ocLazyLoad) {
         $ocLazyLoad.load({
             insertBefore: '#ng_load_plugins_before',
             files: [
@@ -143,17 +197,17 @@ angular.module('MetronicApp')
                 var active = $element.find('[data-step=' + this.step + ']'),
                     current = $element.find('[data-step=' + step + ']');
 
-//                if (active.attr('data-step') == current.attr('data-step')) {
-//                    return false;
-//                }
-//
-//                if (current.attr('data-step') == 2 && $OrdersFactory.length() == 0) {
-//                    return false;
-//                }
-//
-//                if (wizard_state.find('[data-step=' + (current.attr('data-step') - 1) + ']').attr('data-state') == 'unvalid') {
-//                    return false;
-//                }
+                if (active.attr('data-step') == current.attr('data-step')) {
+                    return false;
+                }
+
+                if (current.attr('data-step') == 2 && $OrdersFactory.length() == 0) {
+                    return false;
+                }
+
+                if (wizard_state.find('[data-step=' + (current.attr('data-step') - 1) + ']').attr('data-state') == 'unvalid') {
+                    return false;
+                }
 
                 this.step = step;
 
@@ -166,101 +220,6 @@ angular.module('MetronicApp')
             }
         };
 
-        $ClientFactory.portfolio.infos(function(err, infos) {
-            $scope.wizard.portfolio = new $PortfolioFactory.Portfolio(infos);
-        });
-
-        $scope.$watch(function() {
-            return $scope.wizard.portfolio.strategy.keyword.length();
-        }, function() {
-            var keywords = $scope.wizard.portfolio.strategy.get();
-            var categories = {};
-
-            for (var id in keywords) {
-                var keyword = $PortfolioFactory.Keywords.get(id);
-
-                if (keyword === null) {
-                    console.log('Unregistred key %s', id);
-                    break;
-                }
-
-                if (!categories[keyword.type]) {
-                    categories[keyword.type] = [];
-                }
-
-                categories[keyword.type].push(keyword);
-            }
-
-            for (var category in categories) {
-                var target_sentence = '';
-
-                for (var bind in binding_names) {
-                    if (binding_names[bind].indexOf(category) > -1) {
-                        target_sentence = bind;
-                        break;
-                    }
-                }
-
-                var keywords = [];
-
-                for (var i in categories[category]) {
-                    var keyword = categories[category][i];
-
-                    keywords.push('<span class="questionnaire-sentence-keyword">' + keyword.name + '</span>');
-                }
-
-                $scope.sentence[target_sentence].plural = keywords.length > 1;
-
-                if ($scope.sentence[target_sentence].plural) {
-                    $scope.sentence[target_sentence].text  = keywords.slice(0, keywords.length - 1).join(', ');
-                    $scope.sentence[target_sentence].text += ' et ' + keywords[keywords.length - 1];
-                } else {
-                    $scope.sentence[target_sentence].text  = keywords.join('');
-                }
-            }
-
-             $scope.wizard.portfolio.etfs(function(etfs) {
-                $scope.wizard.portfolio.isins = [];
-
-                for (var i in etfs) {
-                    $scope.wizard.portfolio.isins.push(etfs[i].isin);
-                }
-
-                console.log('==>', $scope.wizard.portfolio.isins)
-            });
-        });
-
-        var binding_names = {
-            locations: ['country', 'region'],
-            themes: ['theme'],
-            news: ['news'],
-            sectors: ['sector'],
-        };
-
-        $scope.sentence = {
-            amount: "",
-            locations: {
-                plural: false,
-                text: ""
-            },
-            themes: {
-                plural: false,
-                text: ""
-            },
-            news: {
-                plural: false,
-                text: ""
-            },
-            sectors: {
-                plural: false,
-                text: ""
-            },
-        };
-
-        // set sidebar closed and body solid layout mode
-        $rootScope.settings.layout.pageContentWhite = true;
-        $rootScope.settings.layout.pageBodySolid = true;
-        $rootScope.settings.layout.pageSidebarClosed = false;
     })
     .controller('InvestirController', function($OrdersFactory, $rootScope, $scope) {
         $scope.$OrdersFactory = $OrdersFactory;

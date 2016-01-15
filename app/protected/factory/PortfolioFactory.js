@@ -1,7 +1,7 @@
 angular.module('MetronicApp')
-    .factory('$PortfolioFactory', function($http) {
-        var models = {}
-          , goals = [
+    .factory('$PortfolioFactory', function($http, $EtfsFactory, $ClientFactory) {
+        var models = {},
+            goals = [
                 {
                     code: "just-invest",
                     label: "Juste investir",
@@ -58,8 +58,8 @@ angular.module('MetronicApp')
                     question: "Dans combien d'années aurez-vous besoin de l'argent ?",
                     questionComment: ""
                 },
-            ]
-          , risks = [
+            ],
+            risks = [
                 {
                     level: "low",
                     label: 'Risque Faible',
@@ -75,41 +75,453 @@ angular.module('MetronicApp')
                     label: 'Risque Elevé',
                     tooltip: "J'accepte de prendre des risques significatifs sur tout ou partie de mon capital investi"
                 }
+            ],
+            structure = {
+                "fields": {
+                    id: "integer",
+                    "name": "string",
+                    "goal": "string",
+                    "when": "integer",
+                    "amountMonthly": "float",
+                    "risk": "string"
+                },
+                "accepts": {
+                    "goal": ["just-invest", "retirement", "home", "child", "rainy-day", "big-spend", "other"],
+                    "risk": ["low", "medium", "high"]
+                },
+                "requirements": {
+                    "just-invest": {
+                        "retirement": ["amountMonthly", "risk"]
+                    },
+                    "goal": {
+                        "retirement": ["when", "amountMonthly", "risk"]
+                    },
+                    "home": {
+                        "retirement": ["when", "amountMonthly", "risk"]
+                    },
+                    "child": {
+                        "retirement": ["when", "amountMonthly", "risk"]
+                    },
+                    "rainy-day": {
+                        "retirement": ["amountMonthly", "risk"]
+                    },
+                    "big-spend": {
+                        "retirement": ["when", "amountMonthly", "risk"]
+                    },
+                    "other": {
+                        "retirement": ["when", "amountMonthly", "risk"]
+                    }
+                }
+            };
+
+        var Keywords = {
+            get: function(id) {
+                for (var i in this.list) {
+                    if (id == this.list[i].id) {
+                        return this.list[i];
+                    }
+                }
+                return null;
+            },
+
+            list: [
+                {
+                    id: "fr",
+                    type: "country",
+                    name: "France"
+                },
+                {
+                    id: "us",
+                    type: "country",
+                    name: "USA"
+                },
+                {
+                    id: "be",
+                    type: "country",
+                    name: "Belgique"
+                },
+                {
+                    id: "jp",
+                    type: "country",
+                    name: "Japon"
+                },
+                {
+                  id: "it",
+                  type: "country",
+                  name: "Italie"
+                },
+                {
+                  id: "ch",
+                  type: "country",
+                  name: "Chine"
+                },
+                {
+                  id: "jp",
+                  type: "country",
+                  name: "Japon"
+                },
+                {
+                  id: "es",
+                  type: "country",
+                  name: "Espagne"
+                },
+                {
+                  id: "de",
+                  type: "country",
+                  name: "Allemagne"
+                },
+                {
+                  id: "ru",
+                  type: "country",
+                  name: "Russie"
+                },
+                {
+                  id: "tr",
+                  type: "country",
+                  name: "Turquie"
+                },
+                {
+                  id: "hk",
+                  type: "country",
+                  name: "Hong-Kong"
+                },
+                {
+                  id: "kr",
+                  type: "country",
+                  name: "Corée"
+                },
+                {
+                  id: "in",
+                  type: "country",
+                  name: "Inde"
+                },
+                {
+                  id: "gr",
+                  type: "country",
+                  name: "Grèce"
+                },
+                {
+                  id: "br",
+                  type: "country",
+                  name: "Brézil"
+                },
+                {
+                  id: "tw",
+                  type: "country",
+                  name: "Taïwan"
+                },
+                {
+                    id: "eurozone",
+                    type: "region",
+                    name: "Eurozone"
+                },
+                {
+                    id: "eu",
+                    type: "region",
+                    name: "Europe"
+                },
+                {
+                    id: "water",
+                    type: "thematic",
+                    name: "Eau"
+                },
+                {
+                    id: "energy",
+                    type: "thematic",
+                    name: "Energie"
+                },
+                {
+                    id: "finance",
+                    type: "sector",
+                    name: "Finance"
+                },
+                {
+                    id: "biens",
+                    type: "sector",
+                    name: "Biens de consommation"
+                },
+                {
+                    id: "industry",
+                    type: "sector",
+                    name: "Industrie"
+                },
+                {
+                    id: "health",
+                    type: "sector",
+                    name: "Santé"
+                },
+                {
+                    id: "collectivity",
+                    type: "sector",
+                    name: "Services aux collectivités"
+                },
+                {
+                    id: "services",
+                    type: "sector",
+                    name: "Services"
+                },
+                {
+                    id: "technology",
+                    type: "sector",
+                    name: "Technologie de l'information"
+                },
+                {
+                    id: "world",
+                    type: "broad",
+                    name: "World"
+                },
+                {
+                    id: "petrole",
+                    type: "news",
+                    name: "Pétrole"
+                },
+                {
+                    id: "matieres-premieres",
+                    type: "news",
+                    name: "Matières premières"
+                },
+                {
+                    id: "ecologie",
+                    type: "theme",
+                    name: "Ecologie"
+                },
+                {
+                    id: "social",
+                    type: "theme",
+                    name: "Social"
+                },
+                {
+                    id: "environnement",
+                    type: "theme",
+                    name: "Environnement"
+                },
             ]
-          , structure = {
-            "fields": {
-                "id": "integer",
-                "name": "string",
-                "goal": "string",
-                "when": "integer",
-                "amountMonthly": "float",
-                "risk": "string"
+        };
+
+        var Matrix = {
+            convert: {
+                strategy: function(strategy) {
+                    var m = [];
+
+                    for (var i in Keywords.list) {
+                        m.push(strategy[Keywords.list[i].id] || 0);
+                    }
+
+//                    console.log('Strategy:', m)
+
+                    return m;
+                },
+                catalog: function(etfs) {
+                    var m = new Array(etfs.length);
+
+//                    console.log(etfs)
+
+                    for (var i in etfs) {
+                        m[i] = new Array(Keywords.list.length);
+
+                        for (var j in Keywords.list) {
+                            var etf = etfs[i];
+
+                            m[i][j] = 0;
+
+                            for (var k in etf.keywords) {
+                                var keyword = etf.keywords[k];
+
+                                if (keyword.id == Keywords.list[j].id) {
+                                    m[i][j] = keyword.weight;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+//                    console.log('Catalog:')
+//
+//                    for (var i in m) {
+//                        console.log(m[i])
+//                    }
+
+                    return m;
+                }
             },
-            "accepts": {
-                "goal": ["just-invest", "retirement", "home", "child", "rainy-day", "big-spend", "other"],
-                "risk": ["low", "medium", "high"]
+            transpose: {
+                catalog: function(matrix, etfs) {
+                    var result = [];
+
+                    for (var i in matrix) {
+                        if (matrix[i]) {
+                            result.push(etfs[i]);
+                        }
+                    }
+
+//                    console.log('Transpose catalog:', result)
+
+                    return result;
+                }
             },
-            "requirements": {
-                "just-invest": {
-                    "retirement": ["amountMonthly", "risk"]
+            multiply: function(catalog, strategy) {
+                var result = new Array(catalog.length);
+
+                for (var i in catalog) {
+                    result[i] = 0;
+
+                    for (var j in strategy) {
+                        result[i] += catalog[i][j] * strategy[j];
+                    }
+                }
+
+//                console.log('Multiply:')
+//
+//                for (var i in result) {
+//                    console.log(result[i])
+//                }
+
+                return result;
+            }
+        };
+
+        var Strategy = function(keywords) {
+            keywords = keywords || {};
+
+            var changed = false;
+
+            if (keywords instanceof Array) { // Convert Array to Object structure
+                var tmp = {};
+
+                for (var i in keywords) {
+                    tmp[keywords[i].id] = {
+                        weight: keywords[i].weight,
+                        operator: 'AND'
+                    };
+                }
+
+                keywords = tmp;
+            }
+
+            return {
+                changed: function() {
+                    return changed;
                 },
-                "goal": {
-                    "retirement": ["when", "amountMonthly", "risk"]
+
+                get: function() {
+                    return keywords;
                 },
-                "home": {
-                    "retirement": ["when", "amountMonthly", "risk"]
+
+                keyword: {
+                    add: function(id, weight, operator) {
+                        if (keywords[id]) {
+                            keywords[id].weight = weight;
+                            changed = true;
+                            return;
+                        }
+
+                        keywords[id] = {
+                            weight: weight || 1,
+                            operator: (operator || 'AND').toUpperCase()
+                        };
+                        changed = true;
+
+                        //console.log('Strategy::keyword ==> (%s, %d)', id, keywords[id]);
+                    },
+
+                    length: function() {
+                        var i = 0;
+
+                        for (var key in keywords) {
+                            i++;
+                        }
+
+                        return i;
+                    },
+
+                    clear: function() {
+                        keywords = {};
+                    },
+
+                    remove: function(id) {
+                        delete keywords[id];
+                    }
                 },
-                "child": {
-                    "retirement": ["when", "amountMonthly", "risk"]
-                },
-                "rainy-day": {
-                    "retirement": ["amountMonthly", "risk"]
-                },
-                "big-spend": {
-                    "retirement": ["when", "amountMonthly", "risk"]
-                },
-                "other": {
-                    "retirement": ["when", "amountMonthly", "risk"]
+
+                cross: function(etfs) {
+                    var catalog = Matrix.convert.catalog(etfs);
+                    var strategy = {
+                        AND: {},
+                        OR: {},
+                    };
+                    var count = {
+                        AND: 0,
+                        OR: 0,
+                    };
+                    var result = [];
+
+                    for (var id in keywords) {
+                        strategy[keywords[id].operator][id] = keywords[id].weight;
+                        count[keywords[id].operator]++;
+                    }
+
+                    if (count.AND) {
+                        result = Matrix.multiply(catalog, Matrix.convert.strategy(strategy.AND));
+
+                        if (count.OR) {
+                            catalog = Matrix.convert.catalog(Matrix.transpose.catalog(result, etfs));
+                            result = Matrix.multiply(catalog, Matrix.convert.strategy(strategy.OR));
+                        }
+
+                        changed = false;
+                    } else if (count.OR) {
+                        result = Matrix.multiply(catalog, Matrix.convert.strategy(strategy.OR));
+                        changed = false;
+                    }
+
+                    console.log('result: ', result)
+
+                    return Matrix.transpose.catalog(result, etfs);
+                }
+            };
+        };
+
+        var Portfolio = function(desc) {
+            var strategy = new Strategy(desc.keywords || []);
+            var etfs_list = [];
+            
+            var build = function(done) {
+                // Build the new portfolio
+                $EtfsFactory.load(null, function(isins) {
+                    // exclude current portfolio's ETFs from the ISIN's list
+                    for (var isin in desc.etfs) {
+                        var index = isins.indexOf(isin);
+
+                        if (index >= 0) {
+                            isins.splice(index, 1); // Remove isin from list
+                        }
+                    }
+
+                    // Load description of each ISIN
+                    $EtfsFactory.load(isins, function(list) {
+                        $EtfsFactory.load(desc.etfs, function(etfs) {
+                            etfs_list = strategy.cross(etfs).concat(strategy.cross(list));
+                            done(etfs_list);
+                        });
+                    });
+                });
+
+                return;
+            };
+            
+            return {
+                desc: desc,
+                strategy: strategy,
+                
+                /**
+                 * Get the portfolio ETFs list based on the current strategy
+                 */
+                etfs: function(done) {
+                    if (strategy.changed()) {
+                        return build(done);
+                    }
+                    
+                    done(etfs_list);
                 }
             }
         };
@@ -139,6 +551,10 @@ angular.module('MetronicApp')
         }
 
         return {
+            Strategy: Strategy,
+            Portfolio: Portfolio,
+            Keywords: Keywords,
+
             /**
              * Get a portfolio model
              * @param goal A portfolio goal
