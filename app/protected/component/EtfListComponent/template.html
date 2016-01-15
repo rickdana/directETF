@@ -1,7 +1,5 @@
 <div class="etf-list-component">
-    <table class="table table-hover table-header-fixed">
-        <tbody data-list-items></tbody>
-    </table>
+    <div class="etf-list-component-table"></div>
 
     <div class="etf-info-box-wrapper" title="Cliquez pour fermer" ng-controller="PopupInfosController"
          data-etf-popup-infos>
@@ -16,20 +14,19 @@
                     <span class="dividente" data-label="Dividendes">4,3 %</span>
                 </div>
 
-                <p class="etf-info-description">{{etf.description}}</p>
+                <p class="etf-info-description" ng-bind-html="etf.description"></p>
 
                 <div class="scroller-zone">
                     <h4>Répartition sectorielle</h4>
-
-                    <div data-lazy="true" data-filter="{{etf.isin}}" data-height="320" data-show-in-legend="false"
-                         data-enable-data-labels="true" ng-etf-sectors-chart></div>
+                    <sector-chart-pie
+                            data-height="200"
+                            data-model="etf.isin"
+                            data-show-in-legend="false"></sector-chart-pie>
 
                     <h4>Répartition dans le monde</h4>
-
-                    <div data-lazy="true" data-filter="{{etf.isin}}" data-height="180" ng-etf-maps></div>
+                    <map height="180" data-model="etf.isin"></map>
 
                     <h4>Performance historique</h4>
-
                     <div class="etf-info-box-chart-performance"></div>
                 </div>
 

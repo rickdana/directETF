@@ -155,8 +155,8 @@ angular.module('MetronicApp')
                 var query = JSON.stringify(filters);
 
                 if (queries[query] instanceof Array) {
-//                    console.log('   return the cache results')
-//                    return cb(queries[query]);
+                    console.log('   return the cache results')
+                    return cb(queries[query]);
                 }
 
                 if (filters instanceof Array && filters.length > 0) {
@@ -221,7 +221,15 @@ angular.module('MetronicApp')
                         // filters = [isin_1, isin_2, ..., isin_n]
                         load(filters, cb, getPrice);
                     }
-
+                } else if (filters === null) {
+                    $http.get(WS_URL + '/etf/list')
+                        .success(function(data) {
+                            queries[query] = data;
+                            cb(data);
+                        })
+                        .error(function(data, status, headers, config) {
+                            console.error("Failed to get the list of ETFs");
+                        });
                 } else if (typeof filters == 'object' && !(filters instanceof Array)) {
                     var filters_array = [];
 
@@ -240,17 +248,20 @@ angular.module('MetronicApp')
                         cb(etfs);
                     }, getPrice);
                 } else {
-                    $http.get(WS_URL + '/etf/list')
-                        .success(function(data) {
-                            load(data, function(etfs) {
-                                queries[query] = etfs;
-                                cb(etfs);
-                            }, getPrice);
-                        })
-                        .error(function(data, status, headers, config) {
-                            console.error("Failed to get the list of ETFs");
-                        });
+                    cb([]);
                 }
+            },
+            loadAll: function(cb, getPrice) {
+                $http.get(WS_URL + '/etf/list')
+                    .success(function(data) {
+                        load(data, function(etfs) {
+                            queries[query] = etfs;
+                            cb(etfs);
+                        }, getPrice);
+                    })
+                    .error(function(data, status, headers, config) {
+                        console.error("Failed to get the list of ETFs");
+                    });
             },
             price: price,
             prices: prices,

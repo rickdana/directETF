@@ -1,17 +1,11 @@
-#maps-container {
-    padding:20px;
-    background-color:#3C8DBC;
-}
-
 .questionnaire-component {
-    margin-top: 42px;
     overflow: hidden;
 }
 
 .questionnaire-component input.filter-checkbox {
     position: absolute;
     left: -111px;
-    visibility: hidden;
+    opacity:0;
 }
 
 .questionnaire-component label {
@@ -25,10 +19,6 @@
 .questionnaire-component input.filter-checkbox.filter-group + label {
     border-bottom: 1px solid #3d4957;
 }
-.questionnaire-component .filter-question > label {
-    background-color:#364150;
-    color: rgb(180, 188, 200);
-}
 
 .questionnaire-component input.filter-checkbox.filter-group:focus + label,
 .questionnaire-component input.filter-checkbox.filter-group + label:hover {
@@ -38,17 +28,13 @@
 .questionnaire-component input.filter-checkbox + label span + i {
     position: absolute;
     right: 15px;
-    margin-top: 2px;
+    margin-top: 4px;
 }
 
 .questionnaire-component input.filter-checkbox.filter-group + label + div {
     height: 0;
     overflow: auto;
     transition: height .3s;
-}
-
-.questionnaire-component .filter-question span {
-    margin-left: 5px;
 }
 
 .questionnaire-component input.filter-checkbox.filter-group:checked + label + div {
@@ -69,11 +55,15 @@
 }
 
 .questionnaire-component .filter-history,
-.questionnaire-component input.filter-checkbox:focus + label,
 .questionnaire-component input.filter-checkbox + label:hover,
 .questionnaire-component input.filter-checkbox:checked + label + div input.filter-checkbox:checked + label {
     color: rgb(255, 255, 255);
     background-color: rgb(54, 198, 211);
+}
+
+.questionnaire-sentence-keyword {
+    color: rgb(54, 198, 211);
+    font-weight: bold;
 }
 
 .questionnaire-component .filter-history {
@@ -133,8 +123,24 @@
     z-index:2;
 }
 
+.questionnaire-component .filter-question > label,
+.questionnaire-component input.filter-checkbox + label {
+    color: #fff;
+    margin-bottom: 2px;
+}
+
+.questionnaire-component input.filter-checkbox + label {
+    font-size: 1.1em;
+    background-color: rgba(54, 198, 211, .6);
+}
+
+.questionnaire-component .filter-question > label,
 .questionnaire-component input.filter-checkbox:checked + label {
-    background-color: rgba(0,0,0,.1);
+    background-color: rgba(43, 155, 165, 1);
+}
+
+.questionnaire-component .filter-question-answer input.filter-checkbox:checked + label {
+    background-color: rgba(54, 198, 211, 1);
 }
 
 .questionnaire-component input.filter-checkbox.aCheck + label i:before {
@@ -150,7 +156,7 @@
     background-color: #fff;
 }
 .questionnaire-component .filter-question > label {
-    padding-left: 28px;
+
 }
 
 .questionnaire-component .filter-question-end {
@@ -158,8 +164,7 @@
 }
 
 .questionnaire-component .filter-question-answer label {
-    padding-left: 30px;
-    padding-right: 30px;
+
 }
 
 .questionnaire-component .filter-question-end [ng-etf-list] {

@@ -1,84 +1,65 @@
-<script type="text/ng-template" id="template-client-portfolio-settings" ng-controller="WizardPortfolioInitController">
-    <h5 class="caption-subject font-green bold uppercase">Configuration du portefeuille</h5>
-    <hr>
-    <div class="wizard-steps">
-        <span ng-class="active0">1</span>
-        <span ng-class="active1">2</span>
-    </div>
-    <div ng-show="wizard.step == 0" client-portfolio-settings></div>
-    <div ng-show="wizard.step == 1" class="portlet light bordered">
-        <div id="wizard-portfolio-model" data-lazy="true" ng-etf-list></div>
-    </div>
-    <div class="margiv-top-10">
-        <a ng-show="wizard.step == 1" href="javascript:void(0)" class="btn default pull-left"
-           ng-click="wizard.prev()"> Etape précédente </a>
-        <a href="javascript:void(0)" class="btn green-haze pull-right"
-           ng-click="wizard.next()"> {{wizard.nextButtonLabel[wizard.step]}} </a>
-        <span class="clearfix"></span>
-    </div>
-</script>
-
 <div ng-controller="WizardController">
-    <div class="page-bar content-header">
-
-
-        <div id="wizard-state">
-            <a ng-class="{valid: wizard.step <= 1, current: wizard.step == 1}">Sélection</a>
-            <a ng-class="{valid: wizard.step <= 2, current: wizard.step == 2}">Montant &amp; Ajustement</a>
-            <a ng-class="{valid: wizard.step <= 3, current: wizard.step == 3}">Revoir</a>
-            <a ng-class="{valid: wizard.step <= 4, current: wizard.step == 4}">Validation</a>
-        </div>
+    <div id="wizard-state" data-current-step="{{wizard.step}}">
+        <div ng-class="{valid: wizard.step >= 1, current: wizard.step == 1}"
+             class="step fa fa-plus" data-title="Sélection"></div>
+        <div ng-class="{valid: wizard.step >= 2, current: wizard.step == 2}"
+             class="step fa fa-sliders" data-title="Montant"></div>
+        <div ng-class="{valid: wizard.step >= 3, current: wizard.step == 3}"
+             class="step fa fa-search" data-title="Simulation"></div>
+        <div ng-class="{valid: wizard.step >= 4, current: wizard.step == 4}"
+             class="step fa fa-check" data-title="Validation"></div>
     </div>
 
+    <div id="sentence"
+         ng-show="wizard.step < 4 && (sentence.amount || sentence.locations.text || sentence.themes.text || sentence.sectors.text || sentence.news.text)">
+        <p>
+            Je souhaite investir
+            <span ng-show="sentence.amount">{{sentence.amount}}&nbsp;{{client.portfolio.currencySymb}}</span>
+            <span ng-show="sentence.locations.text">en <span ng-bind-html="sentence.locations.text"></span></span>
+            <span ng-show="sentence.themes.text">
+                <span ng-show="sentence.themes.plural">sur les thèmes</span>
+                <span ng-show="!sentence.themes.plural">sur le thème</span>
+                <span ng-bind-html="sentence.themes.text"></span></span>
+            <span ng-show="sentence.news.text">
+                <span ng-show="sentence.news.plural">à partir des sujets d'actualité</span>
+                <span ng-show="!sentence.news.plural">à partir du sujet d'actualité</span>
+                <span ng-bind-html="sentence.news.text"></span></span>
+            <span ng-show="sentence.sectors.text">
+                <span ng-show="sentence.sectors.plural">dans les secteurs</span>
+                <span ng-show="!sentence.sectors.plural">dans le secteur</span>
+                <span ng-bind-html="sentence.sectors.text"></span></span>.
+        </p>
+    </div>
 
     <!--Step 1-->
     <div class="wizard-panel" data-step="1" ng-controller="InvestirController" ng-show="wizard.step == 1">
-        <div>
-            Revoir la liste des questions
-            <ul>
-                <li>
-                    je pense qu'un investissement doit ...
-                    <ul>
-                        <li>suivre l'actualité (débranche sur questionnaire spécifique du moment - où on arrive aussi via notif</li>
-                        <li>Privilégier le rendement
-                        <ul>
-                            <li>Définir un niveau de risque</li>
-                        </ul>
-                        </li>
-                        <li>suivre les tendances (strateges populaires)</li>
-                        <li>répondre à un projet précis
-                            <ul>
-                                <li>Je préfère investir dans le privé, financer l'économie
-                                <ul>
-                                    <li>par projet</li>
-                                    <li>par secteur</li>
-                                    <li>par pays...</li>
-                                </ul>
-                                </li>
-                                <li>Je préfère investir dans le public, financer un état
-                                    <ul>
-                                        <li>par région ou pays</li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div id="filters-container">
-            <questionnaire json="/protected/pages/dashboard/investir/questionnaire.json"></questionnaire>
-        </div>
-        <div ng-show="filters.current.category == 'filter-maps-list'">
-            <div id="maps-container" data-null-color="#fff" ng-etf-maps></div>
-            <div class="portlet light bordered" ng-hide="">
-                <div id="investir-etfs-list"
-                     data-header-template="/protected/pages/dashboard/investir/tpl/list-header.html"
-                     data-row-template="/protected/pages/dashboard/investir/tpl/list-row.html" ng-etf-list></div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="portlet">
+                    <questionnaire
+                            data-strategy="wizard.portfolio.strategy"
+                            data-json="/protected/pages/dashboard/investir/questionnaire.json"></questionnaire>
+                </div>
             </div>
+            <div class="col-lg-6">
+                <div class="portlet">
+                    <map id="maps-container" data-height="250"
+                         data-model="wizard.portfolio.isins"></map>
+                    <sector-chart-pie id="sectors-overview" data-height="200"
+                                      data-model="wizard.portfolio.isins"
+                                      data-show-in-legend="true"></sector-chart-pie>
+                </div>
+            </div>
+        </div>
 
-            <div class="">
-                <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
+        <div class="row">
+            <div class="col-lg-6">
+                <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)">Passer au mode
+                    expert</a>
+            </div>
+            <div class="col-lg-6">
+                <a class="wizard-button-goto next pull-right" ng-click="wizard.goto(wizard.step + 1)">Passer à l'étape
+                    suivante <i class="fa fa-angle-right"></i></a>
             </div>
         </div>
     </div>
@@ -104,18 +85,22 @@
 
             <div class="col-md-8">
                 <div class="portlet light bordered">
-                    <div id="investir-selection-list" data-lazy="true"
-                         data-header-template="/protected/pages/dashboard/investir/tpl/selection-header.html"
-                         data-row-template="/protected/pages/dashboard/investir/tpl/selection-row.html"
-                         data-footer-template="/protected/pages/dashboard/investir/tpl/selection-footer.html"
-                         ng-etf-list></div>
+                    <etf-list id="investir-selection-list"
+                              data-model="client.portfolio.isins"
+                              data-template="/protected/pages/dashboard/investir/tpl/selection.html"></etf-list>
                 </div>
             </div>
         </div>
 
-        <div class="pull-right">
-            <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
-            <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
+        <div class="row">
+            <div class="col-lg-6">
+                <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)"><i
+                        class="fa fa-angle-left"></i> Passer à l'étape précédente</a>
+            </div>
+            <div class="col-lg-6">
+                <a class="wizard-button-goto next pull-right" ng-click="wizard.goto(wizard.step + 1)">Passer à l'étape
+                    suivante <i class="fa fa-angle-right"></i></a>
+            </div>
         </div>
     </div>
 
@@ -213,9 +198,15 @@
             </div>
         </div>
 
-        <div class="pull-right">
-            <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
-            <button class="btn green" ng-click="wizard.goto(wizard.step + 1)">Etape suivante</button>
+        <div class="row">
+            <div class="col-lg-6">
+                <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)"><i
+                        class="fa fa-angle-left"></i> Passer à l'étape précédente</a>
+            </div>
+            <div class="col-lg-6">
+                <a class="wizard-button-goto next pull-right" ng-click="wizard.goto(wizard.step + 1)">Passer à l'étape
+                    suivante <i class="fa fa-angle-right"></i></a>
+            </div>
         </div>
     </div>
 
@@ -239,22 +230,22 @@
                         <tbody>
                         <tr>
                             <td>Liquidités disponibles</td>
-                            <td class="text-right">{{client.portfolio.infos.cash | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
+                            <td class="text-right">{{client.portfolio.cash | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
                         </tr>
                         <tr>
                             <td>Liquidités sortantes</td>
-                            <td class="text-right">{{$OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
+                            <td class="text-right">{{$OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
                         </tr>
                         <tr>
                             <td>Liquidités entrantes estimées</td>
-                            <td class="text-right">{{profit | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
+                            <td class="text-right">{{profit | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
                         </tr>
                         </tbody>
 
                         <tfoot>
                         <tr>
                             <td class="text-left">Liquidités restantes estimées après transaction</td>
-                            <td class="text-right">{{client.portfolio.infos.cash - $OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.infos.currencySymb}}</td>
+                            <td class="text-right">{{client.portfolio.cash - $OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
                         </tr>
                         </tfoot>
 
@@ -290,9 +281,13 @@
             </div>
         </div>
 
-        <div class="">
-            <button class="btn btn-default" ng-click="wizard.goto(wizard.step - 1)">Etape précédente</button>
-            <button class="btn green" ng-click="wizard.goto(1)">Valider l'ordre d'achat</button>
+        <a class="wizard-button-goto btn green" ng-click="wizard.goto(wizard.step + 1)">Passer les ordres</a>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)"><i
+                        class="fa fa-angle-left"></i> Passer à l'étape précédente</a>
+            </div>
         </div>
     </div>
 </div>

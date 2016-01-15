@@ -1,253 +1,337 @@
 {
-  "start": "filter-regions",
-  "end": "end",
-  "questionnaire": [
+  "nodes": [
     {
-      "id": "company",
-      "name": "Investir dans des entreprises",
-      "questions": [
+      "id": "root",
+      "text": "",
+      "children": [
         {
-          "id": "mode",
-          "text": "Quel mode d'investissement souhaitez-vous faire ?",
-          "answers": [
-            {
-              "id": "sector",
-              "text": "Par secteur d'activité",
-              "resume": "Investir dans un secteur d'activité",
-              "goto": "sectors"
-            },
-            {
-              "id": "region",
-              "text": "Par région",
-              "resume": "Investir dans une région",
-              "goto": "regions"
-            },
-            {
-              "id": "theme",
-              "text": "Par thème (écologie, etc.)",
-              "resume": "Investir dans thème",
-              "goto": "themes"
-            }
-          ]
+          "id": "root-countries",
+          "text": "Investir par pays",
+          "goto": "countries"
         },
         {
-          "id": "sectors",
-          "text": "Dans quel secteur d'activité souhaitez-vous investir ?",
-          "answers": [
-            {
-              "id": "finance",
-              "text": "Finance",
-              "resume": "Investir dans la finance",
-              "goto": "end"
-            },
-            {
-              "id": "industry",
-              "text": "Industrie",
-              "resume": "Investir dans l'industrie",
-              "goto": "end"
-            },
-            {
-              "id": "health",
-              "text": "Santé",
-              "resume": "Investir dans la santé",
-              "goto": "end"
-            },
-            {
-              "id": "collectivity",
-              "text": "Services aux collectivité",
-              "resume": "Investir dans des collectivité",
-              "goto": "end"
-            },
-            {
-              "id": "technology",
-              "text": "Technologies de l'information",
-              "resume": "Investir dans la technologie",
-              "goto": "end"
-            },
-            {
-              "id": "consomer",
-              "text": "Biens de consomation cyclique",
-              "resume": "Investir dans les biens de consomation cyclique",
-              "goto": "end"
-            }
-          ]
+          "id": "root-sectors",
+          "text": "Investir par secteur",
+          "goto": "sectors"
         },
         {
-          "id": "regions",
-          "text": "Dans quelle région du monde souhaitez-vous investir ?",
-          "answers": [
-            {
-              "id": "africa",
-              "text": "Afrique",
-              "resume": "Investir en Afrique",
-              "goto": "regions-details"
-            },
-            {
-              "id": "europe",
-              "text": "Europe",
-              "resume": "Investir en Europe",
-              "goto": "regions-details"
-            },
-            {
-              "id": "asia-pacific",
-              "text": "Asie Pacifique",
-              "resume": "Investir en Asie Pacifique",
-              "goto": "regions-details"
-            },
-            {
-              "id": "north-america",
-              "text": "Amérique du Nord",
-              "resume": "Investir en Amérique du Nord",
-              "goto": "regions-details"
-            },
-            {
-              "id": "latin-america",
-              "text": "Amérique Latine",
-              "resume": "Investir en Amérique Latine",
-              "goto": "regions-details"
-            }
-          ]
+          "id": "root-news",
+          "text": "Investir à partir de l'actualité",
+          "goto": "news"
         },
         {
-          "id": "regions-details",
-          "text": "Préférez-vous investir sur l'ensemble de la région, ou plutôt sur un pays en particulier ?",
-          "answers": [
-            {
-              "id": "by-countries",
-              "text": "Un pays en particulier",
-              "resume": "Investir dans un pays en particulier",
-              "goto": "countries"
-            },
-            {
-              "id": "regions",
-              "text": "Investir sur l'ensemble de la région",
-              "resume": "Investir sur l'ensemble de la région",
-              "goto": "end"
-            }
-          ]
-        },
-        {
-          "id": "countries",
-          "text": "Sélectionnez le pays souhaité.",
-          "answers": [
-            {
-              "id": "fr",
-              "text": "France",
-              "resume": "Investir en France",
-              "goto": "end"
-            },
-            {
-              "id": "us",
-              "text": "États-Unis",
-              "resume": "Investir aux États-Unis",
-              "goto": "end"
-            },
-            {
-              "id": "be",
-              "text": "Belgique",
-              "resume": "Investir en Belgique",
-              "goto": "end"
-            },
-            {
-              "id": "it",
-              "text": "Italie",
-              "resume": "Investir en Italie",
-              "goto": "end"
-            },
-            {
-              "id": "ch",
-              "text": "Chine",
-              "resume": "Investir en Chine",
-              "goto": "end"
-            },
-            {
-              "id": "jp",
-              "text": "Japon",
-              "resume": "Investir au Japon",
-              "goto": "end"
-            },
-            {
-              "id": "es",
-              "text": "Espagne",
-              "resume": "Investir en Espagne",
-              "goto": "end"
-            },
-            {
-              "id": "de",
-              "text": "Allemagne",
-              "resume": "Investir en Allemagne",
-              "goto": "end"
-            },
-            {
-              "id": "ru",
-              "text": "Russie",
-              "resume": "Investir en Russie",
-              "goto": "end"
-            },
-            {
-              "id": "tr",
-              "text": "Turquie",
-              "resume": "Investir en Turquie",
-              "goto": "end"
-            },
-            {
-              "id": "hk",
-              "text": "Hong-Kong",
-              "resume": "Investir en Hong-Kong",
-              "goto": "end"
-            },
-            {
-              "id": "kr",
-              "text": "Corée",
-              "resume": "Investir en Corée",
-              "goto": "end"
-            },
-            {
-              "id": "in",
-              "text": "Inde",
-              "resume": "Investir en Inde",
-              "goto": "end"
-            },
-            {
-              "id": "gr",
-              "text": "Grèce",
-              "resume": "Investir en Grèce",
-              "goto": "end"
-            },
-            {
-              "id": "br",
-              "text": "Brézil",
-              "resume": "Investir au Brézil",
-              "goto": "end"
-            },
-            {
-              "id": "tw",
-              "text": "Taïwan",
-              "resume": "Investir en Taïwan",
-              "goto": "end"
-            }
-          ]
-        },
-        {
-          "id": "end",
-          "text": "Voici une liste d'ETFs correspondants à vos réponses."
+          "id": "root-themes",
+          "text": "Investir par thème",
+          "goto": "themes"
         }
       ]
     },
     {
-      "id": "filter-country",
-      "name": "Investir dans un pays",
-      "goto": "end"
+      "id": "sectors",
+      "text": "Dans quel secteur d'activité souhaitez-vous investir ?",
+      "type": "checkbox",
+      "operator": "AND",
+      "children": [
+        {
+          "id": "finance",
+          "strategy": {
+            "finance": 1
+          },
+          "text": "Finance",
+          "sentence": {
+            "prefix": "de la",
+            "keyword": "finance"
+          }
+        },
+        {
+          "id": "industry",
+          "strategy": {
+            "industry": 1
+          },
+          "text": "Industrie",
+          "sentence": {
+            "prefix": "de l'",
+            "keyword": "industrie"
+          }
+        },
+        {
+          "id": "health",
+          "strategy": {
+            "health": 1
+          },
+          "text": "Santé",
+          "sentence": {
+            "prefix": "de la",
+            "keyword": "santé"
+          }
+        },
+        {
+          "id": "collectivity",
+          "strategy": {
+            "collectivity": 1
+          },
+          "text": "Services aux collectivités",
+          "sentence": {
+            "prefix": "des",
+            "keyword": "services aux collectivités"
+          }
+        },
+        {
+          "id": "technology",
+          "strategy": {
+            "technology": 1
+          },
+          "text": "Technologies de l'information",
+          "sentence": {
+            "prefix": "de la",
+            "keyword": "technologie"
+          }
+        },
+        {
+          "id": "consomer",
+          "strategy": {
+            "consomer": 1
+          },
+          "text": "Biens de consomation cyclique",
+          "sentence": {
+            "prefix": "des",
+            "keyword": "biens de consomation cyclique"
+          }
+        }
+      ]
     },
     {
-      "id": "filter-news",
-      "name": "Investir à partir de l'actualité",
-      "goto": "end"
+      "id": "regions",
+      "text": "Dans quelle région du monde souhaitez-vous investir ?",
+      "children": [
+        {
+          "id": "africa",
+          "strategy": {
+            "africa": 1
+          },
+          "text": "Afrique",
+          "goto": "regions-details"
+        },
+        {
+          "id": "europe",
+          "strategy": {
+            "europe": 1
+          },
+          "text": "Europe",
+          "goto": "regions-details"
+        },
+        {
+          "id": "asia-pacific",
+          "strategy": {
+            "asia-pacific": 1
+          },
+          "text": "Asie Pacifique",
+          "goto": "regions-details"
+        },
+        {
+          "id": "north-america",
+          "strategy": {
+            "north-america": 1
+          },
+          "text": "Amérique du Nord",
+          "goto": "regions-details"
+        },
+        {
+          "id": "latin-america",
+          "strategy": {
+            "latin-america": 1
+          },
+          "text": "Amérique Latine",
+          "goto": "regions-details"
+        }
+      ]
     },
     {
-      "id": "filter-maps-list",
-      "name": "Je souhaite passer au mode expert",
-      "goto": "end"
+      "id": "regions-details",
+      "text": "Préférez-vous investir sur l'ensemble de la région, ou plutôt sur un pays en particulier ?",
+      "children": [
+        {
+          "id": "by-countries",
+          "text": "Un pays en particulier",
+          "goto": "countries"
+        },
+        {
+          "id": "regions",
+          "text": "Investir sur l'ensemble de la région",
+          "goto": "end"
+        }
+      ]
+    },
+    {
+      "id": "countries",
+      "text": "Sélectionnez le pays souhaité.",
+      "type": "checkbox",
+      "operator": "OR",
+      "children": [
+        {
+          "id": "fr",
+          "strategy": {
+            "fr": 1
+          },
+          "text": "France"
+        },
+        {
+          "id": "us",
+          "strategy": {
+            "us": 1
+          },
+          "text": "États-Unis"
+        },
+        {
+          "id": "be",
+          "strategy": {
+            "be": 1
+          },
+          "text": "Belgique"
+        },
+        {
+          "id": "it",
+          "strategy": {
+            "it": 1
+          },
+          "text": "Italie"
+        },
+        {
+          "id": "ch",
+          "strategy": {
+            "ch": 1
+          },
+          "text": "Chine"
+        },
+        {
+          "id": "jp",
+          "strategy": {
+            "jp": 1
+          },
+          "text": "Japon"
+        },
+        {
+          "id": "es",
+          "strategy": {
+            "es": 1
+          },
+          "text": "Espagne"
+        },
+        {
+          "id": "de",
+          "strategy": {
+            "de": 1
+          },
+          "text": "Allemagne"
+        },
+        {
+          "id": "ru",
+          "strategy": {
+            "ru": 1
+          },
+          "text": "Russie"
+        },
+        {
+          "id": "tr",
+          "strategy": {
+            "tr": 1
+          },
+          "text": "Turquie"
+        },
+        {
+          "id": "hk",
+          "strategy": {
+            "hk": 1
+          },
+          "text": "Hong-Kong"
+        },
+        {
+          "id": "kr",
+          "strategy": {
+            "kr": 1
+          },
+          "text": "Corée"
+        },
+        {
+          "id": "in",
+          "strategy": {
+            "in": 1
+          },
+          "text": "Inde"
+        },
+        {
+          "id": "gr",
+          "strategy": {
+            "gr": 1
+          },
+          "text": "Grèce"
+        },
+        {
+          "id": "br",
+          "strategy": {
+            "br": 1
+          },
+          "text": "Brézil"
+        },
+        {
+          "id": "tw",
+          "strategy": {
+            "tw": 1
+          },
+          "text": "Taïwan"
+        }
+      ]
+    },
+    {
+      "id": "themes",
+      "text": "",
+      "type": "checkbox",
+      "operator": "AND",
+      "children": [
+        {
+          "id": "ecologie",
+          "strategy": {
+            "ecologie": 1
+          },
+          "text": "Ecologie"
+        },
+        {
+          "id": "social",
+          "strategy": {
+            "social": 1
+          },
+          "text": "Social"
+        },
+        {
+          "id": "environnement",
+          "strategy": {
+            "environnement": 1
+          },
+          "text": "Environnement"
+        }
+      ]
+    },
+    {
+      "id": "news",
+      "text": "",
+      "type": "checkbox",
+      "operator": "AND",
+      "children": [
+        {
+          "id": "matieres-premieres",
+          "strategy": {
+            "matieres-premieres": 1
+          },
+          "text": "Matières premières"
+        },
+        {
+          "id": "petrole",
+          "strategy": {
+            "petrole": 1
+          },
+          "text": "Pétrole"
+        }
+      ]
     }
   ]
 }

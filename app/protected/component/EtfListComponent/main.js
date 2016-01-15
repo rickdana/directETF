@@ -1,30 +1,16 @@
 angular.module('MetronicApp')
-    .directive("ngEtfList",
-        function($EtfsFactory) {
-            return {
-                controller: "EtfListController",
-                templateUrl: "/protected/component/EtfListComponent/template.html",
-                link: function($scope, $element, $attrs) {
-                    $element.find('.scroller-zone').slimScroll({
-                        height: '500px',
-                        wheelStep: 10,
-                        railVisible: true
-                    });
-
-                    $scope.$watch(function() {
-                        return $element.attr('data-filter');
-                    }, function(newFilter) {
-                        if (newFilter) {
-                            $EtfsFactory.load(newFilter, $element.onLoaded);
-                        }
-                    });
-
-                    $attrs.targetScopeName = $attrs.targetScopeName || 'etfs';
-                    $scope[$attrs.targetScopeName] = [];
-                }
-            };
-        }
-    )
+    .directive("etfList", function() {
+        return {
+            restrict: 'E',
+            scope: {
+                model: '=model',
+                beforeRendering: '=beforeRendering',
+                afterRendering: '=afterRendering',
+            },
+            controller: "EtfListController",
+            templateUrl: "/protected/component/EtfListComponent/template.html"
+        };
+    })
     .directive("etfAttrName",
         function($compile) {
             return {
@@ -41,108 +27,50 @@ angular.module('MetronicApp')
         }
     )
     .controller('EtfListController', function($EtfsFactory, $scope, $element, $attrs, $compile, $http, $q, $rootScope, $templateCache) {
-        $element.onLoaded = function(etfs) {
-            if (typeof $attrs.onBeforeRendering == 'string') {
-                if (typeof $scope[$attrs.onBeforeRendering] != 'function') {
-                    throw new Error('Cannot find callback ' + $attrs.onBeforeRendering + ' in the current $scope!');
-                }
+        $attrs.template = $attrs.template || "/protected/component/EtfListComponent/template.html";
 
-                $scope[$attrs.onBeforeRendering](etfs, function() {
-                    //render(etfs);
-                });
-            } else if (typeof $scope.cbEtfsListBeforeRendering == 'function') {
-                $scope.cbEtfsListBeforeRendering(etfs, function(etfs) {
-                    render(etfs);
-                });
-            } else {
-                render(etfs);
-            }
-        };
-
-        function render(etfs) {
-            //$scope[$attrs.targetScopeName] = etfs;
+        var render = function(etfs) {
             $scope.etfs = etfs;
 
-            // Table Head
-            var tbody = $element.find('table tbody');
-
-            var uid = Math.floor(Math.random() * (100000 - 1 + 1)) + 1
-              , varTemplateHeadCacheName = 'templateHeadCache' + uid
-              , varTemplateBodyCacheName = 'templateBodyCache' + uid
-              , varTemplateFootCacheName = 'templateFootCache' + uid;
-
-            if ($attrs.headerTemplate && $attrs.headerTemplate.length) {
-                $element.find('table thead').remove();
-                $attrs.headerTemplate = $attrs.headerTemplate || "/protected/component/EtfListComponent/template-head.html";
-
-                $q.all([
-                    $http.get($attrs.headerTemplate, { cache : $templateCache })
-                ]).then(function(resp) {
-                    $rootScope[varTemplateHeadCacheName] = resp;
-                });
-
-                $scope.$watch(varTemplateHeadCacheName, function(n, o) {
-                    if(n) {
-                        tbody.before($compile($templateCache.get($attrs.headerTemplate)[1])($scope));
-                    }
-                });
-            }
-
-            // Table Body Row
-            $attrs.rowTemplate = $attrs.rowTemplate || "/protected/component/EtfListComponent/template-row.html";
-
-            tbody.find('tr').remove();
-            tbody.html("");
-
             $q.all([
-                $http.get($attrs.rowTemplate, { cache : $templateCache })
-            ]).then(function(resp) {
-                $rootScope[varTemplateBodyCacheName] = resp;
-            })
+                $http.get($attrs.template, { cache : $templateCache })
+            ]).then(function(templateCache) {
+                $element.find('.etf-list-component-table').html($compile($templateCache.get($attrs.template)[1])($scope));
 
-            $scope.$watch(varTemplateBodyCacheName, function(n, o) {
-                if(n) {
-                    tbody.append($compile($templateCache.get($attrs.rowTemplate)[1])($scope));
+                // Emit
+                if ($scope.afterRendering) {
+                    if (typeof $scope.afterRendering != 'function') {
+                        throw new Error('Cannot find callback beforeRendered in the current $scope!');
+                    }
+
+                    setTimeout(function() {
+                        $scope.afterRendering(etfs);
+                    }, 500);
                 }
             });
+        };
 
-            // Table Foot
-            if ($attrs.footerTemplate && $attrs.footerTemplate.length) {
-                $element.find('table tfoot').remove();
-
-                $q.all([
-                    $http.get($attrs.footerTemplate, { cache : $templateCache })
-                ]).then(function(resp) {
-                    $rootScope[varTemplateFootCacheName] = resp;
-                });
-
-                $scope.$watch(varTemplateFootCacheName, function(n, o) {
-                    if(n) {
-                        tbody.after($compile($templateCache.get($attrs.footerTemplate)[1])($scope));
+        $scope.$watch(function() {
+            return $scope.model;
+        }, function(filter) {
+            $EtfsFactory.load(filter, function(etfs) {
+                if ($scope.beforeRendering) {
+                    if (typeof $scope.beforeRendering != 'function') {
+                        throw new Error('Cannot find callback beforeRendering in the current $scope!');
                     }
-                });
-            }
 
-            // Emit
-            setTimeout(function() {
-                if (typeof $attrs.onRendered == 'string') {
-                    if (typeof $scope[$attrs.onRendered] != 'function') {
-                        throw new Error('Cannot find callback ' + $attrs.onRendered + ' in the current $scope!');
-                    }
+                    $scope.beforeRendering(etfs, function(etfs) {
+                        render(etfs);
+                    });
+                } else if (typeof $scope.cbEtfsListBeforeRendering == 'function') {
+                    $scope.cbEtfsListBeforeRendering(etfs, function(etfs) {
+                        render(etfs);
+                    });
                 } else {
-                    if (typeof $scope.cbEtfsListLoaded == 'function') {
-                        $attrs.onRendered = 'cbEtfsListLoaded';
-                    } else {
-                        return;
-                    }
+                    render(etfs);
                 }
-                $scope[$attrs.onRendered](etfs);
-            }, 500);
-        }
-
-        if (!$attrs.lazy || $attrs.filter) {
-            $EtfsFactory.load($attrs.filter, $element.onLoaded);
-        }
+            });
+        });
     })
     .controller('PopupInfosController', function($EtfsFactory, $scope, $ocLazyLoad, $element) {
         $ocLazyLoad.load({

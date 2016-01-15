@@ -12,8 +12,6 @@ angular.module('MetronicApp')
 
         $element.render = function(etfs) {
             $element.find('.etf-sectors-pie-chart-wrapper').highcharts({
-        //            colors: ['rgba(0, 166, 90,.3)', 'rgba(0, 166, 90,.8)', 'rgba(0, 166, 90,.7)', 'rgba(0, 166, 90,.5)'],
-
                 mapNavigation: {
                    enabled: false
                 },
@@ -33,34 +31,10 @@ angular.module('MetronicApp')
                         'font-family': 'Poiret one',
                         'font-size': '17px'
                     },
-                    //options3d: {
-                    //    enabled: true,
-                    //    alpha: 45,
-                    //    beta: 0
-                    //}
                 },
                 tooltip: {
                     pointFormat: ' <b>{point.percentage:.2f}%</b>'
                 },
-
-                //plotOptions: {
-                //    pie: {
-                //        ignoreHiddenPoint: false,
-                //        allowPointSelect: true,
-                //        cursor: 'pointer',
-                //        depth: 35,
-                //        dataLabels: {
-                //            enabled: $attrs.enableDataLabels === 'true' || false,
-                //            format: '{point.name}'
-                //        },
-                //        showInLegend: $attrs.showInLegend === 'true' || false,
-                //    },
-                //    series: {
-                //        shadow: true
-                //    },
-                //},
-
-
                 plotOptions: {
                     pie: {
                         ignoreHiddenPoint: false,
@@ -78,7 +52,6 @@ angular.module('MetronicApp')
 
                     },
                 },
-
                 series: [{
                     type: 'pie',
                     data: parse(etfs),
@@ -91,11 +64,6 @@ angular.module('MetronicApp')
                             },
                         }
                     },
-                    //options3d: {
-                    //    enabled: true,
-                    //    alpha: 45,
-                    //    beta: 0
-                    //},
                     events: {
                         click: function (e) {
                             current_pie = e;
@@ -126,8 +94,6 @@ angular.module('MetronicApp')
 
                 colorAxis: null,
 
-
-
                 legend: {
                     enabled: true,
                     labelFormat: '{name} ({percentage:.1f}%)',
@@ -157,11 +123,7 @@ angular.module('MetronicApp')
 
         };
 
-        if (!$attrs.lazy || $attrs.filter) {
-            $EtfsFactory.load($attrs.filter, $element.render);
-        }
-
-        function parse(etfs) {
+        var parse = function(etfs) {
             var sum = 0
               , percents = {}
               , series = [];
@@ -206,19 +168,19 @@ angular.module('MetronicApp')
             return series;
         }
 
+        $scope.$watch(function() {
+            return $scope.model;
+        }, function(filter) {
+            $EtfsFactory.load(filter, $element.render, false);
+        });
     })
-    .directive("ngEtfSectorsChart", function($EtfsFactory) {
+    .directive("sectorChartPie", function($EtfsFactory) {
         return {
             controller: "EtfSectorsChartController",
-            templateUrl: "/protected/component/EtfSectorsChartComponent/template.html",
-            link: function($scope, $element, $attrs) {
-                $scope.$watch(function() {
-                    return $element.attr('data-filter');
-                }, function(filter) {
-                    if (filter) {
-                        $EtfsFactory.load(filter, $element.render, false);
-                    }
-                });
-            }
+            restrict: 'E',
+            scope: {
+                model: '=model'
+            },
+            templateUrl: "/protected/component/EtfSectorsChartComponent/template.html"
         };
     });
