@@ -38,7 +38,7 @@
 
 #page-essai .steps > a {
     position: absolute;
-    top: 30%;
+    margin-top: 30%;
 }
 
 #page-essai .steps > a i {
@@ -167,3 +167,38 @@
 #page-essai .box input[type=radio]:checked + label, .box input[type=checkbox]:checked + label {
     background-color: rgb(19, 135, 141);
 }
+
+#resume input {
+    display: inline-block;
+    width: 90px !important;
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    border-bottom: 1px dotted #8C8B8B;
+    text-align: center;
+}
+
+#resume span {
+    font-size: 18px;
+}
+
+rzslider .rz-bar.rz-selection,
+rzslider .rz-pointer{
+    background-color: #32b5b9;
+}
+
+rzslider .rz-pointer.rz-active:after {
+    background-color:  #308B8E !important;
+}
+
+#mensual-amount, #total-amount {
+    width: 40%;
+    position: relative;
+    left: 203px;
+    margin-top: 23px;
+}
+
+.step a {
+    margin-top: 15px;
+}
+

@@ -240,3 +240,19 @@ table .selected {
 	color: #38cf63;
 	text-align: right
 }
+
+#btn-investissement{
+	font-size: 26px;
+	position: relative;
+	top: 149px;
+	text-align: center;
+	color: rgb(255, 255, 255);
+}
+
+#btn-investissement i {
+	padding-right: 10px;
+}
+
+#btn-investissement a {
+	color: rgb(255, 255, 255);
+}

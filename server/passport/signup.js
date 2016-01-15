@@ -4,7 +4,7 @@ var LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function (passport, User) {
     passport.use('signup', new LocalStrategy({
-            usernameField: 'email',
+            usernameField: 'username',
             passwordField: 'password',
             passReqToCallback: true
         },
@@ -29,6 +29,7 @@ module.exports = function (passport, User) {
                         newUser.setPassword(password);
                         newUser.firstName = req.param('firstName');
                         newUser.lastName = req.param('lastName');
+                        newUser.id = req.param('id') || false;
 
                         // save the user
                         newUser.save(function (err) {

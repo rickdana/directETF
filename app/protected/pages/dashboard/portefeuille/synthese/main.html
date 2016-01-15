@@ -1,12 +1,12 @@
 <div ng-controller="PortefeuilleSyntheseController">
-    <div class="row">
+    <div class="row" ng-if="client.profile.alreadyInvest">
         <div class="col-lg-6">
             <!-- Information du portefeuille -->
             <div id="portfolio">
                 <div class="portlet">
                     <div class="portlet-title">
                         <div class="tools left">
-                            <a id="btn-portfolio" href="javascript:;"><i class="fa fa-history"></i></a>
+                            <a id="btn-portfolio" ng-click="affTableHistorique()"><i class="fa fa-history"></i></a>
                         </div>
                         <div class="tools right">
                             <i class="fa fa-ellipsis-v"></i>
@@ -17,7 +17,7 @@
                     </div>
 
                     <div class="portlet-body">
-                        <div id="portefeuille-valeur" class="infos-principales">
+                        <div class="infos-principales">
                             <div class="number"> {{format(client.portfolio.value)}} {{client.portfolio.currencySymb}}</div>
                             <div>
                                 Variation du jour <span class="result-down">-.8%<i class="fa fa-chevron-down"></i></span>, de l'année <span class="result-up">+8.3%<i class="fa fa-chevron-up"></i></span>
@@ -26,19 +26,19 @@
 
                         <div class="infos-supplements">
                             <table>
-                                <tr id="portefeuille-gains">
+                                <tr>
                                     <td class="type">Gains totaux</td>
-                                    <td id="gains-wallet" class="number">{{format(client.portfolio.gains)}}
+                                    <td class="number">{{format(client.portfolio.gains)}}
                                         {{client.portfolio.currencySymb}}</td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
 
-                                <tr id="portefeuille-benefice">
+                                <tr>
                                     <td class="type">Revenu annuel</td>
                                     <td class="number">{{format(client.portfolio.dividends)}} {{client.portfolio.currencySymb}}</td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
-                                <tr id="">
+                                <tr>
                                     <td class="type">Niveau de risque</td>
                                     <td class="number"></td>
                                     <td class="percent">important</td>
@@ -60,13 +60,12 @@
                     </div>
                 </div>
             </div>
-
             <!-- Table d'historique du portefeuille -->
             <div id="table-synthese">
                 <div class="portlet">
                     <div class="portlet-title">
                         <div class="tools left">
-                            <a id="btn-table-historique" href="javascript:;"><i class="fa fa-line-chart"></i></a>
+                            <a id="btn-table-historique" ng-click="cacheTableHistorique()"><i class="fa fa-line-chart"></i></a>
                         </div>
                         <div class="tools right">
                             <i class="fa fa-ellipsis-v"></i>
@@ -103,7 +102,7 @@
             <div id="sector" class="portlet">
                 <div class="portlet-title">
                     <div class="tools left">
-                        <a id="btn-pie-etfs" href="javascript:;"> <i class="fa fa-bars"></i> </a>
+                        <a id="btn-pie-etfs" ng-click="affListeETFs()"> <i class="fa fa-bars"></i> </a>
                     </div>
                     <div class="tools right">
                         <i class="fa fa-ellipsis-v"></i>
@@ -140,7 +139,7 @@
             <div id="list-etfs" class="portlet">
                 <div class="portlet-title">
                     <div class="tools left">
-                        <a id="btn-liste-etfs" href="javascript:;"> <i class="fa fa-pie-chart"></i> </a>
+                        <a id="btn-liste-etfs" ng-click="cacheListeETFs()"> <i class="fa fa-pie-chart"></i> </a>
                     </div>
                     <div class="tools right">
                         <i class="fa fa-ellipsis-v"></i>
@@ -151,7 +150,7 @@
                 </div>
 
                 <div class="portlet-body">
-                    <div id="investment-list" data-lazy="true" data-filter="{{client.portfolio.etfs}}"
+                    <div data-lazy="true" data-filter="{{client.portfolio.etfs}}"
                          data-header-template="/protected/pages/dashboard/portefeuille/synthese/tpl/header.html"
                          data-row-template="/protected/pages/dashboard/portefeuille/synthese/tpl/row.html"
                          data-footer-template="/protected/pages/dashboard/portefeuille/synthese/tpl/footer.html"
@@ -159,8 +158,104 @@
                 </div>
             </div>
         </div>
-
     </div>
 
+    <div class="row" ng-if="!client.profile.alreadyInvest">
+        <div class="col-lg-6">
+            <!-- Information du portefeuille -->
+            <div id="portfolio">
+                <div class="portlet">
+                    <div class="portlet-title">
+                        <div class="tools right">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </div>
+                        <div class="text">
+                            <span>Valeur de mes Stratégies</span>
+                        </div>
+                    </div>
+
+                    <div class="portlet-body">
+                        <div class="infos-principales">
+                            <div class="number"> {{format(client.portfolio.value)}} {{client.portfolio.currencySymb}}</div>
+                            <div>
+                                Variation du jour <span class="result-up">0%<i class="fa fa-chevron-up"></i></span>, de l'année <span class="result-up">0%<i class="fa fa-chevron-up"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="infos-supplements">
+                            <table>
+                                <tr>
+                                    <td class="type">Gains totaux</td>
+                                    <td class="number">0.00
+                                        {{client.portfolio.currencySymb}}</td>
+                                    <td class="percent"><i class="fa fa-line-chart"></i></td>
+                                </tr>
+
+                                <tr>
+                                    <td class="type">Revenu annuel</td>
+                                    <td class="number">0.00 {{client.portfolio.currencySymb}}</td>
+                                    <td class="percent"><i class="fa fa-line-chart"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="type">Niveau de risque</td>
+                                    <td class="number"></td>
+                                    <td class="percent"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Historique du portefeuille -->
+            <div id="graph-synthese">
+                <div class="portlet" ng-controller="PortefeuilleHistoriqueController">
+                    <div class="portlet-body text-right" style="min-height: 340px;">
+                        <div id="portefeuille-historique-stockchart" style="display: none"></div>
+                        <p id="btn-investissement">
+                            <i class="fa fa-shopping-cart"></i>
+                            <i class="fa fa-angle-right"></i>
+                            <a href="/dashboard#/investir" class=""> Faire un invenstissement</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <!-- Repartition des secteurs -->
+            <div id="sector" class="portlet">
+                <div class="portlet-title">
+                    <div class="tools right">
+                        <i class="fa fa-ellipsis-v"></i>
+                    </div>
+                    <div class="text">
+                        <span>Mes investissements par secteurs</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div id="sectors-overview" data-height="260" data-lazy="true"
+                         data-filter="{{client.portfolio.etfs}}"
+                         data-show-in-legend="true" ng-etf-sectors-chart>
+                    </div>
+                </div>
+            </div>
+            <!-- Maps de mes ETFs-->
+            <div id="maps">
+                <div class="portlet blueX">
+                    <div class="portlet-title">
+                        <span class="caption-subject font-green">Répartition géographique de mes investissements</span>
+                    </div>
+                    <div class="portlet-body">
+                        <div id="maps-repartition" height="300"
+                             data-lazy="true"
+                             data-filter="{{client.portfolio.etfs}}"
+                             data-null-color="rgba(0,0,0,.02)"
+                             data-border-color="transparent"
+                             data-color="rgba(98,87,255,.66)"
+                             ng-etf-maps></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

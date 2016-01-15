@@ -1,6 +1,6 @@
 'use strict';
 
-var DirectETF = angular.module('DirectETF', ['ngRoute', 'oc.lazyLoad']);
+var DirectETF = angular.module('DirectETF', ['ngRoute', "rzModule", 'oc.lazyLoad']);
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
 DirectETF.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
@@ -177,6 +177,19 @@ DirectETF
                 scrollTop: 0
             }, 700);
         });
+    })
+    .directive('stringToNumber', function() {
+        return {
+            require: 'ngModel',
+            link: function(scope, element, attrs, ngModel) {
+                ngModel.$parsers.push(function(value) {
+                    return '' + value;
+                });
+                ngModel.$formatters.push(function(value) {
+                    return parseFloat(value, 10);
+                });
+            }
+        };
     })
 ;
 $(document).ready(function() {

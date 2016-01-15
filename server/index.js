@@ -125,7 +125,9 @@ app.get('/protected/pages/dashboard/main.js', isAuthenticated, function(req, res
             return next(err);
         }
 
-        var ws_content = '\nWS_URL = "' + config.WS_URL + '";';
+        var ws_content = '\nWS_URL = "' + config.WS_URL + '";CLIENT_ID = "' + req.user.id;
+        ws_content += '";CLIENT_FIRST_NAME="' + req.user.firstName + '"';
+        console.log(req.user.firstName)
 
         res.type('text/javascript')
            .status(200)
