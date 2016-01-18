@@ -11,8 +11,10 @@
     </div>
 
     <div id="sentence" ng-show="wizard.step < 4">
-        <p ng-show="sentence.amount">Je souhaite investir
-            {{sentence.amount}}&nbsp;{{client.portfolio.currencySymb}}.</p>
+        <p ng-show="wizard.step > 1">
+            Je souhaite investir
+            <span class="questionnaire-sentence-keyword">
+                {{wizard.order.amount.total}}&nbsp;{{client.portfolio.currencySymb}}</span>.</p>
         <strategy-keywords data-strategy="wizard.portfolio.strategy"></strategy-keywords>
     </div>
 
@@ -41,44 +43,35 @@
         <div class="row">
             <div class="col-lg-6">
                 <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)">Passer au mode
-                    expert</a>
-            </div>
+                    expert</a></div>
             <div class="col-lg-6">
                 <a class="wizard-button-goto next pull-right" ng-click="wizard.goto(wizard.step + 1)">Passer à l'étape
-                    suivante <i class="fa fa-angle-right"></i></a>
-            </div>
+                    suivante <i class="fa fa-angle-right"></i></a></div>
         </div>
     </div>
 
     <!--Step 2-->
     <div class="wizard-panel" data-step="2" ng-controller="InvestirMontantAjustementController" ng-show="wizard.step == 2">
         <div class="row">
-            <div class="col-md-12">
-                <div class="portlet light bordered">
-                    <div class="portlet-title">
-                        <div class="caption caption-md">
-                            <span class="caption-subject font-green bold uppercase">Portefeuille</span>
-                        </div>
-                    </div>
-                    <div class="portlet-body">
-                        <div class="entry">Combien souhaitez-vous investir ?
-                            <rzslider rz-slider-model="sliderInvestLimit.value"
-                                      rz-slider-options="sliderInvestLimit.options"></rzslider>
-                        </div>
-                    </div>
-                </div>
+            <div id="amount-box">
+                <p>Valeur du portfeuille
+                <div>{{wizard.order.amount.total}}<span>{{client.portfolio.currencySymb}}</span></div>
+                </p>
+                <p>Ajouter des fonds</p>
+                <p>
+                <div><input type="real" ng-model="wizard.order.amount.adding" maxlength="5" autofocus>
+                    <span>{{client.portfolio.currencySymb}}</span></div>
+                </p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-6">
                 <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)"><i
-                        class="fa fa-angle-left"></i> Passer à l'étape précédente</a>
-            </div>
+                        class="fa fa-angle-left"></i> Passer à l'étape précédente</a></div>
             <div class="col-lg-6">
                 <a class="wizard-button-goto next pull-right" ng-click="wizard.goto(wizard.step + 1)">Passer à l'étape
-                    suivante <i class="fa fa-angle-right"></i></a>
-            </div>
+                    suivante <i class="fa fa-angle-right"></i></a></div>
         </div>
     </div>
 
@@ -179,12 +172,10 @@
         <div class="row">
             <div class="col-lg-6">
                 <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)"><i
-                        class="fa fa-angle-left"></i> Passer à l'étape précédente</a>
-            </div>
+                        class="fa fa-angle-left"></i> Passer à l'étape précédente</a></div>
             <div class="col-lg-6">
                 <a class="wizard-button-goto next pull-right" ng-click="wizard.goto(wizard.step + 1)">Passer à l'étape
-                    suivante <i class="fa fa-angle-right"></i></a>
-            </div>
+                    suivante <i class="fa fa-angle-right"></i></a></div>
         </div>
     </div>
 
@@ -264,8 +255,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)"><i
-                        class="fa fa-angle-left"></i> Passer à l'étape précédente</a>
-            </div>
+                        class="fa fa-angle-left"></i> Passer à l'étape précédente</a></div>
         </div>
     </div>
 </div>

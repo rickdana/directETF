@@ -35,7 +35,6 @@
       "id": "sectors",
       "text": "Dans quel secteur d'activité souhaitez-vous investir ?",
       "type": "checkbox",
-      "operator": "AND",
       "children": [
         {
           "id": "finance",
@@ -109,7 +108,6 @@
       "id": "regions",
       "text": "Dans quelle région du monde souhaitez-vous investir ?",
       "type": "checkbox",
-      "operator": "OR",
       "children": [
         {
           "id": "africa",
@@ -152,7 +150,6 @@
       "id": "countries",
       "text": "Sélectionnez le pays souhaité.",
       "type": "checkbox",
-      "operator": "OR",
       "children": [
         {
           "id": "fr",
@@ -272,28 +269,34 @@
       "id": "themes",
       "text": "",
       "type": "checkbox",
-      "operator": "AND",
       "children": [
         {
-          "id": "ecologie",
+          "id": "pme",
           "strategy": {
-            "ecologie": 1
+            "pme": 1
           },
-          "text": "Ecologie"
+          "text": "PME"
         },
         {
-          "id": "social",
+          "id": "grande-entreprises",
           "strategy": {
-            "social": 1
+            "grande-entreprises": 1
           },
-          "text": "Social"
+          "text": "Grandes entreprises"
         },
         {
-          "id": "environnement",
+          "id": "eau",
           "strategy": {
-            "environnement": 1
+            "eau": 1
           },
-          "text": "Environnement"
+          "text": "Eau"
+        },
+        {
+          "id": "developpement-durable",
+          "strategy": {
+            "developpement-durable": 1
+          },
+          "text": "Développement durable"
         }
       ]
     },
@@ -301,7 +304,6 @@
       "id": "news",
       "text": "",
       "type": "checkbox",
-      "operator": "AND",
       "children": [
         {
           "id": "matieres-premieres",
