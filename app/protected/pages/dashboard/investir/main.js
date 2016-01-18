@@ -167,18 +167,30 @@ angular.module('MetronicApp')
         };
 
         $scope.sentence = {
-            amount: "",
             keywords: []
         };
+
+        $scope.wizard.order = {
+            amount: {
+                adding: null,
+                total: $scope.client.portfolio.value
+            }
+        }
 
         $ClientFactory.portfolio.infos(function(err, infos) {
             $scope.wizard.portfolio = new $PortfolioFactory.Portfolio(infos);
         });
 
         $scope.$watch(function() {
+            return $scope.wizard.order.amount.adding;
+        }, function(value) {
+            $scope.wizard.order.amount.total = $scope.client.portfolio.value + (parseFloat(value || 0) || 0);
+        });
+
+        $scope.$watch(function() {
             return $scope.wizard.portfolio.strategy.keyword.length();
         }, function() {
-            $scope.wizard.portfolio.etfs(function(etfs) {
+            $scope.wizard.portfolio.strategy.etfs(function(etfs) {
                 $scope.wizard.portfolio.isins = [];
 
                 for (var i in etfs) {

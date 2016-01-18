@@ -32,7 +32,7 @@
                     <div class="portlet-body">
                         <div class="infos-principales">
                             <div class="number"> {{format(client.portfolio.value)}}
-                                {{client.portfolio.desc.currencySymb}}
+                                {{client.portfolio.currencySymb}}
                             </div>
                             <div>
                                 Variation du jour <span class="result-down">-.8%<i class="fa fa-chevron-down"></i></span>, de l'année <span class="result-up">+8.3%<i class="fa fa-chevron-up"></i></span>
@@ -44,15 +44,15 @@
                                 <tr>
                                     <td class="type">Gains totaux</td>
                                     <td class="number">{{format(client.portfolio.gains)}}
-                                        {{client.portfolio.desc.currencySymb}}
+                                        {{client.portfolio.currencySymb}}
                                     </td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
 
                                 <tr>
                                     <td class="type">Revenu annuel</td>
-                                    <td class="number">{{format(client.portfolio.desc.dividends)}}
-                                        {{client.portfolio.desc.currencySymb}}
+                                    <td class="number">{{format(client.portfolio.dividends)}}
+                                        {{client.portfolio.currencySymb}}
                                     </td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
@@ -131,7 +131,7 @@
                 </div>
                 <div class="portlet-body">
                     <sector-chart-pie id="sectors-overview" data-height="260"
-                                      data-model="client.portfolio.desc.etfs"
+                                      data-model="client.portfolio.etfs"
                                       data-show-in-legend="true"></sector-chart-pie>
                 </div>
             </div>
@@ -142,7 +142,7 @@
                         <span class="caption-subject font-green">Répartition géographique de mes investissements</span>
                     </div>
                     <div class="portlet-body">
-                        <map id="maps-repartition" height="300" data-model="client.portfolio.desc.etfs"></map>
+                        <map id="maps-repartition" height="300" data-model="client.portfolio.etfs"></map>
                     </div>
                 </div>
             </div>
@@ -161,7 +161,7 @@
                 </div>
 
                 <div class="portlet-body">
-                    <etf-list data-model="{{client.portfolio.desc.etfs}}"
+                    <etf-list data-model="{{client.portfolio.etfs}}"
                               data-template="/protected/pages/dashboard/portefeuille/synthese/table.html"></etf-list>
                 </div>
             </div>
@@ -198,7 +198,7 @@
                     <div class="portlet-body">
                         <div class="infos-principales">
                             <div class="number"> {{format(client.portfolio.value)}}
-                                {{client.portfolio.desc.currencySymb}}
+                                {{client.portfolio.currencySymb}}
                             </div>
                             <div>
                                 Variation du jour <span class="result-up">0%<i class="fa fa-chevron-up"></i></span>, de l'année <span class="result-up">0%<i class="fa fa-chevron-up"></i></span>
@@ -210,14 +210,14 @@
                                 <tr>
                                     <td class="type">Gains totaux</td>
                                     <td class="number">0.00
-                                        {{client.portfolio.desc.currencySymb}}
+                                        {{client.portfolio.currencySymb}}
                                     </td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
 
                                 <tr>
                                     <td class="type">Revenu annuel</td>
-                                    <td class="number">0.00 {{client.portfolio.desc.currencySymb}}</td>
+                                    <td class="number">0.00 {{client.portfolio.currencySymb}}</td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
                                 <tr>
@@ -257,7 +257,7 @@
                 </div>
                 <div class="portlet-body">
                     <sector-chart-pie id="sectors-overview" data-height="260"
-                                      data-model="client.portfolio.desc.etfs"
+                                      data-model="client.portfolio.etfs"
                                       data-show-in-legend="true"></sector-chart-pie>
                 </div>
             </div>
@@ -268,7 +268,7 @@
                         <span class="caption-subject font-green">Répartition géographique de mes investissements</span>
                     </div>
                     <div class="portlet-body">
-                        <map id="maps-repartition" height="300" data-model="client.portfolio.desc.etfs"></map>
+                        <map id="maps-repartition" height="300" data-model="client.portfolio.etfs"></map>
                     </div>
                 </div>
             </div>

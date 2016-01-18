@@ -102,6 +102,14 @@ MetronicApp.controller('AppController', function($rootScope, $ClientFactory, $Po
         }
 
         $rootScope.client.portfolio = new $PortfolioFactory.Portfolio(infos);
+
+        $ClientFactory.portfolio.value(function(err, value) {
+            if (err) {
+                return console.error(err);
+            }
+
+            $rootScope.client.portfolio.value = value;
+        });
     });
 
     // Profile de client

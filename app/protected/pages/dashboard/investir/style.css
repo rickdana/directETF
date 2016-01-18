@@ -196,36 +196,40 @@ tfoot td {
     text-decoration: line-through;
 }
 
-#slider-timeframe {
-    display: table;
-    position: absolute;
-    right: 0;
-    top: -10px;
+#amount-box {
+    max-width: 600px;
+    padding: 2em;
+    margin: 0 auto 3em;
+    color: #fff;
+    background-color: #364150;
+    box-shadow: 0 0 5px 3px rgba(0,0,0,.5);
+    font-size:1.3em;
+    text-align: center;
 }
 
-.slider-col {
-    display: table-cell;
-    padding: 0 5px;
-    line-height: 50px;
+#amount-box p {
+    text-transform: uppercase;
 }
 
-#slider-timeframe input {
-    display: inline;
-    width: initial;
-    padding: 2px 7px;
+#amount-box p + div {
+    font-size: 3.2em;
+    color: #36c6d3;
 }
 
-#slider-timeframe rzslider {
-    width: 200px;
-    margin: auto;
+#amount-box p + div span {
+    font-size: .59em;
+    color: #fff;
 }
 
-#slider-timeframe label {
-    font-weight: 600;
-}
-
-#slider-timeframe rzslider .rz-pointer {
-    border-radius: 16px !important;
+#amount-box p + div input {
+    background: transparent;
+    border: none;
+    width: 180px;
+    border-radius: 0;
+    border-bottom: 2px dashed #36c6d3;
+    box-shadow: none;
+    text-align: center;
+    outline: none;
 }
 
 .explication-courbe {

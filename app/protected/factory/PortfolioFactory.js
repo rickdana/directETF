@@ -536,22 +536,21 @@ angular.module('MetronicApp')
 
                 return;
             };
-            
-            return {
-                desc: desc,
-                strategy: strategy,
-                
-                /**
-                 * Get the portfolio ETFs list based on the current strategy
-                 */
-                etfs: function(done) {
-                    if (strategy.changed()) {
-                        return build(done);
-                    }
-                    
-                    done(etfs_list);
+
+            desc.strategy = strategy;
+
+            /**
+             * Get the portfolio ETFs list based on the current strategy
+             */
+            strategy.etfs = function(done) {
+                if (strategy.changed()) {
+                    return build(done);
                 }
-            }
+
+                done(etfs_list);
+            };
+
+            return desc;
         };
 
         function loadModel(goal, amountMonthly, riskLevel, cb) {
