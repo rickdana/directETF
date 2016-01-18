@@ -106,14 +106,16 @@ angular.module('MetronicApp')
             });
         }
     })
-    .controller('StrategyKeywordsController', function($PortfolioFactory, $scope) {
+    .controller('StrategyKeywordsController', function($PortfolioFactory, $scope, $compile, $element) {
+        $scope.remove = function(id) {
+            $scope.$strategy.keyword.remove(id);
+        };
+
         $scope.$watch(function() {
             return $scope.$strategy.keyword.length();
         }, function() {
             var keywords = $scope.$strategy.get();
             var keywords_sentence = [];
-
-            console.log('keywords:', keywords)
 
             for (var id in keywords) {
                 var keyword = $PortfolioFactory.Keywords.get(id);
@@ -123,10 +125,12 @@ angular.module('MetronicApp')
                     continue;
                 }
 
-                keywords_sentence.push('<span class="questionnaire-sentence-keyword">' + keyword.name + '</span>');
+                keywords_sentence.push('<span class="questionnaire-sentence-keyword">' + keyword.name
+                                        + '<a ng-click="remove(\'' + id + '\')"></a></span>');
             }
 
-            $scope.keywords = keywords_sentence.join(', ');
+            $element.find('.questionnaire-sentence-keywords').html($compile(keywords_sentence.join(', '))($scope));
+            $scope.hasKeywords = keywords_sentence.length > 0;
         });
     })
     .directive('questionnaire', function() {
@@ -146,7 +150,7 @@ angular.module('MetronicApp')
             scope: {
                 $strategy: '=strategy'
             },
-            template: '<p ng-show="keywords">Mes choix: <span ng-bind-html="keywords"></span>.</p>'
+            template: '<p ng-show="hasKeywords">Mes choix: <span class="questionnaire-sentence-keywords"></span>.</p>'
         };
     })
     .directive('root', function() {
