@@ -223,6 +223,11 @@ angular.module('MetronicApp')
             chart.legend.allItems[1].legendGroup.attr({
                 translateY: 22
             });
+            //chart.legend.setText({
+            //    styles: {
+            //        fill: 'rgb(255, 255, 255)'
+            //    }
+            //});
 
 
 
