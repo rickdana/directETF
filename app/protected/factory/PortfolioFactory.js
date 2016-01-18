@@ -306,19 +306,24 @@ angular.module('MetronicApp')
                     name: "Matières premières"
                 },
                 {
-                    id: "ecologie",
+                    id: "pme",
                     type: "theme",
-                    name: "Ecologie"
+                    name: "PME"
                 },
                 {
-                    id: "social",
+                    id: "grande-entreprises",
                     type: "theme",
-                    name: "Social"
+                    name: "Grandes entreprises"
                 },
                 {
-                    id: "environnement",
+                    id: "eau",
                     type: "theme",
-                    name: "Environnement"
+                    name: "Eau"
+                },
+                {
+                    id: "developpement-durable",
+                    type: "theme",
+                    name: "Développement durable"
                 },
             ]
         };
@@ -416,7 +421,7 @@ angular.module('MetronicApp')
                 for (var i in keywords) {
                     tmp[keywords[i].id] = {
                         weight: keywords[i].weight,
-                        operator: 'AND'
+                        operator: 'OR'
                     };
                 }
 
@@ -442,7 +447,7 @@ angular.module('MetronicApp')
 
                         keywords[id] = {
                             weight: weight || 1,
-                            operator: (operator || 'AND').toUpperCase()
+                            operator: (operator || 'OR').toUpperCase()
                         };
 
                         changed = true;
