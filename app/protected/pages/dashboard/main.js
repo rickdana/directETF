@@ -96,10 +96,8 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', '$ClientFactory
     });
 
     // Exposition initiale
-    $scope.client = {
-        portfolio: {
-            infos: {}
-        }
+    $rootScope.client = {
+        portfolio: {}
     };
 
     // Description du portefeuille (dividentes)
@@ -109,7 +107,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', '$ClientFactory
         }
 
         for (var property in infos) {
-            $scope.client.portfolio[property] = infos[property];
+            $rootScope.client.portfolio[property] = infos[property];
         }
     });
 
@@ -119,7 +117,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', '$ClientFactory
             return console.error(err);
         }
 
-        $scope.client.profile = profile;
+        $rootScope.client.profile = profile;
     });
 }]);
 
