@@ -1,6 +1,8 @@
 angular.module('MetronicApp')
     .controller('EtfMapsController', ['$EtfsFactory', '$scope', '$element', '$attrs', function($EtfsFactory, $scope, $element, $attrs) {
-        //$element.css('width', '100%')
+        $element.css({
+            display: 'block'
+        });
 
         $element.render = function(etfs) {
             var mapData = Highcharts.geojson(Highcharts.maps['custom/world']);
