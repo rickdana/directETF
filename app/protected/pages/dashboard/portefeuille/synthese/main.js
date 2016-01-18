@@ -27,13 +27,11 @@ angular.module('MetronicApp')
 
         $scope.affListeETFs = function() {
             $element.find('#sector').hide();
-            $element.find('#maps').hide();
             $element.find('#list-etfs').show();
         };
 
         $scope.cacheListeETFs = function() {
             $element.find('#sector').show();
-            $element.find('#maps').show();
             $element.find('#list-etfs').hide();
         };
 
