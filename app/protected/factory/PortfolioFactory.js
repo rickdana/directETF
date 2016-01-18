@@ -419,9 +419,8 @@ angular.module('MetronicApp')
                             weight: weight || 1,
                             operator: (operator || 'AND').toUpperCase()
                         };
-                        changed = true;
 
-                        //console.log('Strategy::keyword ==> (%s, %d)', id, keywords[id]);
+                        changed = true;
                     },
 
                     length: function() {
@@ -436,10 +435,12 @@ angular.module('MetronicApp')
 
                     clear: function() {
                         keywords = {};
+                        changed = true;
                     },
 
                     remove: function(id) {
                         delete keywords[id];
+                        changed = true;
                     }
                 },
 
@@ -499,10 +500,7 @@ angular.module('MetronicApp')
 
                     // Load description of each ISIN
                     $EtfsFactory.load(isins, function(list) {
-                        $EtfsFactory.load(desc.etfs, function(etfs) {
-                            etfs_list = strategy.cross(etfs).concat(strategy.cross(list));
-                            done(etfs_list);
-                        });
+                        done(strategy.cross(list));
                     });
                 });
 
