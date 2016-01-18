@@ -439,19 +439,24 @@ body .btn-primary:hover, body .btn-primary:focus {
     background-image: linear-gradient(to bottom, #37c4c7 0, #47a2aa 100%);
 }
 
+
+
+
 header {
     position: relative;
     width: 100%;
-    padding: 12em 2em 2em;
+    padding: 12em 2em 0;
     text-align: center;
 
-    background-image: url(/public/assets/img/fondecrann.jpg);
+    min-height: auto;
+
+    background-image: url(/public/assets/img/fondecrann-1900.jpg);
     background-position: center;
-    background-repeat: no-repeat;
     background-size: cover;
-    background-position: center 0;
-    /*background-size: 100% auto;*/
-    background-attachment: fixed;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
 }
 
 header.overlay:after {

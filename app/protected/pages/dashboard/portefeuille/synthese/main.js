@@ -27,13 +27,11 @@ angular.module('MetronicApp')
 
         $scope.affListeETFs = function() {
             $element.find('#sector').hide();
-            $element.find('#maps').hide();
             $element.find('#list-etfs').show();
         };
 
         $scope.cacheListeETFs = function() {
             $element.find('#sector').show();
-            $element.find('#maps').show();
             $element.find('#list-etfs').hide();
         };
 
@@ -51,7 +49,7 @@ angular.module('MetronicApp')
         };
 
         // Chargement des gains de chaque ETF avant l'affichage du tableau des titres
-        $scope.cbEtfsListBeforeRendering = function(etfs, done) {
+        $scope.beforeRendering = function(etfs, done) {
             $ClientFactory.portfolio.etfs(function(err, etfs_with_gains) {
                 if (err) {
                     return console.error(err);
@@ -62,7 +60,7 @@ angular.module('MetronicApp')
         };
 
         // Changement des couleurs en fonction des gains
-        $scope.cbEtfsListLoaded = function(etfs) {
+        $scope.afterRendering = function(etfs) {
             $element.find('.etf-column.gains .gain-loss').each(function() {
                 $(this).css('color', parseFloat($(this).text()) >= 0 ? "#38cf63" : "red");
             });
@@ -223,6 +221,11 @@ angular.module('MetronicApp')
             chart.legend.allItems[1].legendGroup.attr({
                 translateY: 22
             });
+            //chart.legend.setText({
+            //    styles: {
+            //        fill: 'rgb(255, 255, 255)'
+            //    }
+            //});
 
 
 

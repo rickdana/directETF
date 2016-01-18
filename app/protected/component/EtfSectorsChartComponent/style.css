@@ -4,14 +4,21 @@
     -moz-box-shadow:1px 4px 17px -2px rgba(0,0,0,0.75);
     box-shadow:1px 4px 17px -2px rgba(0,0,0,0.75);
     position: absolute;
-    left: 202px;
-    top: 141px;
+    left: -347px;
+    top: 276px;
     color: #333;
     display: none;
     z-index:900;
-    min-width: 400px;
+    min-width: 300px;
     max-width: 600px;
 }
+
+@media (max-width: 1200px) {
+    .sectors-overview-box {
+        left: 25px;
+    }
+}
+
 .sectors-overview-box .info-box-icon {
 	position:absolute;
 	height:100%;

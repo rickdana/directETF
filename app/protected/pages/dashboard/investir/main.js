@@ -166,60 +166,31 @@ angular.module('MetronicApp')
             }
         };
 
+        $scope.sentence = {
+            keywords: []
+        };
+
+        $scope.wizard.order = {
+            amount: {
+                adding: null,
+                total: $scope.client.portfolio.value
+            }
+        }
+
         $ClientFactory.portfolio.infos(function(err, infos) {
             $scope.wizard.portfolio = new $PortfolioFactory.Portfolio(infos);
         });
 
         $scope.$watch(function() {
+            return $scope.wizard.order.amount.adding;
+        }, function(value) {
+            $scope.wizard.order.amount.total = $scope.client.portfolio.value + (parseFloat(value || 0) || 0);
+        });
+
+        $scope.$watch(function() {
             return $scope.wizard.portfolio.strategy.keyword.length();
         }, function() {
-            var keywords = $scope.wizard.portfolio.strategy.get();
-            var categories = {};
-
-            for (var id in keywords) {
-                var keyword = $PortfolioFactory.Keywords.get(id);
-
-                if (keyword === null) {
-                    console.log('Unregistred key %s', id);
-                    break;
-                }
-
-                if (!categories[keyword.type]) {
-                    categories[keyword.type] = [];
-                }
-
-                categories[keyword.type].push(keyword);
-            }
-
-            for (var category in categories) {
-                var target_sentence = '';
-
-                for (var bind in binding_names) {
-                    if (binding_names[bind].indexOf(category) > -1) {
-                        target_sentence = bind;
-                        break;
-                    }
-                }
-
-                var keywords = [];
-
-                for (var i in categories[category]) {
-                    var keyword = categories[category][i];
-
-                    keywords.push('<span class="questionnaire-sentence-keyword">' + keyword.name + '</span>');
-                }
-
-                $scope.sentence[target_sentence].plural = keywords.length > 1;
-
-                if ($scope.sentence[target_sentence].plural) {
-                    $scope.sentence[target_sentence].text  = keywords.slice(0, keywords.length - 1).join(', ');
-                    $scope.sentence[target_sentence].text += ' et ' + keywords[keywords.length - 1];
-                } else {
-                    $scope.sentence[target_sentence].text  = keywords.join('');
-                }
-            }
-
-             $scope.wizard.portfolio.etfs(function(etfs) {
+            $scope.wizard.portfolio.strategy.etfs(function(etfs) {
                 $scope.wizard.portfolio.isins = [];
 
                 for (var i in etfs) {
@@ -229,33 +200,6 @@ angular.module('MetronicApp')
                 console.log('==>', $scope.wizard.portfolio.isins)
             });
         });
-
-        var binding_names = {
-            locations: ['country', 'region'],
-            themes: ['theme'],
-            news: ['news'],
-            sectors: ['sector'],
-        };
-
-        $scope.sentence = {
-            amount: "",
-            locations: {
-                plural: false,
-                text: ""
-            },
-            themes: {
-                plural: false,
-                text: ""
-            },
-            news: {
-                plural: false,
-                text: ""
-            },
-            sectors: {
-                plural: false,
-                text: ""
-            },
-        };
 
         // set sidebar closed and body solid layout mode
         $rootScope.settings.layout.pageContentWhite = true;

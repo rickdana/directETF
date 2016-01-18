@@ -66,6 +66,35 @@
     font-weight: bold;
 }
 
+.questionnaire-sentence-keyword a {
+    position: relative;
+    font-weight: normal;
+}
+
+.questionnaire-sentence-keyword:focus a:before,
+.questionnaire-sentence-keyword:hover a:before {
+    display: none;
+}
+
+.questionnaire-sentence-keyword:hover a:before,
+.questionnaire-sentence-keyword:focus a:before {
+    content: "x";
+    display: inline-block;
+    position: absolute;
+    background-color: #555;
+    color: #fff;
+    font-size: .6em;
+    top: -10px;
+    right: -7px;
+    /* padding: 0 8px; */
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    text-align: center;
+    cursor:pointer;
+}
+
 .questionnaire-component .filter-history {
     border-top: 1px solid rgba(255,255,255,.3) !important;
 }

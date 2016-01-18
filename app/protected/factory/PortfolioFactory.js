@@ -126,6 +126,31 @@ angular.module('MetronicApp')
 
             list: [
                 {
+                    id: "africa",
+                    type: "region",
+                    name: "Afrique"
+                },
+                {
+                    id: "europe",
+                    type: "region",
+                    name: "Europe"
+                },
+                {
+                    id: "asia-pacific",
+                    type: "region",
+                    name: "Asie Pacifique"
+                },
+                {
+                    id: "north-america",
+                    type: "region",
+                    name: "Amérique du Nord"
+                },
+                {
+                    id: "latin-america",
+                    type: "region",
+                    name: "Amérique Latine"
+                },
+                {
                     id: "fr",
                     type: "country",
                     name: "France"
@@ -281,19 +306,24 @@ angular.module('MetronicApp')
                     name: "Matières premières"
                 },
                 {
-                    id: "ecologie",
+                    id: "pme",
                     type: "theme",
-                    name: "Ecologie"
+                    name: "PME"
                 },
                 {
-                    id: "social",
+                    id: "grande-entreprises",
                     type: "theme",
-                    name: "Social"
+                    name: "Grandes entreprises"
                 },
                 {
-                    id: "environnement",
+                    id: "eau",
                     type: "theme",
-                    name: "Environnement"
+                    name: "Eau"
+                },
+                {
+                    id: "developpement-durable",
+                    type: "theme",
+                    name: "Développement durable"
                 },
             ]
         };
@@ -391,7 +421,7 @@ angular.module('MetronicApp')
                 for (var i in keywords) {
                     tmp[keywords[i].id] = {
                         weight: keywords[i].weight,
-                        operator: 'AND'
+                        operator: 'OR'
                     };
                 }
 
@@ -417,11 +447,10 @@ angular.module('MetronicApp')
 
                         keywords[id] = {
                             weight: weight || 1,
-                            operator: (operator || 'AND').toUpperCase()
+                            operator: (operator || 'OR').toUpperCase()
                         };
-                        changed = true;
 
-                        //console.log('Strategy::keyword ==> (%s, %d)', id, keywords[id]);
+                        changed = true;
                     },
 
                     length: function() {
@@ -436,10 +465,12 @@ angular.module('MetronicApp')
 
                     clear: function() {
                         keywords = {};
+                        changed = true;
                     },
 
                     remove: function(id) {
                         delete keywords[id];
+                        changed = true;
                     }
                 },
 
@@ -499,31 +530,27 @@ angular.module('MetronicApp')
 
                     // Load description of each ISIN
                     $EtfsFactory.load(isins, function(list) {
-                        $EtfsFactory.load(desc.etfs, function(etfs) {
-                            etfs_list = strategy.cross(etfs).concat(strategy.cross(list));
-                            done(etfs_list);
-                        });
+                        done(strategy.cross(list));
                     });
                 });
 
                 return;
             };
-            
-            return {
-                desc: desc,
-                strategy: strategy,
-                
-                /**
-                 * Get the portfolio ETFs list based on the current strategy
-                 */
-                etfs: function(done) {
-                    if (strategy.changed()) {
-                        return build(done);
-                    }
-                    
-                    done(etfs_list);
+
+            desc.strategy = strategy;
+
+            /**
+             * Get the portfolio ETFs list based on the current strategy
+             */
+            strategy.etfs = function(done) {
+                if (strategy.changed()) {
+                    return build(done);
                 }
-            }
+
+                done(etfs_list);
+            };
+
+            return desc;
         };
 
         function loadModel(goal, amountMonthly, riskLevel, cb) {

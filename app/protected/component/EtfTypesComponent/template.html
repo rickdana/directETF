@@ -1,0 +1,15 @@
+<div class="etf-type-progress-wrapper">
+    <table>
+        <tr ng-repeat="type in models">
+            <td class="type-label" ng-style="{'color': type.color}">{{type.name}}</td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" ng-style="{'width' : type.y, 'background-color': type.color}">
+                        {{type.y}}
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+

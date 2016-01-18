@@ -1,6 +1,19 @@
 <div ng-controller="PortefeuilleSyntheseController">
     <div class="row" ng-if="client.profile.alreadyInvest">
         <div class="col-lg-6">
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="text">
+                        <span>Rappel de ma stratégie</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+                    <strategy-keywords data-strategy="client.portfolio.strategy"
+                                       class="text-center"></strategy-keywords>
+                </div>
+            </div>
+
             <!-- Information du portefeuille -->
             <div id="portfolio">
                 <div class="portlet">
@@ -18,7 +31,9 @@
 
                     <div class="portlet-body">
                         <div class="infos-principales">
-                            <div class="number"> {{format(client.portfolio.value)}} {{client.portfolio.currencySymb}}</div>
+                            <div class="number"> {{format(client.portfolio.value)}}
+                                {{client.portfolio.currencySymb}}
+                            </div>
                             <div>
                                 Variation du jour <span class="result-down">-.8%<i class="fa fa-chevron-down"></i></span>, de l'année <span class="result-up">+8.3%<i class="fa fa-chevron-up"></i></span>
                             </div>
@@ -29,13 +44,16 @@
                                 <tr>
                                     <td class="type">Gains totaux</td>
                                     <td class="number">{{format(client.portfolio.gains)}}
-                                        {{client.portfolio.currencySymb}}</td>
+                                        {{client.portfolio.currencySymb}}
+                                    </td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
 
                                 <tr>
                                     <td class="type">Revenu annuel</td>
-                                    <td class="number">{{format(client.portfolio.dividends)}} {{client.portfolio.currencySymb}}</td>
+                                    <td class="number">{{format(client.portfolio.dividends)}}
+                                        {{client.portfolio.currencySymb}}
+                                    </td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
                                 <tr>
@@ -46,9 +64,9 @@
                             </table>
                         </div>
 
-                        <div class="infos-sythese">
+                        <p class="infos-sythese text-center">
                             Votre taux d'épargne est estimé à 15%. Votre épargne est investie à 40%.
-                        </div>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -116,17 +134,10 @@
                                       data-model="client.portfolio.etfs"
                                       data-show-in-legend="true">
                     </sector-chart-pie>
-                </div>
-            </div>
-            <!-- Maps de mes ETFs-->
-            <div id="maps">
-                <div class="portlet">
-                    <div class="portlet-title">
-                        <span class="caption-subject font-green">Répartition géographique de mes investissements</span>
-                    </div>
-                    <div class="portlet-body">
-                        <map id="maps-repartition" height="300" data-model="client.portfolio.etfs"></map>
-                    </div>
+                    <type-progress id="" data-height="260"
+                                   data-model="client.portfolio.etfs"
+                                   data-show-in-legend="true">
+                    </type-progress>
                 </div>
             </div>
             <!-- Liste de mes ETFs-->
@@ -144,10 +155,19 @@
                 </div>
 
                 <div class="portlet-body">
-                    <etf-list data-model="client.portfolio.etfs"
-                              data-before-rendering="cbEtfsListBeforeRendering"
-                              data-after-rendering="cbEtfsListLoaded"
+                    <etf-list data-model="{{client.portfolio.etfs}}"
                               data-template="/protected/pages/dashboard/portefeuille/synthese/table.html"></etf-list>
+                </div>
+            </div>
+            <!-- Maps de mes ETFs-->
+            <div id="maps">
+                <div class="portlet">
+                    <div class="portlet-title">
+                        <span class="caption-subject font-green">Répartition géographique de mes investissements</span>
+                    </div>
+                    <div class="portlet-body">
+                        <map id="maps-repartition" height="300" data-model="client.portfolio.etfs"></map>
+                    </div>
                 </div>
             </div>
         </div>
@@ -155,6 +175,19 @@
 
     <div class="row" ng-if="!client.profile.alreadyInvest">
         <div class="col-lg-6">
+            <div class="portlet">
+                <div class="portlet-title">
+                    <div class="text">
+                        <span>Rappel de ma stratégie</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+                    <strategy-keywords data-strategy="client.portfolio.strategy"
+                                       class="text-center"></strategy-keywords>
+                </div>
+            </div>
+
             <!-- Information du portefeuille -->
             <div id="portfolio">
                 <div class="portlet">
@@ -169,7 +202,9 @@
 
                     <div class="portlet-body">
                         <div class="infos-principales">
-                            <div class="number"> {{format(client.portfolio.value)}} {{client.portfolio.currencySymb}}</div>
+                            <div class="number"> {{format(client.portfolio.value)}}
+                                {{client.portfolio.currencySymb}}
+                            </div>
                             <div>
                                 Variation du jour <span class="result-up">0%<i class="fa fa-chevron-up"></i></span>, de l'année <span class="result-up">0%<i class="fa fa-chevron-up"></i></span>
                             </div>
@@ -180,7 +215,8 @@
                                 <tr>
                                     <td class="type">Gains totaux</td>
                                     <td class="number">0.00
-                                        {{client.portfolio.currencySymb}}</td>
+                                        {{client.portfolio.currencySymb}}
+                                    </td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
 
@@ -225,10 +261,14 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <div id="sectors-overview" data-height="260" data-lazy="true"
-                         data-filter="{{client.portfolio.etfs}}"
-                         data-show-in-legend="true" ng-etf-sectors-chart>
-                    </div>
+                    <sector-chart-pie id="sectors-overview" data-height="260"
+                                      data-model="client.portfolio.etfs"
+                                      data-show-in-legend="true">
+                    </sector-chart-pie>
+                    <type-progress id="" data-height="260"
+                                   data-model="client.portfolio.etfs"
+                                   data-show-in-legend="true">
+                    </type-progress>
                 </div>
             </div>
             <!-- Maps de mes ETFs-->
@@ -238,13 +278,7 @@
                         <span class="caption-subject font-green">Répartition géographique de mes investissements</span>
                     </div>
                     <div class="portlet-body">
-                        <div id="maps-repartition" height="300"
-                             data-lazy="true"
-                             data-filter="{{client.portfolio.etfs}}"
-                             data-null-color="rgba(0,0,0,.02)"
-                             data-border-color="transparent"
-                             data-color="rgba(98,87,255,.66)"
-                             ng-etf-maps></div>
+                        <map id="maps-repartition" height="300" data-model="client.portfolio.etfs"></map>
                     </div>
                 </div>
             </div>
