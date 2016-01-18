@@ -126,6 +126,31 @@ angular.module('MetronicApp')
 
             list: [
                 {
+                    id: "africa",
+                    type: "region",
+                    name: "Afrique"
+                },
+                {
+                    id: "europe",
+                    type: "region",
+                    name: "Europe"
+                },
+                {
+                    id: "asia-pacific",
+                    type: "region",
+                    name: "Asie Pacifique"
+                },
+                {
+                    id: "north-america",
+                    type: "region",
+                    name: "Amérique du Nord"
+                },
+                {
+                    id: "latin-america",
+                    type: "region",
+                    name: "Amérique Latine"
+                },
+                {
                     id: "fr",
                     type: "country",
                     name: "France"
