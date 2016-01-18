@@ -22,7 +22,7 @@ angular.module('MetronicApp')
         }
     )
     .controller('EtfListController', function($EtfsFactory, $scope, $element, $attrs, $compile, $http, $q, $templateCache) {
-        $attrs.template = $attrs.template || "/protected/component/EtfListComponent/template.html";
+        $attrs.template = $attrs.template || "/protected/component/EtfListComponent/table.html";
         //$scope.client = $rootScope.client;
 
         //console.log($scope.client.portfolio)
@@ -49,7 +49,7 @@ angular.module('MetronicApp')
         };
 
         $scope.$watch(function() {
-            return $scope.model;
+            return $attrs.model;
         }, function(filter) {
             $EtfsFactory.load(filter, function(etfs) {
                 if ($scope.beforeRendering) {
