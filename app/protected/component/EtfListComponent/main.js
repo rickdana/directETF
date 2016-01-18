@@ -1,14 +1,9 @@
 angular.module('MetronicApp')
     .directive("etfList", function() {
         return {
-            restrict: 'E',
-            scope: {
-                model: '=model',
-                beforeRendering: '=beforeRendering',
-                afterRendering: '=afterRendering',
-            },
+            transclude: true,
             controller: "EtfListController",
-            templateUrl: "/protected/component/EtfListComponent/template.html"
+            templateUrl: "/protected/component/EtfListComponent/template.html",
         };
     })
     .directive("etfAttrName",
@@ -26,8 +21,11 @@ angular.module('MetronicApp')
             };
         }
     )
-    .controller('EtfListController', function($EtfsFactory, $scope, $element, $attrs, $compile, $http, $q, $rootScope, $templateCache) {
+    .controller('EtfListController', function($EtfsFactory, $scope, $element, $attrs, $compile, $http, $q, $templateCache) {
         $attrs.template = $attrs.template || "/protected/component/EtfListComponent/template.html";
+        //$scope.client = $rootScope.client;
+
+        //console.log($scope.client.portfolio)
 
         var render = function(etfs) {
             $scope.etfs = etfs;
