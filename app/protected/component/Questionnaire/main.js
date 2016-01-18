@@ -10,12 +10,6 @@ angular.module('MetronicApp')
 
             var templateUrl = '/protected/component/Questionnaire/node.html';
 
-            $q.all([
-                $http.get(templateUrl, { cache : $templateCache })
-            ]).then(function(resp) {
-                $scope.templateNode = resp;
-            });
-
             $scope.questionnaire = {
                 current: {
                     node: null,
@@ -80,7 +74,12 @@ angular.module('MetronicApp')
                 },
                 children: function(id) {
                     $scope.node = $scope.questionnaire.node(id);
-                    $element.find('.filter-items.children').html($compile($templateCache.get(templateUrl)[1])($scope));
+
+                    $q.all([
+                        $http.get(templateUrl, { cache : $templateCache })
+                    ]).then(function(resp) {
+                        $element.find('.filter-items.children').html($compile($templateCache.get(templateUrl)[1])($scope));
+                    });
                 }
             };
 
@@ -98,7 +97,7 @@ angular.module('MetronicApp')
                 });
         }
     })
-    .controller('RootController', function($scope, $http, $element, $attrs) {
+    .controller('RootController', function($scope, $element, $attrs) {
         if ($attrs.id) {
             $scope.$watch(function() {
                 return $scope.questionnaire;
@@ -107,6 +106,33 @@ angular.module('MetronicApp')
             });
         }
     })
+    .controller('StrategyKeywordsController', function($PortfolioFactory, $scope, $compile, $element) {
+        $scope.remove = function(id) {
+            $scope.$strategy.keyword.remove(id);
+        };
+
+        $scope.$watch(function() {
+            return $scope.$strategy.keyword.length();
+        }, function() {
+            var keywords = $scope.$strategy.get();
+            var keywords_sentence = [];
+
+            for (var id in keywords) {
+                var keyword = $PortfolioFactory.Keywords.get(id);
+
+                if (keyword === null) {
+                    console.log('Unregistred key %s', id);
+                    continue;
+                }
+
+                keywords_sentence.push('<span class="questionnaire-sentence-keyword">' + keyword.name
+                                        + '<a ng-click="remove(\'' + id + '\')"></a></span>');
+            }
+
+            $element.find('.questionnaire-sentence-keywords').html($compile(keywords_sentence.join(', '))($scope));
+            $scope.hasKeywords = keywords_sentence.length > 0;
+        });
+    })
     .directive('questionnaire', function() {
         return {
             controller: "QuestionnaireController",
@@ -114,7 +140,17 @@ angular.module('MetronicApp')
             scope: {
                 $strategy: '=strategy'
             },
-            templateUrl: "/protected/component/Questionnaire/template.html"
+            templateUrl: "/protected/component/Questionnaire/main.html"
+        };
+    })
+    .directive('strategyKeywords', function() {
+        return {
+            controller: "StrategyKeywordsController",
+            restrict: 'E',
+            scope: {
+                $strategy: '=strategy'
+            },
+            template: '<p ng-show="hasKeywords">Mes choix: <span class="questionnaire-sentence-keywords"></span>.</p>'
         };
     })
     .directive('root', function() {

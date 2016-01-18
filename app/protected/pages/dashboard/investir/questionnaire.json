@@ -5,8 +5,13 @@
       "text": "",
       "children": [
         {
+          "id": "root-regions",
+          "text": "Investir dans une région",
+          "goto": "regions"
+        },
+        {
           "id": "root-countries",
-          "text": "Investir par pays",
+          "text": "Investir dans un pays",
           "goto": "countries"
         },
         {
@@ -103,62 +108,43 @@
     {
       "id": "regions",
       "text": "Dans quelle région du monde souhaitez-vous investir ?",
+      "type": "checkbox",
+      "operator": "OR",
       "children": [
         {
           "id": "africa",
           "strategy": {
             "africa": 1
           },
-          "text": "Afrique",
-          "goto": "regions-details"
+          "text": "Afrique"
         },
         {
           "id": "europe",
           "strategy": {
             "europe": 1
           },
-          "text": "Europe",
-          "goto": "regions-details"
+          "text": "Europe"
         },
         {
           "id": "asia-pacific",
           "strategy": {
             "asia-pacific": 1
           },
-          "text": "Asie Pacifique",
-          "goto": "regions-details"
+          "text": "Asie Pacifique"
         },
         {
           "id": "north-america",
           "strategy": {
             "north-america": 1
           },
-          "text": "Amérique du Nord",
-          "goto": "regions-details"
+          "text": "Amérique du Nord"
         },
         {
           "id": "latin-america",
           "strategy": {
             "latin-america": 1
           },
-          "text": "Amérique Latine",
-          "goto": "regions-details"
-        }
-      ]
-    },
-    {
-      "id": "regions-details",
-      "text": "Préférez-vous investir sur l'ensemble de la région, ou plutôt sur un pays en particulier ?",
-      "children": [
-        {
-          "id": "by-countries",
-          "text": "Un pays en particulier",
-          "goto": "countries"
-        },
-        {
-          "id": "regions",
-          "text": "Investir sur l'ensemble de la région",
-          "goto": "end"
+          "text": "Amérique Latine"
         }
       ]
     },

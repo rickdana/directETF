@@ -89,17 +89,10 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', '$ClientFactory', function($scope, $rootScope, $ClientFactory) {
-    $scope.$on('$viewContentLoaded', function() {
-        //App.initComponents(); // init core components
-        //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
-    });
-
+MetronicApp.controller('AppController', function($rootScope, $ClientFactory, $PortfolioFactory) {
     // Exposition initiale
-    $scope.client = {
-        portfolio: {
-            infos: {}
-        }
+    $rootScope.client = {
+        portfolio: {}
     };
 
     // Description du portefeuille (dividentes)
@@ -108,9 +101,7 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', '$ClientFactory
             return console.error(err);
         }
 
-        for (var property in infos) {
-            $scope.client.portfolio[property] = infos[property];
-        }
+        $rootScope.client.portfolio = new $PortfolioFactory.Portfolio(infos);
     });
 
     // Profile de client
@@ -119,9 +110,9 @@ MetronicApp.controller('AppController', ['$scope', '$rootScope', '$ClientFactory
             return console.error(err);
         }
 
-        $scope.client.profile = profile;
+        $rootScope.client.profile = profile;
     });
-}]);
+});
 
 /***
 Layout Partials.

@@ -51,7 +51,7 @@ angular.module('MetronicApp')
         };
 
         // Chargement des gains de chaque ETF avant l'affichage du tableau des titres
-        $scope.cbEtfsListBeforeRendering = function(etfs, done) {
+        $scope.beforeRendering = function(etfs, done) {
             $ClientFactory.portfolio.etfs(function(err, etfs_with_gains) {
                 if (err) {
                     return console.error(err);
@@ -62,7 +62,7 @@ angular.module('MetronicApp')
         };
 
         // Changement des couleurs en fonction des gains
-        $scope.cbEtfsListLoaded = function(etfs) {
+        $scope.afterRendering = function(etfs) {
             $element.find('.etf-column.gains .gain-loss').each(function() {
                 $(this).css('color', parseFloat($(this).text()) >= 0 ? "#38cf63" : "red");
             });
