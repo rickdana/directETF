@@ -1,17 +1,47 @@
 <div id="page-prix" ng-controller="InfoController">
-
-    <div class="animated bounceInUp">
+    <header>
         <h1>NOS PRIX</h1>
-
-        <div class="animated bounceInUp">
-            <p>Simples & transparents</p>
-
-            <div class="animated bounceInUp">
-                <p>1,2% par an seulement, tout compris</p>
-
-                <p>Nos frais sont parmi les plus réduits du marché et coûtent jusqu'à 80% de moins qu'un placement traditionnel</p>
-                <p>totale transparence. Notre rénumération, les coûts de nos partenaires ou produits distribués... vous saurez tout !</p>
-                <p>La qualité avant tout. Moins cher ne veut pas dire low-cost : nous ne transigerons jamais sur la qualité de notre service</p>
-
+        <h2> Simples &amp; transparents</h2>
+        <p><span class="text-white"><span class="number">1,2</span><span class="percent">%</span></span> par an seulement, <span class="text-white">tout compris</span></p>
+    </header>
+    <section>
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Frais compétitifs</h3>
+                <p>Nos frais sont parmi les plus réduits du marché et coûtent jusqu'à 80% de moins que lors d'un placement traditionnel</span></p>
             </div>
+            <div class="col-md-4">
+                <h3>Totale transparence</h3>
+                <p>Notre rénumeration, les coûts de nos partenaires ou produits distribués... vous saurez tout !</p>
+            </div>
+            <div class="col-md-4">
+                <h3>La qualité avant tout</h3>
+                <p>Moins cher ne veut pas dire low-cost : nous ne transigerons jamais sur la qualité de notre service </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="section-slider" ng-init="montant = 15000">
+                <h4>Nos prix en un clin d'oeil</h4>
+                <p class="richesse">Montant investi</p>
+                <span class="montant">{{montant}}</span> <span class="currency">€</span>
+                <rzslider rz-slider-model="montant"
+                          rz-slider-options="{floor: 100, ceil: 100000, interval: 100, hideLimitLabels: true, showSelectionBar: true}"></rzslider>
 
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h5>Placements traditionnels</h5>
+                        <div><span class="montant">39</span><span class="currency">€</span>/mois</div>
+                        <div class="pourcent">3,6% de frais annuels</div>
+                    </div>
+                    <div class="col-xs-6">
+                        <h5>Frais Direct ETF</h5>
+                        <div><span class="montant">12</span><span class="currency">€</span>/mois</div>
+                        <div class="pourcent">1,2% de frais annuels</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div ng-include="'footer.html'"></div>

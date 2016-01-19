@@ -1,6 +1,90 @@
+#page-prix header {
+    text-align: center;
+    padding: 2em;
+    margin-top: 4em;
+    min-height: initial;
+    background: none;
+    background-color: rgba(54, 198, 211, 0.61);
+}
 
-#page-prix h1 {
+#page-prix header h1 {
     text-transform: uppercase;
     font-size: 1.43em;
+    font-weight: bold;
     margin-top: 20px;
+}
+
+#page-prix header h2 {
+     font-size: 4em;
+}
+
+#page-prix header p {
+    font-size: 1.8em;
+}
+
+#page-prix .text-white {
+    color: #fff;
+}
+
+#page-prix .number {
+    font-size: 1.8em;
+}
+
+#page-prix section {
+    padding: 2em 4em
+}
+
+#page-prix section h3 {
+    font-weight: bold;
+}
+
+#page-prix section p {
+    line-height: 1.1;
+}
+
+#page-prix section h4 {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-top: 2.3em;
+    margin-bottom: 1.8em;
+}
+
+#page-prix section .montant {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-top: -0.6em;
+}
+
+#page-prix section .currency {
+    font-size: 1.7em;
+}
+
+#page-prix section .section-slider {
+    padding: 0 15em;
+}
+
+#page-prix section .section-slider rzslider {
+    margin-bottom: 2em;
+}
+
+#page-prix section h5 {
+    font-size: 1.6em;
+    margin-bottom: 0em;
+}
+
+#page-prix section .pourcent {
+    font-size: 1.2em;
+}
+
+#page-prix section .richesse {
+    margin-bottom: -0.3em;
+}
+
+#page-prix section rzslider .rz-bar.rz-selection {
+    z-index: 2;
+    background: #83DBE3
+}
+
+#page-prix section rzslider .rz-pointer {
+    background-color: rgba(54, 198, 211, 1);
 }
