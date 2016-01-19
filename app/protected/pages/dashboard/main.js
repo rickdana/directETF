@@ -89,7 +89,7 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', function($rootScope, $ClientFactory, $PortfolioFactory) {
+MetronicApp.controller('AppController', function($rootScope, $ClientFactory, $PortfolioFactory, ngDialog) {
     // Exposition initiale
     $rootScope.client = {
         portfolio: {}
@@ -120,6 +120,15 @@ MetronicApp.controller('AppController', function($rootScope, $ClientFactory, $Po
 
         $rootScope.client.profile = profile;
     });
+
+    $rootScope.newsletter = {
+        open: function() {
+            ngDialog.open({
+                template: '<img src="/protected/assets/newsletter/december.jpg">',
+                plain: true
+            });
+        }
+    };
 });
 
 /***
