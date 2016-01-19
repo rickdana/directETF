@@ -348,7 +348,7 @@ angular.module('DirectETF', [])
                 id: 'Prévision_2',
                 type: 'arearange',
                 data: data_invest_future_favorable,
-                color:'rgb(32, 121, 57)',
+                color:'#28939D',
                 zIndex: 11,
                 threshold: null,
                 showInLegend: false,
@@ -357,7 +357,7 @@ angular.module('DirectETF', [])
                 id: 'Prévision_1',
                 type: 'arearange',
                 data: data_invest_future_attendu,
-                color:  'rgb(43, 161, 76)' ,
+                color:  '#36c6d3' ,
                 zIndex: 11,
                 threshold: null,
                 showCheckbox: true,
@@ -384,9 +384,13 @@ angular.module('DirectETF', [])
 
             LoadStockChart(series, $('#questionaire-future-stockchart'), true);
 
+
             var chart = $('#questionaire-future-stockchart').highcharts();
+            //chart.showLoading();
 
-
+            var min = Math.floor(chart.yAxis[0].dataMin);
+            chart.yAxis[0].setExtremes(min, Math.floor(chart.yAxis[0].dataMax) * 2);
+            chart.yAxis[0].options.startOnTick = false;
 
             chart.yAxis[0].update({
                 opposite: true,
@@ -404,11 +408,6 @@ angular.module('DirectETF', [])
                 //return xyArr.join('<br/>');
                 return false;
             }
-
-            var min = Math.floor(chart.yAxis[0].dataMin);
-            chart.yAxis[0].options.startOnTick = false;
-            chart.yAxis[0].setExtremes(min, Math.floor(chart.yAxis[0].dataMax) * 2 );
-
 
             //$('#simulation-future').highcharts().legend.allItems[0].update({name:'Prévision sans nouveaux investissements'});
         }

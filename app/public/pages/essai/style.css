@@ -242,11 +242,11 @@ table#read_chart {
 }
 
 table#read_chart tr.hi {
-    background: #579969;
+    background: #28939D;
 }
 
 table#read_chart tr.med {
-    background: #5FB778;
+    background: #36c6d3;
 }
 
 table#read_chart tr.lo {
