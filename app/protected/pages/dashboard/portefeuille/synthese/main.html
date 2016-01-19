@@ -140,17 +140,6 @@
                     </type-progress>
                 </div>
             </div>
-            <!-- Maps de mes ETFs-->
-            <div id="maps">
-                <div class="portlet">
-                    <div class="portlet-title">
-                        <span class="caption-subject font-green">Répartition géographique de mes investissements</span>
-                    </div>
-                    <div class="portlet-body">
-                        <map id="maps-repartition" height="300" data-model="client.portfolio.etfs"></map>
-                    </div>
-                </div>
-            </div>
             <!-- Liste de mes ETFs-->
             <div id="list-etfs" class="portlet">
                 <div class="portlet-title">
@@ -168,6 +157,17 @@
                 <div class="portlet-body">
                     <etf-list data-model="{{client.portfolio.etfs}}"
                               data-template="/protected/pages/dashboard/portefeuille/synthese/table.html"></etf-list>
+                </div>
+            </div>
+            <!-- Maps de mes ETFs-->
+            <div id="maps">
+                <div class="portlet">
+                    <div class="portlet-title">
+                        <span class="caption-subject font-green">Répartition géographique de mes investissements</span>
+                    </div>
+                    <div class="portlet-body">
+                        <map id="maps-repartition" height="300" data-model="client.portfolio.etfs"></map>
+                    </div>
                 </div>
             </div>
         </div>
