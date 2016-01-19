@@ -59,14 +59,14 @@ angular.module('MetronicApp')
                         console.log('questionnaire.current.node = ', $scope.questionnaire.current.node)
                     },
                     query: function() {
-                        $scope.$strategy.keyword.clear();
+                        $scope.$strategy.keywords.clear();
 
                         for(var i in this.entries) {
                             if (this.entries[i][1].strategy) {
                                 for (var keyword in this.entries[i][1].strategy) {
                                     var weight = this.entries[i][1].strategy[keyword];
 
-                                    $scope.$strategy.keyword.add(keyword, weight, this.entries[i][0].operator);
+                                    $scope.$strategy.keywords.add(keyword, weight, this.entries[i][0].operator);
                                 }
                             }
                         }
@@ -108,11 +108,11 @@ angular.module('MetronicApp')
     })
     .controller('StrategyKeywordsController', function($PortfolioFactory, $scope, $compile, $element) {
         $scope.remove = function(id) {
-            $scope.$strategy.keyword.remove(id);
+            $scope.$strategy.keywords.remove(id);
         };
 
         $scope.$watch(function() {
-            return $scope.$strategy.keyword.length();
+            return $scope.$strategy.keywords.length();
         }, function() {
             var keywords = $scope.$strategy.get();
             var keywords_sentence = [];

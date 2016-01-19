@@ -188,7 +188,7 @@ angular.module('MetronicApp')
         });
 
         $scope.$watch(function() {
-            return $scope.wizard.portfolio.strategy.keyword.length();
+            return $scope.wizard.portfolio.strategy.keywords.length();
         }, function() {
             $scope.wizard.portfolio.strategy.etfs(function(etfs) {
                 $scope.wizard.portfolio.isins = [];
