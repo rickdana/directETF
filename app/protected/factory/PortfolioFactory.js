@@ -256,7 +256,7 @@ angular.module('MetronicApp')
                     name: "Energie"
                 },
                 {
-                    id: "finance",
+                    id: "financial",
                     type: "sector",
                     name: "Finance"
                 },
@@ -296,7 +296,7 @@ angular.module('MetronicApp')
                     name: "World"
                 },
                 {
-                    id: "petrole",
+                    id: "oil",
                     type: "news",
                     name: "Pétrole"
                 },
@@ -437,7 +437,7 @@ angular.module('MetronicApp')
                     return keywords;
                 },
 
-                keyword: {
+                keywords: {
                     add: function(id, weight, operator) {
                         if (keywords[id]) {
                             keywords[id].weight = weight;
@@ -451,6 +451,16 @@ angular.module('MetronicApp')
                         };
 
                         changed = true;
+                    },
+
+                    get: function() {
+                        var output = [];
+
+                        for (var key in keywords) {
+                            output.push(key);
+                        }
+
+                        return output;
                     },
 
                     length: function() {
@@ -515,7 +525,23 @@ angular.module('MetronicApp')
         var Portfolio = function(desc) {
             var strategy = new Strategy(desc.keywords || []);
             var etfs_list = [];
-            
+
+            if (strategy.keywords.length() == 0 && desc.etfs) {
+                // fallback loading
+                // load keywords using the portfolio ETFs list
+                $EtfsFactory.load(desc.etfs, function(list) {
+                    console.log('list:=>', list)
+
+                    for (var i in list) {
+                        var etf = list[i];
+
+                        for (var j in etf.keywords) {
+                            strategy.keywords.add(etf.keywords[j].id, etf.keywords[j].weight);
+                        }
+                    }
+                });
+            }
+
             var build = function(done) {
                 // Build the new portfolio
                 $EtfsFactory.load(null, function(isins) {

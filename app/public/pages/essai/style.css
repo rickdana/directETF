@@ -11,7 +11,8 @@
 #page-essai .bar .percentage {
     position: relative;
     font-size: 0.7em;
-    background: #47a2aa;
+    background: #36c6d3;
+    height: 1em;
     height: 1em;
     border-radius: 10px;
     transition: width .8s;
@@ -132,14 +133,14 @@
 
 #page-essai .box i {
     margin-bottom: .5em;
-    color: #32b5b9;
+    color: #36c6d3;
     font-size: 3em;
 }
 
 @media (max-width:767px) {
     #page-essai .box i {
         margin-bottom: .1em;
-        color: #32b5b9;
+        color: #36c6d3;
         font-size: 1.5em;
     }
 
@@ -160,7 +161,7 @@
 
 #page-essai .box label:hover,
 #page-essai .box input[type=radio]:checked + label, .box input[type=checkbox]:checked + label {
-    background-color: rgba(50, 181, 185, 0.8);
+    background-color: #36c6d3;
     color: rgba(255,255,255,.9);
 }
 
@@ -184,7 +185,7 @@
 
 rzslider .rz-bar.rz-selection,
 rzslider .rz-pointer{
-    background-color: #32b5b9;
+    background-color: #36c6d3;
 }
 
 rzslider .rz-pointer.rz-active:after {

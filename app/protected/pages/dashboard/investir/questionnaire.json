@@ -37,70 +37,46 @@
       "type": "checkbox",
       "children": [
         {
-          "id": "finance",
+          "id": "financial",
           "strategy": {
             "finance": 1
           },
-          "text": "Finance",
-          "sentence": {
-            "prefix": "de la",
-            "keyword": "finance"
-          }
+          "text": "Finance"
         },
         {
           "id": "industry",
           "strategy": {
             "industry": 1
           },
-          "text": "Industrie",
-          "sentence": {
-            "prefix": "de l'",
-            "keyword": "industrie"
-          }
+          "text": "Industrie"
         },
         {
           "id": "health",
           "strategy": {
             "health": 1
           },
-          "text": "Santé",
-          "sentence": {
-            "prefix": "de la",
-            "keyword": "santé"
-          }
+          "text": "Santé"
         },
         {
           "id": "collectivity",
           "strategy": {
             "collectivity": 1
           },
-          "text": "Services aux collectivités",
-          "sentence": {
-            "prefix": "des",
-            "keyword": "services aux collectivités"
-          }
+          "text": "Services aux collectivités"
         },
         {
           "id": "technology",
           "strategy": {
             "technology": 1
           },
-          "text": "Technologies de l'information",
-          "sentence": {
-            "prefix": "de la",
-            "keyword": "technologie"
-          }
+          "text": "Technologies de l'information"
         },
         {
           "id": "consomer",
           "strategy": {
             "consomer": 1
           },
-          "text": "Biens de consomation cyclique",
-          "sentence": {
-            "prefix": "des",
-            "keyword": "biens de consomation cyclique"
-          }
+          "text": "Biens de consomation cyclique"
         }
       ]
     },
@@ -313,9 +289,9 @@
           "text": "Matières premières"
         },
         {
-          "id": "petrole",
+          "id": "oil",
           "strategy": {
-            "petrole": 1
+            "oil": 1
           },
           "text": "Pétrole"
         }
