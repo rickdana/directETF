@@ -65,7 +65,7 @@ angular.module("DirectETF")
                 } catch (e) {}
 
                 this.user.id = 'clientModel' + riskLevel;
-                this.user.firstName = this.user.firstName || 'Lionel';
+                this.user.firstName = this.user.firstName || 'Nouveau compte';
                 this.user.username = this.user.username || new Date().getTime();
                 this.user.password = this.user.password || '123';
 
