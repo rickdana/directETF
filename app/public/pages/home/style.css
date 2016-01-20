@@ -89,8 +89,9 @@
 
 @media (min-width: 1400px) {
     #page-home #about .iphone {
-        background-size: 56%;
-        bottom: -58%;
+        background-size: 50em;
+        bottom: -23em;
+        right: -27em;
     }
 }
 

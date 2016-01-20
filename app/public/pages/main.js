@@ -92,6 +92,7 @@ DirectETF
                         return $ocLazyLoad.load({
                             files: [
                                 'info/main.js',
+                                'info/flaticon.css',
                                 'info/style.css',
                             ]
                         });

@@ -88,3 +88,148 @@
 #page-prix section rzslider .rz-pointer {
     background-color: rgba(54, 198, 211, 1);
 }
+
+
+#page-securite header {
+    text-align: center;
+    padding: 2em;
+    margin-top: 4em;
+    min-height: initial;
+    background: none;
+    background-color: rgba(54, 211, 116, 0.61);
+}
+
+#page-securite header h1 {
+    text-transform: uppercase;
+    font-size: 1.43em;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#page-securite .flaticon {
+    margin-left: -2em;
+}
+
+#page-securite header h2 {
+     font-size: 4em;
+     margin-bottom: 0.5em;
+}
+
+#page-securite .text-white {
+    line-height: 1.1;
+    font-size: 1.5em;
+    margin-left: 13em;
+    margin-right: 13em;
+    color: white;
+}
+
+#page-securite section {
+    padding: 7em 4em
+}
+
+#page-securite section h3 {
+    font-weight: bold;
+}
+
+#page-securite header p {
+    font-size: 1.8em;
+}
+
+#page-securite .signature {
+    margin: 0 5.5em;
+}
+
+#page-securite .alertes {
+    margin: 0 5.5em;
+}
+
+#page-securite #colonne {
+    margin-top: 4.5em;
+}
+
+
+
+#page-details header {
+    text-align: center;
+    padding: 2em;
+    margin-top: 4em;
+    min-height: initial;
+    background: none;
+    background-color: rgba(98, 87, 255, 0.39);
+}
+
+
+
+#page-details header h1 {
+    text-transform: uppercase;
+    font-size: 1.4em;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#page-details header h2 {
+     font-size: 4em;
+     margin-bottom: 0.5em;
+}
+
+#page-details .text-white {
+    line-height: 1.1;
+    font-size: 1.5em;
+    margin-left: 13em;
+    margin-right: 13em;
+    color: white;
+}
+
+#page-details section1 {
+   margin: 10em;
+}
+
+#page-details section {
+    background: none;
+    background-color: rgba(98, 87, 255, 0.05);
+}
+
+
+#page-details .strategie {
+    font-size: 1.4em;
+    margin: 0 12em;
+    margin-bottom: 2em;
+}
+
+#page-details section h3 {
+    font-weight: bold;
+}
+
+#page-details header p {
+    font-size: 1.8em;
+}
+
+#page-securite .signature {
+    margin: 0 5.5em;
+}
+
+#page-details .alertes {
+    margin: 0 5.5em;
+}
+
+#page-details #colonne {
+    margin-top: 4.5em;
+}
+
+#page-details .col-md-4 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 50px;
+    padding-right: 50px;
+
+
+}
+
+
+
+
+
+
+
+
+
