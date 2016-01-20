@@ -301,8 +301,8 @@ table#fund_read_chart {
     border: 2px solid #cccccc;
     border-collapse: collapse;
     background: #fff;
-    position: relative;
-    top: -348px;
+    position: absolute;
+    top: 30px;
     left: 120px;
     font-size: 11px;
     overflow: hidden;
@@ -409,4 +409,8 @@ table#read_chart tr.contr td {
 [data-step="4"] .portlet.bg-black input,
 [data-step="4"] .portlet.bg-black a {
     width: 60%;
+}
+
+#tab_0 .portlet-body {
+    position: relative;
 }

@@ -260,11 +260,13 @@ angular.module('MetronicApp')
         $scope.model = {};
 
         $rootScope.step3 = function () {
-            $scope.simulation();
+            if (!$scope.model.strategies) {
+                $scope.simulation();
 
-            $scope.model.strategies = {
-                'Nouvelle stratégie': $scope.wizard.portfolio.strategy,
-            };
+                $scope.model.strategies = {
+                    'Nouvelle stratégie': $scope.wizard.portfolio.strategy,
+                };
+            }
         };
 
         $scope.timeframe = 10;
