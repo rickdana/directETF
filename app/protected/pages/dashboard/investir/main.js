@@ -212,52 +212,24 @@ angular.module('MetronicApp')
         $rootScope.step1 = function () {};
     })
     .controller('InvestirMontantAjustementController', function($OrdersFactory, $rootScope, $scope, $element) {
-        $scope.sliderInvestLimit = {
-            value: 0,
-            options: {
-                floor: 0,
-                ceil: $scope.client.portfolio.cash,
-                step: 0.1,
-                precision: 2,
-                showSelectionBar: true,
-                hideLimitLabels: true,
-                translate: function(value) {
-                    return value + ' ' + $scope.client.portfolio.currencySymb;
-                }
-            }
-        };
+        $rootScope.step2 = function () {};
 
-        $scope.$OrdersFactory = $OrdersFactory;
-
-        $rootScope.step2 = function () {
-            $scope.sliderInvestLimit.value = $OrdersFactory.cash();
-            $scope.sliderInvestLimit.options.floor = $scope.sliderInvestLimit.value;
-
-            $element.find('[ng-etf-list]').attr('data-filter', '');
-
-            $element.find('[ng-etf-list]')
-                    .attr('data-filter', JSON.stringify($OrdersFactory.get()));
-        };
-
-        $scope.$watch(function() {
-            return $scope.client.portfolio.cash;
-        }, function(cash) {
-            $scope.sliderInvestLimit.options.ceil = cash;
-        });
-
-        $scope.$watch(function() {
-            return $scope.sliderInvestLimit.value;
-        }, function(limit) {
-            $OrdersFactory.distribution($scope.etfs, limit);
-        });
+        //$OrdersFactory.distribution($scope.etfs, limit);
     })
-    .controller('InvestirRevoirController', function ($ClientFactory, $OrdersFactory, $EtfsFactory, $rootScope, $scope, $element) {
+    .controller('InvestirRevoirController', function ($OrdersFactory, $ClientFactory, $EtfsFactory, $rootScope, $scope, $element) {
         var _invest_etfs = null;
         var _ref_etfs = null;
         var _data_valo = null;
 
-        $rootScope.step3 = function () {
-            $OrdersFactory.lock();
+        $rootScope.step1 = function () {
+            $scope.wizard.portfolio.strategy.etfs(function(etfs) {
+                for (var i in etfs) {
+                    $OrdersFactory.set(etfs[i]);
+                }
+
+                console.log('$OrdersFactory.get:', $OrdersFactory.get())
+            });
+
             setTimeout(function() {
                 $scope.runSimulation();
             }, 500);
@@ -317,7 +289,7 @@ angular.module('MetronicApp')
         //Proportion des ETFS d'un nouvel investissement
         function proportion_etfs(ref_etfs) {
             var proportion_etfs = [];
-            var montant = $OrdersFactory.cash();
+            var montant = $scope.wizard.order.amount.total;
 
             for (var i in ref_etfs) {
                 var proportion = ref_etfs[i][3] / montant;

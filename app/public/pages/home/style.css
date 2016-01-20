@@ -1,6 +1,7 @@
 #page-home h2 {
-    text-transform: uppercase;
     font-size: 1.43em;
+    font-weight: bold;
+    margin-bottom: 0.6em;
 }
 
 #page-home #services {
@@ -28,9 +29,11 @@
 #services-divider:before, #services-divider:after {
     content: "";
     position: absolute;
-    width: 40%;
+    width: 31%;
+    margin-left: 5em;
+    margin-right: 5em;
     height: 1px;
-    background-color: #ccc;
+    background-color: rgba(54, 198, 211, 0.48) ;
     top: 50%;
 }
 
@@ -73,7 +76,7 @@
     padding-top: 50%;
     background-repeat: no-repeat;
     background-size: 62%;
-    bottom: -42%;
+    bottom: -50%;
     right: -23%;
     position: absolute;
 }
