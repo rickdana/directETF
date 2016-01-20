@@ -10,7 +10,7 @@
              class="step fa fa-check" data-title="Validation"></div>
     </div>
 
-    <div id="sentence" ng-show="wizard.step < 4">
+    <div id="sentence" ng-show="wizard.step < 3">
         <p ng-show="wizard.step > 1">
             Je souhaite investir
             <span class="questionnaire-sentence-keyword">
@@ -35,6 +35,9 @@
                     <sector-chart-pie id="sectors-overview" data-height="200"
                                       data-model="wizard.portfolio.isins"
                                       data-show-in-legend="true"></sector-chart-pie>
+                    <type-progress data-model="wizard.portfolio.etfs"
+                                   data-show-in-legend="true">
+                    </type-progress>
                     <etf-list data-model="{{wizard.portfolio.isins}}"></etf-list>
                 </div>
             </div>
@@ -53,7 +56,7 @@
     <!--Step 2-->
     <div class="wizard-panel" data-step="2" ng-controller="InvestirMontantAjustementController" ng-show="wizard.step == 2">
         <div class="row">
-            <div id="amount-box">
+            <div id="amount-box" class="bg-black">
                 <div class="money"></div>
                 <div class="title">Valeur du portfeuille</div>
                 <div class="amount total">{{wizard.order.amount.total}}<span>{{client.portfolio.currencySymb}}</span>
@@ -183,76 +186,34 @@
 
     <!--Step 4-->
     <div class="wizard-panel" data-step="4" ng-controller="InvestirValidationController" ng-show="wizard.step == 4">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="portlet light bordered">
-                    <div id="investir-order-list" class="update-with-etfs-selection" data-lazy="true"
-                         data-header-template="/protected/pages/dashboard/investir/tpl/order-header.html"
-                         data-row-template="/protected/pages/dashboard/investir/tpl/order-row.html"
-                         data-footer-template="/protected/pages/dashboard/investir/tpl/order-footer.html" ng-etf-list></div>
-                </div>
+        <div class="portlet text-center">
+            <h2>Récapitulatif</h2>
 
-                <!-- Wallet -->
-                <div class="portlet light bordered">
-                    <table class="table table-hover">
-                        <thead>
-                        <th colspan="2">Récaputilatif</th>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Liquidités disponibles</td>
-                            <td class="text-right">{{client.portfolio.cash | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
-                        </tr>
-                        <tr>
-                            <td>Liquidités sortantes</td>
-                            <td class="text-right">{{$OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
-                        </tr>
-                        <tr>
-                            <td>Liquidités entrantes estimées</td>
-                            <td class="text-right">{{profit | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
-                        </tr>
-                        </tbody>
+            <p>Je souhaite investir
+                <span class="questionnaire-sentence-keyword">
+                    {{wizard.order.amount.total}}&nbsp;{{client.portfolio.currencySymb}}</span>.</p>
+            <strategy-keywords data-strategy="wizard.portfolio.strategy"></strategy-keywords>
 
-                        <tfoot>
-                        <tr>
-                            <td class="text-left">Liquidités restantes estimées après transaction</td>
-                            <td class="text-right">{{client.portfolio.cash - $OrdersFactory.cash() | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
-                        </tr>
-                        </tfoot>
-
-                    </table>
-                </div>
-            </div>
-
-            <!-- Repartition des secteurs -->
-            <div class="col-lg-4">
-                <!-- Repartition des secteurs -->
-                <div id="sector" class="portlet light bordered">
-                    <div class="portlet-title">
-                        <div class="caption caption-md">
-                            <span class="caption-subject font-green bold uppercase">Répartition sectorielle</span>
-                        </div>
-                    </div>
-                    <div class="portlet-body">
-                        <div class="update-with-etfs-selection" data-height="200" data-lazy="true"
-                             data-show-in-legend="true" ng-etf-sectors-chart></div>
-                    </div>
-                </div>
-
-                <div class="portlet light bordered">
-                    <div class="portlet-title">
-                        <div class="caption caption-md">
-                            <span class="caption-subject font-green bold uppercase">Répartition dans le monde</span>
-                        </div>
-                    </div>
-                    <div class="portlet-body">
-                        <div class="update-with-etfs-selection" data-height="200" data-lazy="true" ng-etf-maps></div>
-                    </div>
-                </div>
+            <div class="table-wrapper">
+                <table class="table table-light">
+                    <tbody>
+                    <tr>
+                        <td>Liquidités entrantes estimées</td>
+                        <td class="text-right">{{profit | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
+                    </tr>
+                    <tr>
+                        <td>Coût de la transaction</td>
+                        <td class="text-right">{{wizard.order.amount.total * 0.2 | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <a class="wizard-button-goto btn green" ng-click="wizard.goto(wizard.step + 1)">Passer les ordres</a>
+        <div class="portlet text-center bg-black">
+            <input type="password" placeholder="Votre mot de passe">
+            <a class="wizard-button-goto btn green" ng-click="wizard.order.process()">Passer les ordres</a>
+        </div>
 
         <div class="row">
             <div class="col-lg-6">

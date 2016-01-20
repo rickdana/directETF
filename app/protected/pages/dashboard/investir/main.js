@@ -163,19 +163,21 @@ angular.module('MetronicApp')
                 $OrdersFactory.lock();
 
                 document.body.scrollTop = 0;
+            },
+            order: {
+                amount: {
+                    adding: null,
+                    total: $scope.client.portfolio.value
+                },
+                process: function() {
+
+                }
             }
         };
 
         $scope.sentence = {
             keywords: []
         };
-
-        $scope.wizard.order = {
-            amount: {
-                adding: null,
-                total: $scope.client.portfolio.value
-            }
-        }
 
         $ClientFactory.portfolio.infos(function(err, infos) {
             $scope.wizard.portfolio = new $PortfolioFactory.Portfolio(infos);
