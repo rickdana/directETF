@@ -68,3 +68,7 @@ input.aCheck[type=checkbox]:checked + label:before {
     color: #880000;
     font-size: 2em;
 }
+
+.ngdialog-content {
+  width: 770px !important;
+}

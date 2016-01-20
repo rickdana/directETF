@@ -49,6 +49,7 @@ p {
     margin-bottom: 20px;
     font-size: 20px;
     line-height: 1.5;
+
 }
 
 .navbar-toggle .icon-bar {
@@ -63,17 +64,15 @@ html, body {
 }
 
 .gradient {
-    background: rgba(95, 197, 206, 1);
-    background: rgba(66,212,192,1);
-    background: -moz-radial-gradient(center, ellipse cover, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(66,212,192,1)), color-stop(47%, rgba(69,190,199,1)), color-stop(81%, rgba(30,168,168,1)), color-stop(100%, rgba(30,170,152,1)));
-    background: -webkit-radial-gradient(center, ellipse cover, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
-    background: -o-radial-gradient(center, ellipse cover, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
-    background: -ms-radial-gradient(center, ellipse cover, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
-    background: radial-gradient(ellipse at center, rgba(66,212,192,1) 0%, rgba(69,190,199,1) 47%, rgba(30,168,168,1) 81%, rgba(30,170,152,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#42d4c0', endColorstr='#1eaa98', GradientType=1 );
-    background-color: #222;
-}
+  background: rgba(54,198,211,1);
+  background: -moz-radial-gradient(center, ellipse cover, rgba(54,198,211,1) 0%, rgba(58,168,176,0.94) 50%, rgba(54,198,211,0.88) 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(54,198,211,1)), color-stop(50%, rgba(58,168,176,0.94)), color-stop(100%, rgba(54,198,211,0.88)));
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(54,198,211,1) 0%, rgba(58,168,176,0.94) 50%, rgba(54,198,211,0.88) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(54,198,211,1) 0%, rgba(58,168,176,0.94) 50%, rgba(54,198,211,0.88) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(54,198,211,1) 0%, rgba(58,168,176,0.94) 50%, rgba(54,198,211,0.88) 100%);
+  background: radial-gradient(ellipse at center, rgba(54,198,211,1) 0%, rgba(58,168,176,0.94) 50%, rgba(54,198,211,0.88) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#36c6d3', endColorstr='#36c6d3', GradientType=1 )
+  }
 
 .browsehappy {
     top: 4em;
@@ -241,12 +240,17 @@ section {
 
 }
 
+.text-faded {
+    color: #FFFFFF;
+
+}
+
 .call-to-action h2 {
     margin: 0 auto 20px;
 }
 
 .text-primary {
-    color: #36c6d3;
+    color: rgba(98, 87, 255, 0.658824);
 }
 
 .no-gutter > [class*=col-] {
@@ -400,7 +404,7 @@ header {
 
     min-height: auto;
 
-    background-image: url(/public/assets/img/fondecrann-1900.jpg);
+    background-image: url(/public/pages/background.jpg);
     background-position: center;
     background-size: cover;
 
