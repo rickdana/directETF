@@ -382,32 +382,29 @@ angular.module('DirectETF', [])
                 showInLegend: false
             }];
 
-            LoadStockChart(series, $('#questionaire-future-stockchart'), true);
+            LoadStockChart(series, $('#questionaire-future-stockchart'), true, function (chart) {
+                var min = Math.floor(chart.yAxis[0].dataMin);
 
+                chart.yAxis[0].setExtremes(min, Math.floor(chart.yAxis[0].dataMax) * 2);
+                chart.yAxis[0].options.startOnTick = false;
 
-            var chart = $('#questionaire-future-stockchart').highcharts();
-            //chart.showLoading();
+                chart.yAxis[0].update({
+                    opposite: true,
+                    labels: {
+                        align: 'left'
+                    }
+                });
 
-            var min = Math.floor(chart.yAxis[0].dataMin);
-            chart.yAxis[0].setExtremes(min, Math.floor(chart.yAxis[0].dataMax) * 2);
-            chart.yAxis[0].options.startOnTick = false;
-
-            chart.yAxis[0].update({
-                opposite: true,
-                labels: {
-                    align: 'left'
+                chart.tooltip.options.formatter = function() {
+                    //var xyArr=[];
+                    //$.each(this.points,function(){
+                    //    console.log(this.series)
+                    //    xyArr.push(this.series.name);
+                    //});
+                    //return xyArr.join('<br/>');
+                    return false;
                 }
             });
-
-            chart.tooltip.options.formatter = function() {
-                //var xyArr=[];
-                //$.each(this.points,function(){
-                //    console.log(this.series)
-                //    xyArr.push(this.series.name);
-                //});
-                //return xyArr.join('<br/>');
-                return false;
-            }
 
             //$('#simulation-future').highcharts().legend.allItems[0].update({name:'Prévision sans nouveaux investissements'});
         }
