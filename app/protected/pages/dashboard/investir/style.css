@@ -197,7 +197,7 @@ tfoot td {
 }
 
 #amount-box {
-    max-width: 600px;
+    max-width: 550px;
     padding: 2em;
     margin: 0 auto 3em;
     color: #fff;
@@ -205,15 +205,33 @@ tfoot td {
     box-shadow: 0 0 5px 3px rgba(0,0,0,.5);
     font-size:1.3em;
     text-align: center;
-}
-
-#amount-box p {
+    position: relative;
     text-transform: uppercase;
 }
 
-#amount-box p + div {
+#amount-box .title, #amount-box p {
+    margin-left: 6em;
+    text-align: left;
+}
+
+#amount-box .title {
+    margin-top: 1.5em;
+}
+
+#amount-box .amount {
     font-size: 3.2em;
     color: #36c6d3;
+    margin-left: .51em;
+    z-index: 2;
+    position: relative;
+}
+
+#amount-box .amount.total {
+}
+
+#amount-box p {
+    margin-top: 3em;
+    margin-bottom: -.1em;
 }
 
 #amount-box p + div span {
@@ -224,12 +242,33 @@ tfoot td {
 #amount-box p + div input {
     background: transparent;
     border: none;
-    width: 180px;
+    width: 150px;
     border-radius: 0;
     border-bottom: 2px dashed #36c6d3;
     box-shadow: none;
     text-align: center;
     outline: none;
+}
+
+#amount-box .money {
+    position: absolute;
+    top: 2em;
+    left: 2em;
+    background-image: url(money.png);
+    background-size: cover;
+    width: 150px;
+    height: 135px;
+}
+
+#amount-box .tickets {
+    position: absolute;
+    bottom: 2em;
+    right: 3em;
+    background-image: url(tickets.png);
+    background-size: cover;
+    width: 185px;
+    height: 135px;
+    z-index:1;
 }
 
 .explication-courbe {
