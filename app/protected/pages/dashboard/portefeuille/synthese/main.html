@@ -21,9 +21,6 @@
                         <div class="tools left">
                             <a id="btn-portfolio" ng-click="affTableHistorique()"><i class="fa fa-history"></i></a>
                         </div>
-                        <div class="tools right">
-                            <i class="fa fa-ellipsis-v"></i>
-                        </div>
                         <div class="text">
                             <span>Valeur de ma Stratégie</span>
                         </div>
@@ -85,9 +82,6 @@
                         <div class="tools left">
                             <a id="btn-table-historique" ng-click="cacheTableHistorique()"><i class="fa fa-line-chart"></i></a>
                         </div>
-                        <div class="tools right">
-                            <i class="fa fa-ellipsis-v"></i>
-                        </div>
                         <div class="text">
                             <span>Historique Des Transactions</span>
                         </div>
@@ -122,9 +116,6 @@
                     <div class="tools left">
                         <a id="btn-pie-etfs" ng-click="affListeETFs()"> <i class="fa fa-bars"></i> </a>
                     </div>
-                    <div class="tools right">
-                        <i class="fa fa-ellipsis-v"></i>
-                    </div>
                     <div class="text">
                         <span>Mes investissements par secteurs</span>
                     </div>
@@ -145,9 +136,6 @@
                 <div class="portlet-title">
                     <div class="tools left">
                         <a id="btn-liste-etfs" ng-click="cacheListeETFs()"> <i class="fa fa-pie-chart"></i> </a>
-                    </div>
-                    <div class="tools right">
-                        <i class="fa fa-ellipsis-v"></i>
                     </div>
                     <div class="text">
                         <span>Liste des ETFs</span>
@@ -182,9 +170,9 @@
                     </div>
                 </div>
 
-                <div class="portlet-body">
-                    <strategy-keywords data-strategy="client.portfolio.strategy"
-                                       class="text-center"></strategy-keywords>
+                <div id="strategy-demo" class="portlet-body text-center">
+                    <p>Vous n'avez pas défini de stratégie </p>
+                    <a href="/#/investir" class="btn btn-primary btn-xl"> Définir une stratégie</a>
                 </div>
             </div>
 
@@ -192,9 +180,6 @@
             <div id="portfolio">
                 <div class="portlet">
                     <div class="portlet-title">
-                        <div class="tools right">
-                            <i class="fa fa-ellipsis-v"></i>
-                        </div>
                         <div class="text">
                             <span>Valeur de mes Stratégies</span>
                         </div>
@@ -243,7 +228,7 @@
                         <p id="btn-investissement">
                             <i class="fa fa-shopping-cart"></i>
                             <i class="fa fa-angle-right"></i>
-                            <a href="/dashboard#/investir" class=""> Faire un invenstissement</a></p>
+                            <a href="/#/investir"> Faire un invenstissement</a></p>
                     </div>
                 </div>
             </div>
@@ -253,8 +238,8 @@
             <!-- Repartition des secteurs -->
             <div id="sector" class="portlet">
                 <div class="portlet-title">
-                    <div class="tools right">
-                        <i class="fa fa-ellipsis-v"></i>
+                    <div class="tools left">
+                        <a id="btn-pie-etfs" ng-click="affListeETFs()"> <i class="fa fa-bars"></i> </a>
                     </div>
                     <div class="text">
                         <span>Mes investissements par secteurs</span>
@@ -269,6 +254,21 @@
                                    data-model="client.portfolio.etfs"
                                    data-show-in-legend="true">
                     </type-progress>
+                </div>
+            </div>
+            <!-- Liste de mes ETFs-->
+            <div id="list-etfs" class="portlet">
+                <div class="portlet-title">
+                    <div class="tools left">
+                        <a id="btn-liste-etfs" ng-click="cacheListeETFs()"> <i class="fa fa-pie-chart"></i> </a>
+                    </div>
+                    <div class="text">
+                        <span>Liste des ETFs</span>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+                    <etf-list data-model="{{client.portfolio.etfs}}"></etf-list>
                 </div>
             </div>
             <!-- Maps de mes ETFs-->

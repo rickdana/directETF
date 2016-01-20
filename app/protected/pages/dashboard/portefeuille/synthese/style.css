@@ -257,3 +257,48 @@ table .selected {
 #btn-investissement a {
 	color: rgb(255, 255, 255);
 }
+
+.btn {
+	border: 0;
+	border-radius: 300px !important;
+	text-transform: uppercase;
+	font-family: 'Poiret One', Arial, cursive;
+	font-weight: 700;
+	font-size: 14px;
+	background-color: #ddd;
+}
+
+body .btn-primary {
+	border-color: #83DBE3;
+	color: #fff;
+	background-color: #83DBE3;
+	-webkit-transition: all .35s;
+	-moz-transition: all .35s;
+	transition: all .35s;
+	padding: 1.2em 2em;
+	background-image: linear-gradient(to bottom, rgba(10, 198, 211, 0.05) 0, #36c6d3 100%);
+	/*margin-top: -30px;*/
+	margin: 0;
+}
+
+body .btn-primary .badge {
+	color: #83DBE3;
+	background-color: #fff;
+}
+
+.btn-default, body .btn-primary {
+	transition: none;
+}
+
+body .btn-primary:hover, body .btn-primary:focus {
+	background-color: rgba(54, 198, 211, 1);
+	background-image: none;
+}
+
+#strategy-demo p {
+	margin-bottom: 5px;
+}
+
+#strategy-demo a {
+	margin-bottom: 10px;
+}
