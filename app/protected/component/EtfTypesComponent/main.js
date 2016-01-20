@@ -8,16 +8,7 @@ angular.module('MetronicApp')
             ]
         });
 
-
-        $element.render = function(etfs) {
-
-            var data = prase(etfs);
-
-            $scope.models = data;
-
-        }
-
-        var prase = function (etfs) {
+        var load = function (etfs) {
             var sum = 0
                 , percents = {}
                 , series = [];
@@ -30,8 +21,8 @@ angular.module('MetronicApp')
                     percents[etf.type] = 0;
                 }
 
-                percents[etf.type] += etf.quantity;
-                sum += etf.quantity;
+                percents[etf.type] += etf.quantity || 1;
+                sum += etf.quantity || 1;
             }
 
             // Build the serie
@@ -52,20 +43,20 @@ angular.module('MetronicApp')
         };
 
         $scope.$watch(function() {
-            return $scope.model;
-        }, function(filter) {
-            $EtfsFactory.load(filter, $element.render, false);
+            return $scope.portfolio.strategy.changed();
+        }, function() {
+            $EtfsFactory.loadAll(function(etfs) {
+                $scope.types = load($scope.portfolio.strategy.cross(etfs));
+            });
         });
-
     })
-
 
     .directive("typeProgress", function($EtfsFactory) {
         return {
             controller: "EtfTypesController",
             restrict: 'E',
             scope: {
-                model: '=model'
+                portfolio: '=portfolio'
             },
             templateUrl: "/protected/component/EtfTypesComponent/template.html"
         };

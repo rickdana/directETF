@@ -424,7 +424,17 @@ angular.module('MetronicApp')
                         operator: 'OR'
                     };
                 }
+                keywords = tmp;
 
+            } else if (typeof keywords == 'object' && keywords !== null) {
+                var tmp = {};
+
+                for (var keyword in keywords) {
+                    tmp[keyword] = {
+                        weight: keywords[keyword],
+                        operator: 'OR'
+                    };
+                }
                 keywords = tmp;
             }
 

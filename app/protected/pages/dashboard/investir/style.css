@@ -196,24 +196,46 @@ tfoot td {
     text-decoration: line-through;
 }
 
+.bg-black {
+    color: #fff !important;
+    background-color: #364150 !important;
+}
+
 #amount-box {
-    max-width: 600px;
+    max-width: 550px;
     padding: 2em;
     margin: 0 auto 3em;
-    color: #fff;
-    background-color: #364150;
+
     box-shadow: 0 0 5px 3px rgba(0,0,0,.5);
     font-size:1.3em;
     text-align: center;
-}
-
-#amount-box p {
+    position: relative;
     text-transform: uppercase;
 }
 
-#amount-box p + div {
+#amount-box .title, #amount-box p {
+    margin-left: 6em;
+    text-align: left;
+}
+
+#amount-box .title {
+    margin-top: 1.5em;
+}
+
+#amount-box .amount {
     font-size: 3.2em;
     color: #36c6d3;
+    margin-left: .51em;
+    z-index: 2;
+    position: relative;
+}
+
+#amount-box .amount.total {
+}
+
+#amount-box p {
+    margin-top: 3em;
+    margin-bottom: -.1em;
 }
 
 #amount-box p + div span {
@@ -224,12 +246,33 @@ tfoot td {
 #amount-box p + div input {
     background: transparent;
     border: none;
-    width: 180px;
+    width: 150px;
     border-radius: 0;
     border-bottom: 2px dashed #36c6d3;
     box-shadow: none;
     text-align: center;
     outline: none;
+}
+
+#amount-box .money {
+    position: absolute;
+    top: 2em;
+    left: 2em;
+    background-image: url(money.png);
+    background-size: cover;
+    width: 150px;
+    height: 135px;
+}
+
+#amount-box .tickets {
+    position: absolute;
+    bottom: 2em;
+    right: 3em;
+    background-image: url(tickets.png);
+    background-size: cover;
+    width: 185px;
+    height: 135px;
+    z-index:1;
 }
 
 .explication-courbe {
@@ -311,4 +354,59 @@ table#read_chart tr.contr td {
 
 .investir {
     font-size: 1.5em;
+}
+
+[data-step="4"] .portlet {
+    margin: auto;
+    width: 500px;
+    padding: 2em;
+    font-size: 1.3em;
+}
+
+[data-step="4"] h2 {
+    text-transform: uppercase;
+}
+
+[data-step="4"] .table-wrapper {
+    margin: 0 2em;
+    text-align: left;
+}
+
+[data-step="4"] .table-wrapper .table td, .table th {
+    font-size: .94em;
+}
+
+[data-step="4"] .portlet.bg-black {
+    margin-top: 2em;
+    width: 450px;
+}
+
+[data-step="4"] .portlet.bg-black input {
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,.6);
+    color: #fff;
+    background-color: transparent;
+    display: inline-block;
+    margin-bottom: 1em;
+    padding-bottom: .3em;
+    text-align: center;
+    margin-bottom: 1em;
+    outline: none;
+    transition: border-bottom .5s;
+}
+
+[data-step="4"] .portlet.bg-black input:focus {
+    border-bottom: 1px solid #fff;
+}
+
+[data-step="4"] .portlet.bg-black a {
+    font-weight: normal;
+    padding-left: 2em;
+    padding-right: 2em;
+    border-radius: 1em !important;
+}
+
+[data-step="4"] .portlet.bg-black input,
+[data-step="4"] .portlet.bg-black a {
+    width: 60%;
 }

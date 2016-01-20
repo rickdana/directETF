@@ -163,19 +163,21 @@ angular.module('MetronicApp')
                 $OrdersFactory.lock();
 
                 document.body.scrollTop = 0;
+            },
+            order: {
+                amount: {
+                    adding: null,
+                    total: $scope.client.portfolio.value
+                },
+                process: function() {
+
+                }
             }
         };
 
         $scope.sentence = {
             keywords: []
         };
-
-        $scope.wizard.order = {
-            amount: {
-                adding: null,
-                total: $scope.client.portfolio.value
-            }
-        }
 
         $ClientFactory.portfolio.infos(function(err, infos) {
             $scope.wizard.portfolio = new $PortfolioFactory.Portfolio(infos);
@@ -253,17 +255,19 @@ angular.module('MetronicApp')
     })
     .controller('InvestirRevoirController', function ($ClientFactory, $OrdersFactory, $EtfsFactory, $rootScope, $scope, $element) {
         var _invest_etfs = null;
-        var _ref_etfs = null;
         var _data_valo = null;
 
+        $scope.model = {};
+
         $rootScope.step3 = function () {
-            $OrdersFactory.lock();
-            setTimeout(function() {
-                $scope.runSimulation();
-            }, 500);
+            $scope.simulation();
+
+            $scope.model.strategies = {
+                'Nouvelle stratégie': $scope.wizard.portfolio.strategy,
+            };
         };
 
-        $scope.timeframe = 20;
+        $scope.timeframe = 10;
 
         $scope.sliderTimeframe = {
             options: {
@@ -272,15 +276,13 @@ angular.module('MetronicApp')
                 showSelectionBar: true,
                 hideLimitLabels: true,
                 onEnd: function () {
-                    draw_simulation_future(_data_valo, _ref_etfs, _invest_etfs);
+                    draw_simulation_future(_data_valo, _invest_etfs);
                 },
                 translate: function() {
                     return '';
                 }
             }
         };
-
-
 
         $('#tab-simulation a[href="/investir/#tab_1"]').on('shown.bs.tab', function() {
             $(window).resize();
@@ -312,19 +314,6 @@ angular.module('MetronicApp')
             if (day.length < 2) day = '0' + day;
 
             return [year, month, day].join('-');
-        }
-
-        //Proportion des ETFS d'un nouvel investissement
-        function proportion_etfs(ref_etfs) {
-            var proportion_etfs = [];
-            var montant = $OrdersFactory.cash();
-
-            for (var i in ref_etfs) {
-                var proportion = ref_etfs[i][3] / montant;
-                proportion_etfs.push([ref_etfs[i][0], proportion])
-            }
-
-            return proportion_etfs;
         }
 
         //Simulation passée
@@ -385,46 +374,35 @@ angular.module('MetronicApp')
 
         //Simulation future
         function simulation_future(ref_etfs, time_frame, data_valo_today, left_vol, right_vol) {
-            var simulation_future_etfs = {};
             var simulation_future_etfs_moins_vola = {};
             var simulation_future_etfs_ajoute_vola = {};
             var data_simu_future = [];
 
             var firstDay = formatDate(data_valo_today[0]);
 
-            //ref-etfs = [isin, qdt, price, rentabilite, volatilire]
+            //ref-etfs = [isin, qdt, price, rentabilite, volatilite, pourcentage]
             for (var i in ref_etfs) {
                 var taux_rentabilite = ref_etfs[i][3];
                 var value_etf = ref_etfs[i][1] * ref_etfs[i][2];
                 var month = firstDay;
-                var left_volatilite = ref_etfs[i][4] * left_vol * ref_etfs[i][1];
-                var right_volatilite = ref_etfs[i][4] * right_vol * ref_etfs[i][1];
+                var left_volatilite = ref_etfs[i][4] * left_vol ;
+                var right_volatilite = ref_etfs[i][4] * right_vol;
 
-                simulation_future_etfs[month] = value_etf;
-                if(typeof simulation_future_etfs_moins_vola[month] == 'undefined') {
-                    simulation_future_etfs_moins_vola[month] = simulation_future_etfs[month];
-                    simulation_future_etfs_ajoute_vola[month] = simulation_future_etfs[month];
-                } else {
-                    simulation_future_etfs_moins_vola[month] += simulation_future_etfs[month];
-                    simulation_future_etfs_ajoute_vola[month] += simulation_future_etfs[month];
-                }
 
-                for (var i = 0; i < time_frame; i++) {
-                    for (var j = 1; j <= 12; j++) {
-                        month = next_month(month);
-                        simulation_future_etfs[month] = value_etf * (taux_rentabilite / 12 * j + 1);
-                        if(typeof simulation_future_etfs_moins_vola[month] == 'undefined') {
-                            simulation_future_etfs_moins_vola[month] = simulation_future_etfs[month] + left_volatilite;
-                            simulation_future_etfs_ajoute_vola[month] = simulation_future_etfs[month] + right_volatilite;
-                        } else {
-                            simulation_future_etfs_moins_vola[month] += simulation_future_etfs[month] + left_volatilite;
-                            simulation_future_etfs_ajoute_vola[month] += simulation_future_etfs[month] + right_volatilite;
-                        }
+                for (var j = 1; j <= 12 * time_frame; j++) {
+                    if(typeof simulation_future_etfs_moins_vola[month] == 'undefined') {
+                        simulation_future_etfs_moins_vola[month] =  Math.pow((1 + ((taux_rentabilite + left_volatilite) / 12)), j) * value_etf;
+                        simulation_future_etfs_ajoute_vola[month] =  Math.pow((1 + ((taux_rentabilite + right_volatilite) / 12)), j) * value_etf;
+                    } else {
+                        simulation_future_etfs_moins_vola[month] +=  Math.pow((1 + ((taux_rentabilite + left_volatilite) / 12)), j) * value_etf;
+                        simulation_future_etfs_ajoute_vola[month] +=  Math.pow((1 + ((taux_rentabilite + right_volatilite) / 12)), j) * value_etf;
                     }
-                    value_etf *= (1 + taux_rentabilite);
+                    month = next_month(month);
                 }
+
             }
-            for (var date in simulation_future_etfs) {
+
+            for (var date in simulation_future_etfs_moins_vola) {
                 var low = parseFloat(simulation_future_etfs_moins_vola[date].toFixed(2));
                 var high = parseFloat(simulation_future_etfs_ajoute_vola[date].toFixed(2));
                 data_simu_future.push([new Date(date).getTime(), low, high]);
@@ -438,17 +416,14 @@ angular.module('MetronicApp')
 
         }
 
-
-
-        function draw_simulation_future(data_valo, ref_etfs, ref_etfs_new_invests) {
+        function draw_simulation_future(data_valo, ref_etfs_new_invests) {
             //simulation-graph of the future
             var time_frame = $scope.timeframe;
             var data_valo_today = data_valo[data_valo.length - 1];
 
             var data_invest_future_attendu = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, -1, 1);
-            var data_invest_future_favorable = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, 1, 2);
-            var data_invest_future_defavorable = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, -2, -1);
-
+            var data_invest_future_favorable = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, 1, 1.35);
+            var data_invest_future_defavorable = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, -2.5, -1);
 
             //simulation-graph of the future
             var series = [{
@@ -483,23 +458,21 @@ angular.module('MetronicApp')
 
             LoadStockChart(series, $('#simulation-future'), true);
 
+            var chart =  $('#simulation-future').highcharts();
+
+            chart.yAxis[0].update({
+                opposite: true,
+                labels: {
+                    align: 'left'
+                }
+            });
+
+            var min = Math.floor(chart.yAxis[0].dataMin);
+            chart.yAxis[0].options.startOnTick = false;
+            chart.yAxis[0].setExtremes(min, Math.floor(chart.yAxis[0].dataMax) * 2 );
+
             //$('#simulation-future').highcharts().legend.allItems[0].update({name:'Prévision sans nouveaux investissements'});
         }
-
-
-        //taux de rentabilité
-        function rate_change_year(data) {
-            var rentabilite = 0;
-            var capital = data[0][1];
-            var profit = data[data.length - 1][1] - capital;
-            var time_diff = Math.abs(data[data.length - 1][0] - data[0][0]);
-            var days_diff = Math.ceil(time_diff / (1000 * 3600 * 24));
-
-            //nombre de jours ouverts est 365
-            rentabilite = profit / capital * 365 / days_diff;
-            return rentabilite;
-        }
-
 
         //get the date of next month
         function next_month(date) {
@@ -561,7 +534,7 @@ angular.module('MetronicApp')
                         return console.error(err);
                     }
 
-                    $rootScope.runSimulation = function () {
+                    $scope.simulation = function () {
                         var ref_etfs = []
                         var invest_etfs = [];
                         for(var i in etfs_with_gains) {
@@ -570,82 +543,25 @@ angular.module('MetronicApp')
                         }
                         var orders = $OrdersFactory.get();
 
-                        if (orders.length) {
-                            for (var i = 0; i < orders.length; i++) {
-                                invest_etfs.push([orders[i].isin, orders[i].quantity, orders[i].price, orders[i].profitability, orders[i].volatility]);
+                        $EtfsFactory.loadAll(function(etfs_list) {
+                            var etfs_strategy = $scope.wizard.portfolio.strategy.cross(etfs_list);
+                            var etfs_strategy_simulation = [];
+
+                            for (var i in etfs_strategy) {
+                                var etf = etfs_strategy[i];
+
+                                etfs_strategy_simulation.push([etf.isin, etf.quantity || 1, etf.price, etf.profitability, etf.volatility]);
                             }
 
-                            simulation_past(invest_etfs, valo, data_valo, simulation_cb);
-                            draw_simulation_future(data_valo, ref_etfs, invest_etfs);
-                            _ref_etfs = ref_etfs;
+                            draw_simulation_future(data_valo, etfs_strategy_simulation);
+
                             _invest_etfs = invest_etfs;
                             _data_valo = data_valo;
-
-                        }
+                        });
                     };
-
                 });
-
-
-                function simulation_cb(invest_simu_past) {
-                    var series = [{      //the value of portfolio
-                        name: 'Portefeuille',
-                        type: 'spline',
-                        data: data_valo,
-                        color: 'rgb(50, 197, 210)',
-                        fillOpacity: 0.2
-                    }, {        //trades of client
-                        name: 'Investissement',
-                        data: data_trades,
-                        type: 'spline',
-                        color: 'rgb(111, 111, 119)',
-                        fillOpacity: 0.15,
-                        //yAxis: 1,
-                        dashStyle: 'ShortDot'
-                    }, {
-                        name: 'Nouveaux investissements',
-                        data: invest_simu_past,
-                        type: 'spline',
-                        color: '#5cc586',
-                        fillOpacity: 0.15,
-                    }];
-
-
-                    //simulation-graph of the past
-                    LoadStockChart(series, $('#simulation-past'), true);
-
-
-                    var chart =  $('#simulation-past').highcharts();
-                    chart.rangeSelector.buttons[4].setState(2);
-                    chart.rangeSelector.clickButton(4,4,true);
-                    //Benefice
-                    $rootScope.profit = invest_simu_past[invest_simu_past.length - 1][1] - data_valo[data_valo.length - 1][1]
-                        - (invest_simu_past[0][1] - data_valo[0][1]);
-
-                    //draw_simulation_future(data_valo, invest_simu_past);
-                    //
-                    //_invest_simu_past = invest_simu_past;
-                    //_data_valo = data_valo;
-                }
-
             });
         });
-
-        //[
-        //    {"profitability":0.015,"sectors":[{"Finance":100}],"name":"Lyxor MSCI World UCITS ETF","description":"","countries":[{"US":100}],"volatility":1.46,"isin":"FR0010315770","countriesStr":"US","sectorsStr":"Finance","price":14.06,"$$hashKey":"object:107","quantity":1,"enabled":true},
-        //    {"profitability":0.01,"sectors":[{"Industrie":100}],"name":"Lyxor MSCI USA","description":"","countries":[{"US":100}],"volatility":37.64,"isin":"QS0011029939","countriesStr":"US","sectorsStr":"Industrie","price":191.92,"$$hashKey":"object:219","quantity":1,"enabled":true},
-        //    {"profitability":0.003,"sectors":[{"Technologies de l'information":100}],"name":"Lyxor Smart Cash - UCITS ETF C-EUR","description":"","countries":[{"FR":100}],"volatility":0.29,"isin":"LU1190417599","countriesStr":"FR","sectorsStr":"Technologies de l'information","price":125,"$$hashKey":"object:225","quantity":1,"enabled":true},
-        //    {"profitability":0.01,"sectors":[{"Technologies de l'information":100}],"name":"Lyxor MSCI USA UCITS ETF","description":"","countries":[{"US":100}],"volatility":0.2,"isin":"FR0010296061","countriesStr":"US","sectorsStr":"Technologies de l'information","price":334.73,"$$hashKey":"object:237","quantity":1,"enabled":true},
-        //    {"profitability":0.002,"sectors":[{"Finance":100}],"name":"Lyxor EURO STOXX 50 CHF Daily Hedged UCITS ETF","description":"","countries":[{"FR":100}],"volatility":0.3,"isin":"FR0012399731","countriesStr":"FR","sectorsStr":"Finance","price":60.59,"$$hashKey":"object:251","quantity":1,"enabled":true}
-        //].forEach(function(etf) {
-        //        $OrdersFactory.set(etf);
-        //    });
-        //
-        //setTimeout(function() {
-        //    $scope.wizard.goto(3);
-        //}, 500)
-
-
     })
     .controller('InvestirValidationController', function($OrdersFactory, $rootScope, $scope, $element) {
         $scope.$OrdersFactory = $OrdersFactory;
