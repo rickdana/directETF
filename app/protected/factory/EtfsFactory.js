@@ -252,6 +252,13 @@ angular.module('MetronicApp')
                 }
             },
             loadAll: function(cb, getPrice) {
+                var query = 'all';
+
+                if (queries[query] instanceof Array) {
+                    console.log('   return the cache results')
+                    return cb(queries[query]);
+                }
+
                 $http.get(WS_URL + '/etf/list')
                     .success(function(data) {
                         load(data, function(etfs) {
