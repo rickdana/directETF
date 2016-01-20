@@ -8,16 +8,24 @@ angular.module('DirectETF', [])
             });
         });
 
+        $scope.montant = 15000;
+        $scope.chargeInvest = Math.ceil(($scope.montant * 0.036 / 12));
+        $scope.chargeProduct = Math.ceil($scope.montant * 0.012 / 12);
+
         $scope.slider = {
             options: {
                 floor: 100,
                 ceil: 100000,
-                interval: 100,
+                step: 100,
                 hideLimitLabels: true,
                 showSelectionBar: true,
                 translate: function () {
                     return '';
-                }
+                },
+                onEnd: function () {
+                    $scope.chargeInvest = Math.ceil(($scope.montant * 0.036 / 12));
+                    $scope.chargeProduct = Math.ceil($scope.montant * 0.012 / 12);
+                },
             }
         };
     });

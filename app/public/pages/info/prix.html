@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="section-slider" ng-init="montant = 15000">
+            <div class="section-slider">
                 <h4>Nos prix en un clin d'oeil</h4>
                 <p class="richesse">Montant investi</p>
                 <span class="montant">{{montant}}</span> <span class="currency">€</span>
@@ -30,12 +30,12 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <h5>Placements traditionnels</h5>
-                        <div><span class="montant">39</span><span class="currency">€</span>/mois</div>
+                        <div><span class="montant">{{chargeInvest}}</span><span class="currency">€</span>/mois</div>
                         <div class="pourcent">3,6% de frais annuels</div>
                     </div>
                     <div class="col-xs-6">
                         <h5>Frais Direct ETF</h5>
-                        <div><span class="montant">12</span><span class="currency">€</span>/mois</div>
+                        <div><span class="montant">{{chargeProduct}}</span><span class="currency">€</span>/mois</div>
                         <div class="pourcent">1,2% de frais annuels</div>
                     </div>
                 </div>
