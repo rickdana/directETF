@@ -156,11 +156,11 @@
                                         </div>
                                         <div class="portlet-body">
                                             <div class="form-group form-md-line-input">
-                                                <select class="form-control" id="choix-period-invest-past" name="" ng-model="periodeSelect" data-id-container="simulation-past" link-to-stcokchart>
+                                                <select class="form-control" id="choix-period-invest-past" ng-model="periodeSelect" data-id-container="simulation-past" link-to-stcokchart>
                                                     <option ng-repeat="option in periodeData">{{option}}</option>
                                                 </select>
                                             </div>
-                                            <div id="simulation-past"></div>
+                                            <strategy-comparison id="simulation-past" data-strategies="model.strategies"></strategy-comparison>
                                         </div>
                                     </div>
                                 </div>
