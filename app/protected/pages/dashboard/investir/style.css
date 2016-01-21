@@ -302,8 +302,8 @@ table#fund_read_chart {
     border-collapse: collapse;
     background: #fff;
     position: absolute;
-    top: 30px;
-    left: 120px;
+    top: 150px;
+    left: 20px;
     font-size: 11px;
     overflow: hidden;
     height: auto;
@@ -354,6 +354,14 @@ table#read_chart tr.contr td {
 
 .investir {
     font-size: 1.5em;
+}
+
+.lowercase {
+    text-transform: lowercase;
+}
+
+[data-step="3"] .tab-content {
+    padding: 0 !important;
 }
 
 [data-step="4"] .portlet {
@@ -410,7 +418,7 @@ table#read_chart tr.contr td {
 [data-step="4"] .portlet.bg-black a {
     width: 60%;
 }
-
 #tab_0 .portlet-body {
     position: relative;
 }
+
