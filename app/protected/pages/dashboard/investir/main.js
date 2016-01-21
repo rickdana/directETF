@@ -194,7 +194,7 @@ angular.module('MetronicApp')
                 id: 'Prévision_2',
                 type: 'arearange',
                 data: data_invest_future_favorable,
-                color:'rgb(32, 121, 57)',
+                color:'#28939D',
                 zIndex: 11,
                 threshold: null,
                 showInLegend: false,
@@ -203,7 +203,7 @@ angular.module('MetronicApp')
                 id: 'Prévision_1',
                 type: 'arearange',
                 data: data_invest_future_attendu,
-                color:  'rgb(43, 161, 76)' ,
+                color:  '#36c6d3' ,
                 zIndex: 11,
                 threshold: null,
                 showCheckbox: true,
@@ -398,8 +398,15 @@ angular.module('MetronicApp')
         $rootScope.settings.layout.pageBodySolid = true;
         $rootScope.settings.layout.pageSidebarClosed = false;
     })
-    .controller('InvestirController', function($OrdersFactory, $rootScope, $scope) {
+    .controller('InvestirController', function($OrdersFactory, $rootScope, $scope, $element) {
         $scope.$OrdersFactory = $OrdersFactory;
+
+        $scope.affichageListeEtfs = function() {
+            $element.find('#maps-container').toggle();
+            $element.find('#sectors-overview').toggle();
+            $element.find('#types-overview').toggle();
+            $element.find('#list-overview').toggle();
+        };
 
         $rootScope.step1 = function () {};
     })
@@ -451,7 +458,9 @@ angular.module('MetronicApp')
 
         $rootScope.step3 = function () {
             if (!$scope.model.strategies) {
-                $scope.simulation();
+                setTimeout(function() {
+                    $scope.simulation();
+                }, 100);
 
                 $scope.model.strategies = {
                     'Nouvelle stratégie': $scope.wizard.portfolio.strategy,
@@ -555,7 +564,7 @@ angular.module('MetronicApp')
 
                             SimulationFactory.draw_simulation_future(data_valo, etfs_strategy_simulation, $scope.timeframe);
 
-                            _invest_etfs = invest_etfs;
+                            _invest_etfs = etfs_strategy_simulation;
                             _data_valo = data_valo;
                         });
                     };

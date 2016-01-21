@@ -30,14 +30,16 @@
             </div>
             <div class="col-lg-6">
                 <div class="portlet">
+                    <div class="tools left">
+                        <a ng-click="affichageListeEtfs()"> <i class="fa fa-bars"></i> </a>
+                    </div>
                     <map id="maps-container" data-height="250" data-demo="true"
                          data-model="wizard.portfolio.isins"></map>
-                    <sector-chart-pie id="sectors-overview" data-height="200"
-                                      data-demo="true"
+                    <sector-chart-pie id="sectors-overview" data-height="200" data-demo="true"
                                       data-model="wizard.portfolio.isins"
                                       data-show-in-legend="true"></sector-chart-pie>
-                    <type-progress data-demo="true" data-portfolio="wizard.portfolio"></type-progress>
-                    <etf-list data-demo="true" data-model="{{wizard.portfolio.isins}}"></etf-list>
+                    <type-progress id="types-overview" data-demo="true" data-portfolio="wizard.portfolio"></type-progress>
+                    <etf-list id="list-overview" data-demo="true" data-model="{{wizard.portfolio.isins}}"></etf-list>
                 </div>
             </div>
         </div>
@@ -98,22 +100,19 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="portlet">
-                                        <div class="portlet-body">
-                                            <div class="col-lg-5" style="float: right">
-                                                <div id="slider-timeframe" class="form-group">
-                                                    <div class="slider-col">
-                                                        <label class="caption-subject control-label">Durée</label></div>
-                                                    <div class="slider-col">
-                                                        <rzslider rz-slider-model="timeframe"
-                                                                  rz-slider-options="sliderTimeframe.options"></rzslider>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="portlet-title">
                                             <div class="caption caption-md">
-                                                <div class="explication-courbe">Voici une analyse de votre nouvel
+                                                <div class="explication-courbe" style="float: left;">Voici une analyse de votre nouvel
                                                     investissement.
                                                 </div>
+                                                <div id="slider-timeframe">
+                                                    <span>Durée</span>
+                                                    <rzslider rz-slider-model="timeframe"
+                                                                  rz-slider-options="sliderTimeframe.options"></rzslider>
+                                                </div>
                                             </div>
+                                        </div>
+                                        <div class="portlet-body">
                                             <table id="fund_read_chart" style="display: table;">
                                                 <tbody>
                                                 <tr class="hi" style="display: table-row;">
@@ -205,7 +204,7 @@
                     <tbody>
                     <tr>
                         <td>Liquidités entrantes estimées</td>
-                        <td class="text-right">{{profit | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
+                        <td class="text-right">{{(profit || 350.5) | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
                     </tr>
                     <tr>
                         <td>Coût de la transaction</td>
