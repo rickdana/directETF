@@ -481,13 +481,19 @@ angular.module('MetronicApp')
         })
 
         $scope.newKeywords = function() {
+            if (!$scope.wizard.portfolio) {
+                return [];
+            }
             return SimulationFactory.new_keywords_added($scope.wizard.portfolio.strategy.keywords.get(), $scope.client.portfolio.strategy.keywords.get());
-
         }
 
         $scope.deletedKeywords = function() {
+            if (!$scope.wizard.portfolio) {
+                return [];
+            }
             return SimulationFactory.keywords_deleted($scope.wizard.portfolio.strategy.keywords.get(), $scope.client.portfolio.strategy.keywords.get());
         }
+
         $ClientFactory.portfolio.valo(function (err, valo, data_valo) {
             if (err) {
                 throw err;
