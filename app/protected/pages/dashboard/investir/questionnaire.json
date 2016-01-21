@@ -39,7 +39,7 @@
         {
           "id": "financial",
           "strategy": {
-            "finance": 1
+            "financial": 1
           },
           "text": "Finance"
         },
