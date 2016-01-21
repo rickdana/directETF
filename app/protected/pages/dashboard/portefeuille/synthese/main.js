@@ -12,6 +12,12 @@ angular.module('MetronicApp')
             App.initAjax();
         });
 
+        $scope.risks = {
+            low: 'Faible',
+            medium: 'Moyen',
+            high: 'Important'
+        };
+
         // Affichage/cahe les tableaux de liste de etfs, historique
         $scope.affTableHistorique = function() {
             $element.find('#portfolio').hide();
@@ -35,13 +41,9 @@ angular.module('MetronicApp')
             $element.find('#list-etfs').hide();
         };
 
-        var btn_portfolio = $element.find('#btn-portfolio'),
-            portfolio =  $element.find('#portfolio'),
-            btn_liste_etfs = $element.find('#btn-liste-etfs'),
-            btn_pie_etfs = $element.find('#btn-pie-etfs'),
-            sector =  $element.find('#sector'),
-            maps =  $element.find('#maps'),
-            liste_etfs =  $element.find('#list-etfs');
+        //traduire le risque en français
+        $scope.riskClient = '';
+
 
         // Fonction de formatage des prices
         $scope.format = function(number) {

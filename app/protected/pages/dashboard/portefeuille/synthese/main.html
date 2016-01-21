@@ -56,7 +56,7 @@
                                 <tr>
                                     <td class="type">Niveau de risque</td>
                                     <td class="number"></td>
-                                    <td class="percent">important</td>
+                                    <td class="percent">{{risks[client.portfolio.risk]}}</td>
                                 </tr>
                             </table>
                         </div>
@@ -207,10 +207,10 @@
                                     <td class="number">0.00 {{client.portfolio.currencySymb}}</td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
-                                <tr>
+                                <tr class="infos-risk">
                                     <td class="type">Niveau de risque</td>
                                     <td class="number"></td>
-                                    <td class="percent"></td>
+                                    <td class="percent">{{risks[client.portfolio.risk]}}</td>
                                 </tr>
                             </table>
                         </div>
