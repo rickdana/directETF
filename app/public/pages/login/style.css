@@ -1,3 +1,7 @@
+[ng-view], [ng-view] > .login {
+    height: 100%;
+}
+
 .login {
     position:relative;
     text-align: center;

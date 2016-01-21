@@ -74,10 +74,6 @@ angular.module('MetronicApp')
             },
             portfolio: {
                 infos: function(done) {
-                    if (client.portfolio.infos) {
-                        return done(false, client.portfolio.infos);
-                    }
-
                     $http.get(WS_URL + '/client/portfolio/' + client.id)
                         .success(function(portfolio) {
                             var currency = typeof portfolio['dividends']['EUR'] != 'undefined' ? 'EUR' : 'USD';
@@ -92,6 +88,7 @@ angular.module('MetronicApp')
                                 dividends: portfolio['dividends'][currency],
                                 cash: portfolio.cash[currency],
                                 etfs: portfolio.etfs,
+                                strategy: portfolio.strategy,
                             };
 
                             done(false, client.portfolio.infos);

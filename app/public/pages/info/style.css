@@ -127,6 +127,13 @@
     padding: 7em 4em
 }
 
+#page-securite section [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+section [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    margin: 0;
+    font-size: 3em;
+    color: rgba(52, 195, 109, 0.81);
+}
+
 #page-securite section h3 {
     font-weight: bold;
 }
@@ -225,6 +232,12 @@
 
 }
 
+#page-details section [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+section [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    margin: 0;
+    font-size: 3em;
+    color: rgba(98, 87, 255, 0.7);
+}
 
 
 

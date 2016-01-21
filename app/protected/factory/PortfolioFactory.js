@@ -337,14 +337,10 @@ angular.module('MetronicApp')
                         m.push(strategy[Keywords.list[i].id] || 0);
                     }
 
-//                    console.log('Strategy:', m)
-
                     return m;
                 },
                 catalog: function(etfs) {
                     var m = new Array(etfs.length);
-
-//                    console.log(etfs)
 
                     for (var i in etfs) {
                         m[i] = new Array(Keywords.list.length);
@@ -364,13 +360,6 @@ angular.module('MetronicApp')
                             }
                         }
                     }
-
-//                    console.log('Catalog:')
-//
-//                    for (var i in m) {
-//                        console.log(m[i])
-//                    }
-
                     return m;
                 }
             },
@@ -383,8 +372,6 @@ angular.module('MetronicApp')
                             result.push(etfs[i]);
                         }
                     }
-
-//                    console.log('Transpose catalog:', result)
 
                     return result;
                 }
@@ -399,12 +386,6 @@ angular.module('MetronicApp')
                         result[i] += catalog[i][j] * strategy[j];
                     }
                 }
-
-//                console.log('Multiply:')
-//
-//                for (var i in result) {
-//                    console.log(result[i])
-//                }
 
                 return result;
             }
@@ -533,24 +514,8 @@ angular.module('MetronicApp')
         };
 
         var Portfolio = function(desc) {
-            var strategy = new Strategy(desc.keywords || []);
+            var strategy = new Strategy(desc.strategy || []);
             var etfs_list = [];
-
-            if (strategy.keywords.length() == 0 && desc.etfs) {
-                // fallback loading
-                // load keywords using the portfolio ETFs list
-                $EtfsFactory.load(desc.etfs, function(list) {
-                    console.log('list:=>', list)
-
-                    for (var i in list) {
-                        var etf = list[i];
-
-                        for (var j in etf.keywords) {
-                            strategy.keywords.add(etf.keywords[j].id, etf.keywords[j].weight);
-                        }
-                    }
-                });
-            }
 
             var build = function(done) {
                 // Build the new portfolio
