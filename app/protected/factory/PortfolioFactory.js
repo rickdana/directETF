@@ -416,6 +416,7 @@ angular.module('MetronicApp')
                         operator: 'OR'
                     };
                 }
+
                 keywords = tmp;
             }
 
@@ -442,6 +443,10 @@ angular.module('MetronicApp')
                         };
 
                         changed = true;
+                    },
+
+                    exists: function(id) {
+                        return typeof keywords[id] != 'undefined';
                     },
 
                     get: function() {
