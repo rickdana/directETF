@@ -21,11 +21,8 @@ angular.module('MetronicApp')
             };
         }
     )
-    .controller('EtfListController', function($EtfsFactory, $scope, $element, $attrs, $compile, $http, $q, $templateCache) {
+    .controller('EtfListController', function($EtfsFactory, $rootScope, $scope, $element, $attrs, $compile, $http, $q, $templateCache) {
         $attrs.template = $attrs.template || "/protected/component/EtfListComponent/table.html";
-        //$scope.client = $rootScope.client;
-
-        //console.log($scope.client.portfolio)
 
         var render = function(etfs) {
             $scope.etfs = etfs;
@@ -51,6 +48,18 @@ angular.module('MetronicApp')
         $scope.$watch(function() {
             return $attrs.model;
         }, function(filter) {
+            if (typeof filter == 'undefined' || filter.length == 0) {
+                if ($attrs.demo) {
+                    filter = $rootScope.client.portfolio.etfs;
+                } else {
+                    return;
+                }
+            }
+
+            if (filter.length == 0) {
+                filter = $rootScope.client.portfolio.etfs;
+            }
+
             $EtfsFactory.load(filter, function(etfs) {
                 if ($scope.beforeRendering) {
                     if (typeof $scope.beforeRendering != 'function') {

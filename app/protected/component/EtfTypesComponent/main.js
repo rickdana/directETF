@@ -1,5 +1,5 @@
 angular.module('MetronicApp')
-    .controller('EtfTypesController', function($ocLazyLoad, $EtfsFactory, $scope, $element, $attrs) {
+    .controller('EtfTypesController', function($ocLazyLoad, $EtfsFactory, $rootScope, $scope, $element, $attrs) {
         $ocLazyLoad.load({
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
 
@@ -8,7 +8,7 @@ angular.module('MetronicApp')
             ]
         });
 
-        var load = function (etfs) {
+        var load = function(etfs) {
             var sum = 0
                 , percents = {}
                 , series = [];
@@ -42,15 +42,24 @@ angular.module('MetronicApp')
             return series;
         };
 
-        $scope.$watch(function() {
-            return $scope.portfolio.strategy.changed();
-        }, function() {
-            $EtfsFactory.loadAll(function(etfs) {
-                $scope.types = load($scope.portfolio.strategy.cross(etfs));
+        $EtfsFactory.loadAll(function(etfs) {
+            $scope.$watch(function() {
+                return $scope.portfolio.isins;
+            }, function(filter) {
+                if (typeof filter == 'undefined' || filter.length == 0) {
+                    if ($attrs.demo) {
+                        filter = $rootScope.client.portfolio.isins;
+                    } else {
+                        return;
+                    }
+                }
+
+                $EtfsFactory.load(filter, function(etfs) {
+                    $scope.types = load(etfs);
+                });
             });
         });
     })
-
     .directive("typeProgress", function($EtfsFactory) {
         return {
             controller: "EtfTypesController",

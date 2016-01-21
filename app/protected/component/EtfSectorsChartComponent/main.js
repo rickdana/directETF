@@ -1,7 +1,7 @@
 angular.module('MetronicApp')
-    .controller('EtfSectorsChartController', function($ocLazyLoad, $EtfsFactory, $scope, $element, $attrs) {
+    .controller('EtfSectorsChartController', function($ocLazyLoad, $EtfsFactory, $rootScope, $scope, $element, $attrs) {
         $ocLazyLoad.load({
-            insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+            insertBefore: '#ng_load_plugins_before',
 
             files: [
                 '/protected/component/EtfSectorsChartComponent/style.css'
@@ -10,7 +10,7 @@ angular.module('MetronicApp')
 
         var sector_info_box = $element.find('.sectors-overview-box');
 
-        $element.render = function(etfs) {
+        var render = function(etfs) {
             $element.find('.etf-sectors-pie-chart-wrapper').highcharts({
                 mapNavigation: {
                    enabled: false
@@ -171,7 +171,15 @@ angular.module('MetronicApp')
         $scope.$watch(function() {
             return $scope.model;
         }, function(filter) {
-            $EtfsFactory.load(filter, $element.render, false);
+            if (typeof filter == 'undefined' || filter.length == 0) {
+                if ($attrs.demo) {
+                    filter = $rootScope.client.portfolio.etfs;
+                } else {
+                    return;
+                }
+            }
+
+            $EtfsFactory.load(filter, render, false);
         });
     })
     .directive("sectorChartPie", function($EtfsFactory) {
