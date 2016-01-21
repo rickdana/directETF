@@ -10,7 +10,7 @@
              class="step fa fa-check" data-title="Validation"></div>
     </div>
 
-    <div id="sentence" ng-show="wizard.step < 3">
+    <div id="sentence" ng-show="wizard.step < 4">
         <p ng-show="wizard.step > 1">
             Je souhaite investir
             <span class="questionnaire-sentence-keyword">
@@ -113,13 +113,6 @@
                                                 <div class="explication-courbe">Voici une analyse de votre nouvel
                                                     investissement.
                                                 </div>
-                                                <div>
-                                                    Je souhaite investir
-                                                    <span class="questionnaire-sentence-keyword">
-                                                        {{wizard.order.amount.total}}&nbsp;{{client.portfolio.currencySymb}}</span>.
-                                                </div>
-                                                <strategy-keywords
-                                                        data-strategy="wizard.portfolio.strategy"></strategy-keywords>
                                             </div>
                                             <table id="fund_read_chart" style="display: table;">
                                                 <tbody>
@@ -156,6 +149,14 @@
                                                     <span class="lowercase">{{periodeSelect}}</span>, la performance
                                                     de votre portefeuille aurait été:
                                                     La différence est : augmenter la part des actions US.
+                                                    <div>
+                                                        <span>Mots-clés ajoutés: </span>
+                                                        <span>{{newKeywords().join(', ')}}.</span>
+                                                    </div>
+                                                    <div>
+                                                        <span>Mots-clés supprimés: </span>
+                                                        <span>{{deletedKeywords().join(', ')}}.</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

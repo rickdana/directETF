@@ -14,14 +14,9 @@ New Profile Page
 .profile-sidebar-portlet {
   padding: 30px 0 0 0 !important; }
 
-.profile-userpic img {
-  float: none;
-  margin: 0 auto;
-  width: 50%;
-  height: 50%;
-  -webkit-border-radius: 50% !important;
-  -moz-border-radius: 50% !important;
-  border-radius: 50% !important; }
+.profile-userpic {
+    text-align: center;
+}
 
 .profile-usertitle {
   text-align: center;
@@ -132,3 +127,12 @@ New Profile Page
     margin-bottom: 20px; }
   .profile-content {
     overflow: visible; } }
+
+.image-client {
+  width: 99px;
+  height: 128px;
+  font-size: 126px;
+  top: 57px;
+  position: relative;
+}
+

@@ -56,14 +56,12 @@
                                 <tr>
                                     <td class="type">Niveau de risque</td>
                                     <td class="number"></td>
-                                    <td class="percent">important</td>
+                                    <td class="percent">{{risks[client.portfolio.risk]}}</td>
                                 </tr>
                             </table>
                         </div>
 
-                        <p class="infos-sythese text-center">
-                            Votre taux d'épargne est estimé à 15%. Votre épargne est investie à 40%.
-                        </p>
+
                     </div>
                 </div>
             </div>
@@ -168,7 +166,7 @@
                 </div>
 
                 <div id="strategy-demo" class="portlet-body text-center">
-                    <p>Vous n'avez pas défini de stratégie </p>
+                    <p>Vous n'avez pas défini de stratégie: votre portefeuille est neutre.</p>
                     <a href="#/investir" class="btn btn-primary btn-xl"> Définir une stratégie</a>
                 </div>
             </div>
@@ -207,10 +205,10 @@
                                     <td class="number">0.00 {{client.portfolio.currencySymb}}</td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
-                                <tr>
+                                <tr class="infos-risk">
                                     <td class="type">Niveau de risque</td>
                                     <td class="number"></td>
-                                    <td class="percent"></td>
+                                    <td class="percent">{{risks[client.portfolio.risk]}}</td>
                                 </tr>
                             </table>
                         </div>
