@@ -280,8 +280,8 @@ angular.module('MetronicApp')
                 onEnd: function () {
                     draw_simulation_future(_data_valo, _invest_etfs);
                 },
-                translate: function() {
-                    return '';
+                translate: function(x) {
+                    return x + 'ans';
                 }
             }
         };
