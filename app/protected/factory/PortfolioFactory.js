@@ -517,22 +517,6 @@ angular.module('MetronicApp')
             var strategy = new Strategy(desc.strategy || []);
             var etfs_list = [];
 
-            if (strategy.keywords.length() == 0 && desc.etfs) {
-                // fallback loading
-                // load keywords using the portfolio ETFs list
-                $EtfsFactory.load(desc.etfs, function(list) {
-                    console.log('list:=>', list)
-
-                    for (var i in list) {
-                        var etf = list[i];
-
-                        for (var j in etf.keywords) {
-                            strategy.keywords.add(etf.keywords[j].id, etf.keywords[j].weight);
-                        }
-                    }
-                });
-            }
-
             var build = function(done) {
                 // Build the new portfolio
                 $EtfsFactory.load(null, function(isins) {
