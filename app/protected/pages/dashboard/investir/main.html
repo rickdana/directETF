@@ -30,13 +30,14 @@
             </div>
             <div class="col-lg-6">
                 <div class="portlet">
-                    <map id="maps-container" data-height="250"
+                    <map id="maps-container" data-height="250" data-demo="true"
                          data-model="wizard.portfolio.isins"></map>
                     <sector-chart-pie id="sectors-overview" data-height="200"
+                                      data-demo="true"
                                       data-model="wizard.portfolio.isins"
                                       data-show-in-legend="true"></sector-chart-pie>
-                    <type-progress data-portfolio="wizard.portfolio"></type-progress>
-                    <etf-list data-model="{{wizard.portfolio.isins}}"></etf-list>
+                    <type-progress data-demo="true" data-portfolio="wizard.portfolio"></type-progress>
+                    <etf-list data-demo="true" data-model="{{wizard.portfolio.isins}}"></etf-list>
                 </div>
             </div>
         </div>
