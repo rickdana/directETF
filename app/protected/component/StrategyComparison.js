@@ -90,13 +90,7 @@ angular.module('MetronicApp')
         };
         
         var draw = function($element) {
-            var series = [{
-                name: 'Portefeuille',
-                type: 'spline',
-                data: portfolio.data.valo,
-                color: 'rgb(50, 197, 210)',
-                fillOpacity: 0.2
-            }, {        //trades of client
+            var series = [{        //trades of client
                 name: 'Investissement',
                 data: portfolio.data.trades,
                 type: 'spline',
@@ -104,6 +98,12 @@ angular.module('MetronicApp')
                 fillOpacity: 0.15,
                 //yAxis: 1,
                 dashStyle: 'ShortDot'
+            }, {
+                name: 'Stratégie actuelle',
+                type: 'spline',
+                data: portfolio.data.valo,
+                color: 'rgb(50, 197, 210)',
+                fillOpacity: 0.2
             }];
 
             console.log('portfolio.data.trades:', portfolio.data.trades)

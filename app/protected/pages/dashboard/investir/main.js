@@ -458,7 +458,9 @@ angular.module('MetronicApp')
 
         $rootScope.step3 = function () {
             if (!$scope.model.strategies) {
-                $scope.simulation();
+                setTimeout(function() {
+                    $scope.simulation();
+                }, 100);
 
                 $scope.model.strategies = {
                     'Nouvelle stratégie': $scope.wizard.portfolio.strategy,
