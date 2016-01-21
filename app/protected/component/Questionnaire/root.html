@@ -5,8 +5,6 @@
             <input type="radio" name="{{node.id}}" id="{{child.id}}" class="aCheck filter-checkbox"
                    ng-checked="child.id == first.id"
                    ng-click="questionnaire.current.node = child.goto;
-                             questionnaire.history.add(node, child);
-                             questionnaire.history.query();
                              questionnaire.children(child.goto)">
             <label for="{{child.id}}">
                 <span>{{child.text}}</span>

@@ -42,13 +42,14 @@ angular.module('MetronicApp')
                             }
                         }
                     },
-                    exists: function(child) {
+                    exists: function(id) {
                         for (var i = 0; i < this.entries.length; i++) {
-                            if (this.entries[i][1].id == child.id) {
+                            if (this.entries[i][1].id == id) {
                                 return true;
                             }
                         }
-                        return false;
+
+                        return $scope.$strategy.keywords.exists(id);
                     },
                     remove: function(index) {
                         var rest = this.entries.slice((this.entries.length || index) + 1 || this.entries.length);
@@ -70,6 +71,21 @@ angular.module('MetronicApp')
                                 }
                             }
                         }
+                    },
+                    sync: function() {
+                        for (var i in $scope.questionnaire.nodes) {
+                            var node = $scope.questionnaire.nodes[i];
+
+                            if (node.children) {
+                                for (var j in node.children) {
+                                    var child = node.children[j];
+
+                                    if ($scope.$strategy.keywords.exists(child.id)) {
+                                        this.add(node, child);
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 children: function(id) {
@@ -85,8 +101,13 @@ angular.module('MetronicApp')
 
             $http.get($attrs.json)
                 .then(function(questionnaireFile) {
+                    // Expose the questionnaire node
                     $scope.questionnaire.nodes = questionnaireFile.data.nodes;
 
+                    // Sync the questionnaire history with the linked portfolio's strategy
+                    $scope.questionnaire.history.sync();
+
+                    // Select the first node as a root entry
                     var node = $scope.questionnaire.nodes[0];
                     var child = node.children[0];
 
@@ -112,8 +133,12 @@ angular.module('MetronicApp')
         };
 
         $scope.$watch(function() {
-            return $scope.$strategy.keywords.length();
+            return $scope.$strategy && $scope.$strategy.keywords.length();
         }, function() {
+            if (!$scope.$strategy) {
+                return;
+            }
+
             var keywords = $scope.$strategy.get();
             var keywords_sentence = [];
 
