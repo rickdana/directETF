@@ -10,7 +10,7 @@
              class="step fa fa-check" data-title="Validation"></div>
     </div>
 
-    <div id="sentence" ng-show="wizard.step < 3">
+    <div id="sentence" ng-show="wizard.step < 4">
         <p ng-show="wizard.step > 1">
             Je souhaite investir
             <span class="questionnaire-sentence-keyword">
@@ -97,23 +97,20 @@
                                 <div class="col-lg-12">
                                     <div class="portlet light bordered">
                                         <div class="portlet-title">
-                                            <div class="col-lg-5" style="float: right">
-                                                <div id="slider-timeframe" class="form-group">
+                                            <div class="col-lg-4" style="float: right">
+                                                <div id="slider-timeframe">
                                                     <div class="slider-col">
                                                         <label class="caption-subject control-label">Durée</label></div>
                                                     <div class="slider-col">
                                                         <rzslider rz-slider-model="timeframe"
-                                                                  rz-slider-options="sliderTimeframe.options"></rzslider></div>
-                                                    <div class="slider-col">
-                                                        <input type="number" min="3" max="50"
-                                                               class="form-control" ng-model="timeframe" required></div>
+                                                                  rz-slider-options="sliderTimeframe.options"></rzslider>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="caption caption-md">
                                             <span class="caption-subject font-green bold uppercase">
                                                 Projection sur {{timeframe}} ans</span>
-                                                <div class="explication-courbe">Voici une analyse de votre nouvel investissement
-                                                    (rappeler l'investissement)</div>
+                                                <div class="explication-courbe">Voici une analyse de votre nouvelle stratégie.</div>
                                             </div>
                                         </div>
                                         <div class="portlet-body">
@@ -149,7 +146,7 @@
                                         <div class="portlet-title">
                                             <div class="caption caption-md">
                                                 <span class="caption-subject font-green bold uppercase">Simulation pasée</span>
-                                                <div class="explication-courbe">Si vous aviez passé cet ordre il y a (mettre une combo) mois, la performance
+                                                <div class="explication-courbe">Si vous aviez passé cet ordre il y a mois, la performance
                                                     de votre portefeuille aurait été:
                                                     La différence est : augmenter la part des actions US.
                                                 </div>
