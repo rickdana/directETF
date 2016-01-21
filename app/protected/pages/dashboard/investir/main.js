@@ -558,7 +558,7 @@ angular.module('MetronicApp')
 
                             SimulationFactory.draw_simulation_future(data_valo, etfs_strategy_simulation, $scope.timeframe);
 
-                            _invest_etfs = invest_etfs;
+                            _invest_etfs = etfs_strategy_simulation;
                             _data_valo = data_valo;
                         });
                     };
