@@ -280,8 +280,8 @@ angular.module('MetronicApp')
                 onEnd: function () {
                     draw_simulation_future(_data_valo, _invest_etfs);
                 },
-                translate: function(value) {
-                    return value + ' ans';
+                translate: function(x) {
+                    return x + 'ans';
                 }
             }
         };
@@ -564,10 +564,6 @@ angular.module('MetronicApp')
                 });
             });
         });
-        //setTimeout(function() {
-        //    $scope.wizard.goto(3);
-        //}, 500)
-
     })
     .controller('InvestirValidationController', function($OrdersFactory, $rootScope, $scope, $element) {
         $scope.$OrdersFactory = $OrdersFactory;

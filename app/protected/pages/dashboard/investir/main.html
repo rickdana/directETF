@@ -5,12 +5,12 @@
         <div ng-class="{valid: wizard.step >= 2, current: wizard.step == 2}"
              class="step fa fa-eur" data-title="Montant"></div>
         <div ng-class="{valid: wizard.step >= 3, current: wizard.step == 3}"
-             class="step fa fa-area-chart" data-title="Simulation"></div>
+             class="step fa fa-area-chart" data-title="Simulations"></div>
         <div ng-class="{valid: wizard.step >= 4, current: wizard.step == 4}"
              class="step fa fa-check" data-title="Validation"></div>
     </div>
 
-    <div id="sentence" ng-show="wizard.step < 4">
+    <div id="sentence" ng-show="wizard.step < 3">
         <p ng-show="wizard.step > 1">
             Je souhaite investir
             <span class="questionnaire-sentence-keyword">
@@ -52,7 +52,8 @@
     </div>
 
     <!--Step 2-->
-    <div class="wizard-panel" data-step="2" ng-controller="InvestirMontantAjustementController" ng-show="wizard.step == 2">
+    <div class="wizard-panel" data-step="2" ng-controller="InvestirMontantAjustementController"
+         ng-show="wizard.step == 2">
         <div class="row">
             <div id="amount-box" class="bg-black">
                 <div class="money"></div>
@@ -85,20 +86,20 @@
                 <div class="tabbable-line boxless tabbable-reversed">
                     <ul class="nav nav-tabs" id="tab-simulation">
                         <li class="active">
-                            <a href="/investir/#tab_0" data-toggle="tab"> Simulation future </a>
+                            <a href="/investir/#tab_0" data-toggle="tab">Projection sur {{timeframe}} ans</a>
                         </li>
                         <li>
-                            <a href="/investir/#tab_1" data-toggle="tab"> Simulation passée </a>
+                            <a href="/investir/#tab_1" data-toggle="tab">Comparaison avec la nouvelle stratégie</a>
                         </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_0">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="portlet light bordered">
-                                        <div class="portlet-title">
-                                            <div class="col-lg-4" style="float: right">
-                                                <div id="slider-timeframe">
+                                    <div class="portlet">
+                                        <div class="portlet-body">
+                                            <div class="col-lg-5" style="float: right">
+                                                <div id="slider-timeframe" class="form-group">
                                                     <div class="slider-col">
                                                         <label class="caption-subject control-label">Durée</label></div>
                                                     <div class="slider-col">
@@ -108,12 +109,17 @@
                                                 </div>
                                             </div>
                                             <div class="caption caption-md">
-                                            <span class="caption-subject font-green bold uppercase">
-                                                Projection sur {{timeframe}} ans</span>
-                                                <div class="explication-courbe">Voici une analyse de votre nouvelle stratégie.</div>
+                                                <div class="explication-courbe">Voici une analyse de votre nouvel
+                                                    investissement.
+                                                </div>
+                                                <div>
+                                                    Je souhaite investir
+                                                    <span class="questionnaire-sentence-keyword">
+                                                        {{wizard.order.amount.total}}&nbsp;{{client.portfolio.currencySymb}}</span>.
+                                                </div>
+                                                <strategy-keywords
+                                                        data-strategy="wizard.portfolio.strategy"></strategy-keywords>
                                             </div>
-                                        </div>
-                                        <div class="portlet-body">
                                             <table id="fund_read_chart" style="display: table;">
                                                 <tbody>
                                                 <tr class="hi" style="display: table-row;">
@@ -142,11 +148,11 @@
                         <div class="tab-pane" id="tab_1">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="portlet light bordered">
+                                    <div class="portlet">
                                         <div class="portlet-title">
                                             <div class="caption caption-md">
-                                                <span class="caption-subject font-green bold uppercase">Simulation pasée</span>
-                                                <div class="explication-courbe">Si vous aviez passé cet ordre il y a mois, la performance
+                                                <div class="explication-courbe">Si vous aviez passé cet ordre il y a
+                                                    <span class="lowercase">{{periodeSelect}}</span>, la performance
                                                     de votre portefeuille aurait été:
                                                     La différence est : augmenter la part des actions US.
                                                 </div>
@@ -154,11 +160,14 @@
                                         </div>
                                         <div class="portlet-body">
                                             <div class="form-group form-md-line-input">
-                                                <select class="form-control" id="choix-period-invest-past" ng-model="periodeSelect" data-id-container="simulation-past" link-to-stcokchart>
+                                                <select class="form-control" id="choix-period-invest-past"
+                                                        ng-model="periodeSelect" data-id-container="simulation-past"
+                                                        link-to-stcokchart>
                                                     <option ng-repeat="option in periodeData">{{option}}</option>
                                                 </select>
                                             </div>
-                                            <strategy-comparison id="simulation-past" data-strategies="model.strategies"></strategy-comparison>
+                                            <strategy-comparison id="simulation-past"
+                                                                 data-strategies="model.strategies"></strategy-comparison>
                                         </div>
                                     </div>
                                 </div>
