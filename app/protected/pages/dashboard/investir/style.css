@@ -302,7 +302,7 @@ table#fund_read_chart {
     border-collapse: collapse;
     background: #fff;
     position: absolute;
-    top: 150px;
+    top: 50px;
     left: 20px;
     font-size: 11px;
     overflow: hidden;
@@ -314,11 +314,11 @@ table#fund_read_chart {
 }
 
 table#fund_read_chart tr.hi {
-    background: #579969;
+    background: #28939D;
 }
 
 table#fund_read_chart tr.med {
-    background: #5FB778;
+    background: #36c6d3;
 }
 
 table#fund_read_chart tr.lo {
@@ -347,10 +347,6 @@ table#read_chart tr.contr td {
     right: 30px;
     z-index: 100;
 }
-
-/*#tab_1 .portlet-title .caption, #tab_0 .portlet-title .caption{*/
-    /*padding-left: 22px;*/
-/*}*/
 
 .investir {
     font-size: 1.5em;
@@ -418,7 +414,42 @@ table#read_chart tr.contr td {
 [data-step="4"] .portlet.bg-black a {
     width: 60%;
 }
+
 #tab_0 .portlet-body {
     position: relative;
 }
 
+[data-step="1"] .portlet .tools i {
+    font-size: 22px;
+    color: rgb(127, 123, 123);
+}
+
+[data-step="1"] #list-overview {
+    display: none;
+}
+#tab_0 .portlet .portlet-title {
+    min-height: 20px;
+    margin-bottom: 3px;
+}
+#tab_0 .caption {
+    width: 100%;
+}
+
+#slider-timeframe {
+    right: 31px;
+    position: relative;
+    font-size: 14px;
+    float: right;
+    width: 25%;
+    margin-top: 20px;
+}
+
+#slider-timeframe label {
+    float: left;
+}
+
+#slider-timeframe rzslider {
+   float: right;
+    width: 75%;
+    margin-top: 12px;
+}
