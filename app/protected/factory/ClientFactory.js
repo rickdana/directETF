@@ -77,6 +77,11 @@ angular.module('MetronicApp')
                     $http.get(WS_URL + '/client/portfolio/' + client.id)
                         .success(function(portfolio) {
                             var currency = typeof portfolio['dividends']['EUR'] != 'undefined' ? 'EUR' : 'USD';
+                            var isins = [];
+
+                            for (var isin in portfolio.etfs) {
+                                isins.push(isin);
+                            }
 
                             client.portfolio.infos = {
                                 goal: portfolio.investorProfile.goal,
@@ -89,6 +94,7 @@ angular.module('MetronicApp')
                                 cash: portfolio.cash[currency],
                                 etfs: portfolio.etfs,
                                 strategy: portfolio.strategy,
+                                isins: isins
                             };
 
                             done(false, client.portfolio.infos);
