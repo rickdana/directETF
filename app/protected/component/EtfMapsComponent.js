@@ -1,10 +1,10 @@
 angular.module('MetronicApp')
-    .controller('EtfMapsController', ['$EtfsFactory', '$scope', '$element', '$attrs', function($EtfsFactory, $scope, $element, $attrs) {
+    .controller('EtfMapsController', function($EtfsFactory, $rootScope, $scope, $element, $attrs) {
         $element.css({
             display: 'block'
         });
 
-        $element.render = function(etfs) {
+        var render = function(etfs) {
             var mapData = Highcharts.geojson(Highcharts.maps['custom/world']);
 
             $element.highcharts('Map', {
@@ -112,9 +112,17 @@ angular.module('MetronicApp')
         $scope.$watch(function() {
             return $scope.model;
         }, function(filter) {
-            $EtfsFactory.load(filter, $element.render);
+            if (typeof filter == 'undefined' || filter.length == 0) {
+                if ($attrs.demo) {
+                    filter = $rootScope.client.portfolio.etfs;
+                } else {
+                    return;
+                }
+            }
+
+            $EtfsFactory.load(filter, render);
         });
-    }])
+    })
     .directive("map", function($EtfsFactory) {
         return {
             restrict: 'E',

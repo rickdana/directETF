@@ -5,14 +5,14 @@
              ng-init="node.type = node.type || 'radio'">
             <input ng-if="node.type == 'radio'" type="radio" name="{{node.id}}" id="{{child.id}}"
                    class="filter-checkbox"
-                   ng-checked="questionnaire.history.exists(child)"
+                   ng-checked="questionnaire.history.exists(child.id)"
                    ng-click="questionnaire.current.node = child.goto;
                              questionnaire.history.add(node, child);
                              questionnaire.history.query();
                              questionnaire.children(child.goto)">
             <input ng-if="node.type != 'radio'" type="checkbox" name="{{node.id}}" id="{{child.id}}"
                    class="filter-checkbox"
-                   ng-checked="questionnaire.history.exists(child)"
+                   ng-checked="questionnaire.history.exists(child.id)"
                    ng-click="questionnaire.history.add(node, child);
                              questionnaire.history.query();">
             <label for="{{child.id}}"><span>{{child.text}}</span></label>

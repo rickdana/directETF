@@ -371,26 +371,26 @@ angular.module('MetronicApp')
 
         $ClientFactory.portfolio.infos(function(err, infos) {
             $scope.wizard.portfolio = new $PortfolioFactory.Portfolio(infos);
+
+            $scope.$watch(function() {
+                return $scope.wizard.portfolio.strategy.keywords.length();
+            }, function() {
+                $scope.wizard.portfolio.strategy.etfs(function(etfs) {
+                    $scope.wizard.portfolio.isins = [];
+
+                    for (var i in etfs) {
+                        $scope.wizard.portfolio.isins.push(etfs[i].isin);
+                    }
+
+                    console.log('==>', $scope.wizard.portfolio.isins)
+                });
+            });
         });
 
         $scope.$watch(function() {
             return $scope.wizard.order.amount.adding;
         }, function(value) {
             $scope.wizard.order.amount.total = $scope.client.portfolio.value + (parseFloat(value || 0) || 0);
-        });
-
-        $scope.$watch(function() {
-            return $scope.wizard.portfolio.strategy.keywords.length();
-        }, function() {
-            $scope.wizard.portfolio.strategy.etfs(function(etfs) {
-                $scope.wizard.portfolio.isins = [];
-
-                for (var i in etfs) {
-                    $scope.wizard.portfolio.isins.push(etfs[i].isin);
-                }
-
-                console.log('==>', $scope.wizard.portfolio.isins)
-            });
         });
 
         // set sidebar closed and body solid layout mode
@@ -571,16 +571,6 @@ angular.module('MetronicApp')
         //}, 500)
     })
     .controller('InvestirValidationController', function($OrdersFactory, $rootScope, $scope, $element) {
-        $scope.$OrdersFactory = $OrdersFactory;
-
-        $rootScope.step4 = function () {
-            $OrdersFactory.lock();
-            setTimeout(function() {
-                $scope.$apply(function() {
-                    $element.find('.update-with-etfs-selection')
-                        .attr('data-filter', JSON.stringify($OrdersFactory.get()));
-                });
-            }, 500);
-        };
+        $rootScope.step4 = function () {};
     });
 

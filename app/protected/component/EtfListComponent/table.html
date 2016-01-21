@@ -1,5 +1,5 @@
 <table class="table table-hover table-header-fixed">
-    <thead>
+    <thead ng-show="etfs.length">
     <tr>
         <th class="etf-column name">Intitulé des titres</th>
     </tr>
@@ -10,3 +10,4 @@
     </tr>
     </tbody>
 </table>
+<h2 class="text-center" ng-show="!etfs.length">Aucun titre associé à cette stratégie</h2>
