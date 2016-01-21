@@ -106,8 +106,6 @@ angular.module('MetronicApp')
                 dashStyle: 'ShortDot'
             }];
 
-            console.log('portfolio.data.trades:', portfolio.data.trades)
-
             //simulation-graph of the past
             LoadStockChart(series, $element, true);
 
