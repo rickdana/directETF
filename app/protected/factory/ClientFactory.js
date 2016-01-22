@@ -94,7 +94,8 @@ angular.module('DirectETF')
                                 cash: portfolio.cash[currency],
                                 etfs: portfolio.etfs,
                                 strategy: portfolio.strategy,
-                                isins: isins
+                                description: portfolio.textDescription,
+                                isins: isins,
                             };
 
                             done(false, client.portfolio.infos);
