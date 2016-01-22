@@ -1,4 +1,4 @@
-<div ng-controller="PortefeuilleSyntheseController">
+<div ng-controller="PortefeuilleController">
     <div class="row" ng-if="client.profile.alreadyInvest">
         <div class="col-lg-6">
             <div class="portlet">
@@ -139,7 +139,7 @@
 
                 <div class="portlet-body">
                     <etf-list data-model="{{client.portfolio.etfs}}"
-                              data-template="/protected/pages/dashboard/portefeuille/synthese/table.html"></etf-list>
+                              data-template="/protected/pages/dashboard/portefeuille/table.html"></etf-list>
                 </div>
             </div>
             <!-- Maps de mes ETFs-->

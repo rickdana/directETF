@@ -1,9 +1,9 @@
 angular.module('MetronicApp')
-    .controller('PortefeuilleSyntheseController', function($ClientFactory, $rootScope, $scope, $element, $ocLazyLoad) {
+    .controller('PortefeuilleController', function($ClientFactory, $rootScope, $scope, $element, $ocLazyLoad) {
         $ocLazyLoad.load({
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
             files: [
-                '/protected/pages/dashboard/portefeuille/synthese/style.css',
+                '/protected/pages/dashboard/portefeuille/style.css',
             ]
         });
 

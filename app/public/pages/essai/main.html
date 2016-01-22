@@ -187,7 +187,7 @@
                                             euros par mois avec un patrimoine initial de
                                             <div style="display: inline">
                                                 <input type="number" placeholder="1000" class="form-control" ng-model="model.amountInitialInput" min="{{model.amountInitialMin}}" max="{{model.amountInitialMax}}" step="500" required>
-                                                <span>entre 1000 - 100000 euros</span>
+                                                <span>entre {{model.amountInitialSlider}} - {{model.amountInitialMax}} euros</span>
                                             </div>
                                             euros pendant les
                                             <div style="display: inline">
@@ -225,7 +225,8 @@
                                 </div>
                             </div>
 
-                            <p>Attention, votre choix d'un niveau derisque élevé peu contredire votre objectif de crer un revenu régulier. Souhaitez vous revenir en arrière?
+                            <p>Attention, votre choix d'un niveau de risque élevé peut contredire votre objectif de
+                                créer un revenu régulier. Souhaitez-vous revenir en arrière ?
                            </p><a class="btn btn-primary btn-xl" ng-click="prev()">revoir</a>
                             <a href="#/signin?riskLevel={{model.riskLevel}}" class="btn btn-primary btn-xl">créer un compte</a>
                         </div>

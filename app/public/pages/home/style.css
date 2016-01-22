@@ -107,3 +107,15 @@
 #page-home #contact p a {
     color: #ffffff;
 }
+
+p {
+  margin-bottom: 20px;
+  font-size: 20px;
+  line-height: 1.5;
+  color: #999;
+}
+
+#page-home [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+#page-home [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    font-size: 3em;
+}

@@ -246,7 +246,7 @@ tfoot td {
 #amount-box p + div input {
     background: transparent;
     border: none;
-    width: 150px;
+    width: 165px;
     border-radius: 0;
     border-bottom: 2px dashed #36c6d3;
     box-shadow: none;

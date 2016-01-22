@@ -288,7 +288,7 @@ angular.module('DirectETF', [])
             amountInitialSlider: 1000,
             amountInitialInput: 1000,
             amountInitialMin: 1000,
-            amountInitialMax: 100000,
+            amountInitialMax: 500000,
             riskLevel: 0,
             timeframe: 20,
             timeframeMin: 3,
@@ -298,7 +298,7 @@ angular.module('DirectETF', [])
            sliderAmount : {
             options: {
                 floor: 1000,
-                ceil: 100000,
+                ceil: 500000,
                 step: 500,
                 showSelectionBar: true,
                 hideLimitLabels: true,

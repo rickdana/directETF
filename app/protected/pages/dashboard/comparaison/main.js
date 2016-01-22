@@ -1,10 +1,10 @@
 angular.module('MetronicApp')
-    .controller('PortefeuilleComparerController', function($ClientFactory, $rootScope, $scope, $http, $EtfsFactory, $element, $ocLazyLoad) {
+    .controller('ComparaisonController', function($ClientFactory, $rootScope, $scope, $http, $EtfsFactory, $element, $ocLazyLoad, ngDialog) {
         $ocLazyLoad.load({
             insertBefore: '#ng_load_plugins_before',
             files: [
-                '/protected/pages/dashboard/portefeuille/comparer/style.css',
-                '/protected/pages/dashboard/portefeuille/comparer/reference.json'
+                '/protected/pages/dashboard/comparaison/style.css',
+                '/protected/pages/dashboard/comparaison/reference.json'
             ]
         });
 
@@ -13,6 +13,13 @@ angular.module('MetronicApp')
             App.initAjax();
 
         });
+
+        $scope.share = function() {
+            ngDialog.open({
+                template: '<h2 class="text-center">:-(</h2><p class="text-center">Il n\'est pas encore possible de partager une stratégie.</p>',
+                plain: true
+            });
+        };
 
         // Checkbox
         var checkbox = $element.find('#ref_fis_checkbox');
@@ -43,7 +50,7 @@ angular.module('MetronicApp')
                         throw err;
                     }
 
-                    $http.get('/protected/pages/dashboard/portefeuille/comparer/reference.json')
+                    $http.get('/protected/pages/dashboard/comparaison/reference.json')
                         .success(function (ref_infos) {
                             load_comparaison_valo_trades(data_valo, trades, trades_by_date, $scope);
 
@@ -94,5 +101,10 @@ angular.module('MetronicApp')
             $rootScope.settings.layout.pageContentWhite = true;
             $rootScope.settings.layout.pageBodySolid = false;
             $rootScope.settings.layout.pageSidebarClosed = false;
-        })
+        });
+
+        // set sidebar closed and body solid layout mode
+        $rootScope.settings.layout.pageContentWhite = true;
+        $rootScope.settings.layout.pageBodySolid = true;
+        $rootScope.settings.layout.pageSidebarClosed = false;
     })

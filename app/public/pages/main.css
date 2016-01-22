@@ -286,7 +286,6 @@ section {
 .open > .dropdown-toggle.btn-default {
     border-color: #ffffff;
     color: #000000;
-    background-color: #f2f2f2;
 }
 
 .btn-default:active,

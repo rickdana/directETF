@@ -80,8 +80,8 @@ angular.module("DirectETF")
 
                             setTimeout(function() {
                                 $window.location.href = '/dashboard';
-                            }, 2000);
-                        }, 1000);
+                            }, 1000);
+                        }, 500);
                     })
                     .error(function(data, status) {
                         $scope.account.status = 0;
