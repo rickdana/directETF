@@ -14,7 +14,7 @@
 }
 
 .portfolio-description {
-    margin: 1em 1em -1em;
+    margin: 2em 1em -1em;
 }
 
 table .compo-filter {
@@ -189,7 +189,7 @@ table .selected {
 .portlet-title{
 	color: #36c6d3;
 	text-align: center;
-	font-size: 23px;
+	font-size: 18px;
 }
 
 #portfolio .portlet-title .tools {
