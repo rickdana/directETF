@@ -371,6 +371,12 @@ angular.module('MetronicApp')
                         $window.location.href = '/dashboard';
                     }, 2000);
                 }
+            },
+            share: function() {
+                ngDialog.open({
+                    template: '<h2 class="text-center">:-(</h2><p class="text-center">Il n\'est pas encore possible de partager une stratégie.</p>',
+                    plain: true
+                });
             }
         };
 

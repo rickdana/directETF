@@ -180,10 +180,12 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)"><i
                         class="fa fa-angle-left"></i> Passer à l'étape précédente</a></div>
-            <div class="col-lg-6">
+            <div class="col-lg-4 text-center">
+                <a class="wizard-button-goto" ng-click="wizard.share()">Partager cette stratégie</a></div>
+            <div class="col-lg-4">
                 <a class="wizard-button-goto next pull-right" ng-click="wizard.goto(wizard.step + 1)">Passer à l'étape
                     suivante <i class="fa fa-angle-right"></i></a></div>
         </div>
