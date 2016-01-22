@@ -155,7 +155,7 @@ angular.module('DirectETF')
                 var query = JSON.stringify(filters);
 
                 if (queries[query] instanceof Array) {
-                    console.log('   return the cache results')
+                    //console.log('   return the cache results')
                     return cb(queries[query]);
                 }
 
@@ -255,7 +255,7 @@ angular.module('DirectETF')
                 var query = 'all';
 
                 if (queries[query] instanceof Array) {
-                    console.log('   return the cache results')
+                    //console.log('   return the cache results')
                     return cb(queries[query]);
                 }
 
