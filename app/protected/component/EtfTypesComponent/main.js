@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .controller('EtfTypesController', function($ocLazyLoad, $EtfsFactory, $rootScope, $scope, $element, $attrs) {
         $ocLazyLoad.load({
             insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
