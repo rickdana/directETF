@@ -180,9 +180,14 @@ angular.module('MetronicApp')
 
         }
 
-        var draw_simulation_future = function (data_valo, ref_etfs_new_invests, time_frame) {
+        var draw_simulation_future = function (data_valo, ref_etfs_new_invests, time_frame, amount_add) {
             //simulation-graph of the future
-            var data_valo_today = data_valo[data_valo.length - 1];
+            var data_valo_today;
+            if (data_valo.length == 0) {  //for the deomo
+                data_valo_today = [new Date().getTime(), amount_add];
+            } else {
+                data_valo_today = data_valo[data_valo.length - 1];
+            }
 
             var data_invest_future_attendu = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, -1, 1);
             var data_invest_future_favorable = simulation_future(ref_etfs_new_invests, time_frame, data_valo_today, 1, 1.35);
@@ -463,6 +468,7 @@ angular.module('MetronicApp')
                 }, 100);
 
                 $scope.model.strategies = {
+                    //'Stratégie neutre': $scope.client.portfolio.strategy,
                     'Nouvelle stratégie': $scope.wizard.portfolio.strategy,
                 };
             }
@@ -477,7 +483,7 @@ angular.module('MetronicApp')
                 showSelectionBar: true,
                 hideLimitLabels: true,
                 onEnd: function () {
-                    SimulationFactory.draw_simulation_future(_data_valo, _invest_etfs, $scope.timeframe);
+                    SimulationFactory.draw_simulation_future(_data_valo, _invest_etfs, $scope.timeframe, $scope.wizard.order.amount.total);
                 },
                 translate: function(x) {
                     return x + 'ans';
@@ -562,7 +568,7 @@ angular.module('MetronicApp')
                                 etfs_strategy_simulation.push([etf.isin, etf.quantity || 1, etf.price, etf.profitability, etf.volatility]);
                             }
 
-                            SimulationFactory.draw_simulation_future(data_valo, etfs_strategy_simulation, $scope.timeframe);
+                            SimulationFactory.draw_simulation_future(data_valo, etfs_strategy_simulation, $scope.timeframe, $scope.wizard.order.amount.total);
 
                             _invest_etfs = etfs_strategy_simulation;
                             _data_valo = data_valo;
