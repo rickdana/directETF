@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .factory('StrategyFactory', function($PortfolioFactory, $EtfsFactory, $ClientFactory) {
         var etfs_clients = [];
         var portfolio = {

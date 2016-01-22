@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .factory('$QuestionnaireFactory', function($http) {
         return {
             get: function (type, cb) {

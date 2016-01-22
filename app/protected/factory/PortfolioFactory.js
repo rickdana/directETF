@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .factory('$PortfolioFactory', function($http, $EtfsFactory, $ClientFactory) {
         var models = {},
             goals = [
@@ -427,6 +427,12 @@ angular.module('MetronicApp')
 
                 get: function() {
                     return keywords;
+                },
+
+                compare: function(strategy) {
+                    for (var id in keywords) {
+                        //if ()
+                    }
                 },
 
                 keywords: {

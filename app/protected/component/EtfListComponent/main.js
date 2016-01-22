@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .directive("etfList", function() {
         return {
             transclude: true,
