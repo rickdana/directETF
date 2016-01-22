@@ -203,12 +203,8 @@
                 <table class="table table-light">
                     <tbody>
                     <tr>
-                        <td>Liquidités entrantes estimées</td>
-                        <td class="text-right">{{(profit || (wizard.order.amount.total * 0.03)) | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
-                    </tr>
-                    <tr>
                         <td>Coût de la transaction</td>
-                        <td class="text-right">{{(wizard.order.amount.total * 0.02) | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
+                        <td class="text-right">{{(wizard.order.amount.total * 0.001) | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
                     </tr>
                     </tbody>
                 </table>
