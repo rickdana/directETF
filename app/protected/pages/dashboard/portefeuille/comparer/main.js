@@ -1,5 +1,5 @@
 angular.module('MetronicApp')
-    .controller('PortefeuilleComparerController', function($ClientFactory, $rootScope, $scope, $http, $EtfsFactory, $element, $ocLazyLoad) {
+    .controller('PortefeuilleComparerController', function($ClientFactory, $rootScope, $scope, $http, $EtfsFactory, $element, $ocLazyLoad, ngDialog) {
         $ocLazyLoad.load({
             insertBefore: '#ng_load_plugins_before',
             files: [
@@ -13,6 +13,13 @@ angular.module('MetronicApp')
             App.initAjax();
 
         });
+
+        $scope.share = function() {
+            ngDialog.open({
+                template: '<h2 class="text-center">:-(</h2><p class="text-center">Il n\'est pas encore possible de partager une stratégie.</p>',
+                plain: true
+            });
+        };
 
         // Checkbox
         var checkbox = $element.find('#ref_fis_checkbox');
