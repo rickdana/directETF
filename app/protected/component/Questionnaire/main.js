@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .controller('QuestionnaireController', function($ocLazyLoad, $scope, $http, $element, $attrs, $q, $compile, $templateCache) {
         if ($attrs.json) {
             $ocLazyLoad.load({

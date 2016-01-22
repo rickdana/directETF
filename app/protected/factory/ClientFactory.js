@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .factory('$ClientFactory', function($http, $EtfsFactory) {
         var client = {
             id: CLIENT_ID,

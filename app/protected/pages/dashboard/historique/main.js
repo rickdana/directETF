@@ -1,6 +1,6 @@
-angular.module('MetronicApp').controller('HistoriqueController', function( $ClientFactory, $rootScope, $scope, $http, $ocLazyLoad) {
+angular.module('DirectETF').controller('HistoriqueController', function( $ClientFactory, $rootScope, $scope, $http, $ocLazyLoad) {
     $ocLazyLoad.load({
-        name: 'MetronicApp',
+        name: 'DirectETF',
         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
         files: [
             '/datatables/media/css/jquery.dataTables.css',

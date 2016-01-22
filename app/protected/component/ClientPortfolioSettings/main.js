@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .directive("clientPortfolioSettings",
         function() {
             return {

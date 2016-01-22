@@ -1,6 +1,6 @@
-angular.module('MetronicApp').controller('ActualitesController', function($rootScope, $scope, $http, $timeout, $ocLazyLoad) {
+angular.module('DirectETF').controller('ActualitesController', function($rootScope, $scope, $http, $timeout, $ocLazyLoad) {
     $ocLazyLoad.load({
-        name: 'MetronicApp',
+        name: 'DirectETF',
         insertBefore: '#ng_load_plugins_before',
         files: [
             "/protected/pages/dashboard/actualites/style.css",

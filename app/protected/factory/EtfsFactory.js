@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .factory('$EtfsFactory', function($http) {
         var etfs = [];
         var queries = {};
