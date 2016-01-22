@@ -110,7 +110,7 @@ table .selected {
 }
 
 .portlet-body {
-	font-size: 15px;
+	font-size: 17px;
 }
 
 .infos-principales {
@@ -121,8 +121,9 @@ table .selected {
 }
 
 .infos-principales .number {
-	font-size: 47px;
-	margin-top: -13px;
+	font-size: 50px;
+	margin-top: -10px;
+	margin-bottom: 0.3em;
 }
 
 
@@ -157,12 +158,12 @@ table .selected {
 
 #graph-synthese .portlet{
 	background-color: #36c6d3 !important;
-	height: 386px;
+	height: 362px;
 }
 
 #portfolio .portlet {
 	margin-bottom: 0px;
-	height: 328px;
+	height: 320px;
 }
 
 #portfolio .portlet-title {
@@ -188,14 +189,23 @@ table .selected {
 	font-size: 23px;
 }
 
-#portfolio .portlet-title .tools, #sector .portlet-title .tools, #table-synthese .portlet-title .tools,
-#list-etfs .portlet-title .tools {
-	padding-top: 4px;
+#portfolio .portlet-title .tools {
+      float: none !important;
+      position: absolute;
+      left: 24px;
+}
+
+#portfolio .portlet-title .tools a {
+    color: #4B535A !important;
 }
 
 #portfolio .portlet-title .left, #sector .portlet-title .left, #table-synthese .portlet-title .left,
 #list-etfs .portlet-title .left {
 	float: left;
+}
+
+#sector .portlet-title {
+  margin-bottom: 22px;
 }
 
 #portfolio .portlet-title .left a i, #sector .portlet-title .left a i, #table-synthese .portlet-title .left a i,
@@ -206,17 +216,15 @@ table .selected {
 
 #portfolio .portlet-title .right, #sector .portlet-title .right, #table-synthese .portlet-title .right,
 #list-etfs .portlet-title .right {
-	float: right;
+	float: left;
 }
 
 #portfolio .portlet-title i, #sector .portlet-title i, #table-synthese .portlet-title i,
 #list-etfs .portlet-title i {
 	font-size: 27px;
-}
-
-#portfolio	.portlet-title .text, #sector .portlet-title .text, #table-synthese .portlet-title .text,
-#list-etfs .portlet-title .text {
-	padding-top: 16px;
+	position: absolute;
+    left: 24px;
+    color: #4B535A
 }
 
 #table-synthese, #list-etfs {
@@ -302,3 +310,9 @@ body .btn-primary:hover, body .btn-primary:focus {
 #strategy-demo a {
 	margin-bottom: 10px;
 }
+
+#portefeuille .col-lg-6 {
+    padding-left: 15px;
+    padding-right: 0px
+}
+
