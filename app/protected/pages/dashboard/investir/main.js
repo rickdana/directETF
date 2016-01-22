@@ -312,7 +312,7 @@ angular.module('MetronicApp')
         }
 
     })
-    .controller('WizardController', function($ClientFactory, $PortfolioFactory, $OrdersFactory, $rootScope, $scope, $element, $ocLazyLoad) {
+    .controller('WizardController', function($ClientFactory, $PortfolioFactory, $OrdersFactory, $rootScope, $scope, $element, $ocLazyLoad, ngDialog, $window) {
         $ocLazyLoad.load({
             insertBefore: '#ng_load_plugins_before',
             files: [
@@ -360,7 +360,16 @@ angular.module('MetronicApp')
                     total: $scope.client.portfolio.value
                 },
                 process: function() {
+                    // Confirmation
+                    ngDialog.open({
+                        template: '<p class="text-center">La transaction sera effectuée ce soir à 22h45</p>',
+                        plain: true
+                    });
 
+                    // Open the portfolio page
+                    setTimeout(function() {
+                        $window.location.href = '/dashboard';
+                    }, 2000);
                 }
             }
         };
