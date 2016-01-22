@@ -1,0 +1,30 @@
+<div class="portlet text-center">
+    <h2>Récapitulatif</h2>
+
+    <p>Je souhaite investir
+                <span class="questionnaire-sentence-keyword">
+                    {{wizard.order.amount.total}}&nbsp;{{client.portfolio.currencySymb}}</span>.</p>
+    <strategy-keywords data-strategy="wizard.portfolio.strategy"></strategy-keywords>
+
+    <div class="table-wrapper">
+        <table class="table table-light">
+            <tbody>
+            <tr>
+                <td>Coût de la transaction</td>
+                <td class="text-right">{{(wizard.order.amount.total * 0.001) | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="portlet text-center bg-black">
+    <input type="password" placeholder="Votre mot de passe">
+    <a class="wizard-button-goto btn green" ng-click="wizard.order.process()">Passer les ordres</a>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)"><i
+                class="fa fa-angle-left"></i> Revenir à l'étape précédente</a></div>
+</div>

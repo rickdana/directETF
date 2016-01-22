@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="tabbable-line boxless tabbable-reversed">
+            <ul class="nav nav-tabs" id="tab-simulation">
+                <li class="active">
+                    <a href="/investir/#tab_0" data-toggle="tab">Projection sur {{timeframe}} ans</a>
+                </li>
+                <li>
+                    <a href="/investir/#tab_1" data-toggle="tab">Comparaison avec la nouvelle stratégie</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="portlet">
+                                <div class="portlet-title">
+                                    <div class="caption caption-md">
+                                        <div class="explication-courbe" style="float: left;">Voici une analyse de votre
+                                            nouvel
+                                            investissement.
+                                        </div>
+                                        <div id="slider-timeframe">
+                                            <span>Durée</span>
+                                            <rzslider rz-slider-model="timeframe"
+                                                      rz-slider-options="sliderTimeframe.options"></rzslider>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <table id="fund_read_chart" style="display: table;">
+                                        <tbody>
+                                        <tr class="hi" style="display: table-row;">
+                                            <td>Favorable</td>
+                                            <td>13% chance</td>
+                                        </tr>
+
+                                        <tr class="med" style="display: table-row;">
+                                            <td>Attendu</td>
+                                            <td>68% chance</td>
+                                        </tr>
+
+                                        <tr class="lo" style="display: table-row;">
+                                            <td>Défavorable</td>
+                                            <td>13% chance</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div id="simulation-future"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab_1">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="portlet">
+                                <div class="portlet-title">
+                                    <div class="caption caption-md">
+                                        <div class="explication-courbe">Si vous aviez passé cet ordre il y a
+                                            <span class="lowercase">{{periodeSelect}}</span>, la performance
+                                            de votre portefeuille aurait été:
+                                            La différence est : augmenter la part des actions US.
+                                            <div>
+                                                <span>Mots-clés ajoutés: </span>
+                                                <span>{{newKeywords().join(', ')}}.</span>
+                                            </div>
+                                            <div>
+                                                <span>Mots-clés supprimés: </span>
+                                                <span>{{deletedKeywords().join(', ')}}.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="form-group form-md-line-input">
+                                        <select class="form-control" id="choix-period-invest-past"
+                                                ng-model="periodeSelect" data-id-container="simulation-past"
+                                                link-to-stcokchart>
+                                            <option ng-repeat="option in periodeData">{{option}}</option>
+                                        </select>
+                                    </div>
+                                    <strategy-comparison id="simulation-past"
+                                                         data-strategies="model.strategies"></strategy-comparison>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)"><i
+                class="fa fa-angle-left"></i> Revenir à l'étape précédente</a></div>
+    <div class="col-lg-4 text-center">
+        <a class="wizard-button-goto" ng-click="wizard.share()">Partager cette stratégie</a></div>
+    <div class="col-lg-4">
+        <a class="wizard-button-goto next pull-right" ng-click="wizard.goto(wizard.step + 1)">Passer à l'étape
+            suivante <i class="fa fa-angle-right"></i></a></div>
+</div>

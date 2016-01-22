@@ -20,208 +20,22 @@
 
     <!--Step 1-->
     <div class="wizard-panel" data-step="1" ng-controller="InvestirController" ng-show="wizard.step == 1">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="portlet">
-                    <questionnaire
-                            data-strategy="wizard.portfolio.strategy"
-                            data-json="/protected/pages/dashboard/investir/questionnaire.json"></questionnaire>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="portlet">
-                    <div class="tools left">
-                        <a ng-click="affichageListeEtfs()"> <i class="fa fa-bars"></i> </a>
-                    </div>
-                    <map id="maps-container" data-height="250" data-demo="true"
-                         data-model="wizard.portfolio.isins"></map>
-                    <sector-chart-pie id="sectors-overview" data-height="200" data-demo="true"
-                                      data-model="wizard.portfolio.isins"
-                                      data-show-in-legend="true"></sector-chart-pie>
-                    <type-progress id="types-overview" data-demo="true" data-portfolio="wizard.portfolio"></type-progress>
-                    <etf-list id="list-overview" data-demo="true" data-model="{{wizard.portfolio.isins}}"></etf-list>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-6">
-                <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)">Passer au mode
-                    expert</a></div>
-            <div class="col-lg-6">
-                <a class="wizard-button-goto next pull-right" ng-click="wizard.goto(wizard.step + 1)">Passer à l'étape
-                    suivante <i class="fa fa-angle-right"></i></a></div>
-        </div>
+        <div data-ng-include="'/protected/pages/dashboard/investir/step1.html'"></div>
     </div>
 
     <!--Step 2-->
     <div class="wizard-panel" data-step="2" ng-controller="InvestirMontantAjustementController"
          ng-show="wizard.step == 2">
-        <div class="row">
-            <div id="amount-box" class="bg-black">
-                <div class="money"></div>
-                <div class="title">Valeur du portfeuille</div>
-                <div class="amount total">{{wizard.order.amount.total}}<span>{{client.portfolio.currencySymb}}</span>
-                </div>
-
-                <p>Ajouter des fonds</p>
-
-                <div class="amount"><input type="real" ng-model="wizard.order.amount.adding" maxlength="6" autofocus>
-                    <span>{{client.portfolio.currencySymb}}</span></div>
-                <div class="tickets"></div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-6">
-                <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)"><i
-                        class="fa fa-angle-left"></i> Passer à l'étape précédente</a></div>
-            <div class="col-lg-6">
-                <a class="wizard-button-goto next pull-right" ng-click="wizard.goto(wizard.step + 1)">Passer à l'étape
-                    suivante <i class="fa fa-angle-right"></i></a></div>
-        </div>
+        <div data-ng-include="'/protected/pages/dashboard/investir/step2.html'"></div>
     </div>
 
     <!--Step 3-->
     <div class="wizard-panel" data-step="3" ng-controller="InvestirRevoirController" ng-show="wizard.step == 3">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="tabbable-line boxless tabbable-reversed">
-                    <ul class="nav nav-tabs" id="tab-simulation">
-                        <li class="active">
-                            <a href="/investir/#tab_0" data-toggle="tab">Projection sur {{timeframe}} ans</a>
-                        </li>
-                        <li>
-                            <a href="/investir/#tab_1" data-toggle="tab">Comparaison avec la nouvelle stratégie</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab_0">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="portlet">
-                                        <div class="portlet-title">
-                                            <div class="caption caption-md">
-                                                <div class="explication-courbe" style="float: left;">Voici une analyse de votre nouvel
-                                                    investissement.
-                                                </div>
-                                                <div id="slider-timeframe">
-                                                    <span>Durée</span>
-                                                    <rzslider rz-slider-model="timeframe"
-                                                                  rz-slider-options="sliderTimeframe.options"></rzslider>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="portlet-body">
-                                            <table id="fund_read_chart" style="display: table;">
-                                                <tbody>
-                                                <tr class="hi" style="display: table-row;">
-                                                    <td>Favorable</td>
-                                                    <td>13% chance</td>
-                                                </tr>
-
-                                                <tr class="med" style="display: table-row;">
-                                                    <td>Attendu</td>
-                                                    <td>68% chance</td>
-                                                </tr>
-
-                                                <tr class="lo" style="display: table-row;">
-                                                    <td>Défavorable</td>
-                                                    <td>13% chance</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            <div id="simulation-future"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="tab_1">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="portlet">
-                                        <div class="portlet-title">
-                                            <div class="caption caption-md">
-                                                <div class="explication-courbe">Si vous aviez passé cet ordre il y a
-                                                    <span class="lowercase">{{periodeSelect}}</span>, la performance
-                                                    de votre portefeuille aurait été:
-                                                    La différence est : augmenter la part des actions US.
-                                                    <div>
-                                                        <span>Mots-clés ajoutés: </span>
-                                                        <span>{{newKeywords().join(', ')}}.</span>
-                                                    </div>
-                                                    <div>
-                                                        <span>Mots-clés supprimés: </span>
-                                                        <span>{{deletedKeywords().join(', ')}}.</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="portlet-body">
-                                            <div class="form-group form-md-line-input">
-                                                <select class="form-control" id="choix-period-invest-past"
-                                                        ng-model="periodeSelect" data-id-container="simulation-past"
-                                                        link-to-stcokchart>
-                                                    <option ng-repeat="option in periodeData">{{option}}</option>
-                                                </select>
-                                            </div>
-                                            <strategy-comparison id="simulation-past"
-                                                                 data-strategies="model.strategies"></strategy-comparison>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-4">
-                <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)"><i
-                        class="fa fa-angle-left"></i> Passer à l'étape précédente</a></div>
-            <div class="col-lg-4 text-center">
-                <a class="wizard-button-goto" ng-click="wizard.share()">Partager cette stratégie</a></div>
-            <div class="col-lg-4">
-                <a class="wizard-button-goto next pull-right" ng-click="wizard.goto(wizard.step + 1)">Passer à l'étape
-                    suivante <i class="fa fa-angle-right"></i></a></div>
-        </div>
+        <div data-ng-include="'/protected/pages/dashboard/investir/step3.html'"></div>
     </div>
 
     <!--Step 4-->
     <div class="wizard-panel" data-step="4" ng-controller="InvestirValidationController" ng-show="wizard.step == 4">
-        <div class="portlet text-center">
-            <h2>Récapitulatif</h2>
-
-            <p>Je souhaite investir
-                <span class="questionnaire-sentence-keyword">
-                    {{wizard.order.amount.total}}&nbsp;{{client.portfolio.currencySymb}}</span>.</p>
-            <strategy-keywords data-strategy="wizard.portfolio.strategy"></strategy-keywords>
-
-            <div class="table-wrapper">
-                <table class="table table-light">
-                    <tbody>
-                    <tr>
-                        <td>Coût de la transaction</td>
-                        <td class="text-right">{{(wizard.order.amount.total * 0.001) | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="portlet text-center bg-black">
-            <input type="password" placeholder="Votre mot de passe">
-            <a class="wizard-button-goto btn green" ng-click="wizard.order.process()">Passer les ordres</a>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-6">
-                <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)"><i
-                        class="fa fa-angle-left"></i> Passer à l'étape précédente</a></div>
-        </div>
+        <div data-ng-include="'/protected/pages/dashboard/investir/step4.html'"></div>
     </div>
 </div>
