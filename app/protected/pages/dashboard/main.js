@@ -161,13 +161,13 @@ MetronicApp.controller('FooterController', ['$scope', function($scope) {
 /* Setup Rounting For All Pages */
 MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     // Redirect any unmatched url
-    $urlRouterProvider.otherwise("/portefeuille/synthese");
+    $urlRouterProvider.otherwise("/portefeuille");
 
     $stateProvider
         // Portefeuille synthèse
-        .state('/protected/pages/dashboard/portefeuille/synthese', {
-            url: "/portefeuille/synthese",
-            templateUrl: "/protected/pages/dashboard/portefeuille/synthese/main.html",
+        .state('/protected/pages/dashboard/portefeuille', {
+            url: "/portefeuille",
+            templateUrl: "/protected/pages/dashboard/portefeuille/main.html",
             data: {pageTitle: 'Synthèse du portefeuille'},
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -175,45 +175,25 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                         name: 'MetronicApp',
                         insertBefore: '#ng_load_plugins_before',
                         files: [
-                            '/protected/pages/dashboard/portefeuille/synthese/main.js',
+                            '/protected/pages/dashboard/portefeuille/main.js',
                         ]
                     });
                 }]
             }
         })
 
-        // Portefeuille historique
-        //.state('/protected/pages/dashboard/portefeuille/historique', {
-        //    url: "/portefeuille/historique",
-        //    templateUrl: "/protected/pages/dashboard/portefeuille/historique/main.html",
-        //    data: {pageTitle: 'Historique du portefeuille'},
-        //    resolve: {
-        //        deps: ['$ocLazyLoad', function($ocLazyLoad) {
-        //            return $ocLazyLoad.load({
-        //                name: 'MetronicApp',
-        //                insertBefore: '#ng_load_plugins_before',
-        //                files: [
-        //                    '/protected/pages/dashboard/portefeuille/historique/main.js',
-        //                    '/protected/pages/dashboard/portefeuille/historique/script.js',
-        //                    '/protected/pages/dashboard/portefeuille/historique/style.css',
-        //                ]
-        //            });
-        //        }]
-        //    }
-        //})
-
         // Portefeuille comparer
-        .state('/protected/pages/dashboard/portefeuille/comparer', {
-            url: "/portefeuille/comparer",
-            templateUrl: "/protected/pages/dashboard/portefeuille/comparer/main.html",
-            data: {pageTitle: 'Comparer le portefeuille'},
+        .state('/protected/pages/dashboard/comparaison', {
+            url: "/comparaison",
+            templateUrl: "/protected/pages/dashboard/comparaison/main.html",
+            data: {pageTitle: 'Outil de comparaison'},
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         insertBefore: '#ng_load_plugins_before',  
                         files: [
-                            '/protected/pages/dashboard/portefeuille/comparer/main.js',
-                            '/protected/pages/dashboard/portefeuille/comparer/script.js'
+                            '/protected/pages/dashboard/comparaison/main.js',
+                            '/protected/pages/dashboard/comparaison/script.js'
                         ],
                         name: 'MetronicApp'
                     });
@@ -221,40 +201,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             }
         })
 
-        // Investir - premier etape
-        .state('investirMenu', {
-            url: "/investirMain",
-            templateUrl: "/protected/pages/dashboard/investir/investir.html",
-            data: {pageTitle: 'Investir'},
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before',  
-                        files: [
-                            '/protected/pages/dashboard/investir/main.js',
-                        ]
-                    });
-                }]
-            }
-        })
-
-        .state('investirExplorer', {
-            url: "/explorer",
-            templateUrl: "/protected/pages/dashboard/investir/explorateur.html",
-            data: {pageTitle: 'Investir'},
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'MetronicApp',
-                        insertBefore: '#ng_load_plugins_before',  
-                        files: [
-                            '/protected/pages/dashboard/investir/explorateur.js',
-                        ]
-                    });
-                }]
-            }
-        })
         // Investir
         .state('investir', {
             url: "/investir",

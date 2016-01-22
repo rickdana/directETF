@@ -1,41 +1,4 @@
-<!-- BEGIN PAGE HEADER-->
-<div class="page-bar">
-    <ul class="page-breadcrumb">
-        <li>
-            <a href="/">Direct ETF</a>
-            <i class="fa fa-circle"></i>
-        </li>
-        <li>
-            <a href="#/portefeuille/synthese">Portefeuille</a>
-            <i class="fa fa-circle"></i>
-        </li>
-        <li>
-            <a href="#/portefeuille/comparer">Comparer</a>
-        </li>
-    </ul>
-    <div class="page-toolbar">
-        <div class="btn-group pull-right">
-            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"
-                    dropdown-menu-hover data-delay="1000" data-close-others="true"> Actions
-                <i class="fa fa-angle-down"></i>
-            </button>
-            <ul class="dropdown-menu pull-right" role="menu">
-                <li>
-                    <a href="javascript:print()">
-                        <i class="icon-printer"></i> Imprimer </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="icon-share-alt"></i> Exporter </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-<h3 class="page-title">Comparer mon portefeuille à d'autres stratégies</h3>
-<!-- END PAGE HEADER-->
-<!-- BEGIN MAIN CONTENT -->
-<div ng-controller="PortefeuilleComparerController">
+<div ng-controller="ComparaisonController">
     <div class="row">
         <div class="col-lg-12">
             <div class="portlet light bordered">
@@ -53,7 +16,7 @@
                                         <option ng-repeat="option in data.availableOptions">{{option.name}}</option>
                                     </select>
 
-                                    <input id="ref_fis_checkbox" type="checkbox" disabled>
+                                    <input id="ref_fis_checkbox" type="checkbox" class="aCheck" disabled>
                                     <label for="ref_fis_checkbox" class="fa fa-check">Fiscalité</label>
                                 </div>
 
