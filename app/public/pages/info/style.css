@@ -89,6 +89,12 @@
     background-color: rgba(54, 198, 211, 1);
 }
 
+#page-prix section [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+  font-size: 2.5em;
+  color: rgba(54, 198, 211, 0.61)
+
+}
+
 
 #page-securite header {
     text-align: center;

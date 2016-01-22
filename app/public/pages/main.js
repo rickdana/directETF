@@ -24,6 +24,7 @@ DirectETF
                         return $ocLazyLoad.load({
                             files: [
                                 'home/main.js',
+                                'home/flaticon.css',
                                 'home/style.css',
                             ]
                         });
@@ -58,6 +59,7 @@ DirectETF
                         return $ocLazyLoad.load({
                             files: [
                                 'info/main.js',
+                                'info/prix/flaticon.css',
                                 'info/style.css',
                             ]
                         });
@@ -66,7 +68,7 @@ DirectETF
             })
             .when('/details', {
                 page: {
-                    title: "Details",
+                    title: "Détails",
                     description: ""
                 },
                 templateUrl: 'info/details.html',
@@ -84,7 +86,7 @@ DirectETF
             })
             .when('/securite', {
                 page: {
-                    title: "Securite",
+                    title: "Sécurité",
                     description: ""
                 },
                 templateUrl: 'info/securite.html',
