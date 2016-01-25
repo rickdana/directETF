@@ -323,7 +323,8 @@ angular.module('DirectETF')
         $ocLazyLoad.load({
             insertBefore: '#ng_load_plugins_before',
             files: [
-                '/protected/pages/dashboard/investir/style.css'
+                '/protected/pages/dashboard/investir/icons/flaticon.css',
+                '/protected/pages/dashboard/investir/style.css',
             ]
         });
 
