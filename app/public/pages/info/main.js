@@ -2,6 +2,8 @@
 
 angular.module('DirectETF', [])
     .controller('InfoController', function ($scope, $element) {
+        $scope.animation();
+
         $scope.montant = 15000;
         $scope.chargeInvest = Math.ceil(($scope.montant * 0.036 / 12));
         $scope.chargeProduct = Math.ceil($scope.montant * 0.012 / 12);

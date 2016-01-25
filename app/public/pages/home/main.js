@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('DirectETF', [])
-    .controller('HomeController', function($element) {
+    .controller('HomeController', function($scope, $element) {
+        $scope.animation();
+
         $('.navbar-nav > li > a').on('mouseover', function() {
             $(this).addClass('animated flash');
         });
