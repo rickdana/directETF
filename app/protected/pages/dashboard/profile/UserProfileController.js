@@ -1,6 +1,6 @@
-angular.module('MetronicApp').controller('UserProfileController', function($rootScope, $scope, $ocLazyLoad) {
+angular.module('DirectETF').controller('UserProfileController', function($rootScope, $scope, $ocLazyLoad) {
     $ocLazyLoad.load({
-        name: 'MetronicApp',
+        name: 'DirectETF',
         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
         files: [
             '/protected/pages/dashboard/profile/style.css',

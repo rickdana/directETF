@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div class="portlet">
+            <questionnaire
+                    data-strategy="wizard.portfolio.strategy"
+                    data-json="/protected/pages/dashboard/investir/questionnaire.json"></questionnaire>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="portlet">
+            <div class="tools left">
+                <a ng-click="affichageListeEtfs()"> <i class="fa fa-bars"></i> </a>
+            </div>
+            <map id="maps-container" data-height="250" data-demo="true"
+                 data-model="wizard.portfolio.isins"></map>
+            <sector-chart-pie id="sectors-overview" data-height="200" data-demo="true"
+                              data-model="wizard.portfolio.isins"
+                              data-show-in-legend="true"></sector-chart-pie>
+            <type-progress id="types-overview" data-demo="true" data-portfolio="wizard.portfolio"></type-progress>
+            <etf-list id="list-overview" data-demo="true" data-model="{{wizard.portfolio.isins}}"></etf-list>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <a class="wizard-button-goto prev pull-left" ng-click="wizard.expert()">Passer au mode
+            expert</a></div>
+    <div class="col-lg-6">
+        <a class="wizard-button-goto next pull-right" ng-click="wizard.goto(wizard.step + 1)">Passer à l'étape
+            suivante <i class="fa fa-angle-right"></i></a></div>
+</div>

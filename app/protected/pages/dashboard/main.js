@@ -3,7 +3,7 @@ Metronic AngularJS App Main Script
 ***/
 
 /* Metronic App */
-var MetronicApp = angular.module("MetronicApp", [
+var DirectETF = angular.module("DirectETF", [
     "ui.router",
     "rzModule",
     "ui.bootstrap", 
@@ -13,7 +13,7 @@ var MetronicApp = angular.module("MetronicApp", [
 ]);
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
-MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
+DirectETF.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
     $ocLazyLoadProvider.config({
         // global configs go here
     });
@@ -58,7 +58,7 @@ angular.module('myModule').config(['$controllerProvider', function($controllerPr
 **/
 
 //AngularJS v1.3.x workaround for old style controller declarition in HTML
-MetronicApp.config(['$controllerProvider', function($controllerProvider) {
+DirectETF.config(['$controllerProvider', function($controllerProvider) {
   // this option might be handy for migrating old apps, but please don't use it
   // in new ones!
   $controllerProvider.allowGlobals();
@@ -69,7 +69,7 @@ MetronicApp.config(['$controllerProvider', function($controllerProvider) {
 *********************************************/
 
 /* Setup global settings */
-MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
+DirectETF.factory('settings', ['$rootScope', function($rootScope) {
     // supported languages
     var settings = {
         layout: {
@@ -89,7 +89,7 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', function($rootScope, $ClientFactory, $PortfolioFactory, ngDialog) {
+DirectETF.controller('AppController', function($rootScope, $ClientFactory, $PortfolioFactory, ngDialog) {
     // Exposition initiale
     $rootScope.client = {
         portfolio: {}
@@ -138,28 +138,28 @@ initialization can be disabled and Layout.init() should be called on page load c
 ***/
 
 /* Setup Layout Part - Header */
-MetronicApp.controller('HeaderController', ['$scope', function($scope) {
+DirectETF.controller('HeaderController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
     });
 }]);
 
 /* Setup Layout Part - Sidebar */
-MetronicApp.controller('SidebarController', ['$scope', function($scope) {
+DirectETF.controller('SidebarController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initSidebar(); // init sidebar
     });
 }]);
 
 /* Setup Layout Part - Footer */
-MetronicApp.controller('FooterController', ['$scope', function($scope) {
+DirectETF.controller('FooterController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initFooter(); // init footer
     });
 }]);
 
 /* Setup Rounting For All Pages */
-MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+DirectETF.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     // Redirect any unmatched url
     $urlRouterProvider.otherwise("/portefeuille");
 
@@ -172,7 +172,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'DirectETF',
                         insertBefore: '#ng_load_plugins_before',
                         files: [
                             '/protected/pages/dashboard/portefeuille/main.js',
@@ -195,7 +195,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '/protected/pages/dashboard/comparaison/main.js',
                             '/protected/pages/dashboard/comparaison/script.js'
                         ],
-                        name: 'MetronicApp'
+                        name: 'DirectETF'
                     });
                 }]
             }
@@ -209,7 +209,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'DirectETF',
                         insertBefore: '#ng_load_plugins_before',  
                         files: [
                             '/protected/pages/dashboard/investir/main.js',
@@ -227,7 +227,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'DirectETF',
                         insertBefore: '#ng_load_plugins_before',  
                         files: [
                             "/protected/pages/dashboard/historique/main.js",
@@ -246,7 +246,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'DirectETF',
                         insertBefore: '#ng_load_plugins_before',  
                         files: [
                             "/protected/pages/dashboard/actualites/main.js",
@@ -264,7 +264,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',  
+                        name: 'DirectETF',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             '/protected/pages/dashboard/profile/UserProfileController.js'
@@ -305,7 +305,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
 }]);
 
 /* Init global settings and run the app */
-MetronicApp.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
+DirectETF.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
 }]);

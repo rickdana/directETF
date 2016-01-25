@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .controller('EtfSectorsChartController', function($ocLazyLoad, $EtfsFactory, $rootScope, $scope, $element, $attrs) {
         $ocLazyLoad.load({
             insertBefore: '#ng_load_plugins_before',

@@ -19,12 +19,6 @@ angular.module('DirectETF', [])
             $(this).removeClass('bounce');
         });
 
-        $($element[0]).find('.appear').each(function() {
-            $($(this).get(0)).bind('appear', function () {
-                $(this).addClass($(this).attr('data-animation'));
-            });
-        });
-
         $($element[0]).find('#try-button').on('click', function() {
             $('header').addClass('overlay');
 

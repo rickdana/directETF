@@ -1,0 +1,23 @@
+<div class="row">
+    <div id="amount-box" class="bg-black">
+        <div class="money"></div>
+        <div class="title">Valeur du portfeuille</div>
+        <div class="amount total">{{wizard.order.amount.total}}<span>{{client.portfolio.currencySymb}}</span>
+        </div>
+
+        <p>Ajouter des fonds</p>
+
+        <div class="amount"><input type="real" ng-model="wizard.order.amount.adding" maxlength="6" autofocus>
+            <span>{{client.portfolio.currencySymb}}</span></div>
+        <div class="tickets"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <a class="wizard-button-goto prev pull-left" ng-click="wizard.goto(wizard.step - 1)"><i
+                class="fa fa-angle-left"></i> Revenir à l'étape précédente</a></div>
+    <div class="col-lg-6">
+        <a class="wizard-button-goto next pull-right" ng-click="wizard.goto(wizard.step + 1)">Passer à l'étape
+            suivante <i class="fa fa-angle-right"></i></a></div>
+</div>

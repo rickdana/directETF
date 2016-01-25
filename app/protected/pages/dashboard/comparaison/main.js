@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .controller('ComparaisonController', function($ClientFactory, $rootScope, $scope, $http, $EtfsFactory, $element, $ocLazyLoad, ngDialog) {
         $ocLazyLoad.load({
             insertBefore: '#ng_load_plugins_before',

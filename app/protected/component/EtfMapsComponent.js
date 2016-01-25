@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .controller('EtfMapsController', function($EtfsFactory, $rootScope, $scope, $element, $attrs) {
         $element.css({
             display: 'block'

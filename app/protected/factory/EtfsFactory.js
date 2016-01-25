@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .factory('$EtfsFactory', function($http) {
         var etfs = [];
         var queries = {};
@@ -155,7 +155,7 @@ angular.module('MetronicApp')
                 var query = JSON.stringify(filters);
 
                 if (queries[query] instanceof Array) {
-                    console.log('   return the cache results')
+                    //console.log('   return the cache results')
                     return cb(queries[query]);
                 }
 
@@ -255,7 +255,7 @@ angular.module('MetronicApp')
                 var query = 'all';
 
                 if (queries[query] instanceof Array) {
-                    console.log('   return the cache results')
+                    //console.log('   return the cache results')
                     return cb(queries[query]);
                 }
 

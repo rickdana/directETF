@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .factory('$OrdersFactory', function() {
         var etfs = {};
         var quantities = {};
@@ -382,7 +382,13 @@ angular.module('MetronicApp')
                     template: '<h2 class="text-center">:-(</h2><p class="text-center">Il n\'est pas encore possible de partager une stratégie.</p>',
                     plain: true
                 });
-            }
+            },
+            expert: function() {
+                ngDialog.open({
+                    template: '<h2 class="text-center">;-)</h2><p class="text-center">Le mode expert est actuellement en cours de développement.</p>',
+                    plain: true
+                });
+            },
         };
 
         $scope.sentence = {
@@ -391,12 +397,14 @@ angular.module('MetronicApp')
 
         $ClientFactory.portfolio.infos(function(err, infos) {
             $scope.wizard.portfolio = new $PortfolioFactory.Portfolio(infos);
+            $scope.wizard.portfolio.empty = true;
 
             $scope.$watch(function() {
                 return $scope.wizard.portfolio.strategy.keywords.length();
             }, function() {
                 $scope.wizard.portfolio.strategy.etfs(function(etfs) {
                     $scope.wizard.portfolio.isins = [];
+                    $scope.wizard.portfolio.empty = false;
 
                     for (var i in etfs) {
                         $scope.wizard.portfolio.isins.push(etfs[i].isin);
@@ -600,4 +608,3 @@ angular.module('MetronicApp')
     .controller('InvestirValidationController', function($OrdersFactory, $rootScope, $scope, $element) {
         $rootScope.step4 = function () {};
     });
-

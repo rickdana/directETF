@@ -48,6 +48,23 @@ DirectETF
                     }]
                 }
             })
+            .when('/contact', {
+                page: {
+                    title: "Nous contacter",
+                    description: ""
+                },
+                templateUrl: 'contact/main.html',
+                resolve: {
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            files: [
+                                'contact/main.js',
+                                'contact/style.css',
+                            ]
+                        });
+                    }]
+                }
+            })
             .when('/prix', {
                 page: {
                     title: "Des frais réduits",
@@ -180,6 +197,12 @@ DirectETF
             $('html,body').animate({
                 scrollTop: 0
             }, 700);
+
+            $($element[0]).find('.appear').each(function () {
+                $($(this).get(0)).bind('appear', function () {
+                    $(this).addClass($(this).attr('data-animation'));
+                });
+            });
         });
     });
 

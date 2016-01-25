@@ -1,4 +1,4 @@
-angular.module('MetronicApp')
+angular.module('DirectETF')
     .factory('$PortfolioFactory', function($http, $EtfsFactory, $ClientFactory) {
         var models = {},
             goals = [
@@ -429,6 +429,15 @@ angular.module('MetronicApp')
                     return keywords;
                 },
 
+                compare: function(strategy) {
+                    for (var id in keywords) {
+                        if (!strategy.keywords.exists(id)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+
                 keywords: {
                     add: function(id, weight, operator) {
                         if (keywords[id]) {
@@ -514,47 +523,23 @@ angular.module('MetronicApp')
                     console.log('result: ', result)
 
                     return Matrix.transpose.catalog(result, etfs);
+                },
+
+                /**
+                 * Get the portfolio ETFs list based on the current strategy
+                 */
+                etfs: function(done) {
+                    $EtfsFactory.loadAll((function(self) {
+                        return function(list) {
+                            done(self.cross(list));
+                        };
+                    })(this));
                 }
             };
         };
 
         var Portfolio = function(desc) {
-            var strategy = new Strategy(desc.strategy || []);
-            var etfs_list = [];
-
-            var build = function(done) {
-                // Build the new portfolio
-                $EtfsFactory.load(null, function(isins) {
-                    // exclude current portfolio's ETFs from the ISIN's list
-                    for (var isin in desc.etfs) {
-                        var index = isins.indexOf(isin);
-
-                        if (index >= 0) {
-                            isins.splice(index, 1); // Remove isin from list
-                        }
-                    }
-
-                    // Load description of each ISIN
-                    $EtfsFactory.load(isins, function(list) {
-                        done(strategy.cross(list));
-                    });
-                });
-
-                return;
-            };
-
-            desc.strategy = strategy;
-
-            /**
-             * Get the portfolio ETFs list based on the current strategy
-             */
-            strategy.etfs = function(done) {
-                if (strategy.changed()) {
-                    return build(done);
-                }
-
-                done(etfs_list);
-            };
+            desc.strategy = new Strategy(desc.strategy || []);
 
             return desc;
         };
