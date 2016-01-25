@@ -1,4 +1,4 @@
-<div class="filter-question" ng-show="questionnaire.current.node == node.id">
+<div class="filter-question filter-question-nodes" ng-show="questionnaire.current.node == node.id">
     <label ng-show="node.text"><span>{{node.text}}</span></label>
     <div ng-if="node.children">
         <div class="filter-question-answer" ng-repeat="child in node.children"
@@ -15,7 +15,9 @@
                    ng-checked="questionnaire.history.exists(child.id)"
                    ng-click="questionnaire.history.add(node, child);
                              questionnaire.history.query();">
-            <label for="{{child.id}}"><span>{{child.text}}</span></label>
+            <label for="{{child.id}}">
+                <span>{{child.text}}</span>
+                <i class="{{child.icon}}"></i></label>
         </div>
     </div>
 </div>
