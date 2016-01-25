@@ -291,6 +291,26 @@ angular.module('DirectETF')
                     name: "Technologie de l'information"
                 },
                 {
+                    id: "material",
+                    type: "sector",
+                    name: "Matérieux"
+                },
+                {
+                    id: "services",
+                    type: "sector",
+                    name: "Services"
+                },
+                {
+                    id: "immobilier",
+                    type: "sector",
+                    name: "Immobilier"
+                },
+                {
+                    id: "other",
+                    type: "sector",
+                    name: "Autres"
+                },
+                {
                     id: "world",
                     type: "broad",
                     name: "World"

@@ -77,6 +77,34 @@
             "consomer": 1
           },
           "text": "Biens de consomation cyclique"
+        },
+        {
+          "id": "material",
+          "strategy": {
+            "material": 1
+          },
+          "text": "Matérieux"
+        },
+        {
+          "id": "services",
+          "strategy": {
+            "services": 1
+          },
+          "text": "Services"
+        },
+        {
+          "id": "immobilier",
+          "strategy": {
+            "immobilier": 1
+          },
+          "text": "Immobilier"
+        },
+        {
+          "id": "other",
+          "strategy": {
+            "other": 1
+          },
+          "text": "Autres"
         }
       ]
     },
