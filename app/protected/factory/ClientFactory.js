@@ -154,9 +154,13 @@ angular.module('MetronicApp')
                             return done(err, null);
                         }
 
-                        client.portfolio.value = data_valo.length
-                                               ? data_valo[data_valo.length - 1][1]
-                                               : 0;
+                        if (client.profile.alreadyInvest) {
+                            client.portfolio.value = data_valo.length
+                                ? data_valo[data_valo.length - 1][1]
+                                : 0;
+                        } else {
+                            client.portfolio.value = 0;
+                        }
 
                         done(false, client.portfolio.value);
                     });
