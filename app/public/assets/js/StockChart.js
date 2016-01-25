@@ -60,8 +60,8 @@ function LoadStockChart(series, container, clear, cb, options) {
             tooltip: {
                 useHTML: true,
                 valueDecimals: 2,
-                pointFormat: '<span style="color:{point.color}">\u25CF</span> <b>{point.y} &euro;</b><br/>',
-                //valueSuffix: ' &euro;',
+                //pointFormat: '<span style="color:{point.color}">\u25CF</span> <b>{point.y} &euro;</b><br/>',
+                valueSuffix: ' &euro;',
                 dateTimeLabelFormats: {
                     day: "%e %b %Y"
                 },
