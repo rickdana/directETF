@@ -21,11 +21,14 @@ angular.module('DirectETF', [])
                 showSelectionBar: true,
                 translate: function () {
                     return '';
-                },
-                onEnd: function () {
-                    $scope.chargeInvest = Math.ceil(($scope.montant * 0.036 / 12));
-                    $scope.chargeProduct = Math.ceil($scope.montant * 0.012 / 12);
-                },
+                }
             }
         };
+
+        $scope.$watch(function() {
+            return $scope.montant;
+        }, function(montant) {
+            $scope.chargeInvest = Math.ceil((montant * 0.036 / 12));
+            $scope.chargeProduct = Math.ceil(montant * 0.012 / 12);
+        });
     });
