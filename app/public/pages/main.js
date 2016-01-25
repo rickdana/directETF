@@ -48,6 +48,23 @@ DirectETF
                     }]
                 }
             })
+            .when('/contact', {
+                page: {
+                    title: "Nous contacter",
+                    description: ""
+                },
+                templateUrl: 'contact/main.html',
+                resolve: {
+                    deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            files: [
+                                'contact/main.js',
+                                'contact/style.css',
+                            ]
+                        });
+                    }]
+                }
+            })
             .when('/prix', {
                 page: {
                     title: "Des frais réduits",
