@@ -6,26 +6,31 @@
       "children": [
         {
           "id": "root-regions",
+          "icon": "flaticon-",
           "text": "Investir dans une région",
           "goto": "regions"
         },
         {
           "id": "root-countries",
+          "icon": "flaticon-",
           "text": "Investir dans un pays",
           "goto": "countries"
         },
         {
           "id": "root-sectors",
+          "icon": "flaticon-",
           "text": "Investir par secteur",
           "goto": "sectors"
         },
         {
           "id": "root-news",
+          "icon": "flaticon-",
           "text": "Investir à partir de l'actualité",
           "goto": "news"
         },
         {
           "id": "root-themes",
+          "icon": "flaticon-",
           "text": "Investir par thème",
           "goto": "themes"
         }
@@ -33,6 +38,7 @@
     },
     {
       "id": "sectors",
+      "icon": "flaticon-",
       "text": "Dans quel secteur d'activité souhaitez-vous investir ?",
       "type": "checkbox",
       "children": [
@@ -41,6 +47,7 @@
           "strategy": {
             "financial": 1
           },
+          "icon": "flaticon-money13",
           "text": "Finance"
         },
         {
@@ -48,6 +55,7 @@
           "strategy": {
             "industry": 1
           },
+          "icon": "flaticon-manufacture",
           "text": "Industrie"
         },
         {
@@ -55,6 +63,7 @@
           "strategy": {
             "health": 1
           },
+          "icon": "flaticon-stethoscope",
           "text": "Santé"
         },
         {
@@ -62,6 +71,7 @@
           "strategy": {
             "collectivity": 1
           },
+          "icon": "flaticon-headset1",
           "text": "Services aux collectivités"
         },
         {
@@ -69,6 +79,7 @@
           "strategy": {
             "technology": 1
           },
+          "icon": "flaticon-smartphone55",
           "text": "Technologies de l'information"
         },
         {
@@ -76,12 +87,46 @@
           "strategy": {
             "consomer": 1
           },
+          "icon": "flaticon-car211",
           "text": "Biens de consomation cyclique"
+        },
+        {
+          "id": "material",
+          "strategy": {
+            "material": 1
+          },
+          "icon": "flaticon-",
+          "text": "Matérieux"
+        },
+        {
+          "id": "services",
+          "strategy": {
+            "services": 1
+          },
+          "icon": "flaticon-",
+          "text": "Services"
+        },
+        {
+          "id": "immobilier",
+          "strategy": {
+            "immobilier": 1
+          },
+          "icon": "flaticon-",
+          "text": "Immobilier"
+        },
+        {
+          "id": "other",
+          "strategy": {
+            "other": 1
+          },
+          "icon": "flaticon-",
+          "text": "Autres"
         }
       ]
     },
     {
       "id": "regions",
+      "icon": "flaticon-",
       "text": "Dans quelle région du monde souhaitez-vous investir ?",
       "type": "checkbox",
       "children": [
@@ -90,6 +135,7 @@
           "strategy": {
             "africa": 1
           },
+          "icon": "flaticon-",
           "text": "Afrique"
         },
         {
@@ -97,6 +143,7 @@
           "strategy": {
             "europe": 1
           },
+          "icon": "flaticon-",
           "text": "Europe"
         },
         {
@@ -104,6 +151,7 @@
           "strategy": {
             "asia-pacific": 1
           },
+          "icon": "flaticon-",
           "text": "Asie Pacifique"
         },
         {
@@ -111,6 +159,7 @@
           "strategy": {
             "north-america": 1
           },
+          "icon": "flaticon-",
           "text": "Amérique du Nord"
         },
         {
@@ -118,12 +167,14 @@
           "strategy": {
             "latin-america": 1
           },
+          "icon": "flaticon-",
           "text": "Amérique Latine"
         }
       ]
     },
     {
       "id": "countries",
+      "icon": "flaticon-",
       "text": "Sélectionnez le pays souhaité.",
       "type": "checkbox",
       "children": [
@@ -132,6 +183,7 @@
           "strategy": {
             "fr": 1
           },
+          "icon": "flaticon-",
           "text": "France"
         },
         {
@@ -139,6 +191,7 @@
           "strategy": {
             "us": 1
           },
+          "icon": "flaticon-",
           "text": "États-Unis"
         },
         {
@@ -146,6 +199,7 @@
           "strategy": {
             "be": 1
           },
+          "icon": "flaticon-",
           "text": "Belgique"
         },
         {
@@ -153,6 +207,7 @@
           "strategy": {
             "it": 1
           },
+          "icon": "flaticon-",
           "text": "Italie"
         },
         {
@@ -160,6 +215,7 @@
           "strategy": {
             "ch": 1
           },
+          "icon": "flaticon-",
           "text": "Chine"
         },
         {
@@ -167,6 +223,7 @@
           "strategy": {
             "jp": 1
           },
+          "icon": "flaticon-",
           "text": "Japon"
         },
         {
@@ -174,6 +231,7 @@
           "strategy": {
             "es": 1
           },
+          "icon": "flaticon-",
           "text": "Espagne"
         },
         {
@@ -181,6 +239,7 @@
           "strategy": {
             "de": 1
           },
+          "icon": "flaticon-",
           "text": "Allemagne"
         },
         {
@@ -188,6 +247,7 @@
           "strategy": {
             "ru": 1
           },
+          "icon": "flaticon-",
           "text": "Russie"
         },
         {
@@ -195,6 +255,7 @@
           "strategy": {
             "tr": 1
           },
+          "icon": "flaticon-",
           "text": "Turquie"
         },
         {
@@ -202,6 +263,7 @@
           "strategy": {
             "hk": 1
           },
+          "icon": "flaticon-",
           "text": "Hong-Kong"
         },
         {
@@ -209,6 +271,7 @@
           "strategy": {
             "kr": 1
           },
+          "icon": "flaticon-",
           "text": "Corée"
         },
         {
@@ -216,6 +279,7 @@
           "strategy": {
             "in": 1
           },
+          "icon": "flaticon-",
           "text": "Inde"
         },
         {
@@ -223,6 +287,7 @@
           "strategy": {
             "gr": 1
           },
+          "icon": "flaticon-",
           "text": "Grèce"
         },
         {
@@ -230,6 +295,7 @@
           "strategy": {
             "br": 1
           },
+          "icon": "flaticon-",
           "text": "Brézil"
         },
         {
@@ -237,6 +303,7 @@
           "strategy": {
             "tw": 1
           },
+          "icon": "flaticon-",
           "text": "Taïwan"
         }
       ]
@@ -251,6 +318,7 @@
           "strategy": {
             "pme": 1
           },
+          "icon": "flaticon-",
           "text": "PME"
         },
         {
@@ -258,6 +326,7 @@
           "strategy": {
             "grande-entreprises": 1
           },
+          "icon": "flaticon-",
           "text": "Grandes entreprises"
         },
         {
@@ -265,6 +334,7 @@
           "strategy": {
             "eau": 1
           },
+          "icon": "flaticon-",
           "text": "Eau"
         },
         {
@@ -272,6 +342,7 @@
           "strategy": {
             "developpement-durable": 1
           },
+          "icon": "flaticon-",
           "text": "Développement durable"
         }
       ]
@@ -286,6 +357,7 @@
           "strategy": {
             "matieres-premieres": 1
           },
+          "icon": "flaticon-",
           "text": "Matières premières"
         },
         {
@@ -293,6 +365,7 @@
           "strategy": {
             "oil": 1
           },
+          "icon": "flaticon-",
           "text": "Pétrole"
         }
       ]

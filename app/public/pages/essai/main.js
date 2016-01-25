@@ -169,6 +169,8 @@ angular.module('DirectETF', [])
         }
     })
     .controller('EssaiController', function($scope, $element, $http, SimulationFactory) {
+        $scope.animation();
+
         $('body').addClass('overlay');
 
         var _etfs_infos = null;

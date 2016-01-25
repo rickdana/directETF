@@ -369,7 +369,7 @@ angular.module('DirectETF')
                 process: function() {
                     // Confirmation
                     ngDialog.open({
-                        template: '<p class="text-center">La transaction sera effectuée ce soir à 22h45</p>',
+                        template: '<p class="text-center">La transaction sera effectuée après la fermeture des marchés</p>',
                         plain: true
                     });
 
@@ -381,7 +381,7 @@ angular.module('DirectETF')
             },
             share: function() {
                 ngDialog.open({
-                    template: '<h2 class="text-center">:-(</h2><p class="text-center">Il n\'est pas encore possible de partager une stratégie.</p>',
+                    template: '<h2 class="text-center">:-)</h2><p class="text-center">Il n\'est pas encore possible de partager une stratégie.</p>',
                     plain: true
                 });
             },
