@@ -1,7 +1,7 @@
 angular.module('DirectETF')
-    .controller('EtfTypesController', function($ocLazyLoad, $EtfsFactory, $rootScope, $scope, $element, $attrs) {
+    .controller('EtfTypesController', function($ocLazyLoad, $EtfsFactory, $rootScope, $scope, $attrs) {
         $ocLazyLoad.load({
-            insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+            insertBefore: '#ng_load_plugins_before',
 
             files: [
                 '/protected/component/EtfTypesComponent/style.css'
@@ -42,22 +42,22 @@ angular.module('DirectETF')
             return series;
         };
 
-        $EtfsFactory.loadAll(function(etfs) {
-            $scope.$watch(function() {
-                return $scope.portfolio.isins;
-            }, function(filter) {
-                if (typeof filter == 'undefined' || filter.length == 0) {
-                    if ($attrs.demo) {
-                        filter = $rootScope.client.portfolio.isins;
-                    } else {
-                        return;
-                    }
-                }
+        $scope.$watch(function() {
+            return $scope.portfolio && $scope.portfolio.strategy && $scope.portfolio.isins.length;
+        }, function() {
+            if (!$scope.portfolio) {
+                return;
+            }
 
-                $EtfsFactory.load(filter, function(etfs) {
+            if ($scope.portfolio.strategy.compare($rootScope.client.portfolio.strategy)) {
+                $EtfsFactory.load($rootScope.client.portfolio.etfs, function(etfs) {
                     $scope.types = load(etfs);
                 });
-            });
+            } else {
+                $scope.portfolio.strategy.etfs(function(etfs) {
+                    $scope.types = load(etfs);
+                });
+            }
         });
     })
     .directive("typeProgress", function($EtfsFactory) {
