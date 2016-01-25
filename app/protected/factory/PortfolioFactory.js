@@ -431,8 +431,11 @@ angular.module('DirectETF')
 
                 compare: function(strategy) {
                     for (var id in keywords) {
-                        //if ()
+                        if (!strategy.keywords.exists(id)) {
+                            return false;
+                        }
                     }
+                    return true;
                 },
 
                 keywords: {
