@@ -139,8 +139,9 @@ angular.module('DirectETF', [])
             LoadStockChart(series, $('#questionaire-future-stockchart'), true, function (chart) {
                 var min = Math.floor(chart.yAxis[0].dataMin);
 
-                chart.yAxis[0].setExtremes(min, Math.floor(chart.yAxis[0].dataMax) * 2);
-                chart.yAxis[0].options.startOnTick = false;
+                chart.yAxis[0].setExtremes(min,  Math.floor(chart.yAxis[0].dataMax) * 1.5);
+                console.log(chart.yAxis[0])
+                //chart.yAxis[0].options.startOnTick = false;
 
                 chart.yAxis[0].update({
                     opposite: true,
