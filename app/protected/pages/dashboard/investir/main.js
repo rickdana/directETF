@@ -181,6 +181,7 @@ angular.module('DirectETF')
         }
 
         var draw_simulation_future = function (data_valo, ref_etfs_new_invests, time_frame, amount_add) {
+            console.log(time_frame)
             //simulation-graph of the future
             var data_valo_today;
             if (data_valo.length == 0) {  //for the deomo
@@ -224,20 +225,21 @@ angular.module('DirectETF')
                 showInLegend: false
             }];
 
-            LoadStockChart(series, $('#simulation-future'), true);
+            LoadStockChart(series, $('#simulation-future'), true, function (chart) {
+                var chart =  $('#simulation-future').highcharts();
 
-            var chart =  $('#simulation-future').highcharts();
+                chart.yAxis[0].update({
+                    opposite: true,
+                    labels: {
+                        align: 'left'
+                    }
+                });
 
-            chart.yAxis[0].update({
-                opposite: true,
-                labels: {
-                    align: 'left'
-                }
+                var min = Math.floor(chart.yAxis[0].dataMin);
+                chart.yAxis[0].options.startOnTick = false;
+                chart.yAxis[0].setExtremes(min,  Math.floor(chart.yAxis[0].dataMax) * 1.5);
+
             });
-
-            var min = Math.floor(chart.yAxis[0].dataMin);
-            chart.yAxis[0].options.startOnTick = false;
-            chart.yAxis[0].setExtremes(min, Math.floor(chart.yAxis[0].dataMax) * 2 );
 
             //$('#simulation-future').highcharts().legend.allItems[0].update({name:'Prévision sans nouveaux investissements'});
         }
@@ -500,19 +502,21 @@ angular.module('DirectETF')
         $scope.timeframe = 10;
 
         $scope.sliderTimeframe = {
+            value: 10,
             options: {
                 floor: 3,
                 ceil: 50,
                 showSelectionBar: true,
                 hideLimitLabels: true,
-                onEnd: function () {
-                    SimulationFactory.draw_simulation_future(_data_valo, _invest_etfs, $scope.timeframe, $scope.wizard.order.amount.total);
+                onEnd: function (id, value) {
+                    SimulationFactory.draw_simulation_future(_data_valo, _invest_etfs, $scope.sliderTimeframe.value, $scope.wizard.order.amount.total);
                 },
                 translate: function(x) {
                     return x + 'ans';
                 }
             }
         };
+
 
         $('#tab-simulation a[href="/investir/#tab_1"]').on('shown.bs.tab', function() {
             $(window).resize();
