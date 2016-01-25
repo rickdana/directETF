@@ -71,7 +71,7 @@
           "strategy": {
             "collectivity": 1
           },
-          "icon": "flaticon-headset1",
+          "icon": "flaticon-clerk",
           "text": "Services aux collectivités"
         },
         {
@@ -95,7 +95,7 @@
           "strategy": {
             "material": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-petrol1",
           "text": "Matérieux"
         },
         {
@@ -103,7 +103,7 @@
           "strategy": {
             "services": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-headset1",
           "text": "Services"
         },
         {
@@ -111,7 +111,7 @@
           "strategy": {
             "immobilier": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-home168",
           "text": "Immobilier"
         },
         {
@@ -135,7 +135,7 @@
           "strategy": {
             "africa": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-geography10",
           "text": "Afrique"
         },
         {
@@ -143,7 +143,7 @@
           "strategy": {
             "europe": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-money214",
           "text": "Europe"
         },
         {
@@ -151,7 +151,7 @@
           "strategy": {
             "asia-pacific": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-earth148",
           "text": "Asie Pacifique"
         },
         {
@@ -159,7 +159,7 @@
           "strategy": {
             "north-america": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-earth189",
           "text": "Amérique du Nord"
         },
         {
@@ -167,7 +167,7 @@
           "strategy": {
             "latin-america": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-geography7",
           "text": "Amérique Latine"
         }
       ]
@@ -183,7 +183,7 @@
           "strategy": {
             "fr": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-europe2",
           "text": "France"
         },
         {
@@ -191,7 +191,7 @@
           "strategy": {
             "us": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-us",
           "text": "États-Unis"
         },
         {
@@ -199,7 +199,7 @@
           "strategy": {
             "be": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-europe5",
           "text": "Belgique"
         },
         {
@@ -207,7 +207,7 @@
           "strategy": {
             "it": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-geography5",
           "text": "Italie"
         },
         {
@@ -215,7 +215,7 @@
           "strategy": {
             "ch": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-asia13",
           "text": "Chine"
         },
         {
@@ -223,7 +223,7 @@
           "strategy": {
             "jp": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-japanese13",
           "text": "Japon"
         },
         {
@@ -231,7 +231,7 @@
           "strategy": {
             "es": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-europe12",
           "text": "Espagne"
         },
         {
@@ -239,7 +239,7 @@
           "strategy": {
             "de": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-europe30",
           "text": "Allemagne"
         },
         {
@@ -247,7 +247,7 @@
           "strategy": {
             "ru": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-europe19",
           "text": "Russie"
         },
         {
@@ -255,7 +255,7 @@
           "strategy": {
             "tr": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-asia7",
           "text": "Turquie"
         },
         {
@@ -263,7 +263,7 @@
           "strategy": {
             "hk": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-money469",
           "text": "Hong-Kong"
         },
         {
@@ -271,7 +271,7 @@
           "strategy": {
             "kr": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-asia25",
           "text": "Corée"
         },
         {
@@ -279,7 +279,7 @@
           "strategy": {
             "in": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-asia10",
           "text": "Inde"
         },
         {
@@ -287,7 +287,7 @@
           "strategy": {
             "gr": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-europe32",
           "text": "Grèce"
         },
         {
@@ -295,7 +295,7 @@
           "strategy": {
             "br": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-brazil9",
           "text": "Brézil"
         },
         {
@@ -303,7 +303,7 @@
           "strategy": {
             "tw": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-asia25",
           "text": "Taïwan"
         }
       ]
@@ -318,7 +318,7 @@
           "strategy": {
             "pme": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-businessman",
           "text": "PME"
         },
         {
@@ -326,7 +326,7 @@
           "strategy": {
             "grande-entreprises": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-businessman7",
           "text": "Grandes entreprises"
         },
         {
@@ -334,7 +334,7 @@
           "strategy": {
             "eau": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-water-drop",
           "text": "Eau"
         },
         {
@@ -342,7 +342,7 @@
           "strategy": {
             "developpement-durable": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-energy36",
           "text": "Développement durable"
         }
       ]

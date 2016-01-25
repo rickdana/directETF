@@ -193,8 +193,8 @@ section [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
     color: white;
 }
 
-#page-details section1 {
-   margin: 10em;
+#page-details article {
+   margin: 4em;
 }
 
 #page-details section {
