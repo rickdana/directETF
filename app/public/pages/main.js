@@ -197,6 +197,12 @@ DirectETF
             $('html,body').animate({
                 scrollTop: 0
             }, 700);
+
+            $($element[0]).find('.appear').each(function () {
+                $($(this).get(0)).bind('appear', function () {
+                    $(this).addClass($(this).attr('data-animation'));
+                });
+            });
         });
     });
 
