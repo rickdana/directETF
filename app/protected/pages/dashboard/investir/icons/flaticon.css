@@ -1,0 +1,121 @@
+@font-face {
+	font-family: "Flaticon";
+	src: url("flaticon.eot");
+	src: url("flaticon.eot#iefix") format("embedded-opentype"),
+	url("flaticon.woff") format("woff"),
+	url("flaticon.ttf") format("truetype"),
+	url("flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+	font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}.flaticon-asia10:before {
+	content: "\e000";
+}
+.flaticon-asia13:before {
+	content: "\e001";
+}
+.flaticon-asia17:before {
+	content: "\e002";
+}
+.flaticon-asia25:before {
+	content: "\e003";
+}
+.flaticon-asia7:before {
+	content: "\e004";
+}
+.flaticon-brazil9:before {
+	content: "\e005";
+}
+.flaticon-businessman:before {
+	content: "\e006";
+}
+.flaticon-businessman7:before {
+	content: "\e007";
+}
+.flaticon-car211:before {
+	content: "\e008";
+}
+.flaticon-clerk:before {
+	content: "\e009";
+}
+.flaticon-earth148:before {
+	content: "\e00a";
+}
+.flaticon-earth188:before {
+	content: "\e00b";
+}
+.flaticon-earth189:before {
+	content: "\e00c";
+}
+.flaticon-energy36:before {
+	content: "\e00d";
+}
+.flaticon-europe12:before {
+	content: "\e00e";
+}
+.flaticon-europe19:before {
+	content: "\e00f";
+}
+.flaticon-europe2:before {
+	content: "\e010";
+}
+.flaticon-europe30:before {
+	content: "\e011";
+}
+.flaticon-europe32:before {
+	content: "\e012";
+}
+.flaticon-europe5:before {
+	content: "\e013";
+}
+.flaticon-fire58:before {
+	content: "\e014";
+}
+.flaticon-geography10:before {
+	content: "\e015";
+}
+.flaticon-geography5:before {
+	content: "\e016";
+}
+.flaticon-geography7:before {
+	content: "\e017";
+}
+.flaticon-headset1:before {
+	content: "\e018";
+}
+.flaticon-home168:before {
+	content: "\e019";
+}
+.flaticon-japanese13:before {
+	content: "\e01a";
+}
+.flaticon-manufacture:before {
+	content: "\e01b";
+}
+.flaticon-money214:before {
+	content: "\e01c";
+}
+.flaticon-money469:before {
+	content: "\e01d";
+}
+.flaticon-petrol1:before {
+	content: "\e01e";
+}
+.flaticon-smartphone55:before {
+	content: "\e01f";
+}
+.flaticon-stethoscope:before {
+	content: "\e020";
+}
+.flaticon-us:before {
+	content: "\e021";
+}
+.flaticon-water-drop:before {
+	content: "\e022";
+}
