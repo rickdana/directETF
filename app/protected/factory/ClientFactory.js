@@ -10,7 +10,7 @@ angular.module('DirectETF')
                 etfsValue: 0.0,
                 trades: [],
                 gains: 0.0
-            }
+        }
         };
 
         function gains_by_etf(etf, trades) {
