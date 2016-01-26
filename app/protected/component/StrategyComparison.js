@@ -120,6 +120,7 @@ angular.module('DirectETF')
                 data: invest_simu_past,
                 type: 'spline',
                 fillOpacity: 0.15,
+                color: '#6257FF'
             };
 
             LoadStockChart(serie, $element, false);
