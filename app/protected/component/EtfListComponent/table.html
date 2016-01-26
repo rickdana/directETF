@@ -2,11 +2,13 @@
     <thead ng-show="etfs.length">
     <tr>
         <th class="etf-column name">Intitulé des titres</th>
+        <th class="etf-column">%</th>
     </tr>
     </thead>
     <tbody data-list-items>
     <tr ng-repeat="etf in etfs" id="etf-{{etf.isin}}" data-isin="{{etf.isin}}">
         <td class="etf-column name" data-etf-attr-name="name">{{etf.name}}</td>
+        <td class="etf-column percent text-center">{{percent}} %</td>
     </tr>
     </tbody>
 </table>

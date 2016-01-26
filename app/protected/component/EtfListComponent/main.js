@@ -24,8 +24,13 @@ angular.module('DirectETF')
     .controller('EtfListController', function($EtfsFactory, $rootScope, $scope, $element, $attrs, $compile, $http, $q, $templateCache) {
         $attrs.template = $attrs.template || "/protected/component/EtfListComponent/table.html";
 
+
+
         var render = function(etfs) {
             $scope.etfs = etfs;
+
+
+            $scope.percent = ((1 / etfs.length) * 100).toFixed(2);
 
             $q.all([
                 $http.get($attrs.template, { cache : $templateCache })
