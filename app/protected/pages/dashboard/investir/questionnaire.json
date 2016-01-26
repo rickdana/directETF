@@ -119,7 +119,7 @@
           "strategy": {
             "other": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-waiting3",
           "text": "Autres"
         }
       ]
@@ -159,7 +159,7 @@
           "strategy": {
             "north-america": 1
           },
-          "icon": "flaticon-earth189",
+          "icon": "flaticon-geography",
           "text": "Amérique du Nord"
         },
         {
@@ -271,7 +271,7 @@
           "strategy": {
             "kr": 1
           },
-          "icon": "flaticon-asia25",
+          "icon": "flaticon-asia17",
           "text": "Corée"
         },
         {
@@ -357,7 +357,7 @@
           "strategy": {
             "matieres-premieres": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-plant179",
           "text": "Matières premières"
         },
         {
@@ -365,7 +365,7 @@
           "strategy": {
             "oil": 1
           },
-          "icon": "flaticon-",
+          "icon": "flaticon-gasoline5",
           "text": "Pétrole"
         }
       ]
