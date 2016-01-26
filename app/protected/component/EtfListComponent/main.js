@@ -53,15 +53,11 @@ angular.module('DirectETF')
         $scope.$watch(function() {
             return $attrs.model;
         }, function(filter) {
-            if (typeof filter == 'undefined' || filter.length == 0) {
-                if ($attrs.demo) {
-                    filter = $rootScope.client.portfolio.etfs;
-                } else {
-                    return;
-                }
+            if (!filter) {
+                return;
             }
 
-            if (filter.length == 0) {
+            if (filter.length < 3) {
                 filter = $rootScope.client.portfolio.etfs;
             }
 
@@ -79,9 +75,12 @@ angular.module('DirectETF')
                         render(etfs);
                     });
                 } else {
+                    console.log('>> etfs:', etfs)
+
                     render(etfs);
                 }
             });
+
         });
     })
     .controller('PopupInfosController', function($EtfsFactory, $scope, $ocLazyLoad, $element) {
