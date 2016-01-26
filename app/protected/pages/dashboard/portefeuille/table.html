@@ -12,12 +12,12 @@
     <tr ng-repeat="etf in etfs" id="etf-{{etf.isin}}" data-isin="{{etf.isin}}">
         <td class="etf-column name" data-etf-attr-name="name">{{etf.name}}</td>
         <!--<td class="etf-column quantity number" data-etf-attr-name="quantity" >{{etf.quantity}}</td>-->
-        <!--<td class="etf-column price" data-etf-attr-name="price">{{etf.price}} {{client.portfolio.currencySymb}}</td>-->
+        <!--<td class="etf-column price" data-etf-attr-name="price">{{etf.price}} {{client.portfolio.desc.currencySymb}}</td>-->
         <td class="etf-column value" data-etf-attr-name="value">{{etf.quantity * etf.price | number: 2}}
-            {{client.portfolio.currencySymb}}
+            {{client.portfolio.desc.currencySymb}}
         </td>
         <td class="etf-column gains"><span class="gain-loss">{{etf.gains | number: 2}}</span>
-            {{client.portfolio.currencySymb}}
+            {{client.portfolio.desc.currencySymb}}
         </td>
     </tr>
     </tbody>
@@ -25,7 +25,7 @@
     <tr>
         <td class="etf-column total text-right" colspan="2">Total du portefeuille :</td>
         <td id="total-value" class="etf-column total text-right">{{format(client.portfolio.value)}}
-            {{client.portfolio.currencySymb}}
+            {{client.portfolio.desc.currencySymb}}
         </td>
     </tr>
     </tfoot>

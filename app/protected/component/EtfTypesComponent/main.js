@@ -43,14 +43,14 @@ angular.module('DirectETF')
         };
 
         $scope.$watch(function() {
-            return $scope.portfolio && $scope.portfolio.strategy && $scope.portfolio.isins.length;
+            return $scope.portfolio && $scope.portfolio.strategy && $scope.portfolio.desc.isins.length;
         }, function() {
             if (!$scope.portfolio) {
                 return;
             }
 
             if ($scope.portfolio.strategy.compare($rootScope.client.portfolio.strategy)) {
-                $EtfsFactory.load($rootScope.client.portfolio.etfs, function(etfs) {
+                $EtfsFactory.load($rootScope.client.portfolio.desc.etfs, function(etfs) {
                     $scope.types = load(etfs);
                 });
             } else {

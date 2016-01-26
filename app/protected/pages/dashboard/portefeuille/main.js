@@ -52,7 +52,7 @@ angular.module('DirectETF')
 
         // Chargement des gains de chaque ETF avant l'affichage du tableau des titres
         $scope.beforeRendering = function(etfs, done) {
-            $ClientFactory.portfolio.etfs(function(err, etfs_with_gains) {
+            $scope.client.portfolio.prototype.etfs.list(function(err, etfs_with_gains) {
                 if (err) {
                     return console.error(err);
                 }
@@ -68,42 +68,35 @@ angular.module('DirectETF')
             });
         };
 
+        $scope.$watch(function() {
+            return $rootScope.client.portfolio;
+        }, function(p) {
+            // Gains totals
+            $scope.client.portfolio.prototype.etfs.gains(function(err, gains) {
+                if (err) {
+                    return console.error(err);
+                }
 
-        // Valeur du portefeuille
-        $ClientFactory.portfolio.value(function(err, value) {
-            if (err) {
-                return console.error(err);
-            }
+                $scope.client.portfolio.gains = gains;
+            });
 
-            $scope.client.portfolio.value = value;
-        });
+            // Total des titres
+            $scope.client.portfolio.prototype.etfs.value(function(err, etfsValue) {
+                if (err) {
+                    return console.error(err);
+                }
 
-        // Gains totals
-        $ClientFactory.portfolio.gains(function(err, gains) {
-            if (err) {
-                return console.error(err);
-            }
+                $scope.client.portfolio.etfsValue = etfsValue;
+            });
 
-            $scope.client.portfolio.gains = gains;
-        });
+            //Historique des transactions
+            $scope.client.portfolio.prototype.trades(function(err, trades) {
+                if (err) {
+                    throw err;
+                }
 
-        // Total des titres
-        $ClientFactory.portfolio.etfsValue(function(err, etfsValue) {
-            if (err) {
-                return console.error(err);
-            }
-
-            $scope.client.portfolio.etfsValue = etfsValue;
-        });
-
-        //Historique des transactions
-        $ClientFactory.portfolio.trades(function(err, trades) {
-            if (err) {
-                throw err;
-            }
-
-            $scope.client.portfolio.trades = trades;
-
+                $scope.client.portfolio.trades = trades;
+            });
         });
 
         // set sidebar closed and body solid layout mode
@@ -233,17 +226,11 @@ angular.module('DirectETF')
 
         }
 
-        $ClientFactory.portfolio.valo(function(err, valo, data_valo) {
+        $rootScope.client.portfolio.prototype.trades(function(err, trades) {
             if (err) {
                 throw err;
             }
 
-            $ClientFactory.portfolio.trades(function(err, trades) {
-                if (err) {
-                    throw err;
-                }
-
-                load_historique_valo_trades(valo, trades);
-            });
+            load_historique_valo_trades($rootScope.client.portfolio.valo, trades);
         });
-    })
+    });

@@ -72,7 +72,7 @@ angular.module('DirectETF')
                     showSelectionBar: true,
                     hideLimitLabels: true,
                     translate: function(value) {
-                        return value + ' ' + $scope.client.portfolio.currencySymb;
+                        return value + ' ' + $scope.client.portfolio.desc.currencySymb;
                     }
                 }
             };

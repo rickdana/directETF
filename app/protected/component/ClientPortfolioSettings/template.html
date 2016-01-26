@@ -5,7 +5,7 @@
                 <div class="form-group">
                     <label class="caption-subject bold control-label display-block">Objectif d'investissement</label>
                     <p ng-show="settingInlineDesc == true">
-                        {{portfolio.prototype.goal(client.portfolio.goal).tooltip}}</p>
+                        {{portfolio.prototype.goal(client.portfolio.desc.goal).tooltip}}</p>
                     <div ng-repeat="goal in portfolio.prototype.goals()" class="radio-box goal {{goal.code}}">
                         <input id="goal-{{goal.code}}" type="radio" ng-model="client.portfolio.goal"
                                ng-value="goal.code">
@@ -17,16 +17,17 @@
                 <div class="form-group">
                     <div class="well opts-timeframe">
                         <div class="row goal-just-invest" ng-show="client.portfolio.goal == 'just-invest'">
-                            <div class="col-xs-12">{{portfolio.prototype.goal(client.portfolio.goal).questionComment}}
+                            <div class="col-xs-12">
+                                {{portfolio.prototype.goal(client.portfolio.desc.goal).questionComment}}
                             </div>
                         </div>
-                        <div class="row" ng-hide="client.portfolio.goal == 'just-invest'">
+                        <div class="row" ng-hide="client.portfolio.desc.goal == 'just-invest'">
                             <div class="col-xs-9">
-                                <strong>{{portfolio.prototype.goal(client.portfolio.goal).question}}</strong>
+                                <strong>{{portfolio.prototype.goal(client.portfolio.desc.goal).question}}</strong>
                             </div>
                             <div class="col-xs-3">
                                 <input type="number" class="form-control" maxlength="2"
-                                       ng-model="client.portfolio.timeframe">
+                                       ng-model="client.portfolio.desc.timeframe">
                                 <span>ans</span>
                             </div>
                         </div>
@@ -35,9 +36,9 @@
                 <div class="form-group">
                     <label class="caption-subject bold control-label">Investissement mensuel</label>
                     <input type="real" placeholder="Renseignez le montant mensuel d'investissement"
-                           class="form-control portfolio-amount-monthly" ng-model="client.portfolio.amountMonthly"
+                           class="form-control portfolio-amount-monthly" ng-model="client.portfolio.desc.amountMonthly"
                            required>
-                    <div class="portfolio-amount-monthly" data-currency="{{client.portfolio.currencySymb}}">
+                    <div class="portfolio-amount-monthly" data-currency="{{client.portfolio.desc.currencySymb}}">
                         <rzslider rz-slider-model="client.portfolio.amountMonthly"
                                   rz-slider-options="sliderAmmount.options"></rzslider></div></div>
                 <!--<div class="form-group">-->
@@ -48,7 +49,7 @@
                         <!--<label for="risk-{{risk.level}}" class="risk {{risk.level}}" title="{{risk.tooltip}}">{{risk.label}}</label></div></div>-->
                 <div class="form-group">
                     <label class="caption-subject bold control-label display-block">Niveau de risque accepté</label>
-                    <p>{{portfolio.prototype.risk(client.portfolio.risk).tooltip}}</p>
+                    <p>{{portfolio.prototype.risk(client.portfolio.desc.risk).tooltip}}</p>
                     <rzslider class="portfolio-risks" rz-slider-model="sliderRisks.value"
                               rz-slider-options="sliderRisks.options"></rzslider>
                 </div>

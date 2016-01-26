@@ -133,9 +133,9 @@ angular.module('DirectETF')
         };
 
         $scope.$watch(function() {
-            return $scope.$strategy && $scope.$strategy.keywords.length();
+            return $scope.$strategy && $scope.$strategy.keywords && $scope.$strategy.keywords.length();
         }, function() {
-            if (!$scope.$strategy) {
+            if (!$scope.$strategy.get) {
                 return;
             }
 

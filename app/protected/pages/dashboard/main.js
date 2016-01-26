@@ -9,7 +9,7 @@ var DirectETF = angular.module("DirectETF", [
     "ui.bootstrap", 
     "oc.lazyLoad",
     "ngSanitize",
-    "ngDialog"
+    "ngDialog",
 ]);
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
@@ -92,33 +92,17 @@ DirectETF.factory('settings', ['$rootScope', function($rootScope) {
 DirectETF.controller('AppController', function($rootScope, $ClientFactory, $PortfolioFactory, ngDialog) {
     // Exposition initiale
     $rootScope.client = {
-        portfolio: {}
+        profile: {},
+        portfolio: false,
     };
 
-    // Description du portefeuille (dividentes)
-    $ClientFactory.portfolio.infos(function(err, infos) {
+    // Load the current client and his portfolio
+    $ClientFactory.current(function(err, client) {
         if (err) {
             return console.error(err);
         }
-
-        $rootScope.client.portfolio = new $PortfolioFactory.Portfolio(infos);
-
-        $ClientFactory.portfolio.value(function(err, value) {
-            if (err) {
-                return console.error(err);
-            }
-
-            $rootScope.client.portfolio.value = value;
-        });
-    });
-
-    // Profile de client
-    $ClientFactory.profile(function(err, profile) {
-        if (err) {
-            return console.error(err);
-        }
-
-        $rootScope.client.profile = profile;
+console.log(client)
+        $rootScope.client = client;
     });
 
     $rootScope.newsletter = {

@@ -3,7 +3,7 @@
 
     <p>Je souhaite investir
                 <span class="questionnaire-sentence-keyword">
-                    {{wizard.order.amount.total}}&nbsp;{{client.portfolio.currencySymb}}</span>.</p>
+                    {{wizard.order.amount.total}}&nbsp;{{client.portfolio.desc.currencySymb}}</span>.</p>
     <strategy-keywords data-strategy="wizard.portfolio.strategy"></strategy-keywords>
 
     <div class="table-wrapper">
@@ -11,7 +11,7 @@
             <tbody>
             <tr>
                 <td>Coût de la transaction</td>
-                <td class="text-right">{{(wizard.order.amount.total * 0.001) | number: 2}}&nbsp;{{client.portfolio.currencySymb}}</td>
+                <td class="text-right">{{(wizard.order.amount.total * 0.001) | number: 2}}&nbsp;{{client.portfolio.desc.currencySymb}}</td>
             </tr>
             </tbody>
         </table>

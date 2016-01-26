@@ -65,4 +65,14 @@ section input:focus, section textarea:focus {
 
 dl {
     font-size: 1.4em;
+    text-align: left;
+}
+
+dt, dl {
+    display: inline-block;
+    float: left;
+}
+
+dt {
+    width: 30%;
 }

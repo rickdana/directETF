@@ -50,14 +50,14 @@ angular.module('DirectETF')
         }, function(filter) {
             if (typeof filter == 'undefined' || filter.length == 0) {
                 if ($attrs.demo) {
-                    filter = $rootScope.client.portfolio.etfs;
+                    filter = $rootScope.client.portfolio.desc.etfs;
                 } else {
                     return;
                 }
             }
 
             if (filter.length == 0) {
-                filter = $rootScope.client.portfolio.etfs;
+                filter = $rootScope.client.portfolio.desc.etfs;
             }
 
             $EtfsFactory.load(filter, function(etfs) {

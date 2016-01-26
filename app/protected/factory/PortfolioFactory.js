@@ -1,5 +1,5 @@
 angular.module('DirectETF')
-    .factory('$PortfolioFactory', function($http, $EtfsFactory, $ClientFactory) {
+    .factory('$PortfolioFactory', function($http, $EtfsFactory) {
         var models = {},
             goals = [
                 {
@@ -558,62 +558,252 @@ angular.module('DirectETF')
             };
         };
 
-        var Portfolio = function(desc) {
-            desc.strategy = new Strategy(desc.strategy || []);
+        var PortfolioPrototype = {
+            cache: {},
+            init: function(clientId, isClone, done) {
+                var clientIdCache = clientId;
+                var ready = false;
 
-            return desc;
+                if (isClone) {
+                    clientIdCache = 'clone-' + clientId;
+                }
+
+                this.cache[clientIdCache] = {
+                    desc: {},
+                    order: {},
+                    ready: function() { return ready; },
+                    valo: {},
+                    dataValo: [],
+                    value: 0.0,
+                    strategy: {},
+                    cache: {
+                        trades: [],
+                        tradesByDate: {}
+                    },
+                    prototype: {}
+                };
+
+                // Load the portfolio's description
+                $http.get(WS_URL + '/client/portfolio/' + clientId)
+                    .success(function(portfolio) {
+                        var currency = typeof portfolio['dividends']['EUR'] != 'undefined' ? 'EUR' : 'USD';
+                        var isins = [];
+
+                        for (var isin in portfolio.etfs) {
+                            isins.push(isin);
+                        }
+
+                        PortfolioPrototype.cache[clientIdCache].desc = {
+                            goal: portfolio.investorProfile.goal,
+                            risk: portfolio.investorProfile.risk,
+                            amountMonthly: portfolio.investorProfile.amountMonthly,
+                            timeframe: portfolio.investorProfile.timeframe,
+                            currency: currency,
+                            currencySymb: currency == 'EUR' ? '€' : '$',
+                            dividends: portfolio['dividends'][currency],
+                            cash: portfolio.cash[currency],
+                            etfs: portfolio.etfs,
+                            strategy: portfolio.strategy,
+                            description: portfolio.textDescription,
+                            isins: isins,
+                        };
+
+                        PortfolioPrototype.cache[clientIdCache].strategy = new Strategy(portfolio.strategy || []);
+
+                        ready = PortfolioPrototype.cache[clientIdCache].dataValo.length > 0;
+
+                        if (ready && typeof done == 'function') {
+                            done();
+                        }
+                    })
+                    .error(function(data, status, headers, config) {
+                        throw new Error("Failed to load portfolio of ClientID " + clientId);
+                    });
+
+                // Load the portfolio's value
+                $http.get(WS_URL + '/client/valo/' + clientId)
+                    .success(function(valo) {
+                        var data_valo = [];
+
+                        for (var date in valo) {
+                            data_valo.push([new Date(date).getTime(), valo[date]]);
+                        }
+
+                        data_valo.sort(function (a, b) {
+                            return a[0] - b[0];
+                        });
+
+                        PortfolioPrototype.cache[clientIdCache].valo = valo;
+                        PortfolioPrototype.cache[clientIdCache].dataValo = data_valo;
+                        PortfolioPrototype.cache[clientIdCache].value = data_valo.length
+                                                                      ? data_valo[data_valo.length - 1][1]
+                                                                      : 0;
+
+                        ready = typeof PortfolioPrototype.cache[clientIdCache].strategy.keywords != 'undefined';
+
+                        if (ready && typeof done == 'function') {
+                            done();
+                        }
+                    })
+                    .error(function(data, status, headers, config) {
+                        throw new Error("Failed to load portfolio valo of ClientID " + clientId);
+                    });
+
+                return PortfolioPrototype.cache[clientIdCache];
+            }
         };
 
-        function loadModel(goal, amountMonthly, riskLevel, cb) {
-            var key = goal + amountMonthly + riskLevel;
+        var gains_by_etf = function(etf, trades) {
+            var sum_trades = etf.quantity * etf.price;
 
-            if (models[key]) {
-                return cb(false, models[key]);
+            for (var i = 0, n = trades.length; i < n; i++) {
+                if (trades[i].isin == etf.isin) {
+                    // BUY, STOCKIN, SELL
+                    switch (trades[i].type) {
+                        case 'BUY' :
+                        case 'STOCKIN':
+                            sum_trades -= trades[i].cash;
+                            break;
+
+                        case 'SELL':
+                            sum_trades += trades[i].cash;
+                            break;
+                    }
+                }
             }
 
-            $http.get(WS_URL + '/portfolio/model/' + goal + '/' + amountMonthly + '/' + riskLevel)
-                .success(function (model, status, headers, config) {
-                    models[key] = model;
-                    cb(false, model);
-                })
-                .error(function(data, status, headers, config) {
-                    var err = new Error("Failed to get model of the risk " + riskLevel);
-
-                    err.status = status;
-                    err.headers = headers;
-
-                    cb(err, null);
-
-                    console.error(err.message);
-                });
-        }
+            return sum_trades;
+        };
 
         return {
             Strategy: Strategy,
-            Portfolio: Portfolio,
             Keywords: Keywords,
+            
+            Portfolio: function(clientId, clone, done) {
+                var self = PortfolioPrototype.init(clientId, clone || false, done);
 
-            /**
-             * Get a portfolio model
-             * @param goal A portfolio goal
-             * @param amountMonthly A amount monthly
-             * @param riskLevel A portfolio risk level
-             * @param cb A callback function
-             */
-            model: function(goal, amountMonthly, riskLevel, cb) {
-                if (typeof cb != 'function') {
-                    throw new Error('cb must be a callback function!');
-                }
-
-                if (goals.length == 0) {
-                    if (goal in structure.accepts.goal) {
-                        loadModel(goal, amountMonthly, riskLevel, cb);
-                    } else {
-                        cb(new Error('Unknow goal ' + goal), null);
+                self.prototype.trades = function(done) {
+                    if (self.cache.trades.length) {
+                        return done(false, self.cache.trades);
                     }
-                } else {
-                    loadModel(goal, amountMonthly, riskLevel, cb);
-                }
+                    
+                    $http.get(WS_URL + '/client/trades/' + clientId)
+                        .success(function(trades) {
+                            self.cache.trades = trades;
+                            
+                            done(false, trades);
+                        })
+                        .error(function(data, status, headers, config) {
+                            var err = new Error("Failed to load portfolio trades of ClientID " + clientId);
+                            
+                            err.status = status;
+                            err.headers = headers;
+                            
+                            cb(err, null);
+                            
+                            console.error(err.message);
+                        });
+                };
+                
+                // all the TYPE STOCKIN and CASHIN in the trades according to the value's data in the wallet
+                self.prototype.tradesByDate = function(done) {
+                    if (self.cache.tradesByDate) {
+                        return done(false, self.cache.tradesByDate);
+                    }
+                    
+                    this.valo(function(err, valo, data_valo) {
+                        if (err) {
+                            return done(err, null);
+                        }
+                        
+                        self.prototype.trades(function(err, trades) {
+                            if (err) {
+                                return done(err, null);
+                            }
+                            
+                            var somme_trades = 0;
+                            var trades_by_date = {};
+                            
+                            for (var x in data_valo) {
+                                for (var i in trades) {
+                                    if ((trades[i].type == 'CASHIN' || trades[i].type == 'STOCKIN') && data_valo[x][0] == new Date(trades[i].date).getTime()) {
+                                        somme_trades += trades[i].cash;
+                                    }
+                                }
+                                trades_by_date[new Date(data_valo[x][0])] = somme_trades;
+                            }
+                            
+                            self.cache.tradesByDate = trades_by_date;
+                            
+                            done(false, trades_by_date);
+                        });
+                    });
+                };
+                
+                self.prototype.etfs = {
+                    list: function(done) {
+                        $EtfsFactory.load(self.desc.etfs, function(etfs) {
+                            self.prototype.trades(function(err, trades) {
+                                if (err) {
+                                    return done(err, null);
+                                }
+                                
+                                for (var i = 0; i < etfs.length; i++) {
+                                    etfs[i].gains = gains_by_etf(etfs[i], trades);
+                                    etfs[i].quantity = etfs[i].quantity || 1;
+                                }
+                                
+                                done(false, etfs);
+                            });
+                        });
+                    },
+                    value: function(done) {
+                        this.list(function(err, etfs) {
+                            if (err) {
+                                return done(err, null);
+                            }
+                            
+                            var value = 0;
+                            
+                            for (var i = 0; i < etfs.length; i++) {
+                                value += etfs[i].price * etfs[i].quantity;
+                            }
+                            
+                            self.etfsValue = value;
+                            
+                            done(false, self.etfsValue);
+                        });
+                    },
+                    gains: function(done) {
+                        if (self.gains) {
+                            return done(false, self.gains);
+                        }
+                        
+                        this.list(function(err, etfs) {
+                            if (err) {
+                                return done(err, null);
+                            }
+                            
+                            var gains = 0;
+                            
+                            for (var i = 0; i < etfs.length; i++) {
+                                gains += etfs[i].gains;
+                            }
+                            
+                            self.gains = gains;
+                            
+                            done(false, gains);
+                        });
+                    },
+                };
+
+                self.prototype.persist = function(portfolio) {
+                    self.desc = angular.copy(portfolio.desc);
+                    self.order.value = portfolio.value;
+                    self.order.strategy = angular.copy(portfolio.strategy);
+                };
+                
+                return self;
             },
 
             /**

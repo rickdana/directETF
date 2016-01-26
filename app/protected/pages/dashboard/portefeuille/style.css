@@ -1,3 +1,12 @@
+.incomming {
+  display: inline-block;
+  padding: 5px 15px;
+  margin-bottom: 15px;
+  margin-top: -10px;
+  background-color: #7BE7F0;
+  border-radius: 31px !important;
+}
+
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
 	font-style: normal;
 	font-size: 70px;

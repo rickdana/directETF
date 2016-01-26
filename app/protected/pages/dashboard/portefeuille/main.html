@@ -1,5 +1,5 @@
 <div id="portefeuille" ng-controller="PortefeuilleController">
-    <div class="row" ng-if="client.profile.alreadyInvest">
+    <div class="row" ng-if="client.alreadyInvest">
         <div class="col-lg-6">
             <div class="portlet">
                 <div class="portlet-title">
@@ -29,7 +29,11 @@
                     <div class="portlet-body">
                         <div class="infos-principales">
                             <div class="number"> {{format(client.portfolio.value)}}
-                                {{client.portfolio.currencySymb}}
+                                {{client.portfolio.desc.currencySymb}}
+                            </div>
+                            <div class="incomming text-center" ng-if="client.portfolio.order.value">
+                                En cours de traitement: {{client.portfolio.order.value}}
+                                {{client.portfolio.desc.currencySymb}}
                             </div>
                             <div>
                                 Variation du jour <span class="result-down">-.8%<i class="fa fa-chevron-down"></i></span>
@@ -44,21 +48,21 @@
                                 <tr>
                                     <td class="type">Gains totaux</td>
                                     <td class="number">{{format(client.portfolio.gains)}}
-                                        {{client.portfolio.currencySymb}}
+                                        {{client.portfolio.desc.currencySymb}}
                                     </td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
 
                                 <tr>
                                     <td class="type">Revenu annuel</td>
-                                    <td class="number">{{format(client.portfolio.dividends)}}
-                                        {{client.portfolio.currencySymb}}
+                                    <td class="number">{{format(client.portfolio.desc.dividends)}}
+                                        {{client.portfolio.desc.currencySymb}}
                                     </td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
                                 <tr>
                                     <td class="type">Niveau de risque</td>
-                                    <td class="percent">{{risks[client.portfolio.risk]}}</td>
+                                    <td class="percent">{{risks[client.portfolio.desc.risk]}}</td>
                                 </tr>
                             </table>
                         </div>
@@ -122,7 +126,7 @@
                 </div>
                 <div class="portlet-body">
                     <sector-chart-pie id="sectors-overview" data-height="260"
-                                      data-model="client.portfolio.etfs"
+                                      data-model="client.portfolio.desc.etfs"
                                       data-show-in-legend="true">
                     </sector-chart-pie>
                     <type-progress data-portfolio="client.portfolio"></type-progress>
@@ -140,7 +144,7 @@
                 </div>
 
                 <div class="portlet-body">
-                    <etf-list data-model="{{client.portfolio.etfs}}"
+                    <etf-list data-model="{{client.portfolio.desc.etfs}}"
                               data-template="/protected/pages/dashboard/portefeuille/table.html"></etf-list>
                 </div>
             </div>
@@ -151,25 +155,31 @@
                         <span class="caption-subject font-green">Mon allocation par pays</span>
                     </div>
                     <div class="portlet-body">
-                        <map id="maps-repartition" height="300" data-model="client.portfolio.etfs"></map>
+                        <map id="maps-repartition" height="300" data-model="client.portfolio.desc.etfs"></map>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row" ng-if="!client.profile.alreadyInvest">
+    <div class="row" ng-if="!client.alreadyInvest">
         <div class="col-lg-6">
             <div class="portlet">
                 <div class="portlet-title">
                     <div class="text">
-                        <span>Rappel de ma stratégie</span>
+                        <span ng-show="!client.portfolio.order.value">Rappel de ma stratégie</span>
+                        <span ng-show="client.portfolio.order.value">Nouvelle stratégie</span>
                     </div>
                 </div>
 
-                <div id="strategy-demo" class="portlet-body text-center">
+                <div id="strategy-demo" class="portlet-body text-center" ng-show="!client.portfolio.order.value">
                     <p>Vous n'avez pas défini de stratégie: votre portefeuille est neutre.</p>
                     <a href="#/investir" class="btn btn-primary btn-xl"> Définir une stratégie</a>
+                </div>
+
+                <div ng-show="client.portfolio.order.value">
+                    <strategy-keywords data-strategy="client.portfolio.order.strategy"
+                                       class="text-center"></strategy-keywords>
                 </div>
             </div>
 
@@ -185,7 +195,11 @@
                     <div class="portlet-body">
                         <div class="infos-principales">
                             <div class="number"> {{format(client.portfolio.value)}}
-                                {{client.portfolio.currencySymb}}
+                                {{client.portfolio.desc.currencySymb}}
+                            </div>
+                            <div class="incomming text-center" ng-if="client.portfolio.order.value">
+                                En cours de traitement: {{client.portfolio.order.value}}
+                                {{client.portfolio.desc.currencySymb}}
                             </div>
                             <div>
                                 Variation du jour <span class="result-up">0%<i class="fa fa-chevron-up"></i></span>, de l'année <span class="result-up">0%<i class="fa fa-chevron-up"></i></span>
@@ -197,20 +211,20 @@
                                 <tr>
                                     <td class="type">Gains totaux</td>
                                     <td class="number">0.00
-                                        {{client.portfolio.currencySymb}}
+                                        {{client.portfolio.desc.currencySymb}}
                                     </td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
 
                                 <tr>
                                     <td class="type">Revenu annuel</td>
-                                    <td class="number">0.00 {{client.portfolio.currencySymb}}</td>
+                                    <td class="number">0.00 {{client.portfolio.desc.currencySymb}}</td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
                                 </tr>
                                 <tr class="infos-risk">
                                     <td class="type">Niveau de risque</td>
                                     <td class="number"></td>
-                                    <td class="percent">{{risks[client.portfolio.risk]}}</td>
+                                    <td class="percent">{{risks[client.portfolio.desc.risk]}}</td>
                                 </tr>
                             </table>
                         </div>
@@ -246,7 +260,7 @@
                 </div>
                 <div class="portlet-body">
                     <sector-chart-pie id="sectors-overview" data-height="260"
-                                      data-model="client.portfolio.etfs"
+                                      data-model="client.portfolio.desc.etfs"
                                       data-show-in-legend="true">
                     </sector-chart-pie>
                     <type-progress data-portfolio="client.portfolio"></type-progress>
@@ -264,7 +278,7 @@
                 </div>
 
                 <div class="portlet-body">
-                    <etf-list data-model="{{client.portfolio.etfs}}"></etf-list>
+                    <etf-list data-model="{{client.portfolio.desc.etfs}}"></etf-list>
                 </div>
             </div>
             <!-- Maps de mes ETFs-->
@@ -274,7 +288,7 @@
                         <span class="caption-subject font-green">Mon allocation par pays</span>
                     </div>
                     <div class="portlet-body">
-                        <map id="maps-repartition" height="300" data-model="client.portfolio.etfs"></map>
+                        <map id="maps-repartition" height="300" data-model="client.portfolio.desc.etfs"></map>
                     </div>
                 </div>
             </div>
