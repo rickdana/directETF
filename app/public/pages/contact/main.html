@@ -1,9 +1,37 @@
-<div id="page-details" ng-controller="ContactController">
+<div id="page-contact" ng-controller="ContactController">
     <header>
         <h1 class="animated fadeInUp">CONTACT</h1>
-        <h2 class="animated fadeInUp">Nous sommes à votre écoute</h2>
-        <div class="text-white">Bla bla blabla</div>
+        <h2 class="animated fadeInUp">Un doute, des questions ?</h2>
+        <div class="text-white">Nous sommes à votre écoute</div>
     </header>
+
+    <section>
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" placeholder="Nom" ng-model="model.name" required autofocus>
+                <input type="email" placeholder="Email" ng-model="model.email" required>
+                <input type="text" placeholder="Sujet" ng-model="model.subject" required>
+                <textarea type="text" placeholder="Message" ng-model="model.message" rows="5" required></textarea>
+                <button type="button" class="btn btn-primary btn-xl" ng-click="send()">Envoyer le message</button>
+            </div>
+            <div class="col-md-6">
+                <h3>Nos informations de contact</h3>
+                <dl class="vcard">
+                    <dt>Adresse</dt>
+                    <dd>
+                        <div class="street-address">55 Rue du Faubourg Saint-Honoré</div>
+                        <div class="locality">Paris</div>
+                        <div class="postal-code">75008</div>
+                        <div class="region">Ile de France</div>
+                    </dd>
+                    <dt>Téléphone</dt>
+                    <dd>+33 1 54 58 23 02</dd>
+                    <dt>Email</dt>
+                    <dd>bonjour@directetf.fr</dd>
+                </dl>
+            </div>
+        </div>
+    </section>
 </div>
 
 <div ng-include="'footer.html'"></div>

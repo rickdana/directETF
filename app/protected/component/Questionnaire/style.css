@@ -31,6 +31,13 @@
     margin-top: 4px;
 }
 
+.questionnaire-component .filter-question-nodes input.filter-checkbox + label span + i {
+    position: absolute;
+    right: 25px;
+    top: 4px;
+    margin: 0;
+}
+
 .questionnaire-component input.filter-checkbox.filter-group + label + div {
     height: 0;
     overflow: auto;
