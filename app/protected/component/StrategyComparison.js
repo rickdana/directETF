@@ -214,19 +214,27 @@ angular.module('DirectETF')
             }
         }
     })
-    .controller('StrategyController', function($scope, $element, StrategyFactory) {
+    .controller('StrategyController', function($scope, $element, $attrs, StrategyFactory) {
         $element.css('display', 'block');
 
-        $scope.$watch(function() {
-            return StrategyFactory.ready();
-        }, function() {
-            StrategyFactory.draw($element);
-        });
+        if (typeof $scope.lazy == 'undefined') {
+            $scope.lazy = false;
+        }
 
         $scope.$watch(function() {
-            return $scope.strategies;
-        }, function(strategies) {
-            StrategyFactory.load(strategies, $element);
+            return StrategyFactory.ready() && !$scope.lazy;
+        }, function(is_ready) {
+            if (is_ready) {
+                for (var legend in $scope.strategies) {
+                    // TODO Add a dynamic chart drawing: only redraw the chart for the updating strategy
+                    $scope.$watch(function() {
+                        return $scope.strategies[legend].keywords.length();
+                    }, function() {
+                        StrategyFactory.draw($element);
+                        StrategyFactory.load($scope.strategies, $element);
+                    });
+                }
+            }
         });
     })
     .directive("strategyComparison", function() {
@@ -234,7 +242,8 @@ angular.module('DirectETF')
             controller: "StrategyController",
             restrict: 'E',
             scope: {
-                strategies: '=strategies'
+                strategies: '=strategies',
+                lazy: '=lazy'
             }
         };
     });
