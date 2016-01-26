@@ -10,7 +10,7 @@
     </thead>
     <tbody data-list-items>
     <tr ng-repeat="etf in etfs" id="etf-{{etf.isin}}" data-isin="{{etf.isin}}">
-        <td class="etf-column name" data-etf-attr-name="name">{{etf.name}}</td>
+        <td class="etf-column name" data-etf-attr-name="name">{{etf.name}} ({{ etf.percent }}%)</td>
         <!--<td class="etf-column quantity number" data-etf-attr-name="quantity" >{{etf.quantity}}</td>-->
         <!--<td class="etf-column price" data-etf-attr-name="price">{{etf.price}} {{client.portfolio.currencySymb}}</td>-->
         <td class="etf-column value" data-etf-attr-name="value">{{etf.quantity * etf.price | number: 2}}
