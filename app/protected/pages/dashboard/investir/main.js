@@ -433,7 +433,7 @@ angular.module('DirectETF')
                     $scope.wizard.portfolio.isins = angular.copy(isins_cache);
 
                     for (var i in etfs) {
-                        if (isins_cache.indexOf(etfs[i].isin) > -1) {
+                        if (isins_cache.indexOf(etfs[i].isin) == -1) {
                             $scope.wizard.portfolio.isins.push(etfs[i].isin);
                         }
                     }
