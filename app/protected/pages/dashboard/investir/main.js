@@ -484,7 +484,9 @@ angular.module('DirectETF')
         var _invest_etfs = null;
         var _data_valo = null;
 
-        $scope.model = {};
+        $scope.model = {
+            lazy: true
+        };
 
         $rootScope.step3 = function () {
             if (!$scope.model.strategies) {
@@ -493,10 +495,17 @@ angular.module('DirectETF')
                 }, 100);
 
                 $scope.model.strategies = {
-                    //'Stratégie neutre': $scope.client.portfolio.strategy,
                     'Nouvelle stratégie': $scope.wizard.portfolio.strategy,
                 };
             }
+        };
+
+        $scope.loadSimulationPast = function () {
+            setTimeout(function() {
+                $scope.$apply(function() {
+                    $scope.model.lazy = false;
+                });
+            }, 100);
         };
 
         $scope.timeframe = 10;
@@ -535,6 +544,27 @@ angular.module('DirectETF')
             }
             return SimulationFactory.keywords_deleted($scope.wizard.portfolio.strategy.keywords.get(), $scope.client.portfolio.strategy.keywords.get());
         }
+
+        $scope.$watch(function() {
+            return $scope.wizard.portfolio.strategy.keywords.length();
+        }, function() {
+            //if($scope.wizard.step == 3) {}
+            $EtfsFactory.loadAll(function (etfs_list) {
+                //mettre à jour le graph simulation future
+                var etfs_strategy = $scope.wizard.portfolio.strategy.cross(etfs_list);
+                var etfs_strategy_simulation = [];
+
+                for (var i in etfs_strategy) {
+                    var etf = etfs_strategy[i];
+
+                    etfs_strategy_simulation.push([etf.isin, etf.quantity || 1, etf.price, etf.profitability, etf.volatility]);
+                }
+
+                SimulationFactory.draw_simulation_future(_data_valo, etfs_strategy_simulation, $scope.timeframe, $scope.wizard.order.amount.total);
+
+                _invest_etfs = etfs_strategy_simulation;
+            });
+        });
 
         $ClientFactory.portfolio.valo(function (err, valo, data_valo) {
             if (err) {
