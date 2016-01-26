@@ -154,7 +154,7 @@ angular.module('DirectETF')
                                         + '<a ng-click="remove(\'' + id + '\')"></a></span>');
             }
 
-            $element.find('.questionnaire-sentence-keywords').html($compile(keywords_sentence.join(', '))($scope));
+            $element.find('.questionnaire-sentence-keywords').html($compile(keywords_sentence.join(''))($scope));
             $scope.hasKeywords = keywords_sentence.length > 0;
         });
     })

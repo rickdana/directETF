@@ -1,12 +1,14 @@
-<table class="table table-hover table-header-fixed">
-    <thead ng-show="etfs.length">
+<table class="table table-hover table-header-fixed" ng-show="etfs.length">
+    <thead>
     <tr>
         <th class="etf-column name">Intitulé des titres</th>
+        <th class="etf-column text-center">%</th>
     </tr>
     </thead>
     <tbody data-list-items>
     <tr ng-repeat="etf in etfs" id="etf-{{etf.isin}}" data-isin="{{etf.isin}}">
         <td class="etf-column name" data-etf-attr-name="name">{{etf.name}}</td>
+        <td class="etf-column percent text-center">{{percent}} %</td>
     </tr>
     </tbody>
 </table>

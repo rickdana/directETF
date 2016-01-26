@@ -27,6 +27,9 @@ angular.module('DirectETF')
         var render = function(etfs) {
             $scope.etfs = etfs;
 
+
+            $scope.percent = ((1 / etfs.length) * 100).toFixed(2);
+
             $q.all([
                 $http.get($attrs.template, { cache : $templateCache })
             ]).then(function(templateCache) {
@@ -48,16 +51,12 @@ angular.module('DirectETF')
         $scope.$watch(function() {
             return $attrs.model;
         }, function(filter) {
-            if (typeof filter == 'undefined' || filter.length == 0) {
-                if ($attrs.demo) {
-                    filter = $rootScope.client.portfolio.desc.etfs;
-                } else {
-                    return;
-                }
+            if (!filter) {
+                return;
             }
 
-            if (filter.length == 0) {
-                filter = $rootScope.client.portfolio.desc.etfs;
+            if (filter.length < 3) {
+                filter = $rootScope.client.portfolio.etfs;
             }
 
             $EtfsFactory.load(filter, function(etfs) {

@@ -341,21 +341,43 @@ angular.module('DirectETF')
                 var active = $element.find('[data-step=' + this.step + ']'),
                     current = $element.find('[data-step=' + step + ']');
 
-//                if (active.attr('data-step') == current.attr('data-step')) {
-//                    return false;
-//                }
-//
-//                if (current.attr('data-step') == 2 && $OrdersFactory.length() == 0) {
-//                    return false;
-//                }
-//
-//                if (wizard_state.find('[data-step=' + (current.attr('data-step') - 1) + ']').attr('data-state') == 'unvalid') {
-//                    return false;
-//                }
+                if (step == 2) {
+                    if (!$scope.wizard.portfolio.strategy.keywords.length()) {
+                        ngDialog.open({
+                            template: '<p class="text-center">Veuillez définir une stratégie.</p>',
+                            plain: true
+                        });
+
+                        return;
+                    } else if (!$scope.wizard.portfolio.isins.length) {
+                        ngDialog.open({
+                            template: '<p class="text-center">Veuillez sélectionner des mots clefs supplémentaire.</p>',
+                            plain: true
+                        });
+
+                        return;
+                    }
+                }
+
+                if (step == 3) {
+                    if ($scope.wizard.order.amount.total == 0) {
+                        ngDialog.open({
+                            template: '<p class="text-center">Veuillez ajouter des fonds.</p>',
+                            plain: true
+                        });
+
+                        return;
+                    } else if ($scope.wizard.order.amount.total < 50) {
+                        ngDialog.open({
+                            template: '<p class="text-center">Veuillez rajouter des fonds (minimum 50 euros).</p>',
+                            plain: true
+                        });
+
+                        return;
+                    }
+                }
 
                 this.step = step;
-
-                console.log("Go to step " + current.attr('data-step'));
 
                 $rootScope['step' + current.attr('data-step')]();
                 $OrdersFactory.lock();
@@ -381,8 +403,6 @@ angular.module('DirectETF')
                     setTimeout(function() {
                         ngDialog.close();
                         $state.go('/protected/pages/dashboard/portefeuille');
-
-                        console.log('$rootScope.client.portfolio:', $rootScope.client.portfolio.value)
                     }, 2000);
                 }
             },
@@ -405,29 +425,28 @@ angular.module('DirectETF')
         };
 
         $scope.wizard.portfolio = new $PortfolioFactory.Portfolio($scope.client.id, true);
-        $scope.wizard.portfolio.empty = true;
 
-        console.log('$scope.wizard.portfolio:', $scope.wizard.portfolio)
-
-        $scope.$watch(function() {
-            return $scope.wizard.portfolio.ready();
-        }, function(ready) {
-            if (!ready) {
-                return;
-            }
+            var isins_cache = angular.copy($scope.wizard.portfolio.isins);
 
             $scope.$watch(function() {
-                return $scope.wizard.portfolio.strategy.keywords.length();
-            }, function() {
-                $scope.wizard.portfolio.strategy.etfs(function(etfs) {
-                    $scope.wizard.portfolio.desc.isins = [];
-                    $scope.wizard.portfolio.empty = false;
+                return $scope.wizard.portfolio.ready();
+            }, function(ready) {
+                if (!ready) {
+                    return;
+                }
 
-                    for (var i in etfs) {
-                        $scope.wizard.portfolio.desc.isins.push(etfs[i].isin);
-                    }
+                $scope.$watch(function() {
+                    return $scope.wizard.portfolio.strategy.keywords.length();
+                }, function() {
+                    $scope.wizard.portfolio.strategy.etfs(function(etfs) {
+                        $scope.wizard.portfolio.isins = angular.copy(isins_cache);
 
-                    console.log('==>', $scope.wizard.portfolio.desc.isins)
+                        for (var i in etfs) {
+                            if (isins_cache.indexOf(etfs[i].isin) == -1) {
+                                $scope.wizard.portfolio.desc.isins.push(etfs[i].isin);
+                            }
+                        }
+                    });
                 });
             });
         });
@@ -499,7 +518,9 @@ angular.module('DirectETF')
         var _invest_etfs = null;
         var _data_valo = null;
 
-        $scope.model = {};
+        $scope.model = {
+            lazy: true
+        };
 
         $rootScope.step3 = function () {
             if (!$scope.model.strategies) {
@@ -508,10 +529,17 @@ angular.module('DirectETF')
                 }, 100);
 
                 $scope.model.strategies = {
-                    //'Stratégie neutre': $scope.client.portfolio.strategy,
                     'Nouvelle stratégie': $scope.wizard.portfolio.strategy,
                 };
             }
+        };
+
+        $scope.loadSimulationPast = function () {
+            setTimeout(function() {
+                $scope.$apply(function() {
+                    $scope.model.lazy = false;
+                });
+            }, 100);
         };
 
         $scope.timeframe = 10;
@@ -551,72 +579,88 @@ angular.module('DirectETF')
             return SimulationFactory.keywords_deleted($scope.wizard.portfolio.strategy.keywords.get(), $scope.client.portfolio.strategy.keywords.get());
         }
 
+        $scope.$watch(function() {
+            return $scope.wizard.portfolio.strategy.keywords.length();
+        }, function() {
+            //if($scope.wizard.step == 3) {}
+            $EtfsFactory.loadAll(function (etfs_list) {
+                //mettre à jour le graph simulation future
+                var etfs_strategy = $scope.wizard.portfolio.strategy.cross(etfs_list);
+                var etfs_strategy_simulation = [];
+
+                for (var i in etfs_strategy) {
+                    var etf = etfs_strategy[i];
+
+                    etfs_strategy_simulation.push([etf.isin, etf.quantity || 1, etf.price, etf.profitability, etf.volatility]);
+                }
+
+                SimulationFactory.draw_simulation_future(_data_valo, etfs_strategy_simulation, $scope.timeframe, $scope.wizard.order.amount.total);
+
+                _invest_etfs = etfs_strategy_simulation;
+            });
+        });
+
         // Trades
         $scope.wizard.portfolio.prototype.trades(function (err, trades) {
             if (err) {
                 throw err;
             }
 
-            var data_trades = [];
-            var trades_by_date = {};
-            var somme_trades = 0;
+        var data_trades = [];
+        var trades_by_date = {};
+        var somme_trades = 0;
 
-            //CASHIN and STOCKIN
-            for (var x in $scope.wizard.portfolio.dataValo) {
-                for (var i in trades) {
-                    if ((trades[i].type == 'CASHIN' || trades[i].type == 'STOCKIN') && $scope.wizard.portfolio.dataValo[x][0] == new Date(trades[i].date).getTime()) {
-                        somme_trades += trades[i].cash;
-                    }
+        //CASHIN and STOCKIN
+        for (var x in $scope.wizard.portfolio.dataValo) {
+            for (var i in trades) {
+                if ((trades[i].type == 'CASHIN' || trades[i].type == 'STOCKIN') && $scope.wizard.portfolio.dataValo[x][0] == new Date(trades[i].date).getTime()) {
+                    somme_trades += trades[i].cash;
                 }
-                trades_by_date[new Date($scope.wizard.portfolio.dataValo[x][0])] = somme_trades;
             }
+            trades_by_date[new Date($scope.wizard.portfolio.dataValo[x][0])] = somme_trades;
+        }
 
-            for (var date in trades_by_date) {
-                data_trades.push([new Date(date).getTime(), trades_by_date[date]]);
-            }
-            data_trades.sort(function (a, b) {
-                return a[0] - b[0];
-            });
-
-            //Investements
-            var invest_etfs = [];
-
-            $scope.wizard.portfolio.prototype.etfs.list(function(err, etfs_with_gains) {
-                if (err) {
-                    return console.error(err);
-                }
-
-                $scope.simulation = function () {
-                    var ref_etfs = []
-                    var invest_etfs = [];
-                    for(var i in etfs_with_gains) {
-                        ref_etfs.push([etfs_with_gains[i].isin, etfs_with_gains[i].quantity, etfs_with_gains[i].price, etfs_with_gains[i].profitability, etfs_with_gains[i].volatility]);
-                        invest_etfs.push([etfs_with_gains[i].isin, etfs_with_gains[i].quantity, etfs_with_gains[i].price, etfs_with_gains[i].profitability, etfs_with_gains[i].volatility]);
-                    }
-                    var orders = $OrdersFactory.get();
-
-                    $EtfsFactory.loadAll(function(etfs_list) {
-                        var etfs_strategy = $scope.wizard.portfolio.strategy.cross(etfs_list);
-                        var etfs_strategy_simulation = [];
-
-                        for (var i in etfs_strategy) {
-                            var etf = etfs_strategy[i];
-
-                            etfs_strategy_simulation.push([etf.isin, etf.quantity || 1, etf.price, etf.profitability, etf.volatility]);
-                        }
-
-                        SimulationFactory.draw_simulation_future($scope.wizard.portfolio.dataValo, etfs_strategy_simulation, $scope.timeframe, $scope.wizard.order.amount.total);
-
-                        _invest_etfs = etfs_strategy_simulation;
-                        _data_valo = $scope.wizard.portfolio.dataValo;
-                    });
-                };
-            });
+        for (var date in trades_by_date) {
+            data_trades.push([new Date(date).getTime(), trades_by_date[date]]);
+        }
+        data_trades.sort(function (a, b) {
+            return a[0] - b[0];
         });
 
-        //setTimeout(function() {
-        //    $scope.wizard.goto(3);
-        //}, 500)
+        //Investements
+        var invest_etfs = [];
+
+        $scope.wizard.portfolio.prototype.etfs.list(function(err, etfs_with_gains) {
+            if (err) {
+                return console.error(err);
+            }
+
+            $scope.simulation = function () {
+                var ref_etfs = []
+                var invest_etfs = [];
+                for(var i in etfs_with_gains) {
+                    ref_etfs.push([etfs_with_gains[i].isin, etfs_with_gains[i].quantity, etfs_with_gains[i].price, etfs_with_gains[i].profitability, etfs_with_gains[i].volatility]);
+                    invest_etfs.push([etfs_with_gains[i].isin, etfs_with_gains[i].quantity, etfs_with_gains[i].price, etfs_with_gains[i].profitability, etfs_with_gains[i].volatility]);
+                }
+                var orders = $OrdersFactory.get();
+
+                $EtfsFactory.loadAll(function(etfs_list) {
+                    var etfs_strategy = $scope.wizard.portfolio.strategy.cross(etfs_list);
+                    var etfs_strategy_simulation = [];
+
+                    for (var i in etfs_strategy) {
+                        var etf = etfs_strategy[i];
+
+                        etfs_strategy_simulation.push([etf.isin, etf.quantity || 1, etf.price, etf.profitability, etf.volatility]);
+                    }
+
+                    SimulationFactory.draw_simulation_future($scope.wizard.portfolio.dataValo, etfs_strategy_simulation, $scope.timeframe, $scope.wizard.order.amount.total);
+
+                    _invest_etfs = etfs_strategy_simulation;
+                    _data_valo = $scope.wizard.portfolio.dataValo;
+                });
+            };
+        });
     })
     .controller('InvestirValidationController', function($OrdersFactory, $rootScope, $scope, $element) {
         $rootScope.step4 = function () {};

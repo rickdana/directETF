@@ -44,78 +44,96 @@ margin-left: 20px;
 .flaticon-clerk:before {
 	content: "\e009";
 }
-.flaticon-earth148:before {
+.flaticon-currency19:before {
 	content: "\e00a";
 }
-.flaticon-earth188:before {
+.flaticon-earth148:before {
 	content: "\e00b";
 }
-.flaticon-earth189:before {
+.flaticon-earth188:before {
 	content: "\e00c";
 }
-.flaticon-energy36:before {
+.flaticon-earth189:before {
 	content: "\e00d";
 }
-.flaticon-europe12:before {
+.flaticon-energy36:before {
 	content: "\e00e";
 }
-.flaticon-europe19:before {
+.flaticon-europe12:before {
 	content: "\e00f";
 }
-.flaticon-europe2:before {
+.flaticon-europe19:before {
 	content: "\e010";
 }
-.flaticon-europe30:before {
+.flaticon-europe2:before {
 	content: "\e011";
 }
-.flaticon-europe32:before {
+.flaticon-europe30:before {
 	content: "\e012";
 }
-.flaticon-europe5:before {
+.flaticon-europe32:before {
 	content: "\e013";
 }
-.flaticon-fire58:before {
+.flaticon-europe5:before {
 	content: "\e014";
 }
-.flaticon-geography10:before {
+.flaticon-fire58:before {
 	content: "\e015";
 }
-.flaticon-geography5:before {
+.flaticon-gasoline5:before {
 	content: "\e016";
 }
-.flaticon-geography7:before {
+.flaticon-geography:before {
 	content: "\e017";
 }
-.flaticon-headset1:before {
+.flaticon-geography10:before {
 	content: "\e018";
 }
-.flaticon-home168:before {
+.flaticon-geography5:before {
 	content: "\e019";
 }
-.flaticon-japanese13:before {
+.flaticon-geography7:before {
 	content: "\e01a";
 }
-.flaticon-manufacture:before {
+.flaticon-headset1:before {
 	content: "\e01b";
 }
-.flaticon-money214:before {
+.flaticon-home168:before {
 	content: "\e01c";
 }
-.flaticon-money469:before {
+.flaticon-japanese13:before {
 	content: "\e01d";
 }
-.flaticon-petrol1:before {
+.flaticon-manufacture:before {
 	content: "\e01e";
 }
-.flaticon-smartphone55:before {
+.flaticon-money13:before {
 	content: "\e01f";
 }
-.flaticon-stethoscope:before {
+.flaticon-money214:before {
 	content: "\e020";
 }
-.flaticon-us:before {
+.flaticon-money469:before {
 	content: "\e021";
 }
-.flaticon-water-drop:before {
+.flaticon-petrol1:before {
 	content: "\e022";
+}
+.flaticon-plant179:before {
+	content: "\e023";
+}
+.flaticon-smartphone55:before {
+	content: "\e024";
+}
+.flaticon-stethoscope:before {
+	content: "\e025";
+}
+.flaticon-us:before {
+	content: "\e026";
+}
+.flaticon-waiting3:before {
+	content: "\e027";
+}
+.flaticon-water-drop:before {
+	content: "\e028";
 }
