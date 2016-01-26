@@ -341,21 +341,43 @@ angular.module('DirectETF')
                 var active = $element.find('[data-step=' + this.step + ']'),
                     current = $element.find('[data-step=' + step + ']');
 
-//                if (active.attr('data-step') == current.attr('data-step')) {
-//                    return false;
-//                }
-//
-//                if (current.attr('data-step') == 2 && $OrdersFactory.length() == 0) {
-//                    return false;
-//                }
-//
-//                if (wizard_state.find('[data-step=' + (current.attr('data-step') - 1) + ']').attr('data-state') == 'unvalid') {
-//                    return false;
-//                }
+                if (step == 2) {
+                    if (!$scope.wizard.portfolio.strategy.keywords.length()) {
+                        ngDialog.open({
+                            template: '<p class="text-center">Veuillez définir une stratégie.</p>',
+                            plain: true
+                        });
+
+                        return;
+                    } else if (!$scope.wizard.portfolio.isins.length) {
+                        ngDialog.open({
+                            template: '<p class="text-center">Veuillez sélectionner des mots clefs supplémentaire.</p>',
+                            plain: true
+                        });
+
+                        return;
+                    }
+                }
+
+                if (step == 3) {
+                    if ($scope.wizard.order.amount.total == 0) {
+                        ngDialog.open({
+                            template: '<p class="text-center">Veuillez ajouter des fonds.</p>',
+                            plain: true
+                        });
+
+                        return;
+                    } else if ($scope.wizard.order.amount.total < 50) {
+                        ngDialog.open({
+                            template: '<p class="text-center">Veuillez rajouter des fonds (minimum 50 euros).</p>',
+                            plain: true
+                        });
+
+                        return;
+                    }
+                }
 
                 this.step = step;
-
-                console.log("Go to step " + current.attr('data-step'));
 
                 $rootScope['step' + current.attr('data-step')]();
                 $OrdersFactory.lock();
