@@ -424,18 +424,19 @@ angular.module('DirectETF')
             $scope.wizard.portfolio = new $PortfolioFactory.Portfolio(infos);
             $scope.wizard.portfolio.empty = true;
 
+            var isins_cache = angular.copy($scope.wizard.portfolio.isins);
+
             $scope.$watch(function() {
                 return $scope.wizard.portfolio.strategy.keywords.length();
             }, function() {
                 $scope.wizard.portfolio.strategy.etfs(function(etfs) {
-                    $scope.wizard.portfolio.isins = [];
-                    $scope.wizard.portfolio.empty = false;
+                    $scope.wizard.portfolio.isins = angular.copy(isins_cache);
 
                     for (var i in etfs) {
-                        $scope.wizard.portfolio.isins.push(etfs[i].isin);
+                        if (isins_cache.indexOf(etfs[i].isin) > -1) {
+                            $scope.wizard.portfolio.isins.push(etfs[i].isin);
+                        }
                     }
-
-                    console.log('==>', $scope.wizard.portfolio.isins)
                 });
             });
         });
