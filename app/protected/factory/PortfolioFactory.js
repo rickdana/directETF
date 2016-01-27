@@ -682,6 +682,8 @@ angular.module('DirectETF')
             Portfolio: function(clientId, clone, done) {
                 var self = PortfolioPrototype.init(clientId, clone || false, done);
 
+                self.gains = 0;
+
                 self.prototype.trades = function(done) {
                     if (self.cache.trades.length) {
                         return done(false, self.cache.trades);

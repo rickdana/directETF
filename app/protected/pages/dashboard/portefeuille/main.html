@@ -14,7 +14,7 @@
 
                     <div ng-show="client.portfolio.order.value">
                         <br>
-                        <div class="incomming text-center">Stratégie en cours de traitement</div>
+                        <div class="incomming text-center">En cours de traitement</div>
                         <strategy-keywords
                                 data-strategy="client.portfolio.order.strategy"></strategy-keywords>
                     </div>
@@ -243,7 +243,7 @@
                 </div>
             </div>
             <!-- Historique du portefeuille -->
-            <div id="graph-synthese">
+            <div id="graph-synthese" ng-show="!client.portfolio.order.value">
                 <div class="portlet" ng-controller="PortefeuilleHistoriqueController">
                     <div class="portlet-body text-right" style="min-height: 340px;">
                         <div id="portefeuille-historique-stockchart" style="display: none"></div>
