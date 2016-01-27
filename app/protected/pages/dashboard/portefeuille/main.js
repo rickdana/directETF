@@ -50,16 +50,19 @@ angular.module('DirectETF')
             return parseFloat(number).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
         };
 
-        var quantityTotal = 0;
+
 
         // Chargement des gains de chaque ETF avant l'affichage du tableau des titres
         $scope.beforeRendering = function(etfs, done) {
+            var quantityTotal = 0;
+
             for (var i in etfs) {
                 quantityTotal += etfs[i].quantity;
             }
 
             for (var i in etfs){
-                etfs[i].percent = (etfs[i].quantity * 100 / quantityTotal).toFixed();
+                etfs[i].percent = Math.round((etfs[i].quantity * 100 / quantityTotal));
+                console.log('quantity:', etfs[i].quantity, ' total: ', quantityTotal)
             }
 
             $scope.client.portfolio.prototype.etfs.list(function(err, etfs_with_gains) {
