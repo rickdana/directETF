@@ -62,7 +62,7 @@ angular.module('DirectETF')
                 etfs[i].percent = (etfs[i].quantity * 100 / quantityTotal).toFixed();
             }
 
-            $ClientFactory.portfolio.prototype.etfs.list(function(err, etfs_with_gains) {
+            $scope.client.portfolio.prototype.etfs.list(function(err, etfs_with_gains) {
                 if (err) {
                     return console.error(err);
                 }
@@ -87,7 +87,7 @@ angular.module('DirectETF')
                     return console.error(err);
                 }
 
-                $scope.client.portfolio.gains = gains;
+                $scope.client.portfolio.desc.gains = gains;
             });
 
             // Total des titres

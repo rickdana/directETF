@@ -578,7 +578,7 @@ angular.module('DirectETF')
                     strategy: {},
                     cache: {
                         trades: [],
-                        tradesByDate: {}
+                        tradesByDate: null, // {}
                     },
                     prototype: {}
                 };
@@ -710,33 +710,27 @@ angular.module('DirectETF')
                     if (self.cache.tradesByDate) {
                         return done(false, self.cache.tradesByDate);
                     }
-                    
-                    this.valo(function(err, valo, data_valo) {
+
+                    self.prototype.trades(function(err, trades) {
                         if (err) {
                             return done(err, null);
                         }
-                        
-                        self.prototype.trades(function(err, trades) {
-                            if (err) {
-                                return done(err, null);
-                            }
-                            
-                            var somme_trades = 0;
-                            var trades_by_date = {};
-                            
-                            for (var x in data_valo) {
-                                for (var i in trades) {
-                                    if ((trades[i].type == 'CASHIN' || trades[i].type == 'STOCKIN') && data_valo[x][0] == new Date(trades[i].date).getTime()) {
-                                        somme_trades += trades[i].cash;
-                                    }
+
+                        var somme_trades = 0;
+                        var trades_by_date = {};
+
+                        for (var x in self.dataValo) {
+                            for (var i in trades) {
+                                if ((trades[i].type == 'CASHIN' || trades[i].type == 'STOCKIN') && self.dataValo[x][0] == new Date(trades[i].date).getTime()) {
+                                    somme_trades += trades[i].cash;
                                 }
-                                trades_by_date[new Date(data_valo[x][0])] = somme_trades;
                             }
-                            
-                            self.cache.tradesByDate = trades_by_date;
-                            
-                            done(false, trades_by_date);
-                        });
+                            trades_by_date[new Date(self.dataValo[x][0])] = somme_trades;
+                        }
+
+                        self.cache.tradesByDate = trades_by_date;
+
+                        done(false, trades_by_date);
                     });
                 };
                 

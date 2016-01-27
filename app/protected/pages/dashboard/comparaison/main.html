@@ -12,7 +12,8 @@
                             </div>
                             <div class="display-cell">
                                 <div class="comparaison-inputs">
-                                    <select class="control-input form-control" name="repeatSelect" id="comparaison" ng-model="data.repeatSelect">
+                                    <select class="control-input form-control" name="repeatSelect" id="comparaison"
+                                            ng-model="data.repeatSelect" ng-disabled="!client.alreadyInvest">
                                         <option ng-repeat="option in data.availableOptions">{{option.name}}</option>
                                     </select>
 

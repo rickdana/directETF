@@ -127,7 +127,14 @@ angular.module('DirectETF')
             });
         }
     })
-    .controller('StrategyKeywordsController', function($PortfolioFactory, $scope, $compile, $element) {
+    .controller('StrategyKeywordsController', function($ocLazyLoad, $PortfolioFactory, $scope, $compile, $element, $attrs) {
+        $ocLazyLoad.load({
+            insertBefore: '#ng_load_plugins_before',
+            files: [
+                '/protected/component/Questionnaire/style.css',
+            ]
+        });
+
         $scope.remove = function(id) {
             $scope.$strategy.keywords.remove(id);
         };
@@ -135,9 +142,11 @@ angular.module('DirectETF')
         $scope.$watch(function() {
             return $scope.$strategy && $scope.$strategy.keywords && $scope.$strategy.keywords.length();
         }, function() {
-            if (!$scope.$strategy.get) {
+            if (!$scope.$strategy || !$scope.$strategy.get) {
                 return;
             }
+
+            $attrs.action = $attrs.action || false;
 
             var keywords = $scope.$strategy.get();
             var keywords_sentence = [];
@@ -150,8 +159,13 @@ angular.module('DirectETF')
                     continue;
                 }
 
-                keywords_sentence.push('<span class="questionnaire-sentence-keyword">' + keyword.name
-                                        + '<a ng-click="remove(\'' + id + '\')"></a></span>');
+                if ($attrs.action) {
+                    keywords_sentence.push('<span class="questionnaire-sentence-keyword">' + keyword.name
+                                            + '<a ng-click="remove(\'' + id + '\')"></a></span>');
+                } else {
+                    keywords_sentence.push('<span class="questionnaire-sentence-keyword">' + keyword.name
+                                            + '</span>');
+                }
             }
 
             $element.find('.questionnaire-sentence-keywords').html($compile(keywords_sentence.join(''))($scope));

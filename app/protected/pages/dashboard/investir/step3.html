@@ -6,7 +6,8 @@
                     <a href="/investir/#tab_0" data-toggle="tab">Projection sur {{timeframe}} ans</a>
                 </li>
                 <li id="tab_past">
-                    <a href="/investir/#tab_1" data-toggle="tab" ng-click="loadSimulationPast()">Comparaison avec la nouvelle stratégie</a>
+                    <a href="/investir/#tab_1" data-toggle="tab" ng-click="loadSimulationPast()">Comparaison avec la
+                        nouvelle stratégie</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -80,7 +81,9 @@
                                             <option ng-repeat="option in periodeData">{{option}}</option>
                                         </select>
                                     </div>
-                                    <strategy-comparison id="simulation-past" data-lazy="model.lazy"
+                                    <strategy-comparison id="simulation-past"
+                                                         data-lazy="model.lazy"
+                                                         data-portfolio="wizard.portfolio"
                                                          data-strategies="model.strategies"></strategy-comparison>
                                 </div>
                             </div>

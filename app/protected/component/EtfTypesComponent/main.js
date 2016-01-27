@@ -42,23 +42,31 @@ angular.module('DirectETF')
             return series;
         };
 
-        $scope.$watch(function() {
-            return $scope.portfolio && $scope.portfolio.strategy && $scope.portfolio.desc.isins.length;
-        }, function() {
-            if (!$scope.portfolio) {
-                return;
-            }
+//        $scope.$watch(function() {
+//            return $scope.portfolio.ready && $scope.portfolio.ready();
+//        }, function(ready) {
+//            if (!reday) {
+//                return false;
+//            }
 
-            if ($scope.portfolio.strategy.compare($rootScope.client.portfolio.strategy)) {
-                $EtfsFactory.load($rootScope.client.portfolio.desc.etfs, function(etfs) {
-                    $scope.types = load(etfs);
-                });
-            } else {
-                $scope.portfolio.strategy.etfs(function(etfs) {
-                    $scope.types = load(etfs);
-                });
-            }
-        });
+            $scope.$watch(function() {
+                return $scope.portfolio && $scope.portfolio.strategy && $scope.portfolio.desc.isins.length;
+            }, function() {
+                if (!$scope.portfolio) {
+                    return;
+                }
+
+                if ($scope.portfolio.strategy.compare($rootScope.client.portfolio.strategy)) {
+                    $EtfsFactory.load($rootScope.client.portfolio.desc.etfs, function(etfs) {
+                        $scope.types = load(etfs);
+                    });
+                } else {
+                    $scope.portfolio.strategy.etfs(function(etfs) {
+                        $scope.types = load(etfs);
+                    });
+                }
+            });
+//        });
     })
     .directive("typeProgress", function($EtfsFactory) {
         return {

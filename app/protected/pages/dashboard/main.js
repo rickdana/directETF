@@ -101,7 +101,7 @@ DirectETF.controller('AppController', function($rootScope, $ClientFactory, $Port
         if (err) {
             return console.error(err);
         }
-console.log(client)
+
         $rootScope.client = client;
     });
 

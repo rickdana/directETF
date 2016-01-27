@@ -1,5 +1,5 @@
 angular.module('DirectETF')
-    .factory('StrategyFactory', function($PortfolioFactory, $EtfsFactory, $ClientFactory) {
+    .factory('StrategyFactory', function($PortfolioFactory, $EtfsFactory) {
         var etfs_clients = [];
         var portfolio = {
             data: {}
@@ -143,59 +143,55 @@ angular.module('DirectETF')
                 draw_simulation($element, etfs_strategy_simulation, portfolio.valo, portfolio.data.valo, legend, simulation_cb);
             });
         };
-        
-        $ClientFactory.portfolio.valo(function (err, valo, data_valo) {
-            if (err) {
-                throw err;
-            }
-
-            portfolio.valo = valo;
-            portfolio.data.valo = data_valo;
-
-            // Trades
-            $ClientFactory.portfolio.trades(function (err, trades) {
-                if (err) {
-                    throw err;
-                }
-
-                var data_trades = [];
-                var trades_by_date = {};
-                var somme_trades = 0;
-
-                //CASHIN and STOCKIN
-                for (var x in data_valo) {
-                    for (var i in trades) {
-                        if ((trades[i].type == 'CASHIN' || trades[i].type == 'STOCKIN') && data_valo[x][0] == new Date(trades[i].date).getTime()) {
-                            somme_trades += trades[i].cash;
-                        }
-                    }
-                    trades_by_date[new Date(data_valo[x][0])] = somme_trades;
-                }
-
-                for (var date in trades_by_date) {
-                    data_trades.push([new Date(date).getTime(), trades_by_date[date]]);
-                }
-                data_trades.sort(function (a, b) {
-                    return a[0] - b[0];
-                });
-
-                portfolio.data.trades = data_trades;
-
-                //Investements
-                $ClientFactory.portfolio.etfs(function(err, etfs_with_gains) {
-                    if (err) {
-                        return console.error(err);
-                    }
-
-                    for(var i in etfs_with_gains) {
-                        etfs_clients.push([etfs_with_gains[i].isin, etfs_with_gains[i].quantity, etfs_with_gains[i].price, etfs_with_gains[i].profitability, etfs_with_gains[i].volatility]);
-                    }
-                });
-
-            });
-        });
 
         return {
+            init: function(portfolioSrc) {
+                portfolio.valo = portfolioSrc.valo;
+                portfolio.data.valo = portfolioSrc.dataValo;
+
+                // Trades
+                portfolioSrc.prototype.trades(function (err, trades) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    var data_trades = [];
+                    var trades_by_date = {};
+                    var somme_trades = 0;
+
+                    //CASHIN and STOCKIN
+                    for (var x in portfolio.data.valo) {
+                        for (var i in trades) {
+                            if ((trades[i].type == 'CASHIN' || trades[i].type == 'STOCKIN') && portfolio.data.valo[x][0] == new Date(trades[i].date).getTime()) {
+                                somme_trades += trades[i].cash;
+                            }
+                        }
+                        trades_by_date[new Date(portfolio.data.valo[x][0])] = somme_trades;
+                    }
+
+                    for (var date in trades_by_date) {
+                        data_trades.push([new Date(date).getTime(), trades_by_date[date]]);
+                    }
+                    data_trades.sort(function (a, b) {
+                        return a[0] - b[0];
+                    });
+
+                    portfolio.data.trades = data_trades;
+
+                    //Investements
+                    portfolioSrc.prototype.etfs.list(function(err, etfs_with_gains) {
+                        if (err) {
+                            return console.error(err);
+                        }
+
+                        for(var i in etfs_with_gains) {
+                            etfs_clients.push([etfs_with_gains[i].isin, etfs_with_gains[i].quantity, etfs_with_gains[i].price, etfs_with_gains[i].profitability, etfs_with_gains[i].volatility]);
+                        }
+                    });
+
+                });
+            },
+
             ready: function() {
                 return portfolio.data.trades || false;
             },
@@ -218,14 +214,22 @@ angular.module('DirectETF')
     .controller('StrategyController', function($scope, $element, $attrs, StrategyFactory) {
         $element.css('display', 'block');
 
+        $scope.$watch(function() {
+            return $scope.portfolio.ready();
+        }, function(ready) {
+            if (ready) {
+                StrategyFactory.init($scope.portfolio);
+            }
+        });
+
         if (typeof $scope.lazy == 'undefined') {
             $scope.lazy = false;
         }
 
         $scope.$watch(function() {
             return StrategyFactory.ready() && !$scope.lazy;
-        }, function(is_ready) {
-            if (is_ready) {
+        }, function(ready) {
+            if (ready) {
                 for (var legend in $scope.strategies) {
                     // TODO Add a dynamic chart drawing: only redraw the chart for the updating strategy
                     $scope.$watch(function() {
@@ -243,6 +247,7 @@ angular.module('DirectETF')
             controller: "StrategyController",
             restrict: 'E',
             scope: {
+                portfolio: '=portfolio',
                 strategies: '=strategies',
                 lazy: '=lazy'
             }

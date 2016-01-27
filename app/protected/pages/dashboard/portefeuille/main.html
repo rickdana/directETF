@@ -8,8 +8,13 @@
                     </div>
                 </div>
 
-                <div class="portlet-body">
+                <div class="portlet-body" ng-show="!client.portfolio.order.value">
                     <strategy-keywords data-strategy="client.portfolio.strategy"
+                                       class="text-center"></strategy-keywords>
+                </div>
+
+                <div ng-show="client.portfolio.order.value">
+                    <strategy-keywords data-strategy="client.portfolio.order.strategy"
                                        class="text-center"></strategy-keywords>
                 </div>
             </div>
@@ -47,7 +52,7 @@
                             <table>
                                 <tr>
                                     <td class="type">Gains totaux</td>
-                                    <td class="number">{{format(client.portfolio.gains)}}
+                                    <td class="number">{{format(client.portfolio.desc.gains)}}
                                         {{client.portfolio.desc.currencySymb}}
                                     </td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
@@ -144,8 +149,13 @@
                 </div>
 
                 <div class="portlet-body">
-                    <etf-list data-model="{{client.portfolio.desc.etfs}}"
-                              data-template="/protected/pages/dashboard/portefeuille/table.html"></etf-list>
+                    <div ng-show="!client.portfolio.order.value">
+                        <etf-list data-model="{{client.portfolio.desc.etfs}}"
+                                  data-template="/protected/pages/dashboard/portefeuille/table.html"></etf-list>
+                    </div>
+                    <div ng-show="client.portfolio.order.value">
+                        <etf-list data-model="{{client.portfolio.desc.etfs}}"></etf-list>
+                    </div>
                 </div>
             </div>
             <!-- Maps de mes ETFs-->
@@ -278,7 +288,7 @@
                 </div>
 
                 <div class="portlet-body">
-                    <etf-list data-model="{{client.portfolio.desc.etfs}}"></etf-list>
+                    <etf-list data-model="{{client.portfolio.desc.isins}}"></etf-list>
                 </div>
             </div>
             <!-- Maps de mes ETFs-->

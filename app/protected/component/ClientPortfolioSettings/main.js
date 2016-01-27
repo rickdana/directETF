@@ -23,17 +23,6 @@ angular.module('DirectETF')
                     goal: {},
                     risk: {},
                 }
-            },
-            settings: {
-                portfolio: {
-                    save: function () {
-                        $ClientFactory.settings.portfolio.save($scope.client.portfolio);
-                    },
-                    reset: function () {
-                        angular.copy($scope.client.portfolioDefault, $scope.client.portfolio);
-                        $scope.sliderRisks.value = $scope.sliderRisks.options.stepsArray.indexOf(risks_o[$scope.client.portfolio.risk]);
-                    }
-                }
             }
         };
 

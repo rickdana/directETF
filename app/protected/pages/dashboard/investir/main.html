@@ -10,10 +10,18 @@
              class="step fa fa-check" data-title="Validation"></div>
     </div>
 
-    <div id="sentence" ng-show="wizard.step < 4">
+    <div id="sentence" ng-show="wizard.step == 1">
         <p ng-show="wizard.step > 1">
             Je souhaite investir
-            <span class="questionnaire-sentence-keyword">
+            <span class="orderAmount">
+                {{wizard.order.amount.total}}&nbsp;{{client.portfolio.desc.currencySymb}}</span>.</p>
+        <strategy-keywords data-action="true" data-strategy="wizard.portfolio.strategy"></strategy-keywords>
+    </div>
+
+    <div id="sentence" ng-show="wizard.step > 1 && wizard.step < 4">
+        <p ng-show="wizard.step > 1">
+            Je souhaite investir
+            <span class="orderAmount">
                 {{wizard.order.amount.total}}&nbsp;{{client.portfolio.desc.currencySymb}}</span>.</p>
         <strategy-keywords data-strategy="wizard.portfolio.strategy"></strategy-keywords>
     </div>
@@ -30,12 +38,12 @@
     </div>
 
     <!--Step 3-->
-    <div class="wizard-panel" data-step="3" ng-controller="InvestirRevoirController" ng-show="wizard.step == 13">
+    <div class="wizard-panel" data-step="3" ng-controller="InvestirRevoirController" ng-show="wizard.step == 3">
         <div data-ng-include="'/protected/pages/dashboard/investir/step3.html'"></div>
     </div>
 
     <!--Step 4-->
-    <div class="wizard-panel" data-step="4" ng-controller="InvestirValidationController" ng-show="wizard.step == 3">
+    <div class="wizard-panel" data-step="4" ng-controller="InvestirValidationController" ng-show="wizard.step == 4">
         <div data-ng-include="'/protected/pages/dashboard/investir/step4.html'"></div>
     </div>
 </div>
