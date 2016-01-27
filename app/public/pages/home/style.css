@@ -119,3 +119,23 @@ p {
 #page-home [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
     font-size: 3em;
 }
+
+#page-home .emailstyle {
+    display: inline-block;
+    border: none;
+    background: none;
+    outline: none;
+    width: 50%;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 4px;
+    margin-bottom: 1.3em;
+    font-size: 1.3em;
+    transition: border-color .8s;
+}
+
+#page-home .emailstyle:focus {
+    color: rgba(50, 190, 200, 1);
+    border-color: rgba(54, 198, 211, 1);
+    border-bottom-width: 2px;
+    padding-bottom: 3px;
+}
