@@ -11,13 +11,13 @@
             <div class="tools left">
                 <a ng-click="affichageListeEtfs()"> <i class="fa fa-bars"></i> </a>
             </div>
-            <map id="maps-container" data-height="250" data-demo="true"
+            <map id="maps-container" data-height="250"
                  data-model="wizard.portfolio.desc.isins"></map>
-            <sector-chart-pie id="sectors-overview" data-height="200" data-demo="true"
+            <sector-chart-pie id="sectors-overview" data-height="200"
                               data-model="wizard.portfolio.desc.isins"
                               data-show-in-legend="true"></sector-chart-pie>
-            <type-progress id="types-overview" data-demo="true" data-portfolio="wizard.portfolio"></type-progress>
-            <etf-list id="list-overview" data-demo="true" data-model="{{wizard.portfolio.desc.isins}}"></etf-list>
+            <type-progress id="types-overview" data-portfolio="wizard.portfolio"></type-progress>
+            <etf-list id="list-overview" data-portfolio="wizard.portfolio"></etf-list>
         </div>
     </div>
 </div>

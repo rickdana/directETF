@@ -89,13 +89,7 @@ DirectETF.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-DirectETF.controller('AppController', function($rootScope, $ClientFactory, $PortfolioFactory, ngDialog) {
-    // Exposition initiale
-    $rootScope.client = {
-        profile: {},
-        portfolio: false,
-    };
-
+DirectETF.controller('AppController', function($rootScope, $ClientFactory, ngDialog) {
     // Load the current client and his portfolio
     $ClientFactory.current(function(err, client) {
         if (err) {

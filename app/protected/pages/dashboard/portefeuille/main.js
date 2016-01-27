@@ -79,7 +79,7 @@ angular.module('DirectETF')
         };
 
         $scope.$watch(function() {
-            return $rootScope.client.portfolio;
+            return $rootScope.client.portfolio.ready();
         }, function(p) {
             // Gains totals
             $scope.client.portfolio.prototype.etfs.gains(function(err, gains) {

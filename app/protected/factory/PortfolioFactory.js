@@ -649,7 +649,7 @@ angular.module('DirectETF')
                         throw new Error("Failed to load portfolio valo of ClientID " + clientId);
                     });
 
-                return PortfolioPrototype.cache[clientIdCache];
+                return this.cache[clientIdCache];
             }
         };
 

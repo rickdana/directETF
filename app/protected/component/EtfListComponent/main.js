@@ -4,6 +4,12 @@ angular.module('DirectETF')
             transclude: true,
             controller: "EtfListController",
             templateUrl: "/protected/component/EtfListComponent/template.html",
+            restrict: 'E',
+            scope: {
+                portfolio: '=portfolio',
+                beforeRendering: '=beforeRendering',
+                afterRendering: '=afterRendering',
+            },
         };
     })
     .directive("etfAttrName",
@@ -23,11 +29,10 @@ angular.module('DirectETF')
     )
     .controller('EtfListController', function($EtfsFactory, $rootScope, $scope, $element, $attrs, $compile, $http, $q, $templateCache) {
         $attrs.template = $attrs.template || "/protected/component/EtfListComponent/table.html";
+        $scope.client = $rootScope.client;
 
         var render = function(etfs) {
             $scope.etfs = etfs;
-
-
             $scope.percent = ((1 / etfs.length) * 100).toFixed(2);
 
             $q.all([
@@ -48,17 +53,7 @@ angular.module('DirectETF')
             });
         };
 
-        $scope.$watch(function() {
-            return $attrs.model;
-        }, function(filter) {
-            if (!filter) {
-                return;
-            }
-
-            if (filter.length < 3) {
-                filter = $rootScope.client.portfolio.etfs;
-            }
-
+        var load = function(filter) {
             $EtfsFactory.load(filter, function(etfs) {
                 if ($scope.beforeRendering) {
                     if (typeof $scope.beforeRendering != 'function') {
@@ -74,6 +69,30 @@ angular.module('DirectETF')
                     });
                 } else {
                     render(etfs);
+                }
+            });
+        };
+
+        $scope.$watch(function() {
+            return $scope.portfolio && $scope.portfolio.ready();
+        }, function() {
+            if (!$scope.portfolio) {
+                return;
+            }
+
+            load($rootScope.client.portfolio.desc.etfs);
+
+            $scope.$watch(function() {
+                return $scope.portfolio.strategy.keywords.length();
+            }, function(length) {
+                if (!length) {
+                    return;
+                }
+
+                if ($scope.portfolio.strategy.compare($rootScope.client.portfolio.strategy)) {
+                    load($rootScope.client.portfolio.desc.etfs);
+                } else {
+                    load($scope.portfolio.desc.isins);
                 }
             });
         });

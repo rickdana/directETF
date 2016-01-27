@@ -150,11 +150,13 @@
 
                 <div class="portlet-body">
                     <div ng-show="!client.portfolio.order.value">
-                        <etf-list data-model="{{client.portfolio.desc.etfs}}"
+                        <etf-list data-portfolio="client.portfolio"
+                                  data-before-rendering="beforeRendering"
+                                  data-after-rendering="afterRendering"
                                   data-template="/protected/pages/dashboard/portefeuille/table.html"></etf-list>
                     </div>
                     <div ng-show="client.portfolio.order.value">
-                        <etf-list data-model="{{client.portfolio.desc.etfs}}"></etf-list>
+                        <etf-list data-portfolio="client.portfolio"></etf-list>
                     </div>
                 </div>
             </div>
@@ -288,7 +290,7 @@
                 </div>
 
                 <div class="portlet-body">
-                    <etf-list data-model="{{client.portfolio.desc.isins}}"></etf-list>
+                    <etf-list data-portfolio="client.portfolio"></etf-list>
                 </div>
             </div>
             <!-- Maps de mes ETFs-->
