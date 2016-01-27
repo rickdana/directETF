@@ -334,55 +334,64 @@ angular.module('DirectETF')
         });
 
         var wizard_state = $element.find("#wizard-state");
+        var wizard_continue = function(step) {
+            var active = $element.find('[data-step=' + $scope.wizard.step + ']'),
+                current = $element.find('[data-step=' + step + ']');
+
+            $scope.wizard.step = step;
+            $rootScope['step' + current.attr('data-step')]();
+            document.body.scrollTop = 0;
+        }
 
         $scope.wizard = {
             step: 1,
             goto: function(step) {
-                var active = $element.find('[data-step=' + this.step + ']'),
-                    current = $element.find('[data-step=' + step + ']');
+                switch (step) {
+                    case 2:
+                        if (!$scope.wizard.portfolio.strategy.keywords.length()) {
+                            ngDialog.open({
+                                template: '<p class="text-center">Veuillez définir une stratégie.</p>',
+                                plain: true
+                            });
 
-                if (step == 2) {
-                    if (!$scope.wizard.portfolio.strategy.keywords.length()) {
-                        ngDialog.open({
-                            template: '<p class="text-center">Veuillez définir une stratégie.</p>',
-                            plain: true
+                            return;
+                        }
+
+                        $scope.wizard.portfolio.strategy.etfs(function(etfs) {
+                            if (etfs.length) {
+                                return wizard_continue(step);
+                            }
+
+                            ngDialog.open({
+                                template: '<p class="text-center">Veuillez sélectionner des mots clefs supplémentaire.</p>',
+                                plain: true
+                            });
                         });
+                        break;
 
-                        return;
-                    } else if (!$scope.wizard.portfolio.desc.isins.length) {
-                        ngDialog.open({
-                            template: '<p class="text-center">Veuillez sélectionner des mots clefs supplémentaire.</p>',
-                            plain: true
-                        });
+                    case 3:
+                        if ($scope.wizard.order.amount.total == 0) {
+                            ngDialog.open({
+                                template: '<p class="text-center">Veuillez ajouter des fonds.</p>',
+                                plain: true
+                            });
 
-                        return;
-                    }
+                            return;
+                        } else if ($scope.wizard.order.amount.total < 50) {
+                            ngDialog.open({
+                                template: '<p class="text-center">Veuillez rajouter des fonds (minimum 50 euros).</p>',
+                                plain: true
+                            });
+
+                            return;
+                        } else {
+                            return wizard_continue(step);
+                        }
+                        break;
+
+                    default:
+                        return wizard_continue(step);
                 }
-
-                if (step == 3) {
-                    if ($scope.wizard.order.amount.total == 0) {
-                        ngDialog.open({
-                            template: '<p class="text-center">Veuillez ajouter des fonds.</p>',
-                            plain: true
-                        });
-
-                        return;
-                    } else if ($scope.wizard.order.amount.total < 50) {
-                        ngDialog.open({
-                            template: '<p class="text-center">Veuillez rajouter des fonds (minimum 50 euros).</p>',
-                            plain: true
-                        });
-
-                        return;
-                    }
-                }
-
-                this.step = step;
-
-                $rootScope['step' + current.attr('data-step')]();
-                $OrdersFactory.lock();
-
-                document.body.scrollTop = 0;
             },
             order: {
                 amount: {
