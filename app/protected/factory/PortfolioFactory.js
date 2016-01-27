@@ -792,7 +792,7 @@ angular.module('DirectETF')
                 };
 
                 self.prototype.persist = function(portfolio) {
-                    self.desc = angular.copy(portfolio.desc);
+                    //self.desc = angular.copy(portfolio.desc);
                     self.order.value = portfolio.value;
                     self.order.strategy = angular.copy(portfolio.strategy);
                 };

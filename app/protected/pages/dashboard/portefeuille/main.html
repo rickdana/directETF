@@ -8,14 +8,16 @@
                     </div>
                 </div>
 
-                <div class="portlet-body" ng-show="!client.portfolio.order.value">
-                    <strategy-keywords data-strategy="client.portfolio.strategy"
-                                       class="text-center"></strategy-keywords>
-                </div>
+                <div class="portlet-body text-center">
+                    Mes choix:
+                    <strategy-keywords data-strategy="client.portfolio.strategy"></strategy-keywords>
 
-                <div ng-show="client.portfolio.order.value">
-                    <strategy-keywords data-strategy="client.portfolio.order.strategy"
-                                       class="text-center"></strategy-keywords>
+                    <div ng-show="client.portfolio.order.value">
+                        <br>
+                        <div class="incomming text-center">Stratégie en cours de traitement</div>
+                        <strategy-keywords
+                                data-strategy="client.portfolio.order.strategy"></strategy-keywords>
+                    </div>
                 </div>
             </div>
 
@@ -130,10 +132,10 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <sector-chart-pie id="sectors-overview" data-height="260"
+                    <sector-chart-pie id="sectors-overview"
+                                      data-height="260"
                                       data-model="client.portfolio.desc.etfs"
-                                      data-show-in-legend="true">
-                    </sector-chart-pie>
+                                      data-show-in-legend="true"></sector-chart-pie>
                     <type-progress data-portfolio="client.portfolio"></type-progress>
                 </div>
             </div>
@@ -149,15 +151,10 @@
                 </div>
 
                 <div class="portlet-body">
-                    <div ng-show="!client.portfolio.order.value">
-                        <etf-list data-portfolio="client.portfolio"
-                                  data-before-rendering="beforeRendering"
-                                  data-after-rendering="afterRendering"
-                                  data-template="/protected/pages/dashboard/portefeuille/table.html"></etf-list>
-                    </div>
-                    <div ng-show="client.portfolio.order.value">
-                        <etf-list data-portfolio="client.portfolio"></etf-list>
-                    </div>
+                    <etf-list data-portfolio="client.portfolio"
+                              data-before-rendering="beforeRendering"
+                              data-after-rendering="afterRendering"
+                              data-template="/protected/pages/dashboard/portefeuille/table.html"></etf-list>
                 </div>
             </div>
             <!-- Maps de mes ETFs-->

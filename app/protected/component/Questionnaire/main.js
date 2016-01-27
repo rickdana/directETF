@@ -189,7 +189,7 @@ angular.module('DirectETF')
             scope: {
                 $strategy: '=strategy'
             },
-            template: '<p ng-show="hasKeywords">Mes choix: <span class="questionnaire-sentence-keywords"></span></p>'
+            template: '<div ng-show="hasKeywords"><span class="questionnaire-sentence-keywords"></span></div>'
         };
     })
     .directive('root', function() {
