@@ -2,13 +2,15 @@
     <thead>
     <tr>
         <th>Nom du titre</th>
+        <th class="etf-column">%</th>
         <th class="etf-column value">Valeur</th>
         <th class="etf-column gains">Gains/Pertes</th>
     </tr>
     </thead>
     <tbody data-list-items>
     <tr ng-repeat="etf in etfs" id="etf-{{etf.isin}}" data-isin="{{etf.isin}}">
-        <td class="etf-column name" data-etf-attr-name="name">{{etf.name}} ({{ etf.percent }}%)</td>
+        <td class="etf-column name" data-etf-attr-name="name">{{etf.name}}</td>
+        <td class="etf-column name">{{etf.percent}} %</td>
         <td class="etf-column value" data-etf-attr-name="value">{{etf.quantity * etf.price | number: 2}}
             {{client.portfolio.desc.currencySymb}}
         </td>
@@ -19,7 +21,7 @@
     </tbody>
     <tfoot>
     <tr>
-        <td class="etf-column total text-right" colspan="2">Total du portefeuille :</td>
+        <td class="etf-column total text-right" colspan="3">Total du portefeuille :</td>
         <td id="total-value" class="etf-column total text-right">{{client.portfolio.value}}
             {{client.portfolio.desc.currencySymb}}
         </td>
