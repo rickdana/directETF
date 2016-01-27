@@ -243,7 +243,7 @@
                 </div>
             </div>
             <!-- Historique du portefeuille -->
-            <div id="graph-synthese">
+            <div id="graph-synthese" ng-show="!client.portfolio.order.value">
                 <div class="portlet" ng-controller="PortefeuilleHistoriqueController">
                     <div class="portlet-body text-right" style="min-height: 340px;">
                         <div id="portefeuille-historique-stockchart" style="display: none"></div>
