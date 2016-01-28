@@ -204,8 +204,8 @@ angular.module('DirectETF')
 
             chart.xAxis[0].update({
                 tickColor:'transparent',
-                lineColor: 'transparent',
-                lineWidth: 0,
+                lineColor: 'rgb(255, 255, 255)',
+                lineWidth: 2,
                 labels: {
                     style: {
                         color: 'rgb(255, 255, 255)',
@@ -214,7 +214,8 @@ angular.module('DirectETF')
             });
 
             chart.yAxis[0].update({
-                lineColor: 'transparent',
+                lineColor: 'rgb(255, 255, 255)',
+                lineWidth: 2,
                 labels: {
                     style: {
                         color: 'rgb(255, 255, 255)',

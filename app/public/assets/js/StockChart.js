@@ -36,6 +36,7 @@ function LoadStockChart(series, container, clear, cb, options) {
             },
 
             yAxis: {
+                crosshair: true,
                 opposite: false,
                 gridLineColor: 'transparent',
                 lineColor: 'rgb(0, 0, 0)',
