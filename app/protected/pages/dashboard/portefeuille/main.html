@@ -1,6 +1,6 @@
 <div id="portefeuille" ng-controller="PortefeuilleController">
     <div class="row" ng-if="client.alreadyInvest">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="portlet">
                 <div class="portlet-title">
                     <div class="text">
@@ -9,18 +9,23 @@
                 </div>
 
                 <div class="portlet-body text-center">
+                    <div ng-show="client.portfolio.order.value">
+                        <div class="incomming text-center">
+                            En cours de traitement:
+                            <strategy-keywords
+                                    id="new-strategy-keywords" data-strategy="client.portfolio.order.strategy"></strategy-keywords>
+                        </div>
+                    </div>
+
                     Mes choix:
                     <strategy-keywords data-strategy="client.portfolio.strategy"></strategy-keywords>
-
-                    <div ng-show="client.portfolio.order.value">
-                        <br>
-                        <div class="incomming text-center">En cours de traitement</div>
-                        <strategy-keywords
-                                data-strategy="client.portfolio.order.strategy"></strategy-keywords>
-                    </div>
                 </div>
             </div>
+        </div>
+    </div>
 
+    <div class="row" ng-if="client.alreadyInvest">
+        <div class="col-lg-6">
             <!-- Information du portefeuille -->
             <div id="portfolio">
                 <div class="portlet">
@@ -35,11 +40,11 @@
 
                     <div class="portlet-body">
                         <div class="infos-principales">
-                            <div class="number"> {{format(client.portfolio.value)}}
-                                {{client.portfolio.desc.currencySymb}}
-                            </div>
                             <div class="incomming text-center" ng-if="client.portfolio.order.value">
                                 En cours de traitement: {{client.portfolio.order.value}}
+                                {{client.portfolio.desc.currencySymb}}
+                            </div>
+                            <div class="number"> {{format(client.portfolio.value)}}
                                 {{client.portfolio.desc.currencySymb}}
                             </div>
                             <div>
@@ -120,7 +125,7 @@
         </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-right">
             <!-- Repartition des secteurs -->
             <div id="sector" class="portlet">
                 <div class="portlet-title">
@@ -172,26 +177,27 @@
     </div>
 
     <div class="row" ng-if="!client.alreadyInvest">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="portlet">
-                <div class="portlet-title">
-                    <div class="text">
-                        <span ng-show="!client.portfolio.order.value">Rappel de ma stratégie</span>
-                        <span ng-show="client.portfolio.order.value">Nouvelle stratégie</span>
+                <div class="portlet-body text-center">
+                    <div id="strategy-demo" class="portlet-body text-center" ng-show="!client.portfolio.order.value">
+                        <p>Vous n'avez pas défini de stratégie: votre portefeuille est neutre.</p>
+                        <a href="#/investir" class="btn btn-primary btn-xl"> Définir une stratégie</a>
+                    </div>
+                    <div ng-show="client.portfolio.order.value">
+                        <div class="incomming text-center">
+                            En cours de traitement:
+                            <strategy-keywords
+                                    id="new-strategy-keywords" data-strategy="client.portfolio.order.strategy"></strategy-keywords>
+                        </div>
                     </div>
                 </div>
-
-                <div id="strategy-demo" class="portlet-body text-center" ng-show="!client.portfolio.order.value">
-                    <p>Vous n'avez pas défini de stratégie: votre portefeuille est neutre.</p>
-                    <a href="#/investir" class="btn btn-primary btn-xl"> Définir une stratégie</a>
-                </div>
-
-                <div ng-show="client.portfolio.order.value">
-                    <strategy-keywords data-strategy="client.portfolio.order.strategy"
-                                       class="text-center"></strategy-keywords>
-                </div>
             </div>
+        </div>
+    </div>
 
+    <div class="row" ng-if="!client.alreadyInvest">
+        <div class="col-lg-6">
             <!-- Information du portefeuille -->
             <div id="portfolio">
                 <div class="portlet">
@@ -203,15 +209,18 @@
 
                     <div class="portlet-body">
                         <div class="infos-principales">
-                            <div class="number"> {{format(client.portfolio.value)}}
-                                {{client.portfolio.desc.currencySymb}}
-                            </div>
                             <div class="incomming text-center" ng-if="client.portfolio.order.value">
                                 En cours de traitement: {{client.portfolio.order.value}}
                                 {{client.portfolio.desc.currencySymb}}
                             </div>
+                            <div class="number"> {{format(client.portfolio.value)}}
+                                {{client.portfolio.desc.currencySymb}}
+                            </div>
                             <div>
-                                Variation du jour <span class="result-up">0%<i class="fa fa-chevron-up"></i></span>, de l'année <span class="result-up">0%<i class="fa fa-chevron-up"></i></span>
+                                Variation du jour <span class="result-up">0%<i class="fa fa-chevron-up"></i></span>
+                            </div>
+                            <div>
+                                Variation de l'année <span class="result-up">0%<i class="fa fa-chevron-up"></i></span>
                             </div>
                         </div>
 
@@ -256,7 +265,7 @@
             </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-right">
             <!-- Repartition des secteurs -->
             <div id="sector" class="portlet">
                 <div class="portlet-title">

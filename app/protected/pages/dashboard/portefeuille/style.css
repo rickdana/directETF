@@ -1,10 +1,38 @@
+.col-lg-12 .portlet > .portlet-title {
+	min-height: 0;
+	margin-bottom: 4px;
+}
+
+#new-strategy-keywords .questionnaire-sentence-keywords {
+	margin-top: 0;
+}
+
+#new-strategy-keywords .questionnaire-sentence-keyword {
+	border: none;
+	color: white;
+	padding: 0 2px;
+	margin: 0px;
+}
+
+#new-strategy-keywords .questionnaire-sentence-keyword:after {
+	content: ', ';
+}
+
+#new-strategy-keywords .questionnaire-sentence-keyword:last-child:after {
+	content: '.';
+}
+
+strategy-keywords {
+	display: inline-block;
+}
+
 .incomming {
-  display: inline-block;
-  padding: 5px 15px;
-  margin-bottom: 15px;
-  margin-top: -10px;
-  background-color: #7BE7F0;
-  border-radius: 31px !important;
+    display: inline-block;
+	padding: 1px 30px;
+    margin-bottom: 3px;
+	background-color: #ff8f8f;
+	color: white;
+	border-radius: 30px !important;
 }
 
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
@@ -135,7 +163,6 @@ table .selected {
 .infos-principales .number {
 	font-size: 50px;
 	margin-top: -10px;
-	margin-bottom: 0.3em;
 }
 
 
@@ -323,8 +350,8 @@ body .btn-primary:hover, body .btn-primary:focus {
 	margin-bottom: 10px;
 }
 
-#portefeuille .col-lg-6 {
-    padding-left: 15px;
-    padding-right: 0px
+#portefeuille .col-right{
+    padding-left: 0px;
 }
+
 

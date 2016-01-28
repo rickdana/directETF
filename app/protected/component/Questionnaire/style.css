@@ -75,11 +75,15 @@
 
 .questionnaire-sentence-keyword {
     display: inline-block;
-    padding: 5px 10px;
-    margin-bottom: 5px;
-    margin-right: 10px;
-    color: white;
-    background-color: rgb(54, 198, 211);
+    margin-bottom: 10px;
+    margin-left: 3px;
+    margin-right: 8px;
+    color: rgb(54, 198, 211);
+    border: rgb(54, 198, 211);
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 9px !important;
+    padding: 2px 33px;
 }
 
 .questionnaire-sentence-keyword a {
