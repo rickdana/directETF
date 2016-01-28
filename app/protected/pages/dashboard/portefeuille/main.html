@@ -16,7 +16,9 @@
                                     id="new-strategy-keywords" data-strategy="client.portfolio.order.strategy"></strategy-keywords>
                         </div>
                     </div>
-
+                    <div class="text-risk">
+                        Niveau de risque: <span>{{risks[client.portfolio.desc.risk]}}</span>
+                    </div>
                     Mes choix:
                     <strategy-keywords data-strategy="client.portfolio.strategy"></strategy-keywords>
                 </div>
@@ -71,10 +73,6 @@
                                         {{client.portfolio.desc.currencySymb}}
                                     </td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
-                                </tr>
-                                <tr>
-                                    <td class="type">Niveau de risque</td>
-                                    <td class="percent">{{risks[client.portfolio.desc.risk]}}</td>
                                 </tr>
                             </table>
                         </div>
@@ -191,6 +189,9 @@
                                     id="new-strategy-keywords" data-strategy="client.portfolio.order.strategy"></strategy-keywords>
                         </div>
                     </div>
+                    <div class="text-risk">
+                        Niveau de risque: <span>{{risks[client.portfolio.desc.risk]}}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -238,11 +239,6 @@
                                     <td class="type">Revenu annuel</td>
                                     <td class="number">0.00 {{client.portfolio.desc.currencySymb}}</td>
                                     <td class="percent"><i class="fa fa-line-chart"></i></td>
-                                </tr>
-                                <tr class="infos-risk">
-                                    <td class="type">Niveau de risque</td>
-                                    <td class="number"></td>
-                                    <td class="percent">{{risks[client.portfolio.desc.risk]}}</td>
                                 </tr>
                             </table>
                         </div>
