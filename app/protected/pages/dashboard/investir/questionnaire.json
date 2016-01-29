@@ -7,31 +7,19 @@
         {
           "id": "root-regions",
           "icon": "flaticon-",
-          "text": "Investir dans une région",
-          "goto": "regions"
-        },
-        {
-          "id": "root-countries",
-          "icon": "flaticon-",
-          "text": "Investir dans un pays",
-          "goto": "countries"
+          "text": "Régions/Pays",
+          "goto": "target"
         },
         {
           "id": "root-sectors",
           "icon": "flaticon-",
-          "text": "Investir par secteur",
+          "text": "Secteurs",
           "goto": "sectors"
-        },
-        {
-          "id": "root-news",
-          "icon": "flaticon-",
-          "text": "Investir à partir de l'actualité",
-          "goto": "news"
         },
         {
           "id": "root-themes",
           "icon": "flaticon-",
-          "text": "Investir par thème",
+          "text": "Thèmes",
           "goto": "themes"
         }
       ]
@@ -121,6 +109,171 @@
           },
           "icon": "flaticon-waiting3",
           "text": "Autres"
+        }
+      ]
+    },
+    {
+      "id": "target",
+      "icon": "flaticon-",
+      "text": "",
+      "children": [
+        {
+          "id": "emerging",
+          "strategy": {},
+          "icon": "flaticon-geography10",
+          "text": "Pays Emergents",
+          "goto": "emerging-market"
+        },
+        {
+          "id": "developed",
+          "strategy": {},
+          "icon": "flaticon-money214",
+          "text": "Pays Développés",
+          "goto": "developed-market"
+        }
+      ]
+    },
+    {
+      "id": "emerging-market",
+      "icon": "flaticon-",
+      "text": "",
+      "type": "checkbox",
+      "children": [
+        {
+          "id": "ch",
+          "strategy": {
+            "ch": 1
+          },
+          "icon": "flaticon-asia13",
+          "text": "Chine"
+        },
+        {
+          "id": "in",
+          "strategy": {
+            "in": 1
+          },
+          "icon": "flaticon-asia10",
+          "text": "Inde"
+        }
+      ]
+    },
+    {
+      "id": "developed-market",
+      "icon": "flaticon-",
+      "text": "",
+      "type": "checkbox",
+      "children": [
+        {
+          "id": "fr",
+          "strategy": {
+            "fr": 1
+          },
+          "icon": "flaticon-europe2",
+          "text": "France"
+        },
+        {
+          "id": "us",
+          "strategy": {
+            "us": 1
+          },
+          "icon": "flaticon-us",
+          "text": "États-Unis"
+        },
+        {
+          "id": "be",
+          "strategy": {
+            "be": 1
+          },
+          "icon": "flaticon-europe5",
+          "text": "Belgique"
+        },
+        {
+          "id": "it",
+          "strategy": {
+            "it": 1
+          },
+          "icon": "flaticon-geography5",
+          "text": "Italie"
+        },
+        {
+          "id": "jp",
+          "strategy": {
+            "jp": 1
+          },
+          "icon": "flaticon-japanese13",
+          "text": "Japon"
+        },
+        {
+          "id": "es",
+          "strategy": {
+            "es": 1
+          },
+          "icon": "flaticon-europe12",
+          "text": "Espagne"
+        },
+        {
+          "id": "de",
+          "strategy": {
+            "de": 1
+          },
+          "icon": "flaticon-europe30",
+          "text": "Allemagne"
+        },
+        {
+          "id": "ru",
+          "strategy": {
+            "ru": 1
+          },
+          "icon": "flaticon-europe19",
+          "text": "Russie"
+        },
+        {
+          "id": "tr",
+          "strategy": {
+            "tr": 1
+          },
+          "icon": "flaticon-asia7",
+          "text": "Turquie"
+        },
+        {
+          "id": "hk",
+          "strategy": {
+            "hk": 1
+          },
+          "icon": "flaticon-money469",
+          "text": "Hong-Kong"
+        },
+        {
+          "id": "kr",
+          "strategy": {
+            "kr": 1
+          },
+          "icon": "flaticon-asia17",
+          "text": "Corée"
+        },
+        {
+          "id": "gr",
+          "strategy": {
+            "gr": 1
+          },
+          "icon": "flaticon-europe32",
+          "text": "Grèce"
+        },
+        {
+          "id": "br",
+          "strategy": {
+            "br": 1
+          },
+          "icon": "flaticon-brazil9",
+          "text": "Brézil"
+        },
+        {
+          "id": "tw",
+          "strategy": {
+            "tw": 1
+          },
+          "icon": "flaticon-asia25",
+          "text": "Taïwan"
         }
       ]
     },

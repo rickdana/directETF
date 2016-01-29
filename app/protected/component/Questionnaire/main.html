@@ -1,29 +1,8 @@
 <div class="questionnaire-component">
-    <div class="filter-question filter-history hide"
-         ng-repeat="(index, history) in questionnaire.history.entries"
-         ng-init="q = history[0]; child = history[1]">
-        <div ng-if="child.resume">
-            <input type="radio" name="h-{{child.id}}" id="h-{{child.id}}" class="aCheck filter-checkbox"
-                   ng-init="history.checked = true"
-                   ng-model="history.checked">
-            <label for="h-{{child.id}}"
-                   ng-click="questionnaire.current.node = q.id; questionnaire.current.child = null;
-                             questionnaire.history.remove(index);
-                             questionnaire.history.goto(q.id)">
-                <span>{{child.resume}}</span></label></div>
-    </div>
-
     <div ng-if="questionnaire.nodes">
         <div ng-init="root = questionnaire.nodes[0]; questionnaire.current.node = root.id">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="filter-items root">
-                        <root data-id="{{root.id}}"></root>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="filter-items children"></div>
-                </div>
+            <div class="filter-items root">
+                <root data-id="{{root.id}}"></root>
             </div>
         </div>
     </div>

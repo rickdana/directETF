@@ -89,13 +89,7 @@ angular.module('DirectETF')
                     }
                 },
                 children: function(id) {
-                    $scope.node = $scope.questionnaire.node(id);
-
-                    $q.all([
-                        $http.get(templateUrl, { cache : $templateCache })
-                    ]).then(function(resp) {
-                        $element.find('.filter-items.children').html($compile($templateCache.get(templateUrl)[1])($scope));
-                    });
+                    this.current.node = $scope.questionnaire.node(id);
                 }
             };
 

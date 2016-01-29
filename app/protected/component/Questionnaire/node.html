@@ -1,5 +1,5 @@
 <div class="filter-question filter-question-nodes" ng-show="questionnaire.current.node == node.id">
-    <label ng-show="node.text"><span>{{node.text}}</span></label>
+    <!--<label ng-show="node.text"><span>{{node.text}}</span></label>-->
     <div ng-if="node.children">
         <div class="filter-question-answer" ng-repeat="child in node.children"
              ng-init="node.type = node.type || 'radio'">
