@@ -10,18 +10,14 @@
              class="step fa fa-check" data-title="Validation"></div>
     </div>
 
-    <div id="sentence" ng-show="wizard.step == 1">
-        <p ng-show="wizard.step > 1">
-            Je souhaite investir
-            <span class="orderAmount">
-                {{wizard.order.amount.total}}&nbsp;{{client.portfolio.desc.currencySymb}}</span></p>
+    <div id="sentence-step-1" ng-show="wizard.step == 1">
         Mes choix:
         <strategy-keywords data-action="true" data-strategy="wizard.portfolio.strategy"></strategy-keywords>
         <br>
     </div>
 
-    <div id="sentence" ng-show="wizard.step > 1 && wizard.step < 4">
-        <p ng-show="wizard.step > 1">
+    <div id="sentence-steps" ng-show="wizard.step > 1 && wizard.step < 4">
+        <p ng-show="wizard.step > 2">
             Je souhaite investir
             <span class="orderAmount">
                 {{wizard.order.amount.total}}&nbsp;{{client.portfolio.desc.currencySymb}}</span></p>

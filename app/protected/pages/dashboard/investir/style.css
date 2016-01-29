@@ -114,7 +114,14 @@
     background-color: transparent;
 }
 
-#sentence {
+#sentence-step-1 {
+    text-align: center;
+    font-size: 1.3em;
+    padding: 0 4em;
+    margin-bottom: 40px;
+}
+
+#sentence-steps {
     text-align: center;
     font-size: 1.3em;
     padding: 0 4em;
@@ -217,6 +224,7 @@ tfoot td {
     text-align: center;
     position: relative;
     text-transform: uppercase;
+    margin-top: 70px;
 }
 
 #amount-box .title, #amount-box p {
@@ -465,4 +473,13 @@ table#read_chart tr.contr td {
     min-height: 1px;
     padding-left: 15px;
     padding-right: 0px;
+}
+
+#wizard-state[data-current-step="1"] .questionnaire-sentence-keyword{
+    background-color: white;
+    padding: 0 33px;
+}
+
+strategy-keywords {
+    display: inline-block;
 }
