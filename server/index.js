@@ -13,8 +13,10 @@ var express = require('express')
   , serveStatic = require('serve-static')
   , favicon = require('serve-favicon')
   , cookieParser = require('cookie-parser')
-  , bodyParser = require('body-parser');
-
+  , bodyParser = require('body-parser')
+  , AWS = require('aws-sdk')
+  , validator = require('validator');
+  
 // Load env config
 var env = process.env.NODE_ENV || "aws"
   , config;
@@ -105,6 +107,31 @@ app.post('/login', function(req, res, next) {
 
 app.post('/signup', passport.authenticate('signup'), function(req, res, next) {
     res.sendStatus(200);
+});
+
+// TODO Add credentials (https://aws.amazon.com/sdk-for-node-js/) and test this route
+app.post('/subscribe', function(req, res, next) {
+    if (validator.isEmail(req.body.email)) {
+        var s3 = new AWS.S3();
+        var bucket_name = 'subscribers'
+          , bucket_key  = 'email';
+
+        s3.createBucket({Bucket: bucket_name}, function() {
+            var params = {Bucket: bucket_name, Key: bucket_key, Body: req.body.email};
+
+            s3.putObject(params, function(err, data) {
+                if (err) {
+                    console.log(err);
+                    next(err);
+                } else {
+                    console.log('new subscriber %s', req.body.email);
+                    res.sendStatus(200);
+                }
+            });
+        });
+    } else {
+        res.sendStatus(400);
+    }
 });
 
 ['/protected', '/dashboard'].forEach(function(route) {
