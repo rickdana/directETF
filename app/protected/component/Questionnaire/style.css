@@ -181,12 +181,26 @@
 
 .questionnaire-component input.filter-checkbox + label {
     font-size: 1.1em;
-    background-color: rgba(54, 198, 211, .6);
+    color: rgb(54, 198, 211);
+    border: rgb(54, 198, 211);
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 9px !important;
+    background-color: white;
+    padding: 2px 12px;
+    margin-bottom: 10px;
 }
 
 .questionnaire-component .filter-question > label,
 .questionnaire-component input.filter-checkbox:checked + label {
-    background-color: rgba(43, 155, 165, 1);
+    color: white;
+    border: rgb(54, 198, 211);
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 9px !important;
+    background-color: rgb(54, 198, 211);
+    padding: 2px 12px;
+    margin-bottom: 10px;
 }
 
 .questionnaire-component .filter-question-answer input.filter-checkbox:checked + label {
