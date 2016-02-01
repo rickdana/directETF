@@ -10,7 +10,7 @@
 
 .questionnaire-component label {
     display:inline-block;
-    padding: 7px 12px;
+    padding: 10px 12px;
     width:100%;
     margin:0;
     position: relative;
@@ -32,10 +32,11 @@
 }
 
 .questionnaire-component .filter-question-nodes input.filter-checkbox + label span + i {
-    position: absolute;
-    right: 25px;
-    top: 4px;
+    top: 1px;
     margin: 0;
+    position: relative;
+    float: right;
+    right: 9px;
 }
 
 .questionnaire-component input.filter-checkbox.filter-group + label + div {
@@ -187,7 +188,7 @@
     border-width: 2px;
     border-radius: 9px !important;
     background-color: white;
-    padding: 2px 12px;
+    padding: 0px 12px;
     margin-bottom: 10px;
 }
 
@@ -199,7 +200,7 @@
     border-width: 2px;
     border-radius: 9px !important;
     background-color: rgb(54, 198, 211);
-    padding: 2px 12px;
+    padding: 0px 12px;
     margin-bottom: 10px;
 }
 
@@ -252,5 +253,5 @@
 
 .node-col {
     float: left;
-    margin-right: 15px;
+    margin-right: 12px;
 }
