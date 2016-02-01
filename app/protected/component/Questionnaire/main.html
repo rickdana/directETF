@@ -2,7 +2,23 @@
     <div ng-if="questionnaire.nodes">
         <div ng-init="root = questionnaire.nodes[0]; questionnaire.current.node = root.id">
             <div class="filter-items root">
-                <root data-id="{{root.id}}"></root>
+                <div class="filter-question">
+                    <label ng-show="root.text"><span>{{root.text}}</span></label>
+                    <div ng-if="root.children" ng-init="first = root.children[0]">
+                        <div ng-repeat="level0 in root.children">
+                            <div class="node-col">
+                                <input type="radio" name="{{root.id}}" id="{{level0.id}}" class="aCheck filter-checkbox"
+                                       ng-checked="level0.id == first.id"
+                                       ng-click="questionnaire.current.node = level0.goto;
+                                                 questionnaire.children(level0.goto)">
+                                <label for="{{level0.id}}"><span>{{level0.text}}</span></label>
+                                <div class="filter-items children" ng-init="node = questionnaire.node(level0.goto)">
+                                    <div data-ng-include="'/protected/component/Questionnaire/node.html'"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

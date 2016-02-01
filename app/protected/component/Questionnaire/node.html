@@ -1,23 +1,34 @@
-<div class="filter-question filter-question-nodes" ng-show="questionnaire.current.node == node.id">
+<div class="filter-question filter-question-nodes">
     <!--<label ng-show="node.text"><span>{{node.text}}</span></label>-->
     <div ng-if="node.children">
         <div class="filter-question-answer" ng-repeat="child in node.children"
              ng-init="node.type = node.type || 'radio'">
-            <input ng-if="node.type == 'radio'" type="radio" name="{{node.id}}" id="{{child.id}}"
-                   class="filter-checkbox"
-                   ng-checked="questionnaire.history.exists(child.id)"
-                   ng-click="questionnaire.current.node = child.goto;
-                             questionnaire.history.add(node, child);
-                             questionnaire.history.query();
-                             questionnaire.children(child.goto)">
-            <input ng-if="node.type != 'radio'" type="checkbox" name="{{node.id}}" id="{{child.id}}"
-                   class="filter-checkbox"
-                   ng-checked="questionnaire.history.exists(child.id)"
-                   ng-click="questionnaire.history.add(node, child);
-                             questionnaire.history.query();">
-            <label for="{{child.id}}">
-                <span>{{child.text}}</span>
-                <i class="{{child.icon}}"></i></label>
+            <div ng-show="questionnaire.current.node.id == node.id">
+                <input ng-if="node.type == 'radio'"
+                       type="radio"
+                       name="{{node.id}}"
+                       id="{{child.id}}"
+                       class="filter-checkbox"
+                       ng-checked="questionnaire.history.exists(child.id)"
+                       ng-click="questionnaire.current.node = child.goto;
+                                 questionnaire.history.add(node, child);
+                                 questionnaire.history.query();
+                                 questionnaire.children(child.goto)">
+                <input ng-if="node.type != 'radio'" type="checkbox" name="{{node.id}}" id="{{child.id}}"
+                       class="filter-checkbox"
+                       ng-checked="questionnaire.history.exists(child.id)"
+                       ng-click="questionnaire.history.add(node, child);
+                                 questionnaire.history.query()">
+                <label for="{{child.id}}">
+                    <span>{{child.text}}</span>
+                    <i class="{{child.icon}}"></i></label>
+            </div>
+            <div ng-if="child.goto">
+                <div ng-show="questionnaire.current.node.id == child.goto">
+                    <div ng-init="node = questionnaire.node(child.goto)"
+                         data-ng-include="'/protected/component/Questionnaire/node.html'"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
