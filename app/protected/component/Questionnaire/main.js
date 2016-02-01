@@ -1,5 +1,5 @@
 angular.module('DirectETF')
-    .controller('QuestionnaireController', function($ocLazyLoad, $scope, $http, $element, $attrs, $q, $compile, $templateCache) {
+    .controller('QuestionnaireController', function($ocLazyLoad, $scope, $http, $element, $attrs) {
         if ($attrs.json) {
             $ocLazyLoad.load({
                 insertBefore: '#ng_load_plugins_before',
@@ -7,8 +7,6 @@ angular.module('DirectETF')
                     '/protected/component/Questionnaire/style.css',
                 ]
             });
-
-            var templateUrl = '/protected/component/Questionnaire/node.html';
 
             $scope.questionnaire = {
                 current: {
@@ -89,7 +87,7 @@ angular.module('DirectETF')
                     }
                 },
                 children: function(id) {
-                    this.current.node = $scope.questionnaire.node(id);
+                    this.current.node = this.node(id);
                 }
             };
 
@@ -106,19 +104,15 @@ angular.module('DirectETF')
                     var child = node.children[0];
 
                     setTimeout(function() {
-                        $scope.questionnaire.current.node = child.goto;
                         $scope.questionnaire.children(child.goto);
                     }, 5);
                 });
         }
     })
-    .controller('RootController', function($scope, $element, $attrs) {
+    .controller('NodeController', function($scope, $element, $attrs) {
         if ($attrs.id) {
-            $scope.$watch(function() {
-                return $scope.questionnaire;
-            }, function(questionnaire) {
-                $scope.node = questionnaire.node($attrs.id);
-            });
+            console.log($attrs.id)
+            $scope.node = $scope.questionnaire.node($attrs.id);
         }
     })
     .controller('StrategyKeywordsController', function($ocLazyLoad, $PortfolioFactory, $scope, $compile, $element, $attrs) {
@@ -186,9 +180,10 @@ angular.module('DirectETF')
             template: '<div ng-show="hasKeywords"><span class="questionnaire-sentence-keywords"></span></div>'
         };
     })
-    .directive('root', function() {
+    .directive('node', function() {
         return {
-            controller: "RootController",
-            templateUrl: "/protected/component/Questionnaire/root.html"
+            controller: "NodeController",
+            templateUrl: "/protected/component/Questionnaire/node.html",
+            restrict: 'E',
         };
     })
