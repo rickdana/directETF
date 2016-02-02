@@ -65,7 +65,8 @@ section input:focus, section textarea:focus {
 
 dl {
     font-size: 1.4em;
-    text-align: left;
+    text-align: right;
+    margin-left: 5.5em;
 }
 
 dt, dl {
