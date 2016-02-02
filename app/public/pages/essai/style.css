@@ -180,8 +180,8 @@
     border: none;
     background-color: transparent;
     box-shadow: none;
-    border-bottom: 1px dotted #8C8B8B;
     text-align: center;
+    color: #36c6d3;
 }
 
 #resume span {
